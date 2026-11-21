@@ -89,14 +89,14 @@ export const t = {
   alsoHere: { vi: "Cũng ở đây", en: "Also here" } as L10n,
   hello: { vi: "Xin chào, tôi là", en: "Hi, I'm" } as L10n,
   heroSub: {
-    vi: "Lucy Tutor giúp học tiếng Anh, Cerno biến Google Sheets thành dashboard, còn Lexi Learn là nơi học lập trình từ con số 0 với bài tập tự chấm.",
-    en: "Lucy Tutor helps people learn English, Cerno turns Google Sheets into dashboards, and Lexi Learn is where you learn programming from zero with auto-checked exercises.",
+    vi: "Tôi thiết kế và xây dựng sản phẩm về học tập và dữ liệu, rồi viết lại những gì mình học để chia sẻ với mọi người.",
+    en: "I design and build products for learning and data, then write down what I learn to share with others.",
   } as L10n,
   seeProjects: { vi: "Xem dự án", en: "See the projects" } as L10n,
   startLearning: { vi: "Vào học", en: "Start learning" } as L10n,
   projectsTitle: { vi: "Dự án", en: "Projects" } as L10n,
   projectsIntro: {
-    vi: "Hai sản phẩm đang chạy thật, do tôi thiết kế và xây dựng.",
+    vi: "Hai sản phẩm đang chạy thật mà tôi đã thiết kế và xây dựng.",
     en: "Two live products that I designed and built.",
   } as L10n,
   visit: { vi: "Mở", en: "Visit" } as L10n,

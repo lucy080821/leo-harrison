@@ -2,7 +2,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BilingualLine } from "@/components/BilingualLine";
 import { LearningRows } from "@/components/LearningRows";
-import { PhoneFrame } from "@/components/Mockups";
 import { ProjectBlock } from "@/components/ProjectBlock";
 import { SectionHead } from "@/components/SectionHead";
 import { Logo } from "@/components/Logo";
@@ -16,12 +15,11 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
   const lessonCount = categories.flatMap((c) => coursesOf(c.id)).reduce((n, co) => n + getLessons(co.id).length, 0);
-  const [lucy, cerno] = projects;
 
   return (
     <div className="mx-auto max-w-6xl px-4">
       {/* Hero */}
-      <section className="grid items-center gap-12 pb-20 pt-12 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:pt-20">
+      <section className="pb-20 pt-12 lg:pt-20">
         <div>
           <p className="mb-5 text-2xl font-bold tracking-tight sm:text-3xl">
             {t.hello[lang]} <span className="hl">{owner.nick}</span>
@@ -48,23 +46,6 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           </div>
         </div>
 
-        <div className="relative">
-          <PhoneFrame src="/projects/lucytutor-m.jpg" alt="Lucy Tutor" />
-          <div className="mt-6 flex justify-center gap-3 lg:absolute lg:-right-2 lg:top-1/2 lg:mt-0 lg:-translate-y-1/2 lg:flex-col">
-            <a href={lucy.url} target="_blank" rel="noopener noreferrer" aria-label={lucy.name} className="grid h-11 w-11 place-items-center overflow-hidden rounded-full border border-line bg-surface hover:border-hl">
-              <img src={lucy.logo} alt="" className="h-full w-full object-cover" />
-            </a>
-            <a href={cerno.url} target="_blank" rel="noopener noreferrer" aria-label={cerno.name} className="grid h-11 w-11 place-items-center overflow-hidden rounded-full border border-line bg-surface hover:border-hl">
-              <img src={cerno.logo} alt="" className="h-7 w-7" />
-            </a>
-            <a href={`mailto:${owner.email}`} aria-label="Email" className="grid h-11 w-11 place-items-center rounded-full border border-line bg-surface text-label hover:border-hl">
-              <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <rect x="3" y="5" width="18" height="14" rx="2" />
-                <path d="m3 7 9 6 9-6" />
-              </svg>
-            </a>
-          </div>
-        </div>
       </section>
 
       {/* Projects */}
