@@ -1,0 +1,89 @@
+{
+  "title": {
+    "vi": "Mảng (Array)",
+    "en": "Arrays"
+  },
+  "summary": {
+    "vi": "push/pop, map, filter, reduce, find, sort, slice",
+    "en": "push/pop, map, filter, reduce, find, sort, slice"
+  },
+  "minutes": 20,
+  "preview": "console",
+  "files": [
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "const nums = [5, 3, 8, 1];\n\nnums.push(10);                      // thêm cuối\nconsole.log(nums.length);           // 5\nconsole.log(nums[0]);               // 5 (chỉ số bắt đầu từ 0)\n\nconsole.log(nums.map(n => n * 2));          // [10,6,16,2,20]\nconsole.log(nums.filter(n => n > 4));       // [5,8,10]\nconsole.log(nums.reduce((s, n) => s + n, 0)); // 27\nconsole.log(nums.find(n => n > 6));         // 8\nconsole.log(nums.includes(3));              // true\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Từ mảng nums, lấy các số chẵn rồi bình phương chúng, in kết quả (dùng filter và map).",
+        "en": "From the nums array, take the even numbers and square them, then print the result (use filter and map)."
+      },
+      "hint": {
+        "vi": "nums.filter(n => n % 2 === 0).map(n => n * n)",
+        "en": "nums.filter(n => n % 2 === 0).map(n => n * n)"
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const nums = [1, 2, 3, 4, 5, 6];\n// viết ở đây\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const nums = [1, 2, 3, 4, 5, 6];\nconsole.log(nums.filter(n => n % 2 === 0).map(n => n * n));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In [4,16,36]",
+            "en": "Prints [4,16,36]"
+          },
+          "test": "logs.join('|')==='[4,16,36]'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Với mảng prices: in tổng (dùng reduce), rồi in bản sao đã sắp tăng dần mà KHÔNG làm thay đổi mảng gốc, rồi in mảng gốc.",
+        "en": "With the prices array: print the total (use reduce), then print a sorted ascending copy WITHOUT changing the original, then print the original."
+      },
+      "hint": {
+        "vi": "[...prices].sort((a, b) => a - b) tạo bản sao rồi mới sắp xếp. sort() mặc định so sánh như chuỗi nên cần (a, b) => a - b.",
+        "en": "[...prices].sort((a, b) => a - b) copies first then sorts. Default sort() compares as strings so you need (a, b) => a - b."
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const prices = [12, 5, 30, 8];\n// 1) in tổng\n// 2) in bản sao đã sắp tăng dần\n// 3) in mảng gốc\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const prices = [12, 5, 30, 8];\nconsole.log(prices.reduce((s, p) => s + p, 0));\nconsole.log([...prices].sort((a, b) => a - b));\nconsole.log(prices);\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đúng 3 dòng: 55, [5,8,12,30], [12,5,30,8]",
+            "en": "Exactly 3 lines: 55, [5,8,12,30], [12,5,30,8]"
+          },
+          "test": "logs.join('|')==='55|[5,8,12,30]|[12,5,30,8]'"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "title": {
+    "vi": "Scope, closure và hàm bậc cao",
+    "en": "Scope, closures and higher-order functions"
+  },
+  "summary": {
+    "vi": "phạm vi biến, closure, hàm trả về hàm, hàm làm đối số",
+    "en": "variable scope, closures, functions returning functions, functions as arguments"
+  },
+  "minutes": 18,
+  "preview": "console",
+  "files": [
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "function makeCounter() {\n  let count = 0;                 // biến \"riêng tư\" của closure\n  return function () {\n    count++;\n    return count;\n  };\n}\n\nconst a = makeCounter();\nconsole.log(a(), a(), a());      // 1 2 3\n\nconst b = makeCounter();         // bộ đếm khác, độc lập\nconsole.log(b());                // 1\n\n// Hàm bậc cao: nhận hàm làm đối số\nfunction repeat(n, action) {\n  for (let i = 0; i < n; i++) action(i);\n}\nrepeat(3, (i) => console.log(\"lần\", i));\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết makeCounter() trả về một hàm; mỗi lần gọi hàm đó trả về số lần đã gọi (1, 2, 3...). Hai bộ đếm phải độc lập. Đã có sẵn đoạn in thử.",
+        "en": "Write makeCounter() returning a function; each call to it returns how many times it has been called (1, 2, 3...). Two counters must be independent. The test prints are already there."
+      },
+      "hint": {
+        "vi": "let count = 0; return () => ++count;",
+        "en": "let count = 0; return () => ++count;"
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function makeCounter() {\n  // viết ở đây\n}\n\nconst c1 = makeCounter();\nconst c2 = makeCounter();\nconsole.log(c1());\nconsole.log(c1());\nconsole.log(c1());\nconsole.log(c2());\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function makeCounter() {\n  let count = 0;\n  return () => ++count;\n}\n\nconst c1 = makeCounter();\nconst c2 = makeCounter();\nconsole.log(c1());\nconsole.log(c1());\nconsole.log(c1());\nconsole.log(c2());\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 1, 2, 3, 1",
+            "en": "Prints 1, 2, 3, 1"
+          },
+          "test": "logs.join(',')==='1,2,3,1'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Viết applyTwice(fn, x) áp dụng fn hai lần, và multiplier(k) trả về hàm nhân với k. In applyTwice(n => n * 2, 3) và multiplier(3)(5).",
+        "en": "Write applyTwice(fn, x) applying fn twice, and multiplier(k) returning a function that multiplies by k. Print applyTwice(n => n * 2, 3) and multiplier(3)(5)."
+      },
+      "hint": {
+        "vi": "applyTwice: return fn(fn(x)); multiplier: return (n) => n * k;",
+        "en": "applyTwice: return fn(fn(x)); multiplier: return (n) => n * k;"
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function applyTwice(fn, x) {\n  // viết ở đây\n}\n\nfunction multiplier(k) {\n  // viết ở đây\n}\n\nconsole.log(applyTwice((n) => n * 2, 3));\nconsole.log(multiplier(3)(5));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function applyTwice(fn, x) {\n  return fn(fn(x));\n}\n\nfunction multiplier(k) {\n  return (n) => n * k;\n}\n\nconsole.log(applyTwice((n) => n * 2, 3));\nconsole.log(multiplier(3)(5));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 12 rồi 15",
+            "en": "Prints 12 then 15"
+          },
+          "test": "logs.join(',')==='12,15'"
+        }
+      ]
+    }
+  ]
+}

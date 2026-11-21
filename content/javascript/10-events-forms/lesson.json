@@ -1,0 +1,121 @@
+{
+  "title": {
+    "vi": "Sự kiện nâng cao và biểu mẫu",
+    "en": "Advanced events and forms"
+  },
+  "summary": {
+    "vi": "event object, preventDefault, submit, input, keydown, event delegation",
+    "en": "event object, preventDefault, submit, input, keydown, event delegation"
+  },
+  "minutes": 18,
+  "preview": "web",
+  "files": [
+    {
+      "name": "index.html",
+      "lang": "html",
+      "code": "<form id=\"form\">\n  <label for=\"name\">Tên của bạn</label>\n  <input id=\"name\" type=\"text\" placeholder=\"Nhập tên...\" />\n  <button type=\"submit\">Chào</button>\n</form>\n<p id=\"out\"></p>\n<p>Xem trước: <strong id=\"preview\"></strong></p>\n"
+    },
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "const form = document.getElementById(\"form\");\nconst nameInput = document.getElementById(\"name\");\nconst out = document.getElementById(\"out\");\nconst preview = document.getElementById(\"preview\");\n\nform.addEventListener(\"submit\", (event) => {\n  event.preventDefault();                       // chặn trình duyệt tải lại trang\n  out.textContent = `Xin chào, ${nameInput.value}!`;\n});\n\nnameInput.addEventListener(\"input\", () => {     // chạy mỗi lần gõ\n  preview.textContent = nameInput.value.toUpperCase();\n});\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Xử lý submit của #form: chặn tải lại trang bằng preventDefault và hiện \"Xin chào, <tên>!\" vào #out.",
+        "en": "Handle the #form submit: stop the reload with preventDefault and show \"Xin chào, <name>!\" in #out."
+      },
+      "hint": {
+        "vi": "form.addEventListener(\"submit\", (e) => { e.preventDefault(); out.textContent = `Xin chào, ${nameInput.value}!`; });",
+        "en": "form.addEventListener(\"submit\", (e) => { e.preventDefault(); out.textContent = `Xin chào, ${nameInput.value}!`; });"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<form id=\"form\">\n  <label for=\"name\">Tên của bạn</label>\n  <input id=\"name\" type=\"text\" placeholder=\"Nhập tên...\" />\n  <button type=\"submit\">Chào</button>\n</form>\n<p id=\"out\"></p>\n<p>Xem trước: <strong id=\"preview\"></strong></p>\n"
+        },
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const form = document.getElementById(\"form\");\nconst nameInput = document.getElementById(\"name\");\nconst out = document.getElementById(\"out\");\n\n// Xử lý submit ở đây\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<form id=\"form\">\n  <label for=\"name\">Tên của bạn</label>\n  <input id=\"name\" type=\"text\" placeholder=\"Nhập tên...\" />\n  <button type=\"submit\">Chào</button>\n</form>\n<p id=\"out\"></p>\n<p>Xem trước: <strong id=\"preview\"></strong></p>\n"
+        },
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const form = document.getElementById(\"form\");\nconst nameInput = document.getElementById(\"name\");\nconst out = document.getElementById(\"out\");\n\nform.addEventListener(\"submit\", (event) => {\n  event.preventDefault();\n  out.textContent = `Xin chào, ${nameInput.value}!`;\n});\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Submit đã gọi preventDefault",
+            "en": "The submit calls preventDefault"
+          },
+          "test": "(function(){var e=new Event('submit',{cancelable:true,bubbles:true});document.getElementById('form').dispatchEvent(e);return e.defaultPrevented})()"
+        },
+        {
+          "label": {
+            "vi": "#out hiện đúng lời chào",
+            "en": "#out shows the right greeting"
+          },
+          "test": "(function(){document.getElementById('name').value='An';document.getElementById('form').dispatchEvent(new Event('submit',{cancelable:true,bubbles:true}));return document.getElementById('out').textContent.trim()==='Xin chào, An!'})()"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Cập nhật #preview mỗi khi gõ vào ô nhập (sự kiện input): hiển thị tên viết HOA.",
+        "en": "Update #preview every time the user types in the input (the input event): show the name in UPPERCASE."
+      },
+      "hint": {
+        "vi": "nameInput.addEventListener(\"input\", () => { preview.textContent = nameInput.value.toUpperCase(); });",
+        "en": "nameInput.addEventListener(\"input\", () => { preview.textContent = nameInput.value.toUpperCase(); });"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<form id=\"form\">\n  <label for=\"name\">Tên của bạn</label>\n  <input id=\"name\" type=\"text\" placeholder=\"Nhập tên...\" />\n  <button type=\"submit\">Chào</button>\n</form>\n<p id=\"out\"></p>\n<p>Xem trước: <strong id=\"preview\"></strong></p>\n"
+        },
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const nameInput = document.getElementById(\"name\");\nconst preview = document.getElementById(\"preview\");\n\n// Xử lý sự kiện input ở đây\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<form id=\"form\">\n  <label for=\"name\">Tên của bạn</label>\n  <input id=\"name\" type=\"text\" placeholder=\"Nhập tên...\" />\n  <button type=\"submit\">Chào</button>\n</form>\n<p id=\"out\"></p>\n<p>Xem trước: <strong id=\"preview\"></strong></p>\n"
+        },
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const nameInput = document.getElementById(\"name\");\nconst preview = document.getElementById(\"preview\");\n\nnameInput.addEventListener(\"input\", () => {\n  preview.textContent = nameInput.value.toUpperCase();\n});\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Gõ \"lexi\" thì #preview là \"LEXI\"",
+            "en": "Typing \"lexi\" makes #preview \"LEXI\""
+          },
+          "test": "(function(){var i=document.getElementById('name');i.value='lexi';i.dispatchEvent(new Event('input',{bubbles:true}));return document.getElementById('preview').textContent.trim()==='LEXI'})()"
+        }
+      ]
+    }
+  ]
+}

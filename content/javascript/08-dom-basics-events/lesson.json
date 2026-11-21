@@ -1,0 +1,114 @@
+{
+  "title": {
+    "vi": "DOM cơ bản và sự kiện",
+    "en": "DOM basics and events"
+  },
+  "summary": {
+    "vi": "getElementById, querySelector, textContent, addEventListener",
+    "en": "getElementById, querySelector, textContent, addEventListener"
+  },
+  "minutes": 18,
+  "preview": "web",
+  "files": [
+    {
+      "name": "index.html",
+      "lang": "html",
+      "code": "<h1 id=\"title\">Chưa đặt tên</h1>\n<button id=\"btn\">Bấm tôi</button>\n<p>Đã bấm: <span id=\"count\">0</span> lần</p>\n"
+    },
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "const title = document.getElementById(\"title\");\nconst btn = document.getElementById(\"btn\");\nconst count = document.getElementById(\"count\");\n\ntitle.textContent = \"Xin chào DOM!\";          // đổi chữ\ntitle.style.color = \"#0b6fd6\";                // đổi style\n\nlet n = 0;\nbtn.addEventListener(\"click\", () => {\n  n++;\n  count.textContent = n;\n});\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Dùng JavaScript đổi nội dung của #title thành một tiêu đề mới của riêng bạn (khác \"Chưa đặt tên\", không để trống).",
+        "en": "Use JavaScript to change #title's content to a new heading of your own (not \"Chưa đặt tên\", not empty)."
+      },
+      "hint": {
+        "vi": "document.getElementById(\"title\").textContent = \"Tiêu đề mới\";",
+        "en": "document.getElementById(\"title\").textContent = \"New heading\";"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<h1 id=\"title\">Chưa đặt tên</h1>\n<button id=\"btn\">Bấm tôi</button>\n<p>Đã bấm: <span id=\"count\">0</span> lần</p>\n"
+        },
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "// Viết code ở đây\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<h1 id=\"title\">Chưa đặt tên</h1>\n<button id=\"btn\">Bấm tôi</button>\n<p>Đã bấm: <span id=\"count\">0</span> lần</p>\n"
+        },
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "document.getElementById(\"title\").textContent = \"Học DOM thật vui\";\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "#title đã đổi và không rỗng",
+            "en": "#title has changed and isn't empty"
+          },
+          "test": "(function(){var t=document.getElementById('title').textContent.trim();return t!==''&&t!=='Chưa đặt tên'})()"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Làm bộ đếm: mỗi lần bấm #btn thì số trong #count tăng thêm 1.",
+        "en": "Build a counter: each click on #btn increases the number in #count by 1."
+      },
+      "hint": {
+        "vi": "Giữ một biến let n = 0; trong sự kiện click: n++; count.textContent = n;",
+        "en": "Keep a variable let n = 0; in the click handler: n++; count.textContent = n;"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<h1 id=\"title\">Chưa đặt tên</h1>\n<button id=\"btn\">Bấm tôi</button>\n<p>Đã bấm: <span id=\"count\">0</span> lần</p>\n"
+        },
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const btn = document.getElementById(\"btn\");\nconst count = document.getElementById(\"count\");\n\n// Thêm bộ lắng nghe sự kiện click ở đây\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<h1 id=\"title\">Chưa đặt tên</h1>\n<button id=\"btn\">Bấm tôi</button>\n<p>Đã bấm: <span id=\"count\">0</span> lần</p>\n"
+        },
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const btn = document.getElementById(\"btn\");\nconst count = document.getElementById(\"count\");\nlet n = 0;\n\nbtn.addEventListener(\"click\", () => {\n  n++;\n  count.textContent = n;\n});\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Bấm 3 lần thì #count hiện 3",
+            "en": "After 3 clicks #count shows 3"
+          },
+          "test": "(function(){var b=document.getElementById('btn'),c=document.getElementById('count');b.click();b.click();b.click();return c.textContent.trim()==='3'})()"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "title": {
+    "vi": "Bất đồng bộ (2): Promise",
+    "en": "Async (2): Promises"
+  },
+  "summary": {
+    "vi": "new Promise, then/catch/finally, Promise.all, Promise.race",
+    "en": "new Promise, then/catch/finally, Promise.all, Promise.race"
+  },
+  "minutes": 18,
+  "preview": "console",
+  "files": [
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "// Một Promise đại diện cho kết quả TƯƠNG LAI\nconst wait = (ms, value) =>\n  new Promise((resolve) => setTimeout(() => resolve(value), ms));\n\nwait(100, \"xong!\")\n  .then((v) => {\n    console.log(v);\n    return v.toUpperCase();         // giá trị trả về chuyển sang .then kế tiếp\n  })\n  .then((v) => console.log(v))\n  .catch((err) => console.log(\"lỗi\", err))\n  .finally(() => console.log(\"kết thúc\"));\n\nPromise.reject(new Error(\"hỏng\")).catch((e) => console.log(e.message));\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Hoàn thiện delay(ms): trả về một Promise tự resolve sau ms mili giây. Sau đó in \"done\" khi delay(100) xong.",
+        "en": "Complete delay(ms): return a Promise that resolves after ms milliseconds. Then print \"done\" when delay(100) finishes."
+      },
+      "hint": {
+        "vi": "return new Promise((resolve) => setTimeout(resolve, ms));",
+        "en": "return new Promise((resolve) => setTimeout(resolve, ms));"
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function delay(ms) {\n  // viết ở đây\n}\n\ndelay(100).then(() => console.log(\"done\"));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function delay(ms) {\n  return new Promise((resolve) => setTimeout(resolve, ms));\n}\n\ndelay(100).then(() => console.log(\"done\"));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In \"done\"",
+            "en": "Prints \"done\""
+          },
+          "test": "logs.indexOf('done')>=0"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Dùng Promise.all chờ ba lời hứa wait(50,\"a\"), wait(100,\"b\"), wait(30,\"c\") rồi in kết quả ghép lại (\"abc\"). Và dùng .catch bắt Promise bị reject, in message của lỗi.",
+        "en": "Use Promise.all to await the three promises wait(50,\"a\"), wait(100,\"b\"), wait(30,\"c\") and print the results joined (\"abc\"). Also use .catch on the rejected Promise and print the error's message."
+      },
+      "hint": {
+        "vi": "Promise.all([...]).then((r) => console.log(r.join(\"\"))) và failing.catch((e) => console.log(e.message))",
+        "en": "Promise.all([...]).then((r) => console.log(r.join(\"\"))) and failing.catch((e) => console.log(e.message))"
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const wait = (ms, value) =>\n  new Promise((resolve) => setTimeout(() => resolve(value), ms));\n\nconst failing = Promise.reject(new Error(\"x\"));\n\n// 1) Promise.all rồi in kết quả ghép\n// 2) failing.catch(...) in e.message\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const wait = (ms, value) =>\n  new Promise((resolve) => setTimeout(() => resolve(value), ms));\n\nconst failing = Promise.reject(new Error(\"x\"));\n\nPromise.all([wait(50, \"a\"), wait(100, \"b\"), wait(30, \"c\")])\n  .then((results) => console.log(results.join(\"\")));\n\nfailing.catch((e) => console.log(e.message));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In \"abc\"",
+            "en": "Prints \"abc\""
+          },
+          "test": "logs.indexOf('abc')>=0"
+        },
+        {
+          "label": {
+            "vi": "In message của lỗi (\"x\")",
+            "en": "Prints the error message (\"x\")"
+          },
+          "test": "logs.indexOf('x')>=0"
+        }
+      ]
+    }
+  ]
+}

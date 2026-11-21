@@ -1,0 +1,89 @@
+{
+  "title": {
+    "vi": "Lớp (Class) và lập trình hướng đối tượng",
+    "en": "Classes and object-oriented programming"
+  },
+  "summary": {
+    "vi": "class, constructor, this, extends, super, static, getter",
+    "en": "class, constructor, this, extends, super, static, getters"
+  },
+  "minutes": 18,
+  "preview": "console",
+  "files": [
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "class Animal {\n  constructor(name) {\n    this.name = name;\n  }\n  speak() {\n    return `${this.name} makes a sound`;\n  }\n}\n\nclass Dog extends Animal {\n  speak() {\n    return `${this.name} barks`;          // ghi đè phương thức cha\n  }\n  fetch() {\n    return `${this.name} fetches the ball`;\n  }\n}\n\nconst rex = new Dog(\"Rex\");\nconsole.log(rex.speak());\nconsole.log(rex.fetch());\nconsole.log(rex instanceof Animal);       // true\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết class Animal: constructor(name) lưu this.name, và phương thức speak() trả về `${name} makes a sound`. Tạo new Animal(\"Mèo\") rồi in speak().",
+        "en": "Write class Animal: constructor(name) storing this.name and a speak() method returning `${name} makes a sound`. Create new Animal(\"Cat\") and print speak()."
+      },
+      "hint": {
+        "vi": "class Animal { constructor(name) { this.name = name; } speak() { return `${this.name} makes a sound`; } }",
+        "en": "class Animal { constructor(name) { this.name = name; } speak() { return `${this.name} makes a sound`; } }"
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "// Viết class Animal ở đây\n\nconst cat = new Animal(\"Cat\");\nconsole.log(cat.speak());\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "class Animal {\n  constructor(name) {\n    this.name = name;\n  }\n  speak() {\n    return `${this.name} makes a sound`;\n  }\n}\n\nconst cat = new Animal(\"Cat\");\nconsole.log(cat.speak());\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In \"Cat makes a sound\"",
+            "en": "Prints \"Cat makes a sound\""
+          },
+          "test": "logs.join('|')==='Cat makes a sound'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Viết class Dog extends Animal: ghi đè speak() trả về `${name} barks`, thêm phương thức fetch() trả về `${name} fetches the ball`. In cả hai cho new Dog(\"Rex\").",
+        "en": "Write class Dog extends Animal: override speak() to return `${name} barks` and add a fetch() method returning `${name} fetches the ball`. Print both for new Dog(\"Rex\")."
+      },
+      "hint": {
+        "vi": "class Dog extends Animal { speak() { return `${this.name} barks`; } fetch() { ... } }",
+        "en": "class Dog extends Animal { speak() { return `${this.name} barks`; } fetch() { ... } }"
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "class Animal {\n  constructor(name) {\n    this.name = name;\n  }\n  speak() {\n    return `${this.name} makes a sound`;\n  }\n}\n\n// Viết class Dog ở đây\n\nconst rex = new Dog(\"Rex\");\nconsole.log(rex.speak());\nconsole.log(rex.fetch());\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "class Animal {\n  constructor(name) {\n    this.name = name;\n  }\n  speak() {\n    return `${this.name} makes a sound`;\n  }\n}\n\nclass Dog extends Animal {\n  speak() {\n    return `${this.name} barks`;\n  }\n  fetch() {\n    return `${this.name} fetches the ball`;\n  }\n}\n\nconst rex = new Dog(\"Rex\");\nconsole.log(rex.speak());\nconsole.log(rex.fetch());\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In \"Rex barks\" rồi \"Rex fetches the ball\"",
+            "en": "Prints \"Rex barks\" then \"Rex fetches the ball\""
+          },
+          "test": "logs.join('|')==='Rex barks|Rex fetches the ball'"
+        }
+      ]
+    }
+  ]
+}

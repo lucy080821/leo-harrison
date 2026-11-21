@@ -1,0 +1,89 @@
+{
+  "title": {
+    "vi": "Bất đồng bộ (1): timer, callback và event loop",
+    "en": "Async (1): timers, callbacks and the event loop"
+  },
+  "summary": {
+    "vi": "setTimeout, setInterval, callback, event loop",
+    "en": "setTimeout, setInterval, callbacks, the event loop"
+  },
+  "minutes": 18,
+  "preview": "console",
+  "files": [
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "console.log(\"1. bắt đầu\");\n\nsetTimeout(() => {\n  console.log(\"3. sau 0ms nhưng vẫn chạy SAU\");\n}, 0);\n\nconsole.log(\"2. kết thúc code đồng bộ\");\n\n// setInterval lặp lại; nhớ dừng bằng clearInterval\nlet n = 0;\nconst id = setInterval(() => {\n  n++;\n  console.log(\"tick\", n);\n  if (n === 2) clearInterval(id);\n}, 100);\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Đã in \"start\" và \"end\". Hãy thêm setTimeout với độ trễ 0 để in \"timeout\", đặt GIỮA hai dòng đó trong code. Quan sát: thứ tự in ra là start, end, timeout.",
+        "en": "\"start\" and \"end\" are already printed. Add a setTimeout with a 0 delay printing \"timeout\", placed BETWEEN those two lines in the code. Observe: the output order is start, end, timeout."
+      },
+      "hint": {
+        "vi": "setTimeout(() => console.log(\"timeout\"), 0); — callback luôn chạy sau khi code đồng bộ hiện tại kết thúc.",
+        "en": "setTimeout(() => console.log(\"timeout\"), 0); — the callback always runs after the current synchronous code finishes."
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "console.log(\"start\");\n\n// thêm setTimeout ở đây\n\nconsole.log(\"end\");\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "console.log(\"start\");\n\nsetTimeout(() => console.log(\"timeout\"), 0);\n\nconsole.log(\"end\");\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Thứ tự start, end, timeout",
+            "en": "Order start, end, timeout"
+          },
+          "test": "logs.join(',')==='start,end,timeout'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Đếm ngược bằng setInterval mỗi 100ms: in 3, 2, 1 rồi \"Go!\", sau đó PHẢI dừng bằng clearInterval (không in thêm).",
+        "en": "Count down with setInterval every 100ms: print 3, 2, 1 then \"Go!\", then it MUST stop with clearInterval (no extra output)."
+      },
+      "hint": {
+        "vi": "Trong callback: nếu n > 0 thì in n và giảm; ngược lại in \"Go!\" và gọi clearInterval(id).",
+        "en": "In the callback: if n > 0 print n and decrement; otherwise print \"Go!\" and call clearInterval(id)."
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "let n = 3;\n\n// dùng setInterval ở đây\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "let n = 3;\n\nconst id = setInterval(() => {\n  if (n > 0) {\n    console.log(n);\n    n--;\n  } else {\n    console.log(\"Go!\");\n    clearInterval(id);\n  }\n}, 100);\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 3, 2, 1, Go! rồi dừng",
+            "en": "Prints 3, 2, 1, Go! then stops"
+          },
+          "test": "logs.join(',')==='3,2,1,Go!'"
+        }
+      ]
+    }
+  ]
+}

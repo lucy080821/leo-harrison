@@ -1,0 +1,96 @@
+{
+  "title": {
+    "vi": "Bất đồng bộ (3): async/await và fetch",
+    "en": "Async (3): async/await and fetch"
+  },
+  "summary": {
+    "vi": "async function, await, try/catch, fetch, response.json()",
+    "en": "async function, await, try/catch, fetch, response.json()"
+  },
+  "minutes": 20,
+  "preview": "console",
+  "files": [
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "// Giả lập một API chậm (trong thực tế bạn dùng fetch)\nfunction fakeFetchUser(id) {\n  return new Promise((resolve, reject) => {\n    setTimeout(() => {\n      if (id === 1) resolve({ id: 1, name: \"Lexi\" });\n      else reject(new Error(\"Không tìm thấy\"));\n    }, 50);\n  });\n}\n\nasync function main() {\n  try {\n    const user = await fakeFetchUser(1);   // chờ xong mới chạy dòng kế\n    console.log(\"Xin chào\", user.name);\n    await fakeFetchUser(99);               // bị reject → nhảy vào catch\n  } catch (error) {\n    console.log(\"Lỗi:\", error.message);\n  } finally {\n    console.log(\"xong\");\n  }\n}\nmain();\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết async function getUserName(id): await fakeFetchUser(id) rồi trả về tên. Sau đó gọi và in kết quả.",
+        "en": "Write async function getUserName(id): await fakeFetchUser(id) and return the name. Then call it and print the result."
+      },
+      "hint": {
+        "vi": "const user = await fakeFetchUser(id); return user.name; — gọi: getUserName(1).then(console.log)",
+        "en": "const user = await fakeFetchUser(id); return user.name; — call: getUserName(1).then(console.log)"
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "// Giả lập một API chậm (trong thực tế bạn dùng fetch)\nfunction fakeFetchUser(id) {\n  return new Promise((resolve, reject) => {\n    setTimeout(() => {\n      if (id === 1) resolve({ id: 1, name: \"Lexi\" });\n      else reject(new Error(\"Không tìm thấy\"));\n    }, 50);\n  });\n}\n\nasync function getUserName(id) {\n  // viết ở đây\n}\n\ngetUserName(1).then((name) => console.log(name));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "// Giả lập một API chậm (trong thực tế bạn dùng fetch)\nfunction fakeFetchUser(id) {\n  return new Promise((resolve, reject) => {\n    setTimeout(() => {\n      if (id === 1) resolve({ id: 1, name: \"Lexi\" });\n      else reject(new Error(\"Không tìm thấy\"));\n    }, 50);\n  });\n}\n\nasync function getUserName(id) {\n  const user = await fakeFetchUser(id);\n  return user.name;\n}\n\ngetUserName(1).then((name) => console.log(name));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In \"Lexi\"",
+            "en": "Prints \"Lexi\""
+          },
+          "test": "logs.indexOf('Lexi')>=0"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Viết async function load(id) dùng try/catch: thành công thì in tên; thất bại thì in \"Lỗi: \" + error.message. Gọi load(1) rồi load(0).",
+        "en": "Write async function load(id) using try/catch: on success print the name; on failure print \"Lỗi: \" + error.message. Call load(1) then load(0)."
+      },
+      "hint": {
+        "vi": "try { const u = await fakeFetchUser(id); console.log(u.name); } catch (e) { console.log(\"Lỗi: \" + e.message); }",
+        "en": "try { const u = await fakeFetchUser(id); console.log(u.name); } catch (e) { console.log(\"Lỗi: \" + e.message); }"
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "// Giả lập một API chậm (trong thực tế bạn dùng fetch)\nfunction fakeFetchUser(id) {\n  return new Promise((resolve, reject) => {\n    setTimeout(() => {\n      if (id === 1) resolve({ id: 1, name: \"Lexi\" });\n      else reject(new Error(\"Không tìm thấy\"));\n    }, 50);\n  });\n}\n\nasync function load(id) {\n  // viết ở đây\n}\n\nload(1);\nload(0);\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "// Giả lập một API chậm (trong thực tế bạn dùng fetch)\nfunction fakeFetchUser(id) {\n  return new Promise((resolve, reject) => {\n    setTimeout(() => {\n      if (id === 1) resolve({ id: 1, name: \"Lexi\" });\n      else reject(new Error(\"Không tìm thấy\"));\n    }, 50);\n  });\n}\n\nasync function load(id) {\n  try {\n    const user = await fakeFetchUser(id);\n    console.log(user.name);\n  } catch (error) {\n    console.log(\"Lỗi: \" + error.message);\n  }\n}\n\nload(1);\nload(0);\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In \"Lexi\"",
+            "en": "Prints \"Lexi\""
+          },
+          "test": "logs.indexOf('Lexi')>=0"
+        },
+        {
+          "label": {
+            "vi": "In \"Lỗi: Không tìm thấy\"",
+            "en": "Prints \"Lỗi: Không tìm thấy\""
+          },
+          "test": "logs.indexOf('Lỗi: Không tìm thấy')>=0"
+        }
+      ]
+    }
+  ]
+}

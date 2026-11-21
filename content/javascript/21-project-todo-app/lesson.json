@@ -1,0 +1,160 @@
+{
+  "title": {
+    "vi": "Dự án: Ứng dụng Todo",
+    "en": "Project: a Todo app"
+  },
+  "summary": {
+    "vi": "DOM, sự kiện, ủy quyền sự kiện và dữ liệu",
+    "en": "DOM, events, event delegation and data"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "index.html",
+      "lang": "html",
+      "code": "<main class=\"app\">\n  <h1>Việc cần làm</h1>\n  <form id=\"todo-form\">\n    <input id=\"todo-input\" type=\"text\" placeholder=\"Thêm việc mới...\" />\n    <button id=\"add-btn\" type=\"submit\">Thêm</button>\n  </form>\n  <ul id=\"todo-list\"></ul>\n</main>\n"
+    },
+    {
+      "name": "style.css",
+      "lang": "css",
+      "code": "body { font-family: system-ui, sans-serif; background: #eaf2fb; margin: 0; padding: 16px; }\n.app { max-width: 420px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; }\nh1 { margin-top: 0; color: #0b6fd6; }\nform { display: flex; gap: 8px; }\ninput { flex: 1; padding: 8px; }\nbutton { cursor: pointer; }\nul { list-style: none; padding: 0; }\nli { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee; }\nli.done .text { text-decoration: line-through; color: gray; }\n.text { cursor: pointer; flex: 1; }\n.del { border: 0; background: transparent; color: tomato; font-size: 1.2rem; }\n"
+    },
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "const form = document.getElementById(\"todo-form\");\nconst input = document.getElementById(\"todo-input\");\nconst list = document.getElementById(\"todo-list\");\n\nfunction addTodo(text) {\n  const li = document.createElement(\"li\");\n  const span = document.createElement(\"span\");\n  span.className = \"text\";\n  span.textContent = text;\n  const del = document.createElement(\"button\");\n  del.className = \"del\";\n  del.textContent = \"×\";\n  li.append(span, del);\n  list.appendChild(li);\n}\n\nform.addEventListener(\"submit\", (event) => {\n  event.preventDefault();\n  const text = input.value.trim();\n  if (!text) return;            // bỏ qua việc rỗng\n  addTodo(text);\n  input.value = \"\";             // xoá ô nhập\n});\n\nlist.addEventListener(\"click\", (event) => {\n  const li = event.target.closest(\"li\");\n  if (!li) return;\n  if (event.target.classList.contains(\"del\")) li.remove();       // xoá\n  else if (event.target.classList.contains(\"text\")) li.classList.toggle(\"done\");  // hoàn thành\n});\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Làm chức năng thêm việc: khi submit form, bỏ qua nếu ô trống; nếu không thì tạo <li> chứa <span class=\"text\"> với nội dung và nút <button class=\"del\">, gắn vào #todo-list rồi xoá ô nhập.",
+        "en": "Build the add feature: on form submit, ignore it if the field is empty; otherwise create an <li> containing a <span class=\"text\"> with the text and a <button class=\"del\">, add it to #todo-list and clear the input."
+      },
+      "hint": {
+        "vi": "Nhớ event.preventDefault() trong submit, và input.value.trim() để bỏ khoảng trắng thừa.",
+        "en": "Remember event.preventDefault() in submit, and input.value.trim() to drop extra spaces."
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<main class=\"app\">\n  <h1>Việc cần làm</h1>\n  <form id=\"todo-form\">\n    <input id=\"todo-input\" type=\"text\" placeholder=\"Thêm việc mới...\" />\n    <button id=\"add-btn\" type=\"submit\">Thêm</button>\n  </form>\n  <ul id=\"todo-list\"></ul>\n</main>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "body { font-family: system-ui, sans-serif; background: #eaf2fb; margin: 0; padding: 16px; }\n.app { max-width: 420px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; }\nh1 { margin-top: 0; color: #0b6fd6; }\nform { display: flex; gap: 8px; }\ninput { flex: 1; padding: 8px; }\nbutton { cursor: pointer; }\nul { list-style: none; padding: 0; }\nli { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee; }\nli.done .text { text-decoration: line-through; color: gray; }\n.text { cursor: pointer; flex: 1; }\n.del { border: 0; background: transparent; color: tomato; font-size: 1.2rem; }\n"
+        },
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const form = document.getElementById(\"todo-form\");\nconst input = document.getElementById(\"todo-input\");\nconst list = document.getElementById(\"todo-list\");\n\n// Viết chức năng thêm việc ở đây\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<main class=\"app\">\n  <h1>Việc cần làm</h1>\n  <form id=\"todo-form\">\n    <input id=\"todo-input\" type=\"text\" placeholder=\"Thêm việc mới...\" />\n    <button id=\"add-btn\" type=\"submit\">Thêm</button>\n  </form>\n  <ul id=\"todo-list\"></ul>\n</main>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "body { font-family: system-ui, sans-serif; background: #eaf2fb; margin: 0; padding: 16px; }\n.app { max-width: 420px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; }\nh1 { margin-top: 0; color: #0b6fd6; }\nform { display: flex; gap: 8px; }\ninput { flex: 1; padding: 8px; }\nbutton { cursor: pointer; }\nul { list-style: none; padding: 0; }\nli { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee; }\nli.done .text { text-decoration: line-through; color: gray; }\n.text { cursor: pointer; flex: 1; }\n.del { border: 0; background: transparent; color: tomato; font-size: 1.2rem; }\n"
+        },
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const form = document.getElementById(\"todo-form\");\nconst input = document.getElementById(\"todo-input\");\nconst list = document.getElementById(\"todo-list\");\n\nfunction addTodo(text) {\n  const li = document.createElement(\"li\");\n  const span = document.createElement(\"span\");\n  span.className = \"text\";\n  span.textContent = text;\n  const del = document.createElement(\"button\");\n  del.className = \"del\";\n  del.textContent = \"×\";\n  li.append(span, del);\n  list.appendChild(li);\n}\n\nform.addEventListener(\"submit\", (event) => {\n  event.preventDefault();\n  const text = input.value.trim();\n  if (!text) return;            // bỏ qua việc rỗng\n  addTodo(text);\n  input.value = \"\";             // xoá ô nhập\n});\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Thêm \"Học JS\" thì có 1 <li> chứa .text và .del",
+            "en": "Adding \"Học JS\" creates 1 <li> with .text and .del"
+          },
+          "test": "(function(){var i=document.getElementById('todo-input'),f=document.getElementById('todo-form');i.value='Học JS';f.dispatchEvent(new Event('submit',{cancelable:true,bubbles:true}));var li=document.querySelectorAll('#todo-list li');return li.length===1&&li[0].querySelector('.text').textContent.trim()==='Học JS'&&!!li[0].querySelector('.del')})()"
+        },
+        {
+          "label": {
+            "vi": "Ô nhập được xoá sau khi thêm",
+            "en": "The input is cleared after adding"
+          },
+          "test": "document.getElementById('todo-input').value===''"
+        },
+        {
+          "label": {
+            "vi": "Ô trống không thêm việc nào",
+            "en": "An empty field adds nothing"
+          },
+          "test": "(function(){var i=document.getElementById('todo-input'),f=document.getElementById('todo-form'),n=document.querySelectorAll('#todo-list li').length;i.value='   ';f.dispatchEvent(new Event('submit',{cancelable:true,bubbles:true}));return document.querySelectorAll('#todo-list li').length===n})()"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Thêm ủy quyền sự kiện cho #todo-list: bấm vào .text thì bật/tắt class \"done\" trên <li>; bấm vào .del thì xoá <li>.",
+        "en": "Add event delegation on #todo-list: clicking .text toggles the \"done\" class on the <li>; clicking .del removes the <li>."
+      },
+      "hint": {
+        "vi": "list.addEventListener(\"click\", (e) => { const li = e.target.closest(\"li\"); ... e.target.classList.contains(\"del\") ... });",
+        "en": "list.addEventListener(\"click\", (e) => { const li = e.target.closest(\"li\"); ... e.target.classList.contains(\"del\") ... });"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<main class=\"app\">\n  <h1>Việc cần làm</h1>\n  <form id=\"todo-form\">\n    <input id=\"todo-input\" type=\"text\" placeholder=\"Thêm việc mới...\" />\n    <button id=\"add-btn\" type=\"submit\">Thêm</button>\n  </form>\n  <ul id=\"todo-list\"></ul>\n</main>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "body { font-family: system-ui, sans-serif; background: #eaf2fb; margin: 0; padding: 16px; }\n.app { max-width: 420px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; }\nh1 { margin-top: 0; color: #0b6fd6; }\nform { display: flex; gap: 8px; }\ninput { flex: 1; padding: 8px; }\nbutton { cursor: pointer; }\nul { list-style: none; padding: 0; }\nli { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee; }\nli.done .text { text-decoration: line-through; color: gray; }\n.text { cursor: pointer; flex: 1; }\n.del { border: 0; background: transparent; color: tomato; font-size: 1.2rem; }\n"
+        },
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const form = document.getElementById(\"todo-form\");\nconst input = document.getElementById(\"todo-input\");\nconst list = document.getElementById(\"todo-list\");\n\nfunction addTodo(text) {\n  const li = document.createElement(\"li\");\n  const span = document.createElement(\"span\");\n  span.className = \"text\";\n  span.textContent = text;\n  const del = document.createElement(\"button\");\n  del.className = \"del\";\n  del.textContent = \"×\";\n  li.append(span, del);\n  list.appendChild(li);\n}\n\nform.addEventListener(\"submit\", (event) => {\n  event.preventDefault();\n  const text = input.value.trim();\n  if (!text) return;            // bỏ qua việc rỗng\n  addTodo(text);\n  input.value = \"\";             // xoá ô nhập\n});\n\n// Thêm ủy quyền sự kiện click cho list ở đây\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<main class=\"app\">\n  <h1>Việc cần làm</h1>\n  <form id=\"todo-form\">\n    <input id=\"todo-input\" type=\"text\" placeholder=\"Thêm việc mới...\" />\n    <button id=\"add-btn\" type=\"submit\">Thêm</button>\n  </form>\n  <ul id=\"todo-list\"></ul>\n</main>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "body { font-family: system-ui, sans-serif; background: #eaf2fb; margin: 0; padding: 16px; }\n.app { max-width: 420px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; }\nh1 { margin-top: 0; color: #0b6fd6; }\nform { display: flex; gap: 8px; }\ninput { flex: 1; padding: 8px; }\nbutton { cursor: pointer; }\nul { list-style: none; padding: 0; }\nli { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee; }\nli.done .text { text-decoration: line-through; color: gray; }\n.text { cursor: pointer; flex: 1; }\n.del { border: 0; background: transparent; color: tomato; font-size: 1.2rem; }\n"
+        },
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const form = document.getElementById(\"todo-form\");\nconst input = document.getElementById(\"todo-input\");\nconst list = document.getElementById(\"todo-list\");\n\nfunction addTodo(text) {\n  const li = document.createElement(\"li\");\n  const span = document.createElement(\"span\");\n  span.className = \"text\";\n  span.textContent = text;\n  const del = document.createElement(\"button\");\n  del.className = \"del\";\n  del.textContent = \"×\";\n  li.append(span, del);\n  list.appendChild(li);\n}\n\nform.addEventListener(\"submit\", (event) => {\n  event.preventDefault();\n  const text = input.value.trim();\n  if (!text) return;            // bỏ qua việc rỗng\n  addTodo(text);\n  input.value = \"\";             // xoá ô nhập\n});\n\nlist.addEventListener(\"click\", (event) => {\n  const li = event.target.closest(\"li\");\n  if (!li) return;\n  if (event.target.classList.contains(\"del\")) li.remove();       // xoá\n  else if (event.target.classList.contains(\"text\")) li.classList.toggle(\"done\");  // hoàn thành\n});\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Bấm .text bật class done, bấm lần nữa thì tắt",
+            "en": "Clicking .text turns done on, again turns it off"
+          },
+          "test": "(function(){var i=document.getElementById('todo-input'),f=document.getElementById('todo-form');i.value='A';f.dispatchEvent(new Event('submit',{cancelable:true,bubbles:true}));var li=document.querySelector('#todo-list li'),t=li.querySelector('.text');t.click();var on=li.classList.contains('done');t.click();return on&&!li.classList.contains('done')})()"
+        },
+        {
+          "label": {
+            "vi": "Bấm .del thì xoá việc",
+            "en": "Clicking .del removes the item"
+          },
+          "test": "(function(){var n=document.querySelectorAll('#todo-list li').length;document.querySelector('#todo-list .del').click();return document.querySelectorAll('#todo-list li').length===n-1})()"
+        }
+      ]
+    }
+  ]
+}

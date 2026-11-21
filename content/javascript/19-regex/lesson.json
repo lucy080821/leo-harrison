@@ -1,0 +1,89 @@
+{
+  "title": {
+    "vi": "Biểu thức chính quy (Regex)",
+    "en": "Regular expressions (Regex)"
+  },
+  "summary": {
+    "vi": "/pattern/flags, test, match, replace, nhóm, quantifier",
+    "en": "/pattern/flags, test, match, replace, groups, quantifiers"
+  },
+  "minutes": 18,
+  "preview": "console",
+  "files": [
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "const re = /\\d+/g;                       // một hoặc nhiều chữ số, toàn cục\nconst text = \"Phòng 12, tầng 7, năm 2026\";\n\nconsole.log(text.match(re));              // [\"12\",\"7\",\"2026\"]\nconsole.log(/^\\d{4}$/.test(\"2026\"));      // true  (đúng 4 chữ số)\nconsole.log(\"a  b   c\".replace(/\\s+/g, \" \"));   // \"a b c\"\n\n// Nhóm bắt (capture group)\nconst m = \"21/11/2026\".match(/(\\d+)\\/(\\d+)\\/(\\d+)/);\nconsole.log(m[3], m[2], m[1]);            // 2026 11 21\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Kiểm tra email đơn giản bằng regex /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/: in kết quả test cho \"a@b.co\", \"abc\", \"x@y\" (lần lượt).",
+        "en": "Check simple emails with the regex /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/: print the test result for \"a@b.co\", \"abc\", \"x@y\" (in order)."
+      },
+      "hint": {
+        "vi": "const isEmail = (s) => /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(s);",
+        "en": "const isEmail = (s) => /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(s);"
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const isEmail = (s) => {\n  // viết ở đây\n};\n\nfor (const s of [\"a@b.co\", \"abc\", \"x@y\"]) {\n  console.log(isEmail(s));\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const isEmail = (s) => /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(s);\n\nfor (const s of [\"a@b.co\", \"abc\", \"x@y\"]) {\n  console.log(isEmail(s));\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In true, false, false",
+            "en": "Prints true, false, false"
+          },
+          "test": "logs.join(',')==='true,false,false'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Từ chuỗi s, in mảng tất cả các số (match với /\\d+/g), rồi in dạng slug: bỏ khoảng trắng hai đầu, gộp mọi cụm khoảng trắng thành \"-\" và viết thường của \"  Hello   World  JS \".",
+        "en": "From the string s, print the array of all numbers (match with /\\d+/g), then print a slug: trim, collapse every whitespace run into \"-\" and lowercase of \"  Hello   World  JS \"."
+      },
+      "hint": {
+        "vi": "s.match(/\\d+/g) và t.trim().replace(/\\s+/g, \"-\").toLowerCase()",
+        "en": "s.match(/\\d+/g) and t.trim().replace(/\\s+/g, \"-\").toLowerCase()"
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const s = \"Ngày 12 tháng 7 năm 2026\";\nconst t = \"  Hello   World  JS \";\n// 1) in mảng các số trong s\n// 2) in slug của t\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const s = \"Ngày 12 tháng 7 năm 2026\";\nconst t = \"  Hello   World  JS \";\nconsole.log(s.match(/\\d+/g));\nconsole.log(t.trim().replace(/\\s+/g, \"-\").toLowerCase());\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In [\"12\",\"7\",\"2026\"] rồi hello-world-js",
+            "en": "Prints [\"12\",\"7\",\"2026\"] then hello-world-js"
+          },
+          "test": "logs.join('|')==='[\"12\",\"7\",\"2026\"]|hello-world-js'"
+        }
+      ]
+    }
+  ]
+}

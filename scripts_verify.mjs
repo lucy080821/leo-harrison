@@ -20,7 +20,6 @@ let bad = 0, total = 0;
 
 async function run(files, tests) {
   const page = await browser.newPage();
-  const msgs = [];
   await page.setContent("<html><body></body></html>");
   const doc = buildSrcDoc(files);
   await page.evaluate(

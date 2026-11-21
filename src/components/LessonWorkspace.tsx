@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { CodeEditor } from "@/components/CodeEditor";
 import { buildSrcDoc, type SandboxFile } from "@/lib/sandbox";
 import { useProgress } from "@/lib/progress";
@@ -52,7 +52,7 @@ export function LessonWorkspace(p: Props) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const pendingCheck = useRef<string | null>(null);
 
-  const files = filesByMode[mode] ?? [];
+  const files = useMemo(() => filesByMode[mode] ?? [], [filesByMode, mode]);
   const visible = files.map((f, i) => ({ f, i })).filter(({ f }) => !f.hidden);
   const current = files[activeFile] ?? files[0];
   const exercise = p.exercises.find((e) => e.id === mode);
@@ -127,14 +127,10 @@ export function LessonWorkspace(p: Props) {
 
   function runCheck() {
     if (!exercise) return;
-    const doc = buildSrcDoc(files);
+    // Luôn nạp lại trang sạch trước khi chấm để trạng thái cũ (biến đếm, timer...) không làm sai kết quả.
     pendingCheck.current = exercise.id;
-    if (doc !== srcDoc) {
-      setLogs([]);
-      setSrcDoc(doc); // onLoad của iframe sẽ gửi lệnh kiểm tra sau khi trang mới chạy xong
-    } else {
-      sendCheck(exercise.id);
-    }
+    setLogs([]);
+    setSrcDoc(buildSrcDoc(files) + `<!-- run ${Date.now()} -->`);
   }
 
   const exResults = exercise ? results[exercise.id] : undefined;

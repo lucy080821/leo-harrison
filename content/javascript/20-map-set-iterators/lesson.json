@@ -1,0 +1,89 @@
+{
+  "title": {
+    "vi": "Map, Set và cấu trúc dữ liệu",
+    "en": "Map, Set and data structures"
+  },
+  "summary": {
+    "vi": "Set loại trùng, Map khoá bất kỳ, đếm tần suất, WeakMap",
+    "en": "Set for deduping, Map with any key, counting frequencies, WeakMap"
+  },
+  "minutes": 15,
+  "preview": "console",
+  "files": [
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "const set = new Set([1, 2, 2, 3, 3, 3]);\nconsole.log(set.size, set.has(2), [...set]);\n\nconst map = new Map();\nmap.set(\"a\", 1).set(\"b\", 2);\nconsole.log(map.get(\"a\"), map.size);\nfor (const [key, value] of map) {\n  console.log(key, \"=>\", value);\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Loại các phần tử trùng khỏi mảng nums bằng Set rồi in mảng kết quả.",
+        "en": "Remove duplicates from the nums array using a Set and print the resulting array."
+      },
+      "hint": {
+        "vi": "[...new Set(nums)]",
+        "en": "[...new Set(nums)]"
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const nums = [1, 2, 2, 3, 3, 3, 4];\n// viết ở đây\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const nums = [1, 2, 2, 3, 3, 3, 4];\nconsole.log([...new Set(nums)]);\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In [1,2,3,4]",
+            "en": "Prints [1,2,3,4]"
+          },
+          "test": "logs.join('|')==='[1,2,3,4]'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Đếm số lần xuất hiện của từng từ trong words bằng Map. In số lần của \"the\" rồi số từ khác nhau (freq.size).",
+        "en": "Count how often each word appears in words using a Map. Print the count of \"the\" then the number of distinct words (freq.size)."
+      },
+      "hint": {
+        "vi": "freq.set(w, (freq.get(w) ?? 0) + 1)",
+        "en": "freq.set(w, (freq.get(w) ?? 0) + 1)"
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const words = \"the cat and the dog and the bird\".split(\" \");\nconst freq = new Map();\n\n// duyệt words và đếm ở đây\n\nconsole.log(freq.get(\"the\"));\nconsole.log(freq.size);\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const words = \"the cat and the dog and the bird\".split(\" \");\nconst freq = new Map();\n\nfor (const w of words) {\n  freq.set(w, (freq.get(w) ?? 0) + 1);\n}\n\nconsole.log(freq.get(\"the\"));\nconsole.log(freq.size);\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 3 rồi 5",
+            "en": "Prints 3 then 5"
+          },
+          "test": "logs.join(',')==='3,5'"
+        }
+      ]
+    }
+  ]
+}

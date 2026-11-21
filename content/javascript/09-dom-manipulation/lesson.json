@@ -1,0 +1,146 @@
+{
+  "title": {
+    "vi": "Tạo và thay đổi phần tử DOM",
+    "en": "Creating and changing DOM elements"
+  },
+  "summary": {
+    "vi": "createElement, appendChild, classList, remove, template",
+    "en": "createElement, appendChild, classList, remove, templates"
+  },
+  "minutes": 18,
+  "preview": "web",
+  "files": [
+    {
+      "name": "index.html",
+      "lang": "html",
+      "code": "<h2>Danh sách bạn bè</h2>\n<ul id=\"list\"></ul>\n<button id=\"theme\">Đổi giao diện</button>\n"
+    },
+    {
+      "name": "style.css",
+      "lang": "css",
+      "code": "body { font-family: system-ui, sans-serif; padding: 12px; }\nbody.dark { background: #0d1c2e; color: #e4eefa; }\nli.done { text-decoration: line-through; color: gray; }\n"
+    },
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "const names = [\"An\", \"Bình\", \"Chi\"];\nconst list = document.getElementById(\"list\");\n\nfor (const name of names) {\n  const li = document.createElement(\"li\");   // tạo phần tử\n  li.textContent = name;                      // gán chữ\n  li.classList.add(\"friend\");                 // thêm class\n  list.appendChild(li);                       // gắn vào cây DOM\n}\n\ndocument.getElementById(\"theme\").addEventListener(\"click\", () => {\n  document.body.classList.toggle(\"dark\");     // bật/tắt class\n});\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Dùng createElement và appendChild để tạo một <li> cho MỖI tên trong mảng names, và thêm vào #list (nội dung của li là tên đó).",
+        "en": "Use createElement and appendChild to create an <li> for EACH name in the names array and add it to #list (the li's text is that name)."
+      },
+      "hint": {
+        "vi": "for (const name of names) { const li = document.createElement(\"li\"); li.textContent = name; list.appendChild(li); }",
+        "en": "for (const name of names) { const li = document.createElement(\"li\"); li.textContent = name; list.appendChild(li); }"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<h2>Danh sách bạn bè</h2>\n<ul id=\"list\"></ul>\n<button id=\"theme\">Đổi giao diện</button>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "body { font-family: system-ui, sans-serif; padding: 12px; }\nbody.dark { background: #0d1c2e; color: #e4eefa; }\nli.done { text-decoration: line-through; color: gray; }\n"
+        },
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const names = [\"An\", \"Bình\", \"Chi\"];\nconst list = document.getElementById(\"list\");\n\n// Tạo li cho mỗi tên ở đây\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<h2>Danh sách bạn bè</h2>\n<ul id=\"list\"></ul>\n<button id=\"theme\">Đổi giao diện</button>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "body { font-family: system-ui, sans-serif; padding: 12px; }\nbody.dark { background: #0d1c2e; color: #e4eefa; }\nli.done { text-decoration: line-through; color: gray; }\n"
+        },
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const names = [\"An\", \"Bình\", \"Chi\"];\nconst list = document.getElementById(\"list\");\n\nfor (const name of names) {\n  const li = document.createElement(\"li\");\n  li.textContent = name;\n  list.appendChild(li);\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "#list có 3 <li> với đúng nội dung",
+            "en": "#list has 3 <li> with the right text"
+          },
+          "test": "Array.from(document.querySelectorAll('#list li')).map(function(l){return l.textContent.trim()}).join(',')==='An,Bình,Chi'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Khi bấm #theme, bật/tắt class \"dark\" trên <body> bằng classList.toggle.",
+        "en": "When #theme is clicked, toggle the \"dark\" class on <body> with classList.toggle."
+      },
+      "hint": {
+        "vi": "document.getElementById(\"theme\").addEventListener(\"click\", () => document.body.classList.toggle(\"dark\"));",
+        "en": "document.getElementById(\"theme\").addEventListener(\"click\", () => document.body.classList.toggle(\"dark\"));"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<h2>Danh sách bạn bè</h2>\n<ul id=\"list\"></ul>\n<button id=\"theme\">Đổi giao diện</button>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "body { font-family: system-ui, sans-serif; padding: 12px; }\nbody.dark { background: #0d1c2e; color: #e4eefa; }\nli.done { text-decoration: line-through; color: gray; }\n"
+        },
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const btn = document.getElementById(\"theme\");\n\n// Thêm sự kiện click ở đây\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<h2>Danh sách bạn bè</h2>\n<ul id=\"list\"></ul>\n<button id=\"theme\">Đổi giao diện</button>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "body { font-family: system-ui, sans-serif; padding: 12px; }\nbody.dark { background: #0d1c2e; color: #e4eefa; }\nli.done { text-decoration: line-through; color: gray; }\n"
+        },
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const btn = document.getElementById(\"theme\");\n\nbtn.addEventListener(\"click\", () => {\n  document.body.classList.toggle(\"dark\");\n});\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Bấm lần 1: body có class dark",
+            "en": "After click 1: body has class dark"
+          },
+          "test": "(function(){document.body.classList.remove('dark');document.getElementById('theme').click();return document.body.classList.contains('dark')})()"
+        },
+        {
+          "label": {
+            "vi": "Bấm lần 2: class dark bị gỡ",
+            "en": "After click 2: the dark class is removed"
+          },
+          "test": "(function(){document.getElementById('theme').click();return !document.body.classList.contains('dark')})()"
+        }
+      ]
+    }
+  ]
+}

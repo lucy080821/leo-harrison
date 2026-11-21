@@ -1,0 +1,89 @@
+{
+  "title": {
+    "vi": "Đối tượng (Object)",
+    "en": "Objects"
+  },
+  "summary": {
+    "vi": "thuộc tính, phương thức, destructuring, spread, Object.keys",
+    "en": "properties, methods, destructuring, spread, Object.keys"
+  },
+  "minutes": 18,
+  "preview": "console",
+  "files": [
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "const person = {\n  name: \"Lexi\",\n  age: 20,\n  skills: [\"HTML\", \"CSS\"],\n  greet() {\n    return `Xin chào, tôi là ${this.name}`;\n  },\n};\n\nconsole.log(person.name);          // truy cập bằng dấu chấm\nconsole.log(person[\"age\"]);        // hoặc bằng ngoặc vuông\nperson.city = \"Hà Nội\";            // thêm thuộc tính\nconsole.log(person.greet());\n\nconst { name, age } = person;      // destructuring\nconsole.log(name, age);\nconsole.log(Object.keys(person));  // tên các thuộc tính\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tạo đối tượng person có name là \"Lexi\", age là 20 và phương thức greet() trả về \"Hi, I'm Lexi\" (dùng this.name). In person.greet().",
+        "en": "Create a person object with name \"Lexi\", age 20 and a greet() method returning \"Hi, I'm Lexi\" (use this.name). Print person.greet()."
+      },
+      "hint": {
+        "vi": "greet() { return `Hi, I'm ${this.name}`; }",
+        "en": "greet() { return `Hi, I'm ${this.name}`; }"
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "// Viết đối tượng person ở đây\n\nconsole.log(person.greet());\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const person = {\n  name: \"Lexi\",\n  age: 20,\n  greet() {\n    return `Hi, I'm ${this.name}`;\n  },\n};\n\nconsole.log(person.greet());\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In đúng \"Hi, I'm Lexi\"",
+            "en": "Prints exactly \"Hi, I'm Lexi\""
+          },
+          "test": "logs.join('|')===\"Hi, I'm Lexi\""
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Gộp user và updates thành đối tượng mới bằng toán tử spread (updates ghi đè user), rồi in bằng console.log. Không sửa user.",
+        "en": "Merge user and updates into a new object with the spread operator (updates overrides user), then print it with console.log. Don't mutate user."
+      },
+      "hint": {
+        "vi": "const merged = { ...user, ...updates };",
+        "en": "const merged = { ...user, ...updates };"
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const user = { name: \"An\", age: 20 };\nconst updates = { age: 21, city: \"HN\" };\n// viết ở đây\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const user = { name: \"An\", age: 20 };\nconst updates = { age: 21, city: \"HN\" };\nconst merged = { ...user, ...updates };\nconsole.log(merged);\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In {\"name\":\"An\",\"age\":21,\"city\":\"HN\"}",
+            "en": "Prints {\"name\":\"An\",\"age\":21,\"city\":\"HN\"}"
+          },
+          "test": "logs.join('|')==='{\"name\":\"An\",\"age\":21,\"city\":\"HN\"}'"
+        }
+      ]
+    }
+  ]
+}

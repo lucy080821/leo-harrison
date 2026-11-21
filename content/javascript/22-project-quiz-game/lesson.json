@@ -1,0 +1,160 @@
+{
+  "title": {
+    "vi": "Dự án: Trò chơi trắc nghiệm",
+    "en": "Project: a quiz game"
+  },
+  "summary": {
+    "vi": "dữ liệu → giao diện, trạng thái, tính điểm",
+    "en": "data → UI, state, scoring"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "index.html",
+      "lang": "html",
+      "code": "<main class=\"quiz\">\n  <h2 id=\"question\"></h2>\n  <div id=\"choices\"></div>\n  <p>Điểm: <strong id=\"score\">0</strong></p>\n</main>\n"
+    },
+    {
+      "name": "style.css",
+      "lang": "css",
+      "code": "body { font-family: system-ui, sans-serif; background: #eaf2fb; padding: 16px; }\n.quiz { max-width: 420px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; }\n.choice { display: block; width: 100%; margin: 8px 0; padding: 10px; border-radius: 8px; border: 1px solid #0b6fd6; background: white; cursor: pointer; }\n.choice.correct { background: #12936b; color: white; }\n.choice.wrong { background: #d64545; color: white; }\n"
+    },
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "const questions = [\n  { text: \"2 + 2 = ?\", choices: [\"3\", \"4\", \"5\"], answer: \"4\" },\n  { text: \"Thủ đô của Việt Nam?\", choices: [\"Hà Nội\", \"Huế\", \"Đà Nẵng\"], answer: \"Hà Nội\" },\n];\nlet current = 0;\nlet score = 0;\n\nconst questionEl = document.getElementById(\"question\");\nconst choicesEl = document.getElementById(\"choices\");\nconst scoreEl = document.getElementById(\"score\");\n\nfunction showQuestion() {\n  const q = questions[current];\n  questionEl.textContent = q.text;\n  choicesEl.replaceChildren();\n  for (const choice of q.choices) {\n    const btn = document.createElement(\"button\");\n    btn.className = \"choice\";\n    btn.textContent = choice;\n    choicesEl.appendChild(btn);\n  }\n}\n\nchoicesEl.addEventListener(\"click\", (event) => {\n  const btn = event.target.closest(\".choice\");\n  if (!btn) return;\n  if (btn.textContent === questions[current].answer) {\n    score++;\n    scoreEl.textContent = score;\n  }\n  current = (current + 1) % questions.length;\n  showQuestion();\n});\n\nshowQuestion();\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết showQuestion(): hiện câu hỏi hiện tại (questions[current].text) vào #question, và tạo một <button class=\"choice\"> cho MỖI đáp án trong #choices. Gọi showQuestion() khi tải trang.",
+        "en": "Write showQuestion(): show the current question (questions[current].text) in #question and create one <button class=\"choice\"> for EACH answer in #choices. Call showQuestion() on load."
+      },
+      "hint": {
+        "vi": "choicesEl.replaceChildren() để xoá đáp án cũ, rồi for (const choice of q.choices) { ... appendChild }",
+        "en": "choicesEl.replaceChildren() to clear old answers, then for (const choice of q.choices) { ... appendChild }"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<main class=\"quiz\">\n  <h2 id=\"question\"></h2>\n  <div id=\"choices\"></div>\n  <p>Điểm: <strong id=\"score\">0</strong></p>\n</main>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "body { font-family: system-ui, sans-serif; background: #eaf2fb; padding: 16px; }\n.quiz { max-width: 420px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; }\n.choice { display: block; width: 100%; margin: 8px 0; padding: 10px; border-radius: 8px; border: 1px solid #0b6fd6; background: white; cursor: pointer; }\n.choice.correct { background: #12936b; color: white; }\n.choice.wrong { background: #d64545; color: white; }\n"
+        },
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const questions = [\n  { text: \"2 + 2 = ?\", choices: [\"3\", \"4\", \"5\"], answer: \"4\" },\n  { text: \"Thủ đô của Việt Nam?\", choices: [\"Hà Nội\", \"Huế\", \"Đà Nẵng\"], answer: \"Hà Nội\" },\n];\nlet current = 0;\nlet score = 0;\n\nconst questionEl = document.getElementById(\"question\");\nconst choicesEl = document.getElementById(\"choices\");\nconst scoreEl = document.getElementById(\"score\");\n\nfunction showQuestion() {\n  // viết ở đây\n}\n\nshowQuestion();\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<main class=\"quiz\">\n  <h2 id=\"question\"></h2>\n  <div id=\"choices\"></div>\n  <p>Điểm: <strong id=\"score\">0</strong></p>\n</main>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "body { font-family: system-ui, sans-serif; background: #eaf2fb; padding: 16px; }\n.quiz { max-width: 420px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; }\n.choice { display: block; width: 100%; margin: 8px 0; padding: 10px; border-radius: 8px; border: 1px solid #0b6fd6; background: white; cursor: pointer; }\n.choice.correct { background: #12936b; color: white; }\n.choice.wrong { background: #d64545; color: white; }\n"
+        },
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const questions = [\n  { text: \"2 + 2 = ?\", choices: [\"3\", \"4\", \"5\"], answer: \"4\" },\n  { text: \"Thủ đô của Việt Nam?\", choices: [\"Hà Nội\", \"Huế\", \"Đà Nẵng\"], answer: \"Hà Nội\" },\n];\nlet current = 0;\nlet score = 0;\n\nconst questionEl = document.getElementById(\"question\");\nconst choicesEl = document.getElementById(\"choices\");\nconst scoreEl = document.getElementById(\"score\");\n\nfunction showQuestion() {\n  const q = questions[current];\n  questionEl.textContent = q.text;\n  choicesEl.replaceChildren();\n  for (const choice of q.choices) {\n    const btn = document.createElement(\"button\");\n    btn.className = \"choice\";\n    btn.textContent = choice;\n    choicesEl.appendChild(btn);\n  }\n}\n\nshowQuestion();\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "#question hiện câu hỏi đầu tiên",
+            "en": "#question shows the first question"
+          },
+          "test": "document.getElementById('question').textContent.trim()==='2 + 2 = ?'"
+        },
+        {
+          "label": {
+            "vi": "Có 3 nút .choice với đúng nội dung",
+            "en": "There are 3 .choice buttons with the right text"
+          },
+          "test": "Array.from(document.querySelectorAll('#choices .choice')).map(function(b){return b.textContent.trim()}).join(',')==='3,4,5'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Xử lý chọn đáp án: bấm .choice (ủy quyền trên #choices) — nếu đúng với questions[current].answer thì tăng điểm và cập nhật #score; rồi chuyển sang câu kế (quay vòng) và gọi showQuestion().",
+        "en": "Handle choosing an answer: clicking a .choice (delegated on #choices) — if it matches questions[current].answer, raise the score and update #score; then move to the next question (wrapping around) and call showQuestion()."
+      },
+      "hint": {
+        "vi": "choicesEl.addEventListener(\"click\", (e) => { const btn = e.target.closest(\".choice\"); ... current = (current + 1) % questions.length; showQuestion(); });",
+        "en": "choicesEl.addEventListener(\"click\", (e) => { const btn = e.target.closest(\".choice\"); ... current = (current + 1) % questions.length; showQuestion(); });"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<main class=\"quiz\">\n  <h2 id=\"question\"></h2>\n  <div id=\"choices\"></div>\n  <p>Điểm: <strong id=\"score\">0</strong></p>\n</main>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "body { font-family: system-ui, sans-serif; background: #eaf2fb; padding: 16px; }\n.quiz { max-width: 420px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; }\n.choice { display: block; width: 100%; margin: 8px 0; padding: 10px; border-radius: 8px; border: 1px solid #0b6fd6; background: white; cursor: pointer; }\n.choice.correct { background: #12936b; color: white; }\n.choice.wrong { background: #d64545; color: white; }\n"
+        },
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const questions = [\n  { text: \"2 + 2 = ?\", choices: [\"3\", \"4\", \"5\"], answer: \"4\" },\n  { text: \"Thủ đô của Việt Nam?\", choices: [\"Hà Nội\", \"Huế\", \"Đà Nẵng\"], answer: \"Hà Nội\" },\n];\nlet current = 0;\nlet score = 0;\n\nconst questionEl = document.getElementById(\"question\");\nconst choicesEl = document.getElementById(\"choices\");\nconst scoreEl = document.getElementById(\"score\");\n\nfunction showQuestion() {\n  const q = questions[current];\n  questionEl.textContent = q.text;\n  choicesEl.replaceChildren();\n  for (const choice of q.choices) {\n    const btn = document.createElement(\"button\");\n    btn.className = \"choice\";\n    btn.textContent = choice;\n    choicesEl.appendChild(btn);\n  }\n}\n\nshowQuestion();\n\n// Thêm xử lý bấm đáp án ở đây\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<main class=\"quiz\">\n  <h2 id=\"question\"></h2>\n  <div id=\"choices\"></div>\n  <p>Điểm: <strong id=\"score\">0</strong></p>\n</main>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "body { font-family: system-ui, sans-serif; background: #eaf2fb; padding: 16px; }\n.quiz { max-width: 420px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; }\n.choice { display: block; width: 100%; margin: 8px 0; padding: 10px; border-radius: 8px; border: 1px solid #0b6fd6; background: white; cursor: pointer; }\n.choice.correct { background: #12936b; color: white; }\n.choice.wrong { background: #d64545; color: white; }\n"
+        },
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const questions = [\n  { text: \"2 + 2 = ?\", choices: [\"3\", \"4\", \"5\"], answer: \"4\" },\n  { text: \"Thủ đô của Việt Nam?\", choices: [\"Hà Nội\", \"Huế\", \"Đà Nẵng\"], answer: \"Hà Nội\" },\n];\nlet current = 0;\nlet score = 0;\n\nconst questionEl = document.getElementById(\"question\");\nconst choicesEl = document.getElementById(\"choices\");\nconst scoreEl = document.getElementById(\"score\");\n\nfunction showQuestion() {\n  const q = questions[current];\n  questionEl.textContent = q.text;\n  choicesEl.replaceChildren();\n  for (const choice of q.choices) {\n    const btn = document.createElement(\"button\");\n    btn.className = \"choice\";\n    btn.textContent = choice;\n    choicesEl.appendChild(btn);\n  }\n}\n\nchoicesEl.addEventListener(\"click\", (event) => {\n  const btn = event.target.closest(\".choice\");\n  if (!btn) return;\n  if (btn.textContent === questions[current].answer) {\n    score++;\n    scoreEl.textContent = score;\n  }\n  current = (current + 1) % questions.length;\n  showQuestion();\n});\n\nshowQuestion();\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Chọn đáp án đúng \"4\" thì điểm là 1",
+            "en": "Choosing the right answer \"4\" makes the score 1"
+          },
+          "test": "(function(){var b=Array.from(document.querySelectorAll('#choices .choice')).filter(function(x){return x.textContent.trim()==='4'})[0];if(!b)return false;b.click();return document.getElementById('score').textContent.trim()==='1'})()"
+        },
+        {
+          "label": {
+            "vi": "Sau khi chọn thì sang câu kế tiếp",
+            "en": "After choosing it moves on to the next question"
+          },
+          "test": "document.getElementById('question').textContent.trim()==='Thủ đô của Việt Nam?'"
+        },
+        {
+          "label": {
+            "vi": "Chọn sai thì điểm không đổi",
+            "en": "A wrong answer doesn't change the score"
+          },
+          "test": "(function(){var b=Array.from(document.querySelectorAll('#choices .choice')).filter(function(x){return x.textContent.trim()==='Huế'})[0];if(!b)return false;b.click();return document.getElementById('score').textContent.trim()==='1'})()"
+        }
+      ]
+    }
+  ]
+}

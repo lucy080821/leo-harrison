@@ -1,0 +1,89 @@
+{
+  "title": {
+    "vi": "Vòng lặp",
+    "en": "Loops"
+  },
+  "summary": {
+    "vi": "for, while, do...while, for...of, break, continue",
+    "en": "for, while, do...while, for...of, break, continue"
+  },
+  "minutes": 15,
+  "preview": "console",
+  "files": [
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "// for: biết trước số lần lặp\nfor (let i = 1; i <= 3; i++) {\n  console.log(\"Lần\", i);\n}\n\n// while: lặp khi điều kiện còn đúng\nlet n = 3;\nwhile (n > 0) {\n  console.log(\"Đếm ngược:\", n);\n  n--;\n}\n\n// for...of: duyệt từng phần tử của mảng\nfor (const fruit of [\"táo\", \"cam\", \"xoài\"]) {\n  console.log(fruit);\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Dùng vòng lặp tính tổng các số từ 1 đến 100 và in kết quả.",
+        "en": "Use a loop to sum the numbers from 1 to 100 and print the result."
+      },
+      "hint": {
+        "vi": "let total = 0; for (let i = 1; i <= 100; i++) { total += i; } console.log(total);",
+        "en": "let total = 0; for (let i = 1; i <= 100; i++) { total += i; } console.log(total);"
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "// Tính 1 + 2 + ... + 100\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "let total = 0;\nfor (let i = 1; i <= 100; i++) {\n  total += i;\n}\nconsole.log(total);\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In ra 5050",
+            "en": "Prints 5050"
+          },
+          "test": "logs.join(',')==='5050'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "FizzBuzz: với mỗi số từ 1 đến 15, in \"FizzBuzz\" nếu chia hết cho cả 3 và 5, \"Fizz\" nếu chia hết cho 3, \"Buzz\" nếu chia hết cho 5, ngược lại in chính số đó.",
+        "en": "FizzBuzz: for each number from 1 to 15 print \"FizzBuzz\" if divisible by both 3 and 5, \"Fizz\" if by 3, \"Buzz\" if by 5, otherwise the number itself."
+      },
+      "hint": {
+        "vi": "Kiểm tra chia hết cho 15 (hoặc cả 3 và 5) TRƯỚC khi kiểm tra riêng 3 hoặc 5.",
+        "en": "Check divisibility by 15 (or both 3 and 5) BEFORE checking 3 or 5 alone."
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "for (let i = 1; i <= 15; i++) {\n  // viết ở đây\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "for (let i = 1; i <= 15; i++) {\n  if (i % 15 === 0) console.log(\"FizzBuzz\");\n  else if (i % 3 === 0) console.log(\"Fizz\");\n  else if (i % 5 === 0) console.log(\"Buzz\");\n  else console.log(i);\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Dãy FizzBuzz đúng",
+            "en": "The FizzBuzz sequence is correct"
+          },
+          "test": "logs.join(',')==='1,2,Fizz,4,Buzz,Fizz,7,8,Fizz,Buzz,11,Fizz,13,14,FizzBuzz'"
+        }
+      ]
+    }
+  ]
+}

@@ -31,7 +31,16 @@ Build production (để deploy VPS): `npm run build && npm start`.
 ## Lộ trình
 
 - [x] Giai đoạn 1: khung app, dark mode, EN/VI, bài tập, tiến độ (lưu trên trình duyệt)
-- [ ] Giai đoạn 2: HTML, CSS, JavaScript đầy đủ (hiện có 2 bài mẫu mỗi môn)
+- [x] Giai đoạn 2: HTML (13 bài), CSS (16 bài), JavaScript (22 bài) — song ngữ, 102 bài tập tự chấm
 - [ ] Giai đoạn 3: Python cơ bản, Python Data Analyst (Pyodide), SQL (SQLite WASM)
 - [ ] Giai đoạn 4: Toán cho ML, Machine Learning, Deep Learning, AI hiện đại
 - [ ] Giai đoạn 5: React, Next.js, React Native, Node.js (WebContainers)
+
+## Kiểm tra nội dung tự động
+
+```bash
+node scripts_verify.mjs          # tất cả khoá
+node scripts_verify.mjs css      # một khoá
+```
+
+Script mở từng bài tập trong Chromium (Playwright) và xác nhận: **đáp án đạt mọi check**, **đề khởi đầu chưa đạt hết**, và mỗi bài có đủ `vi.md`/`en.md`. Hãy chạy nó sau mỗi lần thêm hoặc sửa bài.

@@ -1,0 +1,89 @@
+{
+  "title": {
+    "vi": "Chuỗi, số, Math và ngày tháng",
+    "en": "Strings, numbers, Math and dates"
+  },
+  "summary": {
+    "vi": "trim, split, slice, toFixed, Math.round, Date",
+    "en": "trim, split, slice, toFixed, Math.round, Date"
+  },
+  "minutes": 18,
+  "preview": "console",
+  "files": [
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "const s = \"  Hello, Lexi Learn  \";\nconsole.log(s.trim());                     // \"Hello, Lexi Learn\"\nconsole.log(s.trim().toUpperCase());\nconsole.log(s.trim().split(\" \"));          // [\"Hello,\",\"Lexi\",\"Learn\"]\nconsole.log(s.includes(\"Lexi\"));           // true\nconsole.log(\"abcdef\".slice(1, 4));         // \"bcd\"\nconsole.log(\"a-b-c\".replaceAll(\"-\", \"+\")); // \"a+b+c\"\n\nconsole.log((3.14159).toFixed(2));         // \"3.14\" (chuỗi)\nconsole.log(Math.round(2.5), Math.floor(2.9), Math.ceil(2.1));\nconsole.log(Math.max(3, 9, 4), Math.PI);\nconsole.log(Number(\"42\") + 1, parseInt(\"12px\"), 0.1 + 0.2);\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Cho text = \"  Hello, Lexi Learn  \": in chuỗi đã cắt khoảng trắng hai đầu và viết HOA, rồi in số từ (tách bằng dấu cách).",
+        "en": "Given text = \"  Hello, Lexi Learn  \": print the trimmed, UPPERCASE string, then print the number of words (split by space)."
+      },
+      "hint": {
+        "vi": "text.trim().toUpperCase() và text.trim().split(\" \").length",
+        "en": "text.trim().toUpperCase() and text.trim().split(\" \").length"
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const text = \"  Hello, Lexi Learn  \";\n// viết ở đây\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const text = \"  Hello, Lexi Learn  \";\nconsole.log(text.trim().toUpperCase());\nconsole.log(text.trim().split(\" \").length);\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In \"HELLO, LEXI LEARN\" rồi 3",
+            "en": "Prints \"HELLO, LEXI LEARN\" then 3"
+          },
+          "test": "logs.join('|')==='HELLO, LEXI LEARN|3'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Viết roundTo(n, digits) làm tròn n tới digits chữ số thập phân (trả về SỐ), và clamp(n, min, max) giữ n trong khoảng. In roundTo(3.14159, 2) và clamp(15, 0, 10).",
+        "en": "Write roundTo(n, digits) rounding n to digits decimals (return a NUMBER), and clamp(n, min, max) keeping n in a range. Print roundTo(3.14159, 2) and clamp(15, 0, 10)."
+      },
+      "hint": {
+        "vi": "roundTo: Number(n.toFixed(digits)); clamp: Math.min(Math.max(n, min), max)",
+        "en": "roundTo: Number(n.toFixed(digits)); clamp: Math.min(Math.max(n, min), max)"
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function roundTo(n, digits) {\n  // viết ở đây\n}\n\nfunction clamp(n, min, max) {\n  // viết ở đây\n}\n\nconsole.log(roundTo(3.14159, 2));\nconsole.log(clamp(15, 0, 10));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function roundTo(n, digits) {\n  return Number(n.toFixed(digits));\n}\n\nfunction clamp(n, min, max) {\n  return Math.min(Math.max(n, min), max);\n}\n\nconsole.log(roundTo(3.14159, 2));\nconsole.log(clamp(15, 0, 10));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 3.14 rồi 10",
+            "en": "Prints 3.14 then 10"
+          },
+          "test": "logs.join('|')==='3.14|10'"
+        }
+      ]
+    }
+  ]
+}

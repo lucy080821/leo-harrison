@@ -1,0 +1,89 @@
+{
+  "title": {
+    "vi": "Xử lý lỗi và gỡ lỗi",
+    "en": "Error handling and debugging"
+  },
+  "summary": {
+    "vi": "try/catch/finally, throw, Error, JSON.parse, console, DevTools",
+    "en": "try/catch/finally, throw, Error, JSON.parse, console, DevTools"
+  },
+  "minutes": 15,
+  "preview": "console",
+  "files": [
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "try {\n  const data = JSON.parse(\"{ khong hop le\");\n  console.log(data);\n} catch (error) {\n  console.log(\"Lỗi:\", error.name);     // SyntaxError\n} finally {\n  console.log(\"luôn chạy\");\n}\n\nfunction divide(a, b) {\n  if (b === 0) throw new Error(\"Không thể chia cho 0\");\n  return a / b;\n}\n\ntry {\n  divide(1, 0);\n} catch (e) {\n  console.log(e.message);\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết safeParse(text) dùng try/catch: trả về đối tượng nếu JSON hợp lệ, ngược lại trả về null. In safeParse('{\"a\":1}') và safeParse('oops').",
+        "en": "Write safeParse(text) using try/catch: return the object if the JSON is valid, otherwise null. Print safeParse('{\"a\":1}') and safeParse('oops')."
+      },
+      "hint": {
+        "vi": "try { return JSON.parse(text); } catch { return null; }",
+        "en": "try { return JSON.parse(text); } catch { return null; }"
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function safeParse(text) {\n  // viết ở đây\n}\n\nconsole.log(safeParse('{\"a\":1}'));\nconsole.log(safeParse('oops'));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function safeParse(text) {\n  try {\n    return JSON.parse(text);\n  } catch {\n    return null;\n  }\n}\n\nconsole.log(safeParse('{\"a\":1}'));\nconsole.log(safeParse('oops'));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In {\"a\":1} rồi null",
+            "en": "Prints {\"a\":1} then null"
+          },
+          "test": "logs.join('|')==='{\"a\":1}|null'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Viết validateAge(age): ném new Error(\"Invalid age\") nếu age không phải số hoặc nhỏ hơn 0; ngược lại trả về \"ok\". Vòng lặp bên dưới bắt lỗi và in message.",
+        "en": "Write validateAge(age): throw new Error(\"Invalid age\") if age isn't a number or is below 0; otherwise return \"ok\". The loop below catches errors and prints the message."
+      },
+      "hint": {
+        "vi": "if (typeof age !== \"number\" || age < 0) throw new Error(\"Invalid age\"); return \"ok\";",
+        "en": "if (typeof age !== \"number\" || age < 0) throw new Error(\"Invalid age\"); return \"ok\";"
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function validateAge(age) {\n  // viết ở đây\n}\n\nfor (const input of [25, -5, \"x\"]) {\n  try {\n    console.log(validateAge(input));\n  } catch (e) {\n    console.log(e.message);\n  }\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function validateAge(age) {\n  if (typeof age !== \"number\" || age < 0) {\n    throw new Error(\"Invalid age\");\n  }\n  return \"ok\";\n}\n\nfor (const input of [25, -5, \"x\"]) {\n  try {\n    console.log(validateAge(input));\n  } catch (e) {\n    console.log(e.message);\n  }\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In ok, Invalid age, Invalid age",
+            "en": "Prints ok, Invalid age, Invalid age"
+          },
+          "test": "logs.join(',')==='ok,Invalid age,Invalid age'"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "title": {
+    "vi": "JSON và lưu trữ dữ liệu",
+    "en": "JSON and data storage"
+  },
+  "summary": {
+    "vi": "JSON.stringify/parse, localStorage, sessionStorage, cookies",
+    "en": "JSON.stringify/parse, localStorage, sessionStorage, cookies"
+  },
+  "minutes": 15,
+  "preview": "console",
+  "files": [
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "const data = { name: \"Lexi\", skills: [\"HTML\", \"JS\"], active: true };\n\nconst text = JSON.stringify(data);      // đối tượng → chuỗi JSON\nconsole.log(text);\n\nconst back = JSON.parse(text);          // chuỗi JSON → đối tượng\nconsole.log(back.skills.length);\n\n// Mô phỏng localStorage bằng một đối tượng thường\nconst storage = {};\nstorage.setItem = (k, v) => { storage[k] = String(v); };\nstorage.getItem = (k) => (k in storage ? storage[k] : null);\nstorage.setItem(\"theme\", \"dark\");\nconsole.log(storage.getItem(\"theme\"));\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Chuyển đối tượng cfg thành chuỗi JSON và in ra, rồi parse chuỗi đó ngược lại và in độ dài mảng cfg.tags.",
+        "en": "Convert the cfg object to a JSON string and print it, then parse that string back and print the length of cfg.tags."
+      },
+      "hint": {
+        "vi": "const text = JSON.stringify(cfg); console.log(text); console.log(JSON.parse(text).tags.length);",
+        "en": "const text = JSON.stringify(cfg); console.log(text); console.log(JSON.parse(text).tags.length);"
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const cfg = { a: 1, tags: [\"x\", \"y\"] };\n// viết ở đây\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const cfg = { a: 1, tags: [\"x\", \"y\"] };\nconst text = JSON.stringify(cfg);\nconsole.log(text);\nconsole.log(JSON.parse(text).tags.length);\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In {\"a\":1,\"tags\":[\"x\",\"y\"]} rồi 2",
+            "en": "Prints {\"a\":1,\"tags\":[\"x\",\"y\"]} then 2"
+          },
+          "test": "logs.join('|')==='{\"a\":1,\"tags\":[\"x\",\"y\"]}|2'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Hoàn thiện save(key, value) (lưu JSON.stringify(value) vào storage) và load(key, fallback) (trả về JSON.parse hoặc fallback nếu chưa có). Đây là đúng cách bạn dùng localStorage.",
+        "en": "Complete save(key, value) (store JSON.stringify(value) in storage) and load(key, fallback) (return the JSON.parse or the fallback if absent). This is exactly how you'd use localStorage."
+      },
+      "hint": {
+        "vi": "save: storage[key] = JSON.stringify(value); load: key in storage ? JSON.parse(storage[key]) : fallback",
+        "en": "save: storage[key] = JSON.stringify(value); load: key in storage ? JSON.parse(storage[key]) : fallback"
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const storage = {}; // giả lập localStorage\n\nfunction save(key, value) {\n  // viết ở đây\n}\n\nfunction load(key, fallback) {\n  // viết ở đây\n}\n\nconsole.log(load(\"cfg\", { dark: false }));\nsave(\"cfg\", { dark: true });\nconsole.log(load(\"cfg\", { dark: false }));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const storage = {}; // giả lập localStorage\n\nfunction save(key, value) {\n  storage[key] = JSON.stringify(value);\n}\n\nfunction load(key, fallback) {\n  return key in storage ? JSON.parse(storage[key]) : fallback;\n}\n\nconsole.log(load(\"cfg\", { dark: false }));\nsave(\"cfg\", { dark: true });\nconsole.log(load(\"cfg\", { dark: false }));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Lần đầu in fallback, lần sau in giá trị đã lưu",
+            "en": "First prints the fallback, then the saved value"
+          },
+          "test": "logs.join('|')==='{\"dark\":false}|{\"dark\":true}'"
+        }
+      ]
+    }
+  ]
+}

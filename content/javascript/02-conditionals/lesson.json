@@ -1,0 +1,89 @@
+{
+  "title": {
+    "vi": "Câu điều kiện",
+    "en": "Conditionals"
+  },
+  "summary": {
+    "vi": "if/else, so sánh, &&, ||, switch, toán tử 3 ngôi",
+    "en": "if/else, comparison, &&, ||, switch, ternary"
+  },
+  "minutes": 15,
+  "preview": "console",
+  "files": [
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "const age = 17;\n\nif (age >= 18) {\n  console.log(\"Người lớn\");\n} else if (age >= 13) {\n  console.log(\"Thiếu niên\");\n} else {\n  console.log(\"Trẻ em\");\n}\n\n// Toán tử 3 ngôi: điều kiện ? nếu đúng : nếu sai\nconsole.log(age >= 18 ? \"được lái xe\" : \"chưa được lái xe\");\n\n// switch\nconst day = 3;\nswitch (day) {\n  case 1: console.log(\"Thứ Hai\"); break;\n  case 3: console.log(\"Thứ Tư\"); break;\n  default: console.log(\"Ngày khác\");\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Hoàn thiện hàm grade(score): trả về \"A\" nếu score ≥ 90, \"B\" nếu ≥ 80, ngược lại \"C\".",
+        "en": "Complete grade(score): return \"A\" if score ≥ 90, \"B\" if ≥ 80, otherwise \"C\"."
+      },
+      "hint": {
+        "vi": "Kiểm tra điều kiện lớn nhất trước: if (score >= 90) return \"A\"; if (score >= 80) return \"B\"; return \"C\";",
+        "en": "Check the largest condition first: if (score >= 90) return \"A\"; if (score >= 80) return \"B\"; return \"C\";"
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function grade(score) {\n  // viết ở đây\n}\n\nconsole.log(grade(95));\nconsole.log(grade(85));\nconsole.log(grade(50));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function grade(score) {\n  if (score >= 90) return \"A\";\n  if (score >= 80) return \"B\";\n  return \"C\";\n}\n\nconsole.log(grade(95));\nconsole.log(grade(85));\nconsole.log(grade(50));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In ra A, B, C theo thứ tự",
+            "en": "Prints A, B, C in order"
+          },
+          "test": "logs.join(',')==='A,B,C'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Viết isLeapYear(year): năm nhuận khi chia hết cho 400, hoặc chia hết cho 4 nhưng không chia hết cho 100.",
+        "en": "Write isLeapYear(year): a leap year is divisible by 400, or divisible by 4 but not by 100."
+      },
+      "hint": {
+        "vi": "return year % 400 === 0 || (year % 4 === 0 && year % 100 !== 0);",
+        "en": "return year % 400 === 0 || (year % 4 === 0 && year % 100 !== 0);"
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function isLeapYear(year) {\n  // viết ở đây\n}\n\nconsole.log(isLeapYear(2000));\nconsole.log(isLeapYear(1900));\nconsole.log(isLeapYear(2024));\nconsole.log(isLeapYear(2023));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function isLeapYear(year) {\n  return year % 400 === 0 || (year % 4 === 0 && year % 100 !== 0);\n}\n\nconsole.log(isLeapYear(2000));\nconsole.log(isLeapYear(1900));\nconsole.log(isLeapYear(2024));\nconsole.log(isLeapYear(2023));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Kết quả true, false, true, false",
+            "en": "Results true, false, true, false"
+          },
+          "test": "logs.join(',')==='true,false,true,false'"
+        }
+      ]
+    }
+  ]
+}

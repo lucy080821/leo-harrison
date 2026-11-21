@@ -1,0 +1,89 @@
+{
+  "title": {
+    "vi": "JavaScript hiện đại (ES6+)",
+    "en": "Modern JavaScript (ES6+)"
+  },
+  "summary": {
+    "vi": "destructuring, spread/rest, ?., ??, module import/export",
+    "en": "destructuring, spread/rest, ?., ??, module import/export"
+  },
+  "minutes": 18,
+  "preview": "console",
+  "files": [
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "// Destructuring mảng + rest\nconst [first, second, ...others] = [10, 20, 30, 40];\nconsole.log(first, second, others);\n\n// Optional chaining ?. và nullish coalescing ??\nconst user = { name: \"An\", address: null };\nconsole.log(user.address?.city ?? \"Không rõ\");\n\n// Spread\nconst a = [1, 2], b = [3, 4];\nconsole.log([...a, ...b, 5]);\nconsole.log(Math.max(...a, ...b));\n\n// Giá trị 0 / \"\" không bị coi là \"thiếu\" với ??\nconsole.log(0 ?? 99, 0 || 99);\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Với mỗi user trong mảng users, in thành phố (user.address.city) hoặc \"Unknown\" nếu thiếu address — dùng ?. và ??.",
+        "en": "For each user in the users array, print the city (user.address.city) or \"Unknown\" if address is missing — use ?. and ??."
+      },
+      "hint": {
+        "vi": "console.log(user.address?.city ?? \"Unknown\");",
+        "en": "console.log(user.address?.city ?? \"Unknown\");"
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const users = [\n  { name: \"An\", address: { city: \"HN\" } },\n  { name: \"Bình\" },\n  { name: \"Chi\", address: { city: \"SG\" } },\n];\n\nfor (const user of users) {\n  // viết ở đây\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const users = [\n  { name: \"An\", address: { city: \"HN\" } },\n  { name: \"Bình\" },\n  { name: \"Chi\", address: { city: \"SG\" } },\n];\n\nfor (const user of users) {\n  console.log(user.address?.city ?? \"Unknown\");\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In HN, Unknown, SG",
+            "en": "Prints HN, Unknown, SG"
+          },
+          "test": "logs.join(',')==='HN,Unknown,SG'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Dùng destructuring để tách first và rest từ mảng nums, viết hàm sum(...numbers) bằng rest parameter, rồi in first và sum(...rest).",
+        "en": "Use destructuring to split first and rest from the nums array, write sum(...numbers) with a rest parameter, then print first and sum(...rest)."
+      },
+      "hint": {
+        "vi": "const [first, ...rest] = nums; function sum(...numbers) { return numbers.reduce((s, n) => s + n, 0); }",
+        "en": "const [first, ...rest] = nums; function sum(...numbers) { return numbers.reduce((s, n) => s + n, 0); }"
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const nums = [1, 2, 3, 4];\n\n// 1) tách first và rest\n// 2) viết hàm sum(...numbers)\n// 3) in first rồi in sum(...rest)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const nums = [1, 2, 3, 4];\nconst [first, ...rest] = nums;\n\nfunction sum(...numbers) {\n  return numbers.reduce((s, n) => s + n, 0);\n}\n\nconsole.log(first);\nconsole.log(sum(...rest));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 1 rồi 9",
+            "en": "Prints 1 then 9"
+          },
+          "test": "logs.join(',')==='1,9'"
+        }
+      ]
+    }
+  ]
+}
