@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Script from "next/script";
 import "../globals.css";
 import { Header } from "@/components/Header";
 import { dict, isLocale, locales } from "@/lib/i18n";
@@ -30,10 +31,8 @@ export default async function LangLayout({
 
   return (
     <html lang={lang} suppressHydrationWarning className="antialiased">
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-      </head>
-      <body className="min-h-screen bg-bg font-sans text-fg">
+      <body suppressHydrationWarning className="min-h-screen bg-bg font-sans text-fg">
+        <Script id="lexi-theme" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: themeScript }} />
         <Header lang={lang} />
         <main>{children}</main>
       </body>
