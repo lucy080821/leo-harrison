@@ -4,6 +4,10 @@ export const owner = {
   name: "Tạ Hoàng Anh Tuấn",
   nick: "Leo",
   email: "tahoanganhtuan1996@gmail.com",
+  phone: "+84869603164",
+  phoneDisplay: "+84 869 603 164",
+  github: "https://github.com/lucy080821",
+  facebook: "https://www.facebook.com/profile.php?id=61575890257643",
 };
 
 export const nav: { href: string; label: L10n }[] = [

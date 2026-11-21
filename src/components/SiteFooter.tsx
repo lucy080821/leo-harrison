@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SocialLinks } from "@/components/SocialLinks";
 import { owner, t as site, nav } from "@/content/site";
 import type { Locale } from "@/lib/i18n";
 
@@ -18,6 +19,7 @@ export function SiteFooter({ lang }: { lang: Locale }) {
           <a href={`mailto:${owner.email}`} className="hover:text-fg">
             {owner.email}
           </a>
+          <SocialLinks compact />
         </div>
       </div>
     </footer>

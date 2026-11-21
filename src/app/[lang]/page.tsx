@@ -4,6 +4,7 @@ import { BilingualLine } from "@/components/BilingualLine";
 import { HeroBackground } from "@/components/HeroBackground";
 import { LearningRows } from "@/components/LearningRows";
 import { ProjectBlock } from "@/components/ProjectBlock";
+import { SocialLinks } from "@/components/SocialLinks";
 import { SectionHead } from "@/components/SectionHead";
 import { Logo } from "@/components/Logo";
 import { categories, coursesOf } from "@/content/registry";
@@ -111,6 +112,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         >
           {t.emailMe[lang]}: {owner.email}
         </a>
+        <SocialLinks className="mt-6 justify-center" />
       </section>
     </div>
     </div>

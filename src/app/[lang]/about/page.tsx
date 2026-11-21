@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { SocialLinks } from "@/components/SocialLinks";
 import { owner, t } from "@/content/site";
 import { isLocale, locales } from "@/lib/i18n";
 
@@ -28,6 +29,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
         <a href={`mailto:${owner.email}`} className="h-display mt-4 inline-block break-all text-2xl text-brand underline decoration-brand2 underline-offset-4">
           {owner.email}
         </a>
+        <SocialLinks className="mt-6" />
       </section>
     </div>
   );
