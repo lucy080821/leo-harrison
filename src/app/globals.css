@@ -120,7 +120,6 @@ body {
 .chunk {
   display: inline-flex;
   flex-direction: column;
-  animation: chunk-in 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 .chunk-gloss {
   margin-top: 0.45em;
@@ -131,9 +130,6 @@ body {
   font-weight: 400;
   letter-spacing: 0;
   color: var(--brand);
-}
-@media (prefers-reduced-motion: reduce) {
-  .chunk { animation: none; }
 }
 
 /* ---------- Portfolio ---------- */
@@ -148,3 +144,51 @@ body {
   box-decoration-break: clone;
 }
 .chunk-gloss { font-family: var(--font-label); color: var(--label); }
+
+/* ---------- Gõ chữ ---------- */
+.tw-slot { position: relative; display: block; }
+.tw-ghost { visibility: hidden; white-space: pre; display: block; }
+.tw-live { position: absolute; left: 0; top: 0; white-space: pre; }
+.tw-caret {
+  display: inline-block;
+  width: 0.07em;
+  height: 0.82em;
+  margin-left: 0.06em;
+  vertical-align: -0.06em;
+  background: var(--hl);
+  animation: tw-blink 0.9s steps(1) infinite;
+}
+.chunk-gloss .tw-caret { width: 0.5em; height: 1em; margin-left: 0.1em; vertical-align: -0.12em; }
+@keyframes tw-blink { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .tw-caret { animation: none; } }
+
+/* ---------- Nền phần đầu trang ---------- */
+.hero-grid {
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--label) 11%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--label) 11%, transparent) 1px, transparent 1px);
+  background-size: 52px 52px;
+  -webkit-mask-image: radial-gradient(ellipse 75% 70% at 62% 30%, #000 20%, transparent 75%);
+  mask-image: radial-gradient(ellipse 75% 70% at 62% 30%, #000 20%, transparent 75%);
+}
+.hero-glow {
+  background:
+    radial-gradient(40rem 32rem at 78% 28%, color-mix(in srgb, var(--hl) 16%, transparent), transparent 70%),
+    radial-gradient(30rem 24rem at 10% 70%, color-mix(in srgb, var(--brand) 12%, transparent), transparent 70%);
+}
+@keyframes greet-float {
+  0%, 100% { transform: translateY(0); opacity: 0.12; }
+  50% { transform: translateY(-12px); opacity: 0.4; }
+}
+.greet {
+  position: absolute;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  animation: greet-float 12s ease-in-out infinite;
+}
+@media (max-width: 640px) {
+  .greet { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .greet { animation: none; opacity: 0.22; }
+}

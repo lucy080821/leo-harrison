@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BilingualLine } from "@/components/BilingualLine";
+import { HeroBackground } from "@/components/HeroBackground";
 import { LearningRows } from "@/components/LearningRows";
 import { ProjectBlock } from "@/components/ProjectBlock";
 import { SectionHead } from "@/components/SectionHead";
@@ -17,6 +18,8 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
   const lessonCount = categories.flatMap((c) => coursesOf(c.id)).reduce((n, co) => n + getLessons(co.id).length, 0);
 
   return (
+    <div className="relative isolate overflow-x-clip">
+    <HeroBackground />
     <div className="mx-auto max-w-6xl px-4">
       {/* Hero */}
       <section className="pb-20 pt-12 lg:pt-20">
@@ -93,6 +96,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           {t.emailMe[lang]}: {owner.email}
         </a>
       </section>
+    </div>
     </div>
   );
 }
