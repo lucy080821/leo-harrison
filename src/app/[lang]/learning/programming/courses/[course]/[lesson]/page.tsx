@@ -30,7 +30,7 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
   if (idx < 0) notFound();
   const l = all[idx];
   const t = dict[lang];
-  const base = `/${lang}/learn/${course}`;
+  const base = `/${lang}/learning/programming/courses/${course}`;
 
   return (
     <LessonWorkspace

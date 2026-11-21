@@ -20,7 +20,7 @@ export default async function CoursePage({ params }: { params: Promise<{ lang: s
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
-      <Link href={`/${lang}/${cat.id}`} className="text-sm text-muted hover:text-brand">
+      <Link href={`/${lang}/learning/programming/${cat.id}`} className="text-sm text-muted hover:text-brand">
         ← {cat.name[lang]}
       </Link>
       <h1 className="mt-3 text-3xl font-extrabold">{co.name[lang]}</h1>
@@ -36,7 +36,7 @@ export default async function CoursePage({ params }: { params: Promise<{ lang: s
             {lessons.map((l, i) => (
               <li key={l.slug}>
                 <Link
-                  href={`/${lang}/learn/${co.id}/${l.slug}`}
+                  href={`/${lang}/learning/programming/courses/${co.id}/${l.slug}`}
                   className="flex items-center gap-4 rounded-xl border border-line bg-surface p-4 transition hover:border-brand hover:shadow"
                 >
                   <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brandsoft text-sm font-bold text-brand">

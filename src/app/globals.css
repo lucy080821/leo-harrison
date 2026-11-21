@@ -47,7 +47,8 @@
   --color-brandsoft: var(--brand-soft);
   --color-ok: var(--ok);
   --color-bad: var(--bad);
-  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-sans: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Newsreader Variable", Georgia, "Times New Roman", serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
 }
 
@@ -101,3 +102,27 @@ body {
 .dark .hljs-number, .dark .hljs-literal { color: #f0b35b; }
 .hljs-title, .hljs-name, .hljs-tag { color: #7b5be6; }
 .dark .hljs-title, .dark .hljs-name, .dark .hljs-tag { color: #b39dff; }
+
+/* ---------- Trang chủ: câu mở đầu song ngữ theo cụm ---------- */
+@keyframes chunk-in {
+  from { opacity: 0; transform: translateY(0.35em); }
+  to { opacity: 1; transform: none; }
+}
+.chunk {
+  display: inline-flex;
+  flex-direction: column;
+  animation: chunk-in 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.chunk-gloss {
+  margin-top: 0.45em;
+  padding-top: 0.35em;
+  border-top: 1px solid var(--border);
+  font-size: 0.3em;
+  line-height: 1.3;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--brand);
+}
+@media (prefers-reduced-motion: reduce) {
+  .chunk { animation: none; }
+}

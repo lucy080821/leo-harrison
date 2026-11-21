@@ -17,7 +17,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ lang:
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
-      <Link href={`/${lang}`} className="text-sm text-muted hover:text-brand">
+      <Link href={`/${lang}/learning/programming`} className="text-sm text-muted hover:text-brand">
         ← {t.back}
       </Link>
       <h1 className="mt-3 text-3xl font-extrabold">{cat.name[lang]}</h1>
@@ -48,7 +48,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ lang:
           return ready ? (
             <Link
               key={co.id}
-              href={`/${lang}/learn/${co.id}`}
+              href={`/${lang}/learning/programming/courses/${co.id}`}
               className="rounded-2xl border border-line bg-surface p-5 transition hover:-translate-y-0.5 hover:border-brand hover:shadow-lg"
             >
               {inner}

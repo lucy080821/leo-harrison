@@ -1,50 +1,62 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { categories, coursesOf } from "@/content/registry";
-import { getLessons } from "@/lib/content";
-import { dict, isLocale } from "@/lib/i18n";
+import { BilingualLine } from "@/components/BilingualLine";
+import { ProjectBlock } from "@/components/ProjectBlock";
+import { LearningRows } from "@/components/LearningRows";
+import { heroChunks, owner, projects, t } from "@/content/site";
+import { isLocale } from "@/lib/i18n";
 
 export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
-  const t = dict[lang];
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-12">
-      <section className="mx-auto max-w-3xl text-center">
-        <h1 className="bg-gradient-to-r from-brand to-brand2 bg-clip-text text-4xl font-extrabold tracking-tight text-transparent sm:text-5xl">
-          {t.heroTitle}
-        </h1>
-        <p className="mt-4 text-lg text-muted">{t.heroDesc}</p>
+    <div className="mx-auto max-w-5xl px-4">
+      <section className="pb-16 pt-14 sm:pt-20">
+        <p className="mb-6 text-muted">
+          {t.hello[lang]} <span className="font-semibold text-fg">{owner.name}</span> ({owner.nick})
+        </p>
+        <BilingualLine chunks={heroChunks} lang={lang} />
+        <p className="mt-10 max-w-xl text-lg leading-relaxed text-muted">{t.heroSub[lang]}</p>
+        <div className="mt-8 flex flex-wrap gap-3">
+          <Link href={`/${lang}/projects`} className="rounded-lg bg-brand px-5 py-2.5 font-semibold text-white hover:opacity-90">
+            {t.seeProjects[lang]}
+          </Link>
+          <Link href={`/${lang}/learning`} className="rounded-lg border border-line bg-surface px-5 py-2.5 font-semibold hover:bg-surface2">
+            {t.startLearning[lang]}
+          </Link>
+        </div>
       </section>
 
-      <h2 className="mb-5 mt-14 text-xl font-bold">{t.chooseTrack}</h2>
-      <div className="grid gap-5 sm:grid-cols-2">
-        {categories.map((c) => {
-          const list = coursesOf(c.id);
-          const ready = list.filter((co) => getLessons(co.id).length > 0).length;
-          return (
-            <Link
-              key={c.id}
-              href={`/${lang}/${c.id}`}
-              className="group rounded-2xl border border-line bg-surface p-6 transition hover:-translate-y-0.5 hover:border-brand hover:shadow-lg"
-            >
-              <h3 className="text-xl font-bold group-hover:text-brand">{c.name[lang]}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted">{c.desc[lang]}</p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {list.map((co) => (
-                  <span key={co.id} className="rounded-full bg-brandsoft px-2.5 py-0.5 text-xs font-semibold text-brand">
-                    {co.name[lang]}
-                  </span>
-                ))}
-              </div>
-              <p className="mt-4 text-xs text-muted">
-                {ready}/{list.length} {t.coursesReady}
-              </p>
-            </Link>
-          );
-        })}
-      </div>
+      <section aria-labelledby="projects-h" className="pb-6">
+        <h2 id="projects-h" className="font-display text-3xl font-semibold tracking-tight">
+          {t.projectsTitle[lang]}
+        </h2>
+        <p className="mt-2 text-muted">{t.projectsIntro[lang]}</p>
+        <div className="mt-8">
+          {projects.map((p, i) => (
+            <ProjectBlock key={p.id} p={p} lang={lang} flip={i % 2 === 1} />
+          ))}
+        </div>
+      </section>
+
+      <section aria-labelledby="learn-h" className="pt-10">
+        <h2 id="learn-h" className="font-display text-3xl font-semibold tracking-tight">
+          {t.learningTitle[lang]}
+        </h2>
+        <p className="mt-2 max-w-xl text-muted">{t.learningIntro[lang]}</p>
+        <LearningRows lang={lang} />
+      </section>
+
+      <section aria-labelledby="contact-h" className="mt-20 border-t border-line pt-10">
+        <h2 id="contact-h" className="font-display text-3xl font-semibold tracking-tight">
+          {t.contactTitle[lang]}
+        </h2>
+        <p className="mt-2 max-w-xl text-muted">{t.contactBody[lang]}</p>
+        <a href={`mailto:${owner.email}`} className="font-display mt-5 inline-block break-all text-2xl text-brand underline decoration-brand2 underline-offset-4 sm:text-3xl">
+          {owner.email}
+        </a>
+      </section>
     </div>
   );
 }
