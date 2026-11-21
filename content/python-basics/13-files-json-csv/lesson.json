@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "File, JSON và CSV",
+    "en": "Files, JSON and CSV"
+  },
+  "summary": {
+    "vi": "open, with, đọc/ghi, json, csv",
+    "en": "open, with, reading/writing, json, csv"
+  },
+  "minutes": 18,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import json, csv, io\n\n# Ghi và đọc file văn bản (trong trình duyệt là hệ file ảo tạm thời)\nwith open(\"notes.txt\", \"w\", encoding=\"utf-8\") as f:\n    f.write(\"dòng 1\\ndòng 2\\ndòng 3\\n\")\n\nwith open(\"notes.txt\", encoding=\"utf-8\") as f:\n    lines = f.read().splitlines()\nprint(len(lines), lines[0])\n\n# JSON: từ điển <-> chuỗi\ntext = json.dumps({\"name\": \"An\", \"scores\": [8, 9]}, ensure_ascii=False)\nprint(text)\nprint(json.loads(text)[\"scores\"])\n\n# CSV\ndata = \"name,score\\nAn,8\\nBinh,6\\n\"\nfor row in csv.DictReader(io.StringIO(data)):\n    print(row[\"name\"], int(row[\"score\"]))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Ghi 3 dòng \"a\", \"b\", \"c\" vào file letters.txt (mỗi dòng một chữ), rồi đọc lại bằng with open và in SỐ DÒNG.",
+        "en": "Write the 3 lines \"a\", \"b\", \"c\" into letters.txt (one letter per line), then read it back with with open and print the NUMBER OF LINES."
+      },
+      "hint": {
+        "vi": "with open(\"letters.txt\", \"w\") as f: f.write(\"a\\nb\\nc\\n\")",
+        "en": "with open(\"letters.txt\", \"w\") as f: f.write(\"a\\nb\\nc\\n\")"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "# ghi file letters.txt rồi đọc lại và in số dòng\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "with open(\"letters.txt\", \"w\", encoding=\"utf-8\") as f:\n    f.write(\"a\\nb\\nc\\n\")\n\nwith open(\"letters.txt\", encoding=\"utf-8\") as f:\n    lines = f.read().splitlines()\nprint(len(lines))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 3",
+            "en": "Prints 3"
+          },
+          "test": "_out == '3'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Phân tích chuỗi CSV bằng csv.DictReader và in TỔNG cột score (kết quả 24).",
+        "en": "Parse the CSV string with csv.DictReader and print the SUM of the score column (the result is 24)."
+      },
+      "hint": {
+        "vi": "sum(int(row[\"score\"]) for row in csv.DictReader(io.StringIO(text)))",
+        "en": "sum(int(row[\"score\"]) for row in csv.DictReader(io.StringIO(text)))"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import csv, io\n\ntext = \"name,score\\nAn,8\\nBinh,6\\nChi,10\\n\"\n# in tổng cột score\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import csv, io\n\ntext = \"name,score\\nAn,8\\nBinh,6\\nChi,10\\n\"\nprint(sum(int(row[\"score\"]) for row in csv.DictReader(io.StringIO(text))))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 24",
+            "en": "Prints 24"
+          },
+          "test": "_out == '24'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

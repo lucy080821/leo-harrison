@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Vòng lặp",
+    "en": "Loops"
+  },
+  "summary": {
+    "vi": "for, range, while, break/continue, enumerate",
+    "en": "for, range, while, break/continue, enumerate"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "for i in range(1, 4):          # 1, 2, 3 (không gồm 4)\n    print(\"lần\", i)\n\ntotal = 0\nfor n in [10, 20, 30]:\n    total += n\nprint(\"tổng:\", total)\n\ncount = 3\nwhile count > 0:               # lặp khi điều kiện còn đúng\n    print(count)\n    count -= 1\n\nfor index, fruit in enumerate([\"táo\", \"cam\"], start=1):\n    print(index, fruit)\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tính tổng các số CHẴN từ 1 đến 100 bằng vòng lặp và in kết quả.",
+        "en": "Sum the EVEN numbers from 1 to 100 with a loop and print the result."
+      },
+      "hint": {
+        "vi": "total = 0; for n in range(1, 101): if n % 2 == 0: total += n; print(total)",
+        "en": "total = 0; for n in range(1, 101): if n % 2 == 0: total += n; print(total)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "# tính tổng các số chẵn từ 1 đến 100\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "total = 0\nfor n in range(1, 101):\n    if n % 2 == 0:\n        total += n\nprint(total)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 2550",
+            "en": "Prints 2550"
+          },
+          "test": "_out == '2550'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "In bảng cửu chương 7 từ 1 đến 5, mỗi dòng dạng: 7 x 1 = 7",
+        "en": "Print the 7 times table from 1 to 5, each line like: 7 x 1 = 7"
+      },
+      "hint": {
+        "vi": "for i in range(1, 6): print(f\"7 x {i} = {7 * i}\")",
+        "en": "for i in range(1, 6): print(f\"7 x {i} = {7 * i}\")"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "# in 5 dòng bảng cửu chương 7\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "for i in range(1, 6):\n    print(f\"7 x {i} = {7 * i}\")\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đúng 5 dòng 7 x i = ...",
+            "en": "Exactly 5 lines 7 x i = ..."
+          },
+          "test": "_out == '\\n'.join(f'7 x {i} = {7*i}' for i in range(1, 6))"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

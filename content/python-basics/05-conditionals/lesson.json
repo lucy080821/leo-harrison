@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Câu điều kiện",
+    "en": "Conditionals"
+  },
+  "summary": {
+    "vi": "if/elif/else, so sánh, and/or/not, toán tử 3 ngôi",
+    "en": "if/elif/else, comparisons, and/or/not, ternary expressions"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "score = 85\n\nif score >= 90:\n    print(\"Xuất sắc\")\nelif score >= 80:\n    print(\"Giỏi\")\nelse:\n    print(\"Cố gắng thêm\")\n\nage = 20\nprint(\"người lớn\" if age >= 18 else \"trẻ em\")   # biểu thức điều kiện\n\nx = 5\nprint(1 < x < 10)            # so sánh chuỗi: True\nprint(x > 3 and x % 2 == 1)  # True\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết hàm classify(n) trả về \"negative\" nếu n < 0, \"zero\" nếu n == 0, ngược lại \"positive\". In kết quả cho -5, 0, 9 (mỗi dòng một kết quả).",
+        "en": "Write classify(n) returning \"negative\" if n < 0, \"zero\" if n == 0, otherwise \"positive\". Print the result for -5, 0, 9 (one per line)."
+      },
+      "hint": {
+        "vi": "if n < 0: return \"negative\" / elif n == 0: return \"zero\" / else: return \"positive\"",
+        "en": "if n < 0: return \"negative\" / elif n == 0: return \"zero\" / else: return \"positive\""
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def classify(n):\n    # viết ở đây\n    pass\n\nfor n in [-5, 0, 9]:\n    print(classify(n))\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def classify(n):\n    if n < 0:\n        return \"negative\"\n    elif n == 0:\n        return \"zero\"\n    else:\n        return \"positive\"\n\nfor n in [-5, 0, 9]:\n    print(classify(n))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In negative, zero, positive",
+            "en": "Prints negative, zero, positive"
+          },
+          "test": "_out == 'negative\\nzero\\npositive'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Giá vé theo tuổi: dưới 5 tuổi 0 đồng; dưới 18 tuổi 50; dưới 60 tuổi 100; còn lại 70. Viết ticket_price(age) và in giá cho các tuổi 3, 10, 30, 70.",
+        "en": "Ticket price by age: under 5 pays 0; under 18 pays 50; under 60 pays 100; otherwise 70. Write ticket_price(age) and print the price for ages 3, 10, 30, 70."
+      },
+      "hint": {
+        "vi": "if age < 5: return 0 / elif age < 18: return 50 / elif age < 60: return 100 / else: return 70",
+        "en": "if age < 5: return 0 / elif age < 18: return 50 / elif age < 60: return 100 / else: return 70"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def ticket_price(age):\n    # viết ở đây\n    pass\n\nfor age in [3, 10, 30, 70]:\n    print(ticket_price(age))\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def ticket_price(age):\n    if age < 5:\n        return 0\n    elif age < 18:\n        return 50\n    elif age < 60:\n        return 100\n    else:\n        return 70\n\nfor age in [3, 10, 30, 70]:\n    print(ticket_price(age))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 0, 50, 100, 70",
+            "en": "Prints 0, 50, 100, 70"
+          },
+          "test": "_out == '0\\n50\\n100\\n70'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

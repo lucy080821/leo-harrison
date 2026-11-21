@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Biến và kiểu dữ liệu",
+    "en": "Variables and data types"
+  },
+  "summary": {
+    "vi": "gán biến, int/float/str/bool, f-string, ép kiểu",
+    "en": "assignment, int/float/str/bool, f-strings, type conversion"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "name = \"Lexi\"          # str: chuỗi\nage = 20               # int: số nguyên\nheight = 1.65          # float: số thực\nis_student = True      # bool: đúng/sai\n\nprint(name, age, height, is_student)\nprint(type(name), type(age), type(height), type(is_student))\n\n# f-string: chèn biến vào chuỗi\nprint(f\"{name} is {age} years old\")\n\n# Ép kiểu\nprint(int(\"42\") + 1)       # \"42\" -> 42\nprint(str(3.5) + \" kg\")    # 3.5 -> \"3.5\"\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Cho name và age. Dùng f-string in đúng dòng: Lexi is 20 years old",
+        "en": "Given name and age, use an f-string to print exactly: Lexi is 20 years old"
+      },
+      "hint": {
+        "vi": "print(f\"{name} is {age} years old\")",
+        "en": "print(f\"{name} is {age} years old\")"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "name = \"Lexi\"\nage = 20\n# in dòng yêu cầu bằng f-string\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "name = \"Lexi\"\nage = 20\nprint(f\"{name} is {age} years old\")\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is exactly right"
+          },
+          "test": "_out == 'Lexi is 20 years old'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "a và b là CHUỖI \"5\" và \"7\". Cộng chúng như SỐ NGUYÊN và in 12 (không phải 57).",
+        "en": "a and b are the STRINGS \"5\" and \"7\". Add them as INTEGERS and print 12 (not 57)."
+      },
+      "hint": {
+        "vi": "print(int(a) + int(b))",
+        "en": "print(int(a) + int(b))"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "a = \"5\"\nb = \"7\"\n# in tổng như số nguyên\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "a = \"5\"\nb = \"7\"\nprint(int(a) + int(b))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra là 12",
+            "en": "The output is 12"
+          },
+          "test": "_out == '12'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Chuỗi (string)",
+    "en": "Strings"
+  },
+  "summary": {
+    "vi": "chỉ số, cắt lát, phương thức chuỗi, format",
+    "en": "indexing, slicing, string methods, formatting"
+  },
+  "minutes": 18,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "s = \"  Python is Awesome  \"\nprint(s.strip())              # bỏ khoảng trắng hai đầu\nprint(s.strip().upper())\nprint(s.strip().split(\" \"))   # ['Python', 'is', 'Awesome']\n\nword = \"python\"\nprint(word[0], word[-1])      # p n   (chỉ số, -1 là ký tự cuối)\nprint(word[1:4])              # yth   (cắt lát từ 1 đến trước 4)\nprint(word[::-1])             # nohtyp (đảo ngược)\nprint(len(word), \"th\" in word)\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Với s = \"  Python is Awesome  \": in chuỗi đã bỏ khoảng trắng hai đầu và viết HOA, rồi in số từ (tách bằng khoảng trắng).",
+        "en": "With s = \"  Python is Awesome  \": print the stripped, UPPERCASE string, then the number of words (split on whitespace)."
+      },
+      "hint": {
+        "vi": "s.strip().upper() và len(s.split())",
+        "en": "s.strip().upper() and len(s.split())"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "s = \"  Python is Awesome  \"\n# in chuỗi viết hoa đã bỏ khoảng trắng, rồi số từ\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "s = \"  Python is Awesome  \"\nprint(s.strip().upper())\nprint(len(s.split()))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In PYTHON IS AWESOME rồi 3",
+            "en": "Prints PYTHON IS AWESOME then 3"
+          },
+          "test": "_out == 'PYTHON IS AWESOME\\n3'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Với word = \"python\": in từ viết ngược, rồi in 3 ký tự đầu (dùng cắt lát).",
+        "en": "With word = \"python\": print the word reversed, then its first 3 characters (use slicing)."
+      },
+      "hint": {
+        "vi": "word[::-1] và word[:3]",
+        "en": "word[::-1] and word[:3]"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "word = \"python\"\n# in từ đảo ngược, rồi 3 ký tự đầu\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "word = \"python\"\nprint(word[::-1])\nprint(word[:3])\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In nohtyp rồi pyt",
+            "en": "Prints nohtyp then pyt"
+          },
+          "test": "_out == 'nohtyp\\npyt'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

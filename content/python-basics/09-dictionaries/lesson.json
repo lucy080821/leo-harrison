@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Từ điển (dict)",
+    "en": "Dictionaries"
+  },
+  "summary": {
+    "vi": "khoá-giá trị, get, items, đếm tần suất, từ điển lồng nhau",
+    "en": "key-value pairs, get, items, counting frequencies, nested dicts"
+  },
+  "minutes": 18,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "student = {\"name\": \"An\", \"age\": 20, \"scores\": [8, 9]}\nprint(student[\"name\"])\nprint(student.get(\"email\", \"chưa có\"))    # get: không lỗi nếu thiếu khoá\n\nstudent[\"city\"] = \"Hanoi\"                  # thêm / sửa\ndel student[\"age\"]\n\nfor key, value in student.items():         # duyệt cặp khoá-giá trị\n    print(key, \"->\", value)\nprint(list(student.keys()), \"name\" in student)\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Đếm số lần xuất hiện của mỗi từ trong text bằng dict. In số lần của \"the\", rồi số từ khác nhau.",
+        "en": "Count how often each word appears in text using a dict. Print the count of \"the\", then the number of distinct words."
+      },
+      "hint": {
+        "vi": "counts[w] = counts.get(w, 0) + 1",
+        "en": "counts[w] = counts.get(w, 0) + 1"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "text = \"the cat and the hat and the bat\"\ncounts = {}\n# duyệt các từ và đếm\n\nprint(counts.get(\"the\"))\nprint(len(counts))\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "text = \"the cat and the hat and the bat\"\ncounts = {}\nfor w in text.split():\n    counts[w] = counts.get(w, 0) + 1\n\nprint(counts.get(\"the\"))\nprint(len(counts))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 3 rồi 5",
+            "en": "Prints 3 then 5"
+          },
+          "test": "_out == '3\\n5'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Với từ điển điểm: in tên học sinh có điểm cao nhất, rồi điểm trung bình (một số thực).",
+        "en": "With the scores dictionary: print the name of the student with the highest score, then the average score (a float)."
+      },
+      "hint": {
+        "vi": "max(scores, key=scores.get) và sum(scores.values()) / len(scores)",
+        "en": "max(scores, key=scores.get) and sum(scores.values()) / len(scores)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "scores = {\"An\": 8, \"Binh\": 6, \"Chi\": 10}\n# in tên điểm cao nhất, rồi điểm trung bình\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "scores = {\"An\": 8, \"Binh\": 6, \"Chi\": 10}\nprint(max(scores, key=scores.get))\nprint(sum(scores.values()) / len(scores))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In Chi rồi 8.0",
+            "en": "Prints Chi then 8.0"
+          },
+          "test": "_out == 'Chi\\n8.0'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

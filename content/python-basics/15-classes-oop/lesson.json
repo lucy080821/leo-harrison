@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Lớp và lập trình hướng đối tượng",
+    "en": "Classes and object-oriented programming"
+  },
+  "summary": {
+    "vi": "class, __init__, self, kế thừa, __str__, property",
+    "en": "class, __init__, self, inheritance, __str__, properties"
+  },
+  "minutes": 20,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "class Rectangle:\n    def __init__(self, width, height):     # hàm khởi tạo\n        self.width = width\n        self.height = height\n\n    def area(self):\n        return self.width * self.height\n\n    def __str__(self):                      # in đối tượng ra chữ\n        return f\"Rectangle({self.width}x{self.height})\"\n\nr = Rectangle(3, 4)\nprint(r, r.area())\n\nclass Square(Rectangle):                    # kế thừa\n    def __init__(self, side):\n        super().__init__(side, side)\n\nprint(Square(5).area())\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết class Rectangle(width, height) có phương thức area() và perimeter(). Với Rectangle(3, 4) in diện tích rồi chu vi.",
+        "en": "Write a class Rectangle(width, height) with methods area() and perimeter(). For Rectangle(3, 4) print the area then the perimeter."
+      },
+      "hint": {
+        "vi": "def area(self): return self.width * self.height ; def perimeter(self): return 2 * (self.width + self.height)",
+        "en": "def area(self): return self.width * self.height ; def perimeter(self): return 2 * (self.width + self.height)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "# viết class Rectangle ở đây\n\nr = Rectangle(3, 4)\nprint(r.area())\nprint(r.perimeter())\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "class Rectangle:\n    def __init__(self, width, height):\n        self.width = width\n        self.height = height\n\n    def area(self):\n        return self.width * self.height\n\n    def perimeter(self):\n        return 2 * (self.width + self.height)\n\nr = Rectangle(3, 4)\nprint(r.area())\nprint(r.perimeter())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 12 rồi 14",
+            "en": "Prints 12 then 14"
+          },
+          "test": "_out == '12\\n14'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Viết class BankAccount có số dư balance (bắt đầu 0), phương thức deposit(n) và withdraw(n) (chỉ rút nếu đủ tiền). Gửi 150, rút 50 rồi in số dư; sau đó thử rút 500 và in số dư lần nữa.",
+        "en": "Write a BankAccount class with a balance (starting at 0), methods deposit(n) and withdraw(n) (only withdraws if there are enough funds). Deposit 150, withdraw 50 and print the balance; then try withdrawing 500 and print the balance again."
+      },
+      "hint": {
+        "vi": "def withdraw(self, n): if n <= self.balance: self.balance -= n",
+        "en": "def withdraw(self, n): if n <= self.balance: self.balance -= n"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "# viết class BankAccount ở đây\n\nacc = BankAccount()\nacc.deposit(150)\nacc.withdraw(50)\nprint(acc.balance)\nacc.withdraw(500)\nprint(acc.balance)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "class BankAccount:\n    def __init__(self):\n        self.balance = 0\n\n    def deposit(self, n):\n        self.balance += n\n\n    def withdraw(self, n):\n        if n <= self.balance:\n            self.balance -= n\n\nacc = BankAccount()\nacc.deposit(150)\nacc.withdraw(50)\nprint(acc.balance)\nacc.withdraw(500)\nprint(acc.balance)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 100 rồi 100",
+            "en": "Prints 100 then 100"
+          },
+          "test": "_out == '100\\n100'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

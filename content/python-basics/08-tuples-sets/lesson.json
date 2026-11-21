@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Tuple và Set",
+    "en": "Tuples and sets"
+  },
+  "summary": {
+    "vi": "tuple bất biến, giải nén, tập hợp và phép toán tập hợp",
+    "en": "immutable tuples, unpacking, sets and set operations"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "point = (3, 4)            # tuple: không sửa được\nx, y = point              # giải nén (unpacking)\nprint(x, y)\n\na = {1, 2, 3, 4}          # set: không trùng, không thứ tự\nb = {3, 4, 5}\nprint(a & b)              # giao: {3, 4}\nprint(a | b)              # hợp\nprint(a - b)              # hiệu\nprint(set([1, 1, 2, 2, 3]))   # loại trùng\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Cho point = (3, 4). Giải nén thành x, y rồi in khoảng cách tới gốc toạ độ √(x² + y²) (ra 5.0).",
+        "en": "Given point = (3, 4). Unpack into x, y and print the distance to the origin √(x² + y²) (which is 5.0)."
+      },
+      "hint": {
+        "vi": "print((x ** 2 + y ** 2) ** 0.5)",
+        "en": "print((x ** 2 + y ** 2) ** 0.5)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "point = (3, 4)\n# giải nén và in khoảng cách\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "point = (3, 4)\nx, y = point\nprint((x ** 2 + y ** 2) ** 0.5)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 5.0",
+            "en": "Prints 5.0"
+          },
+          "test": "_out == '5.0'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Với tập A và B: in danh sách đã sắp của giao (A & B), rồi danh sách đã sắp của hợp (A | B).",
+        "en": "For sets A and B: print the sorted list of the intersection (A & B), then the sorted list of the union (A | B)."
+      },
+      "hint": {
+        "vi": "sorted(A & B) và sorted(A | B)",
+        "en": "sorted(A & B) and sorted(A | B)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "A = {1, 2, 3, 4}\nB = {3, 4, 5}\n# in sorted(giao) rồi sorted(hợp)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "A = {1, 2, 3, 4}\nB = {3, 4, 5}\nprint(sorted(A & B))\nprint(sorted(A | B))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In [3, 4] rồi [1, 2, 3, 4, 5]",
+            "en": "Prints [3, 4] then [1, 2, 3, 4, 5]"
+          },
+          "test": "_out == '[3, 4]\\n[1, 2, 3, 4, 5]'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

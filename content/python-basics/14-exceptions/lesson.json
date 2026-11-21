@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Xử lý ngoại lệ",
+    "en": "Exception handling"
+  },
+  "summary": {
+    "vi": "try/except/else/finally, raise, ngoại lệ tự định nghĩa",
+    "en": "try/except/else/finally, raise, custom exceptions"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "def safe_int(text):\n    try:\n        return int(text)\n    except ValueError:\n        return None\n\nprint(safe_int(\"42\"), safe_int(\"abc\"))\n\ndef withdraw(balance, amount):\n    if amount > balance:\n        raise ValueError(\"Insufficient funds\")\n    return balance - amount\n\ntry:\n    print(withdraw(100, 30))\n    print(withdraw(100, 500))\nexcept ValueError as e:\n    print(\"Lỗi:\", e)\nfinally:\n    print(\"luôn chạy\")\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết safe_int(text): trả về số nguyên nếu chuyển được, ngược lại trả về None. In danh sách [safe_int('42'), safe_int('x')].",
+        "en": "Write safe_int(text): return the integer if it converts, otherwise None. Print the list [safe_int('42'), safe_int('x')]."
+      },
+      "hint": {
+        "vi": "try: return int(text) except ValueError: return None",
+        "en": "try: return int(text) except ValueError: return None"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def safe_int(text):\n    # viết ở đây\n    pass\n\nprint([safe_int('42'), safe_int('x')])\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def safe_int(text):\n    try:\n        return int(text)\n    except ValueError:\n        return None\n\nprint([safe_int('42'), safe_int('x')])\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In [42, None]",
+            "en": "Prints [42, None]"
+          },
+          "test": "_out == '[42, None]'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Viết withdraw(balance, amount): ném ValueError(\"Insufficient funds\") nếu amount > balance, ngược lại trả về số dư mới. Đoạn dưới bắt lỗi và in message.",
+        "en": "Write withdraw(balance, amount): raise ValueError(\"Insufficient funds\") if amount > balance, otherwise return the new balance. The code below catches the error and prints its message."
+      },
+      "hint": {
+        "vi": "if amount > balance: raise ValueError(\"Insufficient funds\"); return balance - amount",
+        "en": "if amount > balance: raise ValueError(\"Insufficient funds\"); return balance - amount"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def withdraw(balance, amount):\n    # viết ở đây\n    pass\n\nfor amount in [30, 500]:\n    try:\n        print(withdraw(100, amount))\n    except ValueError as e:\n        print(e)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def withdraw(balance, amount):\n    if amount > balance:\n        raise ValueError(\"Insufficient funds\")\n    return balance - amount\n\nfor amount in [30, 500]:\n    try:\n        print(withdraw(100, amount))\n    except ValueError as e:\n        print(e)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 70 rồi Insufficient funds",
+            "en": "Prints 70 then Insufficient funds"
+          },
+          "test": "_out == '70\\nInsufficient funds'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

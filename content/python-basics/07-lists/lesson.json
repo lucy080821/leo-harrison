@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Danh sách (list)",
+    "en": "Lists"
+  },
+  "summary": {
+    "vi": "tạo, chỉ số, thêm/xoá, sort, cắt lát, sao chép",
+    "en": "creating, indexing, adding/removing, sorting, slicing, copying"
+  },
+  "minutes": 18,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "nums = [5, 3, 8, 1]\nnums.append(10)            # thêm vào cuối\nnums.insert(0, 99)         # chèn vào vị trí 0\nprint(nums, len(nums))\n\nprint(nums[0], nums[-1])   # phần tử đầu và cuối\nprint(nums[1:4])           # cắt lát như chuỗi\n\nnums.sort()                # sắp xếp TẠI CHỖ\nprint(nums)\nprint(sorted(nums, reverse=True))   # bản sao đã sắp, không đổi nums\nprint(3 in nums, nums.index(8))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Với nums = [5, 3, 8, 1, 9, 2]: in danh sách sắp xếp GIẢM dần (không làm thay đổi nums), rồi in 3 phần tử đầu của nums gốc.",
+        "en": "With nums = [5, 3, 8, 1, 9, 2]: print the list sorted DESCENDING (without changing nums), then print the first 3 elements of the original nums."
+      },
+      "hint": {
+        "vi": "sorted(nums, reverse=True) và nums[:3]",
+        "en": "sorted(nums, reverse=True) and nums[:3]"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "nums = [5, 3, 8, 1, 9, 2]\n# 1) in bản sắp giảm dần\n# 2) in 3 phần tử đầu của nums gốc\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "nums = [5, 3, 8, 1, 9, 2]\nprint(sorted(nums, reverse=True))\nprint(nums[:3])\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In [9, 8, 5, 3, 2, 1] rồi [5, 3, 8]",
+            "en": "Prints [9, 8, 5, 3, 2, 1] then [5, 3, 8]"
+          },
+          "test": "_out == '[9, 8, 5, 3, 2, 1]\\n[5, 3, 8]'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Loại các phần tử trùng khỏi items nhưng GIỮ NGUYÊN thứ tự xuất hiện đầu tiên, rồi in danh sách kết quả.",
+        "en": "Remove duplicates from items while KEEPING the order of first appearance, then print the resulting list."
+      },
+      "hint": {
+        "vi": "unique = []; for x in items: if x not in unique: unique.append(x)",
+        "en": "unique = []; for x in items: if x not in unique: unique.append(x)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "items = ['a', 'b', 'a', 'c', 'b']\n# tạo danh sách unique rồi in\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "items = ['a', 'b', 'a', 'c', 'b']\nunique = []\nfor x in items:\n    if x not in unique:\n        unique.append(x)\nprint(unique)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In ['a', 'b', 'c']",
+            "en": "Prints ['a', 'b', 'c']"
+          },
+          "test": "_out == str(['a', 'b', 'c'])"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

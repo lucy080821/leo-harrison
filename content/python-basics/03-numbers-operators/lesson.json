@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Số và toán tử",
+    "en": "Numbers and operators"
+  },
+  "summary": {
+    "vi": "+ - * / // % **, thứ tự ưu tiên, round, math",
+    "en": "+ - * / // % **, precedence, round, math"
+  },
+  "minutes": 12,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "print(7 + 2, 7 - 2, 7 * 2)\nprint(7 / 2)      # 3.5   chia thực\nprint(7 // 2)     # 3     chia lấy phần nguyên\nprint(7 % 2)      # 1     chia lấy dư\nprint(2 ** 10)    # 1024  luỹ thừa\n\nprint(divmod(17, 5))      # (3, 2): thương và dư\nprint(round(3.14159, 2))  # 3.14\nprint(abs(-5), max(3, 9, 4), min(3, 9, 4))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Hình chữ nhật có chiều rộng w = 7, chiều cao h = 4. In diện tích rồi chu vi (mỗi số một dòng).",
+        "en": "A rectangle has width w = 7 and height h = 4. Print its area then its perimeter (one number per line)."
+      },
+      "hint": {
+        "vi": "print(w * h) rồi print(2 * (w + h))",
+        "en": "print(w * h) then print(2 * (w + h))"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "w = 7\nh = 4\n# in diện tích, rồi chu vi\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "w = 7\nh = 4\nprint(w * h)\nprint(2 * (w + h))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 28 rồi 22",
+            "en": "Prints 28 then 22"
+          },
+          "test": "_out == '28\\n22'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Đổi total_seconds = 3725 thành giờ, phút, giây và in dạng h:m:s (ở đây là 1:2:5). Gợi ý: dùng // và %.",
+        "en": "Convert total_seconds = 3725 into hours, minutes, seconds and print as h:m:s (here 1:2:5). Hint: use // and %."
+      },
+      "hint": {
+        "vi": "hours = total // 3600; minutes = (total % 3600) // 60; seconds = total % 60",
+        "en": "hours = total // 3600; minutes = (total % 3600) // 60; seconds = total % 60"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "total_seconds = 3725\n# tính giờ, phút, giây rồi in h:m:s\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "total_seconds = 3725\nhours = total_seconds // 3600\nminutes = (total_seconds % 3600) // 60\nseconds = total_seconds % 60\nprint(f\"{hours}:{minutes}:{seconds}\")\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 1:2:5",
+            "en": "Prints 1:2:5"
+          },
+          "test": "_out == '1:2:5'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

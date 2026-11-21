@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Dự án: Sổ điểm học sinh",
+    "en": "Project: a grade book"
+  },
+  "summary": {
+    "vi": "kết hợp dict, list, hàm, vòng lặp và định dạng đầu ra",
+    "en": "combine dicts, lists, functions, loops and formatted output"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "students = {\n    \"An\":   [8, 9, 7],\n    \"Binh\": [6, 5, 7],\n    \"Chi\":  [10, 9, 10],\n}\n\ndef average(scores):\n    return sum(scores) / len(scores)\n\ndef letter(avg):\n    if avg >= 9:\n        return \"A\"\n    elif avg >= 8:\n        return \"B\"\n    elif avg >= 6.5:\n        return \"C\"\n    return \"D\"\n\nfor name, scores in students.items():\n    avg = average(scores)\n    print(f\"{name:<6} {avg:5.2f}  {letter(avg)}\")\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tính điểm trung bình (làm tròn 1 chữ số) của từng học sinh và in từ điển {tên: điểm_tb}.",
+        "en": "Compute each student's average (rounded to 1 decimal) and print the dictionary {name: average}."
+      },
+      "hint": {
+        "vi": "{name: round(sum(s) / len(s), 1) for name, s in students.items()}",
+        "en": "{name: round(sum(s) / len(s), 1) for name, s in students.items()}"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "students = {\n    'An':   [8, 9, 7],\n    'Binh': [6, 5, 7],\n    'Chi':  [10, 9, 10],\n}\n# tính điểm trung bình, làm tròn 1 chữ số, in từ điển\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "students = {\n    'An':   [8, 9, 7],\n    'Binh': [6, 5, 7],\n    'Chi':  [10, 9, 10],\n}\naverages = {name: round(sum(s) / len(s), 1) for name, s in students.items()}\nprint(averages)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In {'An': 8.0, 'Binh': 6.0, 'Chi': 9.7}",
+            "en": "Prints {'An': 8.0, 'Binh': 6.0, 'Chi': 9.7}"
+          },
+          "test": "_out == \"{'An': 8.0, 'Binh': 6.0, 'Chi': 9.7}\""
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Xếp hạng: in danh sách tên học sinh sắp theo điểm trung bình giảm dần (người cao nhất đứng đầu).",
+        "en": "Ranking: print the list of student names sorted by average descending (highest first)."
+      },
+      "hint": {
+        "vi": "sorted(students, key=lambda n: sum(students[n]) / len(students[n]), reverse=True)",
+        "en": "sorted(students, key=lambda n: sum(students[n]) / len(students[n]), reverse=True)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "students = {\n    'An':   [8, 9, 7],\n    'Binh': [6, 5, 7],\n    'Chi':  [10, 9, 10],\n}\n# in danh sách tên theo điểm TB giảm dần\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "students = {\n    'An':   [8, 9, 7],\n    'Binh': [6, 5, 7],\n    'Chi':  [10, 9, 10],\n}\nranking = sorted(students, key=lambda n: sum(students[n]) / len(students[n]), reverse=True)\nprint(ranking)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In ['Chi', 'An', 'Binh']",
+            "en": "Prints ['Chi', 'An', 'Binh']"
+          },
+          "test": "_out == \"['Chi', 'An', 'Binh']\""
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

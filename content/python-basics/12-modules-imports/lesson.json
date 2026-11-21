@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Module và thư viện chuẩn",
+    "en": "Modules and the standard library"
+  },
+  "summary": {
+    "vi": "import, math, random, datetime, collections",
+    "en": "import, math, random, datetime, collections"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import math\nfrom datetime import date\nfrom collections import Counter\n\nprint(math.sqrt(144), round(math.pi, 2), math.ceil(4.2))\n\nd1 = date(2024, 2, 1)\nd2 = date(2024, 3, 1)\nprint((d2 - d1).days)                 # 29 ngày (2024 là năm nhuận)\nprint(d1.strftime(\"%d/%m/%Y\"), d1.weekday())\n\nprint(Counter(\"banana\").most_common(2))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Dùng module math: in căn bậc hai của 144, π làm tròn 2 chữ số, và trần (ceil) của 4.2 — mỗi giá trị một dòng.",
+        "en": "Use the math module: print the square root of 144, π rounded to 2 decimals, and the ceiling of 4.2 — one value per line."
+      },
+      "hint": {
+        "vi": "math.sqrt(144), round(math.pi, 2), math.ceil(4.2)",
+        "en": "math.sqrt(144), round(math.pi, 2), math.ceil(4.2)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import math\n# in ba giá trị, mỗi giá trị một dòng\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import math\nprint(math.sqrt(144))\nprint(round(math.pi, 2))\nprint(math.ceil(4.2))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 12.0, 3.14, 5",
+            "en": "Prints 12.0, 3.14, 5"
+          },
+          "test": "_out == '12.0\\n3.14\\n5'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Dùng collections.Counter đếm các phần tử của words và in 2 phần tử xuất hiện nhiều nhất (most_common(2)), rồi dùng datetime.date tính số ngày giữa 2024-02-01 và 2024-03-01.",
+        "en": "Use collections.Counter to count the elements of words and print the 2 most common (most_common(2)), then use datetime.date to compute the days between 2024-02-01 and 2024-03-01."
+      },
+      "hint": {
+        "vi": "Counter(words).most_common(2) và (date(2024, 3, 1) - date(2024, 2, 1)).days",
+        "en": "Counter(words).most_common(2) and (date(2024, 3, 1) - date(2024, 2, 1)).days"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from collections import Counter\nfrom datetime import date\n\nwords = ['a', 'b', 'a', 'c', 'a', 'b']\n# 1) in 2 từ phổ biến nhất\n# 2) in số ngày giữa 2024-02-01 và 2024-03-01\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from collections import Counter\nfrom datetime import date\n\nwords = ['a', 'b', 'a', 'c', 'a', 'b']\nprint(Counter(words).most_common(2))\nprint((date(2024, 3, 1) - date(2024, 2, 1)).days)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In [('a', 3), ('b', 2)] rồi 29",
+            "en": "Prints [('a', 3), ('b', 2)] then 29"
+          },
+          "test": "_out == \"[('a', 3), ('b', 2)]\\n29\""
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}
