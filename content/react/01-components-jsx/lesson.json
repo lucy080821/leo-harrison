@@ -1,0 +1,97 @@
+{
+  "title": {
+    "vi": "Component và JSX",
+    "en": "Components and JSX"
+  },
+  "summary": {
+    "vi": "Hàm trả về giao diện, cú pháp JSX, biểu thức trong {}",
+    "en": "Functions that return UI, JSX syntax, expressions in {}"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "function App() {\n  const name = \"Lexi\";\n  return (\n    <div>\n      <h1>Xin chào, {name}!</h1>\n      <p>2 + 3 = {2 + 3}</p>\n    </div>\n  );\n}\n\nexport default App;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Sửa component App để hiển thị một thẻ <h1> có nội dung đúng \"Hello React\".",
+        "en": "Edit App so it renders an <h1> whose text is exactly \"Hello React\"."
+      },
+      "hint": {
+        "vi": "return <h1>Hello React</h1>;",
+        "en": "return <h1>Hello React</h1>;"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "export default function App() {\n  return <p>Chưa xong</p>;\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "export default function App() {\n  return <h1>Hello React</h1>;\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có thẻ h1",
+            "en": "Has an h1"
+          },
+          "test": "!!document.querySelector('h1')"
+        },
+        {
+          "label": {
+            "vi": "Nội dung đúng \"Hello React\"",
+            "en": "Text is exactly \"Hello React\""
+          },
+          "test": "document.querySelector('h1')?.textContent==='Hello React'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Khai báo const year = 2025 và hiển thị trong <p id=\"year\"> dòng \"Năm: 2025\" bằng biểu thức {year}.",
+        "en": "Declare const year = 2025 and render <p id=\"year\"> with \"Year: 2025\" using the {year} expression."
+      },
+      "hint": {
+        "vi": "<p id=\"year\">Năm: {year}</p>",
+        "en": "<p id=\"year\">Year: {year}</p>"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "export default function App() {\n  // khai báo year ở đây\n  return <p id=\"year\">Năm: ?</p>;\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "export default function App() {\n  const year = 2025;\n  return <p id=\"year\">Năm: {year}</p>;\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Thẻ #year chứa 2025",
+            "en": "#year contains 2025"
+          },
+          "test": "/2025/.test(document.getElementById('year')?.textContent||'')"
+        }
+      ]
+    }
+  ],
+  "runtime": "react"
+}

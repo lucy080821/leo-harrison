@@ -1,0 +1,89 @@
+{
+  "title": {
+    "vi": "Next.js là gì và định tuyến bằng thư mục",
+    "en": "What Next.js is and folder-based routing"
+  },
+  "summary": {
+    "vi": "App Router, page.js, thư mục động [slug], khớp đường dẫn",
+    "en": "App Router, page.js, dynamic [slug] folders, matching paths"
+  },
+  "minutes": 18,
+  "preview": "console",
+  "files": [
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "// Next.js biến cây thư mục thành đường dẫn website.\n// Hàm này mô phỏng ý tưởng đó:\nfunction fileToRoute(file) {\n  return (\n    \"/\" +\n    file\n      .replace(/^app\\/?/, \"\")\n      .replace(/\\/?page\\.js$/, \"\")\n      .replace(/\\[(\\w+)\\]/g, \":$1\")\n  );\n}\n\nconsole.log(fileToRoute(\"app/page.js\"));                 // /\nconsole.log(fileToRoute(\"app/about/page.js\"));           // /about\nconsole.log(fileToRoute(\"app/blog/[slug]/page.js\"));     // /blog/:slug\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết hàm routeToParams(pattern, url): so khớp pattern dạng \"/blog/:slug\" với url \"/blog/hello\" và trả về {slug: \"hello\"}; không khớp thì trả null.",
+        "en": "Write routeToParams(pattern, url): match a pattern like \"/blog/:slug\" against url \"/blog/hello\" and return {slug: \"hello\"}; return null when it doesn't match."
+      },
+      "hint": {
+        "vi": "Tách cả hai bằng split(\"/\"), so từng đoạn; đoạn bắt đầu bằng \":\" là tham số.",
+        "en": "Split both with split(\"/\") and compare segment by segment; a segment starting with \":\" is a parameter."
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function routeToParams(pattern, url) {\n  // viết ở đây\n}\n\nconsole.log(JSON.stringify(routeToParams(\"/blog/:slug\", \"/blog/hello\")));\nconsole.log(JSON.stringify(routeToParams(\"/blog/:slug\", \"/shop/hello\")));\nconsole.log(JSON.stringify(routeToParams(\"/u/:id/post/:pid\", \"/u/7/post/9\")));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function routeToParams(pattern, url) {\n  const a = pattern.split(\"/\");\n  const b = url.split(\"/\");\n  if (a.length !== b.length) return null;\n  const params = {};\n  for (let i = 0; i < a.length; i++) {\n    if (a[i].startsWith(\":\")) params[a[i].slice(1)] = b[i];\n    else if (a[i] !== b[i]) return null;\n  }\n  return params;\n}\n\nconsole.log(JSON.stringify(routeToParams(\"/blog/:slug\", \"/blog/hello\")));\nconsole.log(JSON.stringify(routeToParams(\"/blog/:slug\", \"/shop/hello\")));\nconsole.log(JSON.stringify(routeToParams(\"/u/:id/post/:pid\", \"/u/7/post/9\")));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Kết quả đúng cho 3 trường hợp",
+            "en": "Correct for all 3 cases"
+          },
+          "test": "logs.join('|')==='{\"slug\":\"hello\"}|null|{\"id\":\"7\",\"pid\":\"9\"}'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Viết hàm routeToFile(route) làm ngược lại: \"/\" → \"app/page.js\", \"/about\" → \"app/about/page.js\".",
+        "en": "Write routeToFile(route) doing the reverse: \"/\" → \"app/page.js\", \"/about\" → \"app/about/page.js\"."
+      },
+      "hint": {
+        "vi": "route === \"/\" ? \"app/page.js\" : \"app\" + route + \"/page.js\"",
+        "en": "route === \"/\" ? \"app/page.js\" : \"app\" + route + \"/page.js\""
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function routeToFile(route) {\n  // viết ở đây\n}\n\nconsole.log(routeToFile(\"/\"));\nconsole.log(routeToFile(\"/about\"));\nconsole.log(routeToFile(\"/blog/new\"));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function routeToFile(route) {\n  return route === \"/\" ? \"app/page.js\" : \"app\" + route + \"/page.js\";\n}\n\nconsole.log(routeToFile(\"/\"));\nconsole.log(routeToFile(\"/about\"));\nconsole.log(routeToFile(\"/blog/new\"));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Ba kết quả đúng",
+            "en": "All three correct"
+          },
+          "test": "logs.join('|')==='app/page.js|app/about/page.js|app/blog/new/page.js'"
+        }
+      ]
+    }
+  ]
+}

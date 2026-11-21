@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Máy chủ HTTP đầu tiên",
+    "en": "Your first HTTP server"
+  },
+  "summary": {
+    "vi": "http.createServer, request, response, status code, header",
+    "en": "http.createServer, request, response, status codes, headers"
+  },
+  "minutes": 18,
+  "preview": "console",
+  "files": [
+    {
+      "name": "index.js",
+      "lang": "javascript",
+      "code": "const http = require(\"http\");\n\nconst server = http.createServer((req, res) => {\n  if (req.url === \"/\") {\n    res.writeHead(200, { \"Content-Type\": \"text/plain; charset=utf-8\" });\n    res.end(\"Trang chủ\");\n  } else if (req.url === \"/api/time\") {\n    res.writeHead(200, { \"Content-Type\": \"application/json\" });\n    res.end(JSON.stringify({ ok: true }));\n  } else {\n    res.writeHead(404);\n    res.end(\"Không tìm thấy\");\n  }\n});\n\n// Ngoài máy thật: server.listen(3000);\n// Trong trình duyệt ta thử bằng inject:\nasync function main() {\n  for (const url of [\"/\", \"/api/time\", \"/xyz\"]) {\n    const r = await server.inject(url);\n    console.log(url, \"->\", r.statusCode, r.body);\n  }\n}\nmain();\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết handler: GET /hello trả 200 và chuỗi \"hello\"; mọi đường dẫn khác trả 404. Code kiểm thử đã có sẵn.",
+        "en": "Write a handler: GET /hello returns 200 and \"hello\"; any other path returns 404. The test code is provided."
+      },
+      "hint": {
+        "vi": "if (req.url === \"/hello\") { res.writeHead(200); res.end(\"hello\"); } else { res.writeHead(404); res.end(); }",
+        "en": "if (req.url === \"/hello\") { res.writeHead(200); res.end(\"hello\"); } else { res.writeHead(404); res.end(); }"
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const http = require(\"http\");\n\nconst server = http.createServer((req, res) => {\n  // viết ở đây\n  res.end();\n});\n\n(async () => {\n  const a = await server.inject(\"/hello\");\n  const b = await server.inject(\"/other\");\n  console.log(a.statusCode, a.body, b.statusCode);\n})();\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const http = require(\"http\");\n\nconst server = http.createServer((req, res) => {\n  if (req.url === \"/hello\") {\n    res.writeHead(200);\n    res.end(\"hello\");\n  } else {\n    res.writeHead(404);\n    res.end();\n  }\n});\n\n(async () => {\n  const a = await server.inject(\"/hello\");\n  const b = await server.inject(\"/other\");\n  console.log(a.statusCode, a.body, b.statusCode);\n})();\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 200 hello 404",
+            "en": "Prints 200 hello 404"
+          },
+          "test": "logs.join('|')==='200 hello 404'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Viết server trả JSON {\"method\": req.method} với header Content-Type: application/json. In ra body khi gọi bằng phương thức POST.",
+        "en": "Write a server that returns JSON {\"method\": req.method} with the header Content-Type: application/json. Print the body when called with POST."
+      },
+      "hint": {
+        "vi": "res.writeHead(200, {\"Content-Type\": \"application/json\"}); res.end(JSON.stringify({ method: req.method }));",
+        "en": "res.writeHead(200, {\"Content-Type\": \"application/json\"}); res.end(JSON.stringify({ method: req.method }));"
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const http = require(\"http\");\n\nconst server = http.createServer((req, res) => {\n  // viết ở đây\n  res.end();\n});\n\nserver.inject({ method: \"POST\", url: \"/\" }).then((r) => console.log(r.body));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const http = require(\"http\");\n\nconst server = http.createServer((req, res) => {\n  res.writeHead(200, { \"Content-Type\": \"application/json\" });\n  res.end(JSON.stringify({ method: req.method }));\n});\n\nserver.inject({ method: \"POST\", url: \"/\" }).then((r) => console.log(r.body));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Body là {\"method\":\"POST\"}",
+            "en": "Body is {\"method\":\"POST\"}"
+          },
+          "test": "logs.join('|')==='{\"method\":\"POST\"}'"
+        }
+      ]
+    }
+  ],
+  "runtime": "node"
+}

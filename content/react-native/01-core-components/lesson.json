@@ -1,0 +1,97 @@
+{
+  "title": {
+    "vi": "React Native là gì: View, Text, StyleSheet",
+    "en": "What React Native is: View, Text, StyleSheet"
+  },
+  "summary": {
+    "vi": "Component cốt lõi thay cho div/p, StyleSheet.create",
+    "en": "Core components replacing div/p, StyleSheet.create"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { View, Text, StyleSheet } from \"react-native\";\n\nexport default function App() {\n  return (\n    <View style={styles.container}>\n      <Text style={styles.title}>Xin chào React Native!</Text>\n      <Text>Một codebase cho iOS và Android.</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: { padding: 20, backgroundColor: \"#e0f2f1\" },\n  title: { fontSize: 22, fontWeight: \"bold\", color: \"#0f766e\" },\n});\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Hiển thị một <Text testID=\"hello\"> với nội dung đúng \"Hello Native\" bên trong một View.",
+        "en": "Render a <Text testID=\"hello\"> with the exact content \"Hello Native\" inside a View."
+      },
+      "hint": {
+        "vi": "<View><Text testID=\"hello\">Hello Native</Text></View>",
+        "en": "<View><Text testID=\"hello\">Hello Native</Text></View>"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { View, Text } from \"react-native\";\n\nexport default function App() {\n  return (\n    <View>\n      {/* viết Text ở đây */}\n    </View>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { View, Text } from \"react-native\";\n\nexport default function App() {\n  return (\n    <View>\n      <Text testID=\"hello\">Hello Native</Text>\n    </View>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có Text hello đúng nội dung",
+            "en": "Has the hello Text with exact content"
+          },
+          "test": "document.querySelector('[data-testid=\"hello\"]')?.textContent==='Hello Native'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Tạo StyleSheet có style box: backgroundColor \"teal\", padding 16, và áp dụng cho <View testID=\"box\">.",
+        "en": "Create a StyleSheet with a box style: backgroundColor \"teal\", padding 16, and apply it to <View testID=\"box\">."
+      },
+      "hint": {
+        "vi": "const styles = StyleSheet.create({ box: { backgroundColor: \"teal\", padding: 16 } });",
+        "en": "const styles = StyleSheet.create({ box: { backgroundColor: \"teal\", padding: 16 } });"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { View, Text, StyleSheet } from \"react-native\";\n\nexport default function App() {\n  return (\n    <View testID=\"box\">\n      <Text>Hộp</Text>\n    </View>\n  );\n}\n\n// khai báo styles ở đây\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { View, Text, StyleSheet } from \"react-native\";\n\nexport default function App() {\n  return (\n    <View testID=\"box\" style={styles.box}>\n      <Text>Hộp</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  box: { backgroundColor: \"teal\", padding: 16 },\n});\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Nền màu teal",
+            "en": "Background is teal"
+          },
+          "test": "getComputedStyle(document.querySelector('[data-testid=\"box\"]')).backgroundColor==='rgb(0, 128, 128)'"
+        },
+        {
+          "label": {
+            "vi": "Padding 16px",
+            "en": "Padding is 16px"
+          },
+          "test": "getComputedStyle(document.querySelector('[data-testid=\"box\"]')).paddingTop==='16px'"
+        }
+      ]
+    }
+  ],
+  "runtime": "rn"
+}

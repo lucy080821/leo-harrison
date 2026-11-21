@@ -1,0 +1,104 @@
+{
+  "title": {
+    "vi": "Props và danh sách",
+    "en": "Props and lists"
+  },
+  "summary": {
+    "vi": "Truyền dữ liệu vào component, children, map và key",
+    "en": "Pass data into components, children, map and key"
+  },
+  "minutes": 18,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "function Card({ title, children }) {\n  return (\n    <div className=\"card\">\n      <h3>{title}</h3>\n      {children}\n    </div>\n  );\n}\n\nexport default function App() {\n  const fruits = [\"Cam\", \"Xoài\", \"Ổi\"];\n  return (\n    <div>\n      <Card title=\"Trái cây\">\n        <ul>\n          {fruits.map((f) => (\n            <li key={f}>{f}</li>\n          ))}\n        </ul>\n      </Card>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết component Greeting nhận prop name và render <p class=\"hi\">Xin chào, {name}!</p>. App dùng nó với name=\"Lexi\".",
+        "en": "Write a Greeting component that takes a name prop and renders <p class=\"hi\">Hello, {name}!</p>. App uses it with name=\"Lexi\"."
+      },
+      "hint": {
+        "vi": "function Greeting({ name }) { return <p className=\"hi\">Hello, {name}!</p>; }",
+        "en": "function Greeting({ name }) { return <p className=\"hi\">Hello, {name}!</p>; }"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "function Greeting(props) {\n  return null; // viết ở đây\n}\n\nexport default function App() {\n  return <Greeting name=\"Lexi\" />;\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "function Greeting({ name }) {\n  return <p className=\"hi\">Hello, {name}!</p>;\n}\n\nexport default function App() {\n  return <Greeting name=\"Lexi\" />;\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Hiện tên truyền vào",
+            "en": "Shows the passed name"
+          },
+          "test": "/Lexi/.test(document.querySelector('.hi')?.textContent||'')"
+        },
+        {
+          "label": {
+            "vi": "Có dấu chấm than",
+            "en": "Has the exclamation mark"
+          },
+          "test": "/!$/.test(document.querySelector('.hi')?.textContent||'')"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Render danh sách <ul> với mỗi phần tử của mảng langs thành một <li> (nhớ key).",
+        "en": "Render a <ul> with one <li> per item of the langs array (remember key)."
+      },
+      "hint": {
+        "vi": "{langs.map((l) => <li key={l}>{l}</li>)}",
+        "en": "{langs.map((l) => <li key={l}>{l}</li>)}"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "export default function App() {\n  const langs = [\"HTML\", \"CSS\", \"JS\", \"React\"];\n  return (\n    <ul>\n      {/* map ở đây */}\n    </ul>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "export default function App() {\n  const langs = [\"HTML\", \"CSS\", \"JS\", \"React\"];\n  return (\n    <ul>\n      {langs.map((l) => <li key={l}>{l}</li>)}\n    </ul>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 4 thẻ li",
+            "en": "Has 4 li elements"
+          },
+          "test": "document.querySelectorAll('li').length===4"
+        },
+        {
+          "label": {
+            "vi": "Nội dung đúng thứ tự",
+            "en": "Correct order"
+          },
+          "test": "[...document.querySelectorAll('li')].map(x=>x.textContent).join()==='HTML,CSS,JS,React'"
+        }
+      ]
+    }
+  ],
+  "runtime": "react"
+}

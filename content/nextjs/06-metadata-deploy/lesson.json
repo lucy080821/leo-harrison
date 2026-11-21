@@ -1,0 +1,89 @@
+{
+  "title": {
+    "vi": "Metadata, tối ưu và triển khai lên VPS",
+    "en": "Metadata, optimisation and deploying to a VPS"
+  },
+  "summary": {
+    "vi": "generateMetadata, next/image, biến môi trường, next build/start, pm2, Nginx",
+    "en": "generateMetadata, next/image, env vars, next build/start, pm2, Nginx"
+  },
+  "minutes": 18,
+  "preview": "console",
+  "files": [
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "// app/blog/[slug]/page.js — generateMetadata quyết định <title> và mô tả (SEO)\nasync function generateMetadata({ params }) {\n  const { slug } = await params;\n  const title = slug.replace(/-/g, \" \");\n  return {\n    title: title.charAt(0).toUpperCase() + title.slice(1) + \" | Lexi Blog\",\n    description: \"Bài viết: \" + title,\n  };\n}\n\ngenerateMetadata({ params: Promise.resolve({ slug: \"hoc-next-js\" }) }).then((m) =>\n  console.log(JSON.stringify(m))\n);\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết generateMetadata({ params }) trả { title: \"Sản phẩm <id>\" } với id lấy từ params (một Promise).",
+        "en": "Write generateMetadata({ params }) returning { title: \"Product <id>\" } with the id taken from params (a Promise)."
+      },
+      "hint": {
+        "vi": "const { id } = await params; return { title: \"Product \" + id };",
+        "en": "const { id } = await params; return { title: \"Product \" + id };"
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "async function generateMetadata({ params }) {\n  // viết ở đây\n}\n\ngenerateMetadata({ params: Promise.resolve({ id: \"42\" }) }).then((m) =>\n  console.log(JSON.stringify(m))\n);\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "async function generateMetadata({ params }) {\n  const { id } = await params;\n  return { title: \"Product \" + id };\n}\n\ngenerateMetadata({ params: Promise.resolve({ id: \"42\" }) }).then((m) =>\n  console.log(JSON.stringify(m))\n);\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In {\"title\":\"Product 42\"}",
+            "en": "Prints {\"title\":\"Product 42\"}"
+          },
+          "test": "logs.join('|')==='{\"title\":\"Product 42\"}'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Viết hàm readPort(env) trả về Number(env.PORT) nếu có, ngược lại 3000. Đây là cách app Next/Node đọc cổng trên VPS.",
+        "en": "Write readPort(env) returning Number(env.PORT) if present, otherwise 3000. This is how a Next/Node app reads its port on a VPS."
+      },
+      "hint": {
+        "vi": "return env.PORT ? Number(env.PORT) : 3000;",
+        "en": "return env.PORT ? Number(env.PORT) : 3000;"
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function readPort(env) {\n  // viết ở đây\n}\n\nconsole.log(readPort({ PORT: \"8080\" }));\nconsole.log(readPort({}));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function readPort(env) {\n  return env.PORT ? Number(env.PORT) : 3000;\n}\n\nconsole.log(readPort({ PORT: \"8080\" }));\nconsole.log(readPort({}));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 8080 rồi 3000",
+            "en": "Prints 8080 then 3000"
+          },
+          "test": "logs.join('|')==='8080|3000'"
+        }
+      ]
+    }
+  ]
+}

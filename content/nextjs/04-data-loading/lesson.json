@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Lấy dữ liệu, loading và lỗi",
+    "en": "Fetching data, loading and errors"
+  },
+  "summary": {
+    "vi": "async Server Component, loading.js, error.js, trạng thái tải",
+    "en": "async Server Components, loading.js, error.js, loading states"
+  },
+  "minutes": 20,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { useState, useEffect } from \"react\";\n\n// Giả lập một API mất 300ms để trả dữ liệu\nfunction getPosts() {\n  return new Promise((resolve) =>\n    setTimeout(() => resolve([{ id: 1, title: \"Bài viết 1\" }, { id: 2, title: \"Bài viết 2\" }]), 300)\n  );\n}\n\nexport default function App() {\n  const [posts, setPosts] = useState(null);\n\n  useEffect(() => {\n    getPosts().then(setPosts);\n  }, []);\n\n  if (!posts) return <p id=\"status\">Đang tải...</p>;\n  return (\n    <ul id=\"list\">\n      {posts.map((p) => <li key={p.id}>{p.title}</li>)}\n    </ul>\n  );\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Hiển thị <p id=\"status\">Loading...</p> trong lúc chờ, sau đó thay bằng <ul id=\"list\"> với mỗi bài là một <li>.",
+        "en": "Show <p id=\"status\">Loading...</p> while waiting, then replace it with a <ul id=\"list\"> with one <li> per post."
+      },
+      "hint": {
+        "vi": "if (!posts) return <p id=\"status\">Loading...</p>; return <ul id=\"list\">...</ul>;",
+        "en": "if (!posts) return <p id=\"status\">Loading...</p>; return <ul id=\"list\">...</ul>;"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, useEffect } from \"react\";\n\nconst getPosts = () => new Promise((r) => setTimeout(() => r([\"A\", \"B\", \"C\"]), 200));\n\nexport default function App() {\n  const [posts, setPosts] = useState(null);\n  useEffect(() => {\n    getPosts().then(setPosts);\n  }, []);\n\n  // trả loading hoặc danh sách\n  return <p id=\"status\">?</p>;\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, useEffect } from \"react\";\n\nconst getPosts = () => new Promise((r) => setTimeout(() => r([\"A\", \"B\", \"C\"]), 200));\n\nexport default function App() {\n  const [posts, setPosts] = useState(null);\n  useEffect(() => {\n    getPosts().then(setPosts);\n  }, []);\n\n  if (!posts) return <p id=\"status\">Loading...</p>;\n  return (\n    <ul id=\"list\">\n      {posts.map((p) => <li key={p}>{p}</li>)}\n    </ul>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có hiện danh sách 3 bài sau khi tải",
+            "en": "Shows the 3-post list after loading"
+          },
+          "test": "(async()=>{await new Promise(r=>setTimeout(r,500));return document.querySelectorAll('#list li').length===3})()"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Xử lý lỗi: getData() bị từ chối (reject). Bắt lỗi bằng .catch và hiển thị <p id=\"err\">Error: &lt;message&gt;</p>.",
+        "en": "Handle errors: getData() rejects. Catch it with .catch and show <p id=\"err\">Error: &lt;message&gt;</p>."
+      },
+      "hint": {
+        "vi": ".catch((e) => setError(e.message))",
+        "en": ".catch((e) => setError(e.message))"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, useEffect } from \"react\";\n\nconst getData = () => new Promise((_, rej) => setTimeout(() => rej(new Error(\"server down\")), 100));\n\nexport default function App() {\n  const [error, setError] = useState(null);\n  useEffect(() => {\n    getData(); // bắt lỗi ở đây\n  }, []);\n  if (error) return <p id=\"err\">Error: {error}</p>;\n  return <p>Đang tải...</p>;\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, useEffect } from \"react\";\n\nconst getData = () => new Promise((_, rej) => setTimeout(() => rej(new Error(\"server down\")), 100));\n\nexport default function App() {\n  const [error, setError] = useState(null);\n  useEffect(() => {\n    getData().catch((e) => setError(e.message));\n  }, []);\n  if (error) return <p id=\"err\">Error: {error}</p>;\n  return <p>Đang tải...</p>;\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Hiện Error: server down",
+            "en": "Shows Error: server down"
+          },
+          "test": "(async()=>{await new Promise(r=>setTimeout(r,400));return document.getElementById('err')?.textContent==='Error: server down'})()"
+        }
+      ]
+    }
+  ],
+  "runtime": "react"
+}

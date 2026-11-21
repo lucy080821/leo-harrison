@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Middleware và xử lý lỗi",
+    "en": "Middleware and error handling"
+  },
+  "summary": {
+    "vi": "app.use, next(), logger, xác thực, middleware lỗi",
+    "en": "app.use, next(), logger, auth, error middleware"
+  },
+  "minutes": 20,
+  "preview": "console",
+  "files": [
+    {
+      "name": "index.js",
+      "lang": "javascript",
+      "code": "const express = require(\"express\");\nconst app = express();\n\n// Middleware: chạy trước mọi route, gọi next() để đi tiếp\napp.use((req, res, next) => {\n  console.log(req.method, req.url);\n  next();\n});\n\napp.get(\"/\", (req, res) => res.send(\"OK\"));\n\napp.get(\"/boom\", () => {\n  throw new Error(\"Có lỗi!\");\n});\n\n// Middleware lỗi: có 4 tham số, đặt CUỐI CÙNG\napp.use((err, req, res, next) => {\n  res.status(500).json({ error: err.message });\n});\n\n(async () => {\n  const a = await app.inject(\"/\");\n  const b = await app.inject(\"/boom\");\n  console.log(a.statusCode, b.statusCode, b.body);\n})();\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết middleware requireKey: nếu header x-api-key khác \"secret\" thì trả 401 {\"error\":\"unauthorized\"}, ngược lại gọi next(). Áp dụng cho route /private.",
+        "en": "Write middleware requireKey: if the x-api-key header isn't \"secret\" respond 401 {\"error\":\"unauthorized\"}, otherwise call next(). Apply it to /private."
+      },
+      "hint": {
+        "vi": "if (req.headers[\"x-api-key\"] !== \"secret\") return res.status(401).json({ error: \"unauthorized\" }); next();",
+        "en": "if (req.headers[\"x-api-key\"] !== \"secret\") return res.status(401).json({ error: \"unauthorized\" }); next();"
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const express = require(\"express\");\nconst app = express();\n\nfunction requireKey(req, res, next) {\n  // viết ở đây\n  next();\n}\n\napp.get(\"/private\", requireKey, (req, res) => res.json({ data: 42 }));\n\n(async () => {\n  const a = await app.inject(\"/private\");\n  const b = await app.inject({ url: \"/private\", headers: { \"x-api-key\": \"secret\" } });\n  console.log(a.statusCode, b.statusCode);\n})();\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const express = require(\"express\");\nconst app = express();\n\nfunction requireKey(req, res, next) {\n  if (req.headers[\"x-api-key\"] !== \"secret\") {\n    return res.status(401).json({ error: \"unauthorized\" });\n  }\n  next();\n}\n\napp.get(\"/private\", requireKey, (req, res) => res.json({ data: 42 }));\n\n(async () => {\n  const a = await app.inject(\"/private\");\n  const b = await app.inject({ url: \"/private\", headers: { \"x-api-key\": \"secret\" } });\n  console.log(a.statusCode, b.statusCode);\n})();\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Thiếu key → 401, có key → 200",
+            "en": "No key → 401, with key → 200"
+          },
+          "test": "logs.join('|')==='401 200'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Thêm middleware lỗi trả status 400 và JSON {\"error\": err.message} cho mọi lỗi ném ra (route /bad đã ném lỗi).",
+        "en": "Add an error middleware returning status 400 and JSON {\"error\": err.message} for any thrown error (the /bad route already throws)."
+      },
+      "hint": {
+        "vi": "app.use((err, req, res, next) => res.status(400).json({ error: err.message }));",
+        "en": "app.use((err, req, res, next) => res.status(400).json({ error: err.message }));"
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const express = require(\"express\");\nconst app = express();\n\napp.get(\"/bad\", () => {\n  throw new Error(\"dữ liệu sai\");\n});\n\n// thêm middleware lỗi ở đây\n\napp.inject(\"/bad\").then((r) => console.log(r.statusCode, r.body));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const express = require(\"express\");\nconst app = express();\n\napp.get(\"/bad\", () => {\n  throw new Error(\"dữ liệu sai\");\n});\n\napp.use((err, req, res, next) => {\n  res.status(400).json({ error: err.message });\n});\n\napp.inject(\"/bad\").then((r) => console.log(r.statusCode, r.body));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Trả 400 và JSON lỗi",
+            "en": "Returns 400 and the error JSON"
+          },
+          "test": "logs.join('|')==='400 {\"error\":\"dữ liệu sai\"}'"
+        }
+      ]
+    }
+  ],
+  "runtime": "node"
+}

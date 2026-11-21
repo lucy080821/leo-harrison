@@ -1,0 +1,104 @@
+{
+  "title": {
+    "vi": "Bố cục Flexbox",
+    "en": "Flexbox layout"
+  },
+  "summary": {
+    "vi": "flexDirection, justifyContent, alignItems, flex",
+    "en": "flexDirection, justifyContent, alignItems, flex"
+  },
+  "minutes": 18,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { View, Text, StyleSheet } from \"react-native\";\n\nexport default function App() {\n  return (\n    <View style={styles.row}>\n      <View style={[styles.box, { backgroundColor: \"#0f766e\" }]}><Text style={styles.t}>1</Text></View>\n      <View style={[styles.box, { backgroundColor: \"#0891b2\" }]}><Text style={styles.t}>2</Text></View>\n      <View style={[styles.box, { backgroundColor: \"#2563eb\" }]}><Text style={styles.t}>3</Text></View>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  row: { flexDirection: \"row\", justifyContent: \"space-between\", padding: 10 },\n  box: { width: 60, height: 60, alignItems: \"center\", justifyContent: \"center\" },\n  t: { color: \"white\", fontWeight: \"bold\" },\n});\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Cho View testID=\"row\" xếp các con theo hàng ngang (flexDirection: \"row\") và căn đều hai đầu (justifyContent: \"space-between\").",
+        "en": "Make View testID=\"row\" lay out its children horizontally (flexDirection: \"row\") and space them to the edges (justifyContent: \"space-between\")."
+      },
+      "hint": {
+        "vi": "row: { flexDirection: \"row\", justifyContent: \"space-between\" }",
+        "en": "row: { flexDirection: \"row\", justifyContent: \"space-between\" }"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { View, Text, StyleSheet } from \"react-native\";\n\nexport default function App() {\n  return (\n    <View testID=\"row\" style={styles.row}>\n      <Text>A</Text>\n      <Text>B</Text>\n      <Text>C</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  row: {},\n});\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { View, Text, StyleSheet } from \"react-native\";\n\nexport default function App() {\n  return (\n    <View testID=\"row\" style={styles.row}>\n      <Text>A</Text>\n      <Text>B</Text>\n      <Text>C</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  row: { flexDirection: \"row\", justifyContent: \"space-between\" },\n});\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "flexDirection là row",
+            "en": "flexDirection is row"
+          },
+          "test": "getComputedStyle(document.querySelector('[data-testid=\"row\"]')).flexDirection==='row'"
+        },
+        {
+          "label": {
+            "vi": "justifyContent là space-between",
+            "en": "justifyContent is space-between"
+          },
+          "test": "getComputedStyle(document.querySelector('[data-testid=\"row\"]')).justifyContent==='space-between'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Căn giữa nội dung của View testID=\"center\" cả hai chiều (justifyContent và alignItems đều \"center\").",
+        "en": "Center the content of View testID=\"center\" on both axes (both justifyContent and alignItems set to \"center\")."
+      },
+      "hint": {
+        "vi": "{ justifyContent: \"center\", alignItems: \"center\" }",
+        "en": "{ justifyContent: \"center\", alignItems: \"center\" }"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { View, Text, StyleSheet } from \"react-native\";\n\nexport default function App() {\n  return (\n    <View testID=\"center\" style={styles.c}>\n      <Text>Giữa</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  c: { height: 120 },\n});\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { View, Text, StyleSheet } from \"react-native\";\n\nexport default function App() {\n  return (\n    <View testID=\"center\" style={styles.c}>\n      <Text>Giữa</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  c: { height: 120, justifyContent: \"center\", alignItems: \"center\" },\n});\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "justifyContent: center",
+            "en": "justifyContent: center"
+          },
+          "test": "getComputedStyle(document.querySelector('[data-testid=\"center\"]')).justifyContent==='center'"
+        },
+        {
+          "label": {
+            "vi": "alignItems: center",
+            "en": "alignItems: center"
+          },
+          "test": "getComputedStyle(document.querySelector('[data-testid=\"center\"]')).alignItems==='center'"
+        }
+      ]
+    }
+  ],
+  "runtime": "rn"
+}

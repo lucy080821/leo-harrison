@@ -1,0 +1,89 @@
+{
+  "title": {
+    "vi": "Route Handler: viết API trong Next.js",
+    "en": "Route Handlers: building APIs in Next.js"
+  },
+  "summary": {
+    "vi": "route.js, GET/POST, Request/Response chuẩn Web",
+    "en": "route.js, GET/POST, standard Web Request/Response"
+  },
+  "minutes": 20,
+  "preview": "console",
+  "files": [
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "// app/api/hello/route.js — Next.js dùng Request/Response chuẩn Web,\n// giống hệt những gì có sẵn trong trình duyệt:\nasync function GET(request) {\n  const { searchParams } = new URL(request.url);\n  const name = searchParams.get(\"name\") ?? \"world\";\n  return Response.json({ message: \"Hello, \" + name });\n}\n\nasync function main() {\n  const res = await GET(new Request(\"http://localhost:3000/api/hello?name=Lexi\"));\n  console.log(res.status);\n  console.log(JSON.stringify(await res.json()));\n}\nmain();\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết GET(request) trả Response.json({ sum: a + b }) với a và b lấy từ query (?a=2&b=3) và chuyển thành số.",
+        "en": "Write GET(request) returning Response.json({ sum: a + b }) with a and b taken from the query (?a=2&b=3) and converted to numbers."
+      },
+      "hint": {
+        "vi": "const sp = new URL(request.url).searchParams; Number(sp.get(\"a\")) + Number(sp.get(\"b\"))",
+        "en": "const sp = new URL(request.url).searchParams; Number(sp.get(\"a\")) + Number(sp.get(\"b\"))"
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "async function GET(request) {\n  // viết ở đây\n}\n\nGET(new Request(\"http://x.test/api/add?a=2&b=3\"))\n  .then((r) => r.json())\n  .then((d) => console.log(JSON.stringify(d)));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "async function GET(request) {\n  const sp = new URL(request.url).searchParams;\n  const sum = Number(sp.get(\"a\")) + Number(sp.get(\"b\"));\n  return Response.json({ sum });\n}\n\nGET(new Request(\"http://x.test/api/add?a=2&b=3\"))\n  .then((r) => r.json())\n  .then((d) => console.log(JSON.stringify(d)));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In {\"sum\":5}",
+            "en": "Prints {\"sum\":5}"
+          },
+          "test": "logs.join('|')==='{\"sum\":5}'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Viết POST(request): đọc JSON body {title}; nếu thiếu title trả Response.json({error:\"title required\"}, {status: 400}); ngược lại trả {id: 1, title} với status 201.",
+        "en": "Write POST(request): read the JSON body {title}; if title is missing return Response.json({error:\"title required\"}, {status: 400}); otherwise return {id: 1, title} with status 201."
+      },
+      "hint": {
+        "vi": "const body = await request.json(); if (!body.title) return Response.json({...}, { status: 400 });",
+        "en": "const body = await request.json(); if (!body.title) return Response.json({...}, { status: 400 });"
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "async function POST(request) {\n  // viết ở đây\n}\n\nconst call = (body) =>\n  POST(new Request(\"http://x.test/api/todos\", { method: \"POST\", body: JSON.stringify(body) }))\n    .then((r) => r.status);\n\n(async () => {\n  console.log(await call({ title: \"Học Next\" }));\n  console.log(await call({}));\n})();\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "async function POST(request) {\n  const body = await request.json();\n  if (!body.title) {\n    return Response.json({ error: \"title required\" }, { status: 400 });\n  }\n  return Response.json({ id: 1, title: body.title }, { status: 201 });\n}\n\nconst call = (body) =>\n  POST(new Request(\"http://x.test/api/todos\", { method: \"POST\", body: JSON.stringify(body) }))\n    .then((r) => r.status);\n\n(async () => {\n  console.log(await call({ title: \"Học Next\" }));\n  console.log(await call({}));\n})();\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Trả 201 rồi 400",
+            "en": "Returns 201 then 400"
+          },
+          "test": "logs.join('|')==='201|400'"
+        }
+      ]
+    }
+  ]
+}

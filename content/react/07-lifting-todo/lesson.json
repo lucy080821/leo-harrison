@@ -1,0 +1,97 @@
+{
+  "title": {
+    "vi": "Nâng state và bài Todo",
+    "en": "Lifting state and a Todo app"
+  },
+  "summary": {
+    "vi": "Chia sẻ state giữa component, ghép component thành app",
+    "en": "Share state between components, compose an app"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { useState } from \"react\";\n\nfunction TodoItem({ todo, onToggle }) {\n  return (\n    <li\n      onClick={() => onToggle(todo.id)}\n      style={{ textDecoration: todo.done ? \"line-through\" : \"none\" }}\n    >\n      {todo.text}\n    </li>\n  );\n}\n\nexport default function App() {\n  const [todos, setTodos] = useState([\n    { id: 1, text: \"Học React\", done: false },\n    { id: 2, text: \"Làm bài tập\", done: true },\n  ]);\n\n  const toggle = (id) =>\n    setTodos(todos.map((t) => (t.id === id ? { ...t, done: !t.done } : t)));\n\n  return (\n    <ul>\n      {todos.map((t) => (\n        <TodoItem key={t.id} todo={t} onToggle={toggle} />\n      ))}\n    </ul>\n  );\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Hoàn thành hàm addTodo: thêm một việc mới {id: Date.now(), text, done:false} vào cuối danh sách. Form đã nối sẵn.",
+        "en": "Finish addTodo: append a new todo {id: Date.now(), text, done:false} to the list. The form is already wired."
+      },
+      "hint": {
+        "vi": "setTodos([...todos, { id: Date.now(), text, done: false }]);",
+        "en": "setTodos([...todos, { id: Date.now(), text, done: false }]);"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\n\nexport default function App() {\n  const [todos, setTodos] = useState([]);\n  const [text, setText] = useState(\"\");\n\n  function addTodo(e) {\n    e.preventDefault();\n    // thêm todo ở đây, rồi xóa ô nhập\n  }\n\n  return (\n    <div>\n      <form onSubmit={addTodo}>\n        <input id=\"in\" value={text} onChange={(e) => setText(e.target.value)} />\n        <button id=\"add\">Thêm</button>\n      </form>\n      <ul>{todos.map((t) => <li key={t.id}>{t.text}</li>)}</ul>\n    </div>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\n\nexport default function App() {\n  const [todos, setTodos] = useState([]);\n  const [text, setText] = useState(\"\");\n\n  function addTodo(e) {\n    e.preventDefault();\n    if (!text.trim()) return;\n    setTodos([...todos, { id: Date.now(), text, done: false }]);\n    setText(\"\");\n  }\n\n  return (\n    <div>\n      <form onSubmit={addTodo}>\n        <input id=\"in\" value={text} onChange={(e) => setText(e.target.value)} />\n        <button id=\"add\">Thêm</button>\n      </form>\n      <ul>{todos.map((t) => <li key={t.id}>{t.text}</li>)}</ul>\n    </div>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Thêm việc làm xuất hiện trong danh sách",
+            "en": "A added todo appears in the list"
+          },
+          "test": "(async()=>{const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;const i=document.getElementById('in');set.call(i,'Học');i.dispatchEvent(new Event('input',{bubbles:true}));await new Promise(r=>setTimeout(r,60));document.getElementById('add').click();await new Promise(r=>setTimeout(r,60));return [...document.querySelectorAll('li')].map(x=>x.textContent).join()==='Học'})()"
+        },
+        {
+          "label": {
+            "vi": "Ô nhập được xóa sau khi thêm",
+            "en": "Input is cleared after adding"
+          },
+          "test": "document.getElementById('in').value===''"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Hiển thị <p id=\"left\"> với số việc chưa xong (done === false), dạng \"Còn lại: N\".",
+        "en": "Show <p id=\"left\"> with the number of unfinished todos (done === false), as \"Left: N\"."
+      },
+      "hint": {
+        "vi": "const left = todos.filter((t) => !t.done).length;",
+        "en": "const left = todos.filter((t) => !t.done).length;"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\n\nexport default function App() {\n  const [todos] = useState([\n    { id: 1, text: \"A\", done: false },\n    { id: 2, text: \"B\", done: true },\n    { id: 3, text: \"C\", done: false },\n  ]);\n  return (\n    <div>\n      <p id=\"left\">Left: ?</p>\n    </div>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\n\nexport default function App() {\n  const [todos] = useState([\n    { id: 1, text: \"A\", done: false },\n    { id: 2, text: \"B\", done: true },\n    { id: 3, text: \"C\", done: false },\n  ]);\n  const left = todos.filter((t) => !t.done).length;\n  return (\n    <div>\n      <p id=\"left\">Left: {left}</p>\n    </div>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Hiện Left: 2",
+            "en": "Shows Left: 2"
+          },
+          "test": "/Left:\\s*2/.test(document.getElementById('left')?.textContent||'')"
+        }
+      ]
+    }
+  ],
+  "runtime": "react"
+}

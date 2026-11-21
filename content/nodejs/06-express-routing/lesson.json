@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Express: định tuyến",
+    "en": "Express: routing"
+  },
+  "summary": {
+    "vi": "app.get/post, params, query, res.json",
+    "en": "app.get/post, params, query, res.json"
+  },
+  "minutes": 20,
+  "preview": "console",
+  "files": [
+    {
+      "name": "index.js",
+      "lang": "javascript",
+      "code": "const express = require(\"express\");\nconst app = express();\n\napp.get(\"/\", (req, res) => res.send(\"Trang chủ\"));\n\napp.get(\"/hello/:name\", (req, res) => {\n  res.json({ message: \"Xin chào \" + req.params.name });\n});\n\napp.get(\"/search\", (req, res) => {\n  // /search?q=node  ->  req.query.q === \"node\"\n  res.json({ q: req.query.q });\n});\n\n// app.listen(3000) ngoài máy thật. Ở đây dùng inject:\n(async () => {\n  for (const url of [\"/\", \"/hello/Lexi\", \"/search?q=node\"]) {\n    const r = await app.inject(url);\n    console.log(r.statusCode, r.body);\n  }\n})();\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Thêm route GET /square/:n trả JSON {\"result\": n*n} (n là số).",
+        "en": "Add a GET /square/:n route returning JSON {\"result\": n*n} (n is a number)."
+      },
+      "hint": {
+        "vi": "app.get(\"/square/:n\", (req, res) => { const n = Number(req.params.n); res.json({ result: n * n }); });",
+        "en": "app.get(\"/square/:n\", (req, res) => { const n = Number(req.params.n); res.json({ result: n * n }); });"
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const express = require(\"express\");\nconst app = express();\n\n// thêm route ở đây\n\napp.inject(\"/square/7\").then((r) => console.log(r.statusCode, r.body));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const express = require(\"express\");\nconst app = express();\n\napp.get(\"/square/:n\", (req, res) => {\n  const n = Number(req.params.n);\n  res.json({ result: n * n });\n});\n\napp.inject(\"/square/7\").then((r) => console.log(r.statusCode, r.body));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Trả 200 và {\"result\":49}",
+            "en": "Returns 200 and {\"result\":49}"
+          },
+          "test": "logs.join('|')==='200 {\"result\":49}'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Thêm route GET /greet đọc query ?name=... và trả văn bản \"Hello, <name>\"; nếu thiếu name thì dùng \"stranger\".",
+        "en": "Add a GET /greet route reading ?name=... and returning the text \"Hello, <name>\"; if name is missing use \"stranger\"."
+      },
+      "hint": {
+        "vi": "const name = req.query.name || \"stranger\"; res.send(\"Hello, \" + name);",
+        "en": "const name = req.query.name || \"stranger\"; res.send(\"Hello, \" + name);"
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const express = require(\"express\");\nconst app = express();\n\n// thêm route ở đây\n\n(async () => {\n  console.log((await app.inject(\"/greet?name=Lexi\")).body);\n  console.log((await app.inject(\"/greet\")).body);\n})();\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const express = require(\"express\");\nconst app = express();\n\napp.get(\"/greet\", (req, res) => {\n  const name = req.query.name || \"stranger\";\n  res.send(\"Hello, \" + name);\n});\n\n(async () => {\n  console.log((await app.inject(\"/greet?name=Lexi\")).body);\n  console.log((await app.inject(\"/greet\")).body);\n})();\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In Hello, Lexi rồi Hello, stranger",
+            "en": "Prints Hello, Lexi then Hello, stranger"
+          },
+          "test": "logs.join('|')==='Hello, Lexi|Hello, stranger'"
+        }
+      ]
+    }
+  ],
+  "runtime": "node"
+}

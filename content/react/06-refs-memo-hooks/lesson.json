@@ -1,0 +1,97 @@
+{
+  "title": {
+    "vi": "useRef, useMemo và hook tự viết",
+    "en": "useRef, useMemo and custom hooks"
+  },
+  "summary": {
+    "vi": "Tham chiếu DOM, ghi nhớ giá trị, tái sử dụng logic",
+    "en": "DOM references, memoised values, reusable logic"
+  },
+  "minutes": 20,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { useState, useRef, useMemo } from \"react\";\n\n// Hook tự viết: tên bắt đầu bằng \"use\"\nfunction useToggle(initial = false) {\n  const [on, setOn] = useState(initial);\n  const toggle = () => setOn((v) => !v);\n  return [on, toggle];\n}\n\nexport default function App() {\n  const inputRef = useRef(null);\n  const [on, toggle] = useToggle();\n  const [n, setN] = useState(5);\n  const squared = useMemo(() => n * n, [n]);\n\n  return (\n    <div>\n      <input ref={inputRef} />\n      <button onClick={() => inputRef.current.focus()}>Focus</button>\n      <button onClick={toggle}>{on ? \"BẬT\" : \"TẮT\"}</button>\n      <p>{n}² = {squared}</p>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Dùng useRef để khi bấm nút #go thì ô input #box được focus.",
+        "en": "Use useRef so that clicking #go focuses the #box input."
+      },
+      "hint": {
+        "vi": "const ref = useRef(null); <input ref={ref} />; onClick={() => ref.current.focus()}",
+        "en": "const ref = useRef(null); <input ref={ref} />; onClick={() => ref.current.focus()}"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useRef } from \"react\";\n\nexport default function App() {\n  return (\n    <div>\n      <input id=\"box\" />\n      <button id=\"go\">Focus</button>\n    </div>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useRef } from \"react\";\n\nexport default function App() {\n  const ref = useRef(null);\n  return (\n    <div>\n      <input id=\"box\" ref={ref} />\n      <button id=\"go\" onClick={() => ref.current.focus()}>Focus</button>\n    </div>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Bấm nút thì input được focus",
+            "en": "Clicking focuses the input"
+          },
+          "test": "(async()=>{document.getElementById('go').click();await new Promise(r=>setTimeout(r,60));return document.activeElement===document.getElementById('box')})()"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Viết hook useCounter(start) trả về [count, inc, dec]. App dùng nó: #c hiện số, #inc tăng, #dec giảm.",
+        "en": "Write a useCounter(start) hook returning [count, inc, dec]. App uses it: #c shows the number, #inc increments, #dec decrements."
+      },
+      "hint": {
+        "vi": "const [c, setC] = useState(start); return [c, () => setC(c + 1), () => setC(c - 1)];",
+        "en": "const [c, setC] = useState(start); return [c, () => setC(c + 1), () => setC(c - 1)];"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\n\nfunction useCounter(start) {\n  // viết hook ở đây\n  return [0, () => {}, () => {}];\n}\n\nexport default function App() {\n  const [count, inc, dec] = useCounter(10);\n  return (\n    <div>\n      <span id=\"c\">{count}</span>\n      <button id=\"inc\" onClick={inc}>+</button>\n      <button id=\"dec\" onClick={dec}>-</button>\n    </div>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\n\nfunction useCounter(start) {\n  const [c, setC] = useState(start);\n  return [c, () => setC(c + 1), () => setC(c - 1)];\n}\n\nexport default function App() {\n  const [count, inc, dec] = useCounter(10);\n  return (\n    <div>\n      <span id=\"c\">{count}</span>\n      <button id=\"inc\" onClick={inc}>+</button>\n      <button id=\"dec\" onClick={dec}>-</button>\n    </div>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Bắt đầu ở 10",
+            "en": "Starts at 10"
+          },
+          "test": "document.getElementById('c').textContent==='10'"
+        },
+        {
+          "label": {
+            "vi": "+ rồi − hoạt động",
+            "en": "+ and − work"
+          },
+          "test": "(async()=>{const c=()=>document.getElementById('c').textContent;document.getElementById('inc').click();await new Promise(r=>setTimeout(r,60));document.getElementById('inc').click();await new Promise(r=>setTimeout(r,60));const a=c()==='12';document.getElementById('dec').click();await new Promise(r=>setTimeout(r,60));return a&&c()==='11'})()"
+        }
+      ]
+    }
+  ],
+  "runtime": "react"
+}

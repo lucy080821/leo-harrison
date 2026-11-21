@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "EventEmitter: lập trình theo sự kiện",
+    "en": "EventEmitter: event-driven code"
+  },
+  "summary": {
+    "vi": "on, emit, once, off — nền tảng của Node",
+    "en": "on, emit, once, off — the heart of Node"
+  },
+  "minutes": 15,
+  "preview": "console",
+  "files": [
+    {
+      "name": "index.js",
+      "lang": "javascript",
+      "code": "const EventEmitter = require(\"events\");\n\nconst shop = new EventEmitter();\n\nshop.on(\"order\", (item, qty) => {\n  console.log(\"Nhận đơn:\", item, \"x\", qty);\n});\n\nshop.once(\"open\", () => console.log(\"Mở cửa (chỉ một lần)\"));\n\nshop.emit(\"open\");\nshop.emit(\"open\");            // không in lần nữa\nshop.emit(\"order\", \"bánh\", 2);\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tạo emitter, đăng ký sự kiện \"greet\" in ra \"Hi, \" + name, rồi emit(\"greet\", \"Lexi\").",
+        "en": "Create an emitter, register a \"greet\" event printing \"Hi, \" + name, then emit(\"greet\", \"Lexi\")."
+      },
+      "hint": {
+        "vi": "e.on(\"greet\", (name) => console.log(\"Hi, \" + name)); e.emit(\"greet\", \"Lexi\");",
+        "en": "e.on(\"greet\", (name) => console.log(\"Hi, \" + name)); e.emit(\"greet\", \"Lexi\");"
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const EventEmitter = require(\"events\");\nconst e = new EventEmitter();\n// viết ở đây\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const EventEmitter = require(\"events\");\nconst e = new EventEmitter();\ne.on(\"greet\", (name) => console.log(\"Hi, \" + name));\ne.emit(\"greet\", \"Lexi\");\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In Hi, Lexi",
+            "en": "Prints Hi, Lexi"
+          },
+          "test": "logs.join('|')==='Hi, Lexi'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Viết class Counter kế thừa EventEmitter có phương thức inc(): tăng this.n và emit(\"change\", this.n). Gọi inc() ba lần và in mỗi giá trị nhận được.",
+        "en": "Write a Counter class extending EventEmitter with inc(): increase this.n and emit(\"change\", this.n). Call inc() three times and print each received value."
+      },
+      "hint": {
+        "vi": "class Counter extends EventEmitter { n = 0; inc() { this.n++; this.emit(\"change\", this.n); } }",
+        "en": "class Counter extends EventEmitter { n = 0; inc() { this.n++; this.emit(\"change\", this.n); } }"
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const EventEmitter = require(\"events\");\n\nclass Counter extends EventEmitter {\n  n = 0;\n  inc() {\n    // viết ở đây\n  }\n}\n\nconst c = new Counter();\nc.on(\"change\", (v) => console.log(v));\nc.inc(); c.inc(); c.inc();\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const EventEmitter = require(\"events\");\n\nclass Counter extends EventEmitter {\n  n = 0;\n  inc() {\n    this.n++;\n    this.emit(\"change\", this.n);\n  }\n}\n\nconst c = new Counter();\nc.on(\"change\", (v) => console.log(v));\nc.inc(); c.inc(); c.inc();\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 1, 2, 3",
+            "en": "Prints 1, 2, 3"
+          },
+          "test": "logs.join('|')==='1|2|3'"
+        }
+      ]
+    }
+  ],
+  "runtime": "node"
+}

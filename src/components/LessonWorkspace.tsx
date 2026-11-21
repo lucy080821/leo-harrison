@@ -6,7 +6,7 @@ import { CodeEditor } from "@/components/CodeEditor";
 import { EngineOutput, type EngineState } from "@/components/EngineOutput";
 import { getEngine } from "@/lib/engines/client";
 import type { EngineInput } from "@/lib/engines/types";
-import { buildSrcDoc, type SandboxFile } from "@/lib/sandbox";
+import { buildSrcDoc, type Runtime, type SandboxFile } from "@/lib/sandbox";
 import { useProgress } from "@/lib/progress";
 import type { Dict, L10n, Locale } from "@/lib/i18n";
 
@@ -28,6 +28,7 @@ type Props = {
   files: SandboxFile[];
   preview: "web" | "console";
   engine: "web" | "python" | "sql";
+  runtime?: Runtime;
   engineData: { data: Record<string, string>; dataset?: string };
   exercises: Exercise[];
   prevHref?: string;
@@ -52,10 +53,11 @@ export function LessonWorkspace(p: Props) {
   const [logs, setLogs] = useState<LogLine[]>([]);
   const [results, setResults] = useState<Record<string, boolean[]>>({});
   const [showHint, setShowHint] = useState<Record<string, boolean>>({});
-  const [srcDoc, setSrcDoc] = useState(() => buildSrcDoc(p.files));
+  const [srcDoc, setSrcDoc] = useState(() => buildSrcDoc(p.files, p.runtime));
 
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const pendingCheck = useRef<string | null>(null);
+  const loadToken = useRef(0);
 
   // ----- Engine Python / SQL (chạy trong Web Worker) -----
   const isEngine = p.engine !== "web";
@@ -73,15 +75,16 @@ export function LessonWorkspace(p: Props) {
 
   // Realtime: gõ đến đâu cập nhật đến đó (debounce nhẹ để không giật).
   useEffect(() => {
-    const doc = buildSrcDoc(files);
+    const doc = buildSrcDoc(files, p.runtime);
     const id = setTimeout(() => {
+      if (pendingCheck.current) return; // đang chấm bài: giữ nguyên trang để không nạp lại giữa chừng
       setSrcDoc((prev) => {
         if (prev !== doc) setLogs([]);
         return doc;
       });
     }, 300);
     return () => clearTimeout(id);
-  }, [files]);
+  }, [files, p.runtime]);
 
   const engineInput = useCallback(
     (list: SandboxFile[]): EngineInput => ({
@@ -214,7 +217,7 @@ export function LessonWorkspace(p: Props) {
     // Luôn nạp lại trang sạch trước khi chấm để trạng thái cũ (biến đếm, timer...) không làm sai kết quả.
     pendingCheck.current = exercise.id;
     setLogs([]);
-    setSrcDoc(buildSrcDoc(files) + `<!-- run ${Date.now()} -->`);
+    setSrcDoc(buildSrcDoc(files, p.runtime) + `<!-- run ${Date.now()} -->`);
   }
 
   const exResults = exercise ? results[exercise.id] : undefined;
@@ -451,11 +454,17 @@ export function LessonWorkspace(p: Props) {
           <iframe
             ref={iframeRef}
             title={t.preview}
-            sandbox="allow-scripts"
+            sandbox="allow-scripts allow-forms"
             srcDoc={srcDoc}
             onLoad={() => {
               // Chờ một chút để các timer/promise ngắn trong code của bạn kịp chạy xong rồi mới chấm.
-              if (pendingCheck.current) setTimeout(() => pendingCheck.current && sendCheck(pendingCheck.current), 700);
+              // Mỗi lần nạp trang chỉ gửi đúng một lệnh chấm (tránh chấm đôi khi trang nạp lại liên tiếp).
+              const token = ++loadToken.current;
+              if (pendingCheck.current) {
+                setTimeout(() => {
+                  if (token === loadToken.current && pendingCheck.current) sendCheck(pendingCheck.current);
+                }, 700);
+              }
             }}
             className={`h-full w-full bg-white ${outTab === "preview" ? "" : "hidden"}`}
           />

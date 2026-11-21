@@ -41,6 +41,7 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
       files={l.files}
       preview={l.preview}
       engine={l.engine ?? "web"}
+      runtime={l.runtime}
       engineData={getEngineData(l)}
       exercises={l.exercises}
       prevHref={idx > 0 ? `${base}/${all[idx - 1].slug}` : base}

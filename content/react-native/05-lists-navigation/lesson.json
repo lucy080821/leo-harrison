@@ -1,0 +1,104 @@
+{
+  "title": {
+    "vi": "Danh sách với FlatList và điều hướng",
+    "en": "Lists with FlatList and navigation"
+  },
+  "summary": {
+    "vi": "FlatList, keyExtractor, ScrollView, điều hướng màn hình",
+    "en": "FlatList, keyExtractor, ScrollView, screen navigation"
+  },
+  "minutes": 20,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { View, Text, FlatList, StyleSheet } from \"react-native\";\n\nconst DATA = [\n  { id: \"1\", name: \"Hà Nội\" },\n  { id: \"2\", name: \"Đà Nẵng\" },\n  { id: \"3\", name: \"TP.HCM\" },\n];\n\nexport default function App() {\n  return (\n    <FlatList\n      data={DATA}\n      keyExtractor={(item) => item.id}\n      renderItem={({ item }) => (\n        <View style={styles.row}>\n          <Text>{item.name}</Text>\n        </View>\n      )}\n    />\n  );\n}\n\nconst styles = StyleSheet.create({\n  row: { padding: 14, borderBottomWidth: 1, borderColor: \"#ddd\" },\n});\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Dùng FlatList để hiển thị mỗi tên trong mảng names thành một <Text testID=\"item\">.",
+        "en": "Use FlatList to show each name in the names array as a <Text testID=\"item\">."
+      },
+      "hint": {
+        "vi": "<FlatList data={names} keyExtractor={(n) => n} renderItem={({ item }) => <Text testID=\"item\">{item}</Text>} />",
+        "en": "<FlatList data={names} keyExtractor={(n) => n} renderItem={({ item }) => <Text testID=\"item\">{item}</Text>} />"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { View, Text, FlatList } from \"react-native\";\n\nconst names = [\"An\", \"Bình\", \"Chi\"];\n\nexport default function App() {\n  return (\n    <View>\n      {/* dùng FlatList ở đây */}\n    </View>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { View, Text, FlatList } from \"react-native\";\n\nconst names = [\"An\", \"Bình\", \"Chi\"];\n\nexport default function App() {\n  return (\n    <View>\n      <FlatList\n        data={names}\n        keyExtractor={(n) => n}\n        renderItem={({ item }) => <Text testID=\"item\">{item}</Text>}\n      />\n    </View>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 3 phần tử",
+            "en": "Has 3 items"
+          },
+          "test": "document.querySelectorAll('[data-testid=\"item\"]').length===3"
+        },
+        {
+          "label": {
+            "vi": "Thứ tự đúng",
+            "en": "Correct order"
+          },
+          "test": "[...document.querySelectorAll('[data-testid=\"item\"]')].map(x=>x.textContent).join()==='An,Bình,Chi'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Làm điều hướng đơn giản bằng state: screen là \"home\" hoặc \"detail\". Ở home có Pressable testID=\"go\" chuyển sang detail; ở detail hiện <Text testID=\"title\">Detail</Text> và Pressable testID=\"back\" quay lại.",
+        "en": "Build simple navigation with state: screen is \"home\" or \"detail\". On home a Pressable testID=\"go\" switches to detail; on detail show <Text testID=\"title\">Detail</Text> and a Pressable testID=\"back\" that returns."
+      },
+      "hint": {
+        "vi": "const [screen, setScreen] = useState(\"home\"); screen === \"home\" ? ... : ...",
+        "en": "const [screen, setScreen] = useState(\"home\"); screen === \"home\" ? ... : ..."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\nimport { View, Text, Pressable } from \"react-native\";\n\nexport default function App() {\n  const [screen, setScreen] = useState(\"home\");\n  // trả về màn hình tương ứng\n  return (\n    <View>\n      <Pressable testID=\"go\"><Text>Đi tới chi tiết</Text></Pressable>\n    </View>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\nimport { View, Text, Pressable } from \"react-native\";\n\nexport default function App() {\n  const [screen, setScreen] = useState(\"home\");\n  if (screen === \"detail\") {\n    return (\n      <View>\n        <Text testID=\"title\">Detail</Text>\n        <Pressable testID=\"back\" onPress={() => setScreen(\"home\")}>\n          <Text>Quay lại</Text>\n        </Pressable>\n      </View>\n    );\n  }\n  return (\n    <View>\n      <Pressable testID=\"go\" onPress={() => setScreen(\"detail\")}>\n        <Text>Đi tới chi tiết</Text>\n      </Pressable>\n    </View>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Chuyển sang màn Detail",
+            "en": "Navigates to Detail"
+          },
+          "test": "(async()=>{document.querySelector('[data-testid=\"go\"]').click();await new Promise(r=>setTimeout(r,60));return document.querySelector('[data-testid=\"title\"]')?.textContent==='Detail'})()"
+        },
+        {
+          "label": {
+            "vi": "Quay lại được màn Home",
+            "en": "Can go back to Home"
+          },
+          "test": "(async()=>{document.querySelector('[data-testid=\"back\"]')?.click();await new Promise(r=>setTimeout(r,60));return !!document.querySelector('[data-testid=\"go\"]')})()"
+        }
+      ]
+    }
+  ],
+  "runtime": "rn"
+}

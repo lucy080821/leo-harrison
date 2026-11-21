@@ -1,0 +1,97 @@
+{
+  "title": {
+    "vi": "Server Component và Client Component",
+    "en": "Server Components and Client Components"
+  },
+  "summary": {
+    "vi": "Mặc định chạy trên server, \"use client\" khi cần tương tác, renderToString",
+    "en": "Server by default, \"use client\" for interactivity, renderToString"
+  },
+  "minutes": 20,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { useState } from \"react\";\nimport { renderToString } from \"react-dom/server\";\n\n// Component thường (Server Component trong Next): chỉ tạo HTML\nfunction Article({ title }) {\n  return (\n    <article>\n      <h2>{title}</h2>\n      <p>Nội dung được vẽ sẵn trên server.</p>\n    </article>\n  );\n}\n\n// Client Component: cần \"use client\" ở đầu file để dùng state/sự kiện\nfunction LikeButton() {\n  const [likes, setLikes] = useState(0);\n  return <button onClick={() => setLikes(likes + 1)}>👍 {likes}</button>;\n}\n\nexport default function App() {\n  // renderToString mô phỏng việc server biến component thành chuỗi HTML\n  const html = renderToString(<Article title=\"Giới thiệu Next.js\" />);\n  return (\n    <div>\n      <pre id=\"html\">{html}</pre>\n      <LikeButton />\n    </div>\n  );\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Dùng renderToString để chuyển <h1>Hi</h1> thành chuỗi HTML và hiển thị trong <pre id=\"out\">.",
+        "en": "Use renderToString to turn <h1>Hi</h1> into an HTML string and show it in <pre id=\"out\">."
+      },
+      "hint": {
+        "vi": "const html = renderToString(<h1>Hi</h1>);",
+        "en": "const html = renderToString(<h1>Hi</h1>);"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { renderToString } from \"react-dom/server\";\n\nexport default function App() {\n  const html = \"\"; // dùng renderToString\n  return <pre id=\"out\">{html}</pre>;\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { renderToString } from \"react-dom/server\";\n\nexport default function App() {\n  const html = renderToString(<h1>Hi</h1>);\n  return <pre id=\"out\">{html}</pre>;\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Chuỗi HTML là <h1>Hi</h1>",
+            "en": "The HTML string is <h1>Hi</h1>"
+          },
+          "test": "document.getElementById('out')?.textContent==='<h1>Hi</h1>'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Tạo Client Component LikeButton (state likes, bắt đầu 0) hiển thị \"Likes: N\" trong <button id=\"like\">; mỗi lần bấm tăng 1.",
+        "en": "Build a LikeButton Client Component (state likes, starts at 0) showing \"Likes: N\" in <button id=\"like\">; each click adds 1."
+      },
+      "hint": {
+        "vi": "const [likes, setLikes] = useState(0); <button id=\"like\" onClick={() => setLikes(likes + 1)}>Likes: {likes}</button>",
+        "en": "const [likes, setLikes] = useState(0); <button id=\"like\" onClick={() => setLikes(likes + 1)}>Likes: {likes}</button>"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\n\nfunction LikeButton() {\n  // thêm state và onClick\n  return <button id=\"like\">Likes: 0</button>;\n}\n\nexport default function App() {\n  return <LikeButton />;\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\n\nfunction LikeButton() {\n  const [likes, setLikes] = useState(0);\n  return (\n    <button id=\"like\" onClick={() => setLikes(likes + 1)}>\n      Likes: {likes}\n    </button>\n  );\n}\n\nexport default function App() {\n  return <LikeButton />;\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Ban đầu Likes: 0",
+            "en": "Starts at Likes: 0"
+          },
+          "test": "document.getElementById('like').textContent==='Likes: 0'"
+        },
+        {
+          "label": {
+            "vi": "Bấm hai lần được Likes: 2",
+            "en": "Two clicks give Likes: 2"
+          },
+          "test": "(async()=>{const b=document.getElementById('like');b.click();await new Promise(r=>setTimeout(r,60));b.click();await new Promise(r=>setTimeout(r,60));return b.textContent==='Likes: 2'})()"
+        }
+      ]
+    }
+  ],
+  "runtime": "react"
+}

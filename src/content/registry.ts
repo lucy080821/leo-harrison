@@ -75,6 +75,13 @@ export const courses: Course[] = [
     desc: { vi: "Ngôn ngữ lập trình của trình duyệt — làm trang web biết tương tác.", en: "The language of the browser — make pages interactive." },
   },
   {
+    id: "react",
+    category: "frontend",
+    badge: "React",
+    name: { vi: "React", en: "React" },
+    desc: { vi: "Thư viện UI: component, state, hooks — nền tảng của Next.js và React Native.", en: "The UI library: components, state, hooks — the base of Next.js and React Native." },
+  },
+  {
     id: "nextjs",
     category: "frontend",
     badge: "Next",

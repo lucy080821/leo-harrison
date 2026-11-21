@@ -13,6 +13,7 @@ const langExt = {
   html: () => html(),
   css: () => css(),
   javascript: () => javascript(),
+  jsx: () => javascript({ jsx: true }),
   python: () => python(),
   sql: () => sql(),
 } as const;

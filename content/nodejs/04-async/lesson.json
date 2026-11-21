@@ -1,0 +1,124 @@
+{
+  "title": {
+    "vi": "Bất đồng bộ: callback, Promise, async/await",
+    "en": "Async: callbacks, Promises, async/await"
+  },
+  "summary": {
+    "vi": "Event loop, hẹn giờ, xử lý lỗi bất đồng bộ",
+    "en": "The event loop, timers, async error handling"
+  },
+  "minutes": 20,
+  "preview": "console",
+  "files": [
+    {
+      "name": "index.js",
+      "lang": "javascript",
+      "code": "const fs = require(\"fs\");\nconst { setTimeout: sleep } = require(\"timers/promises\");\n\nasync function main() {\n  console.log(\"1. bắt đầu\");\n\n  await sleep(50);                       // chờ 50ms mà không chặn\n  fs.writeFileSync(\"/n.txt\", \"42\");\n  const text = await fs.promises.readFile(\"/n.txt\", \"utf8\");\n  console.log(\"2. đọc được\", text);\n\n  try {\n    await fs.promises.readFile(\"/khong-co.txt\");\n  } catch (err) {\n    console.log(\"3. lỗi:\", err.code);    // ENOENT\n  }\n}\n\nmain();\nconsole.log(\"0. dòng này in TRƯỚC (main chưa xong)\");\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết async function delayedDouble(n) chờ 20ms (timers/promises) rồi trả về n * 2. In kết quả của delayedDouble(21).",
+        "en": "Write async function delayedDouble(n) that waits 20ms (timers/promises) and returns n * 2. Print the result of delayedDouble(21)."
+      },
+      "hint": {
+        "vi": "await sleep(20); return n * 2;",
+        "en": "await sleep(20); return n * 2;"
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const { setTimeout: sleep } = require(\"timers/promises\");\n\nasync function delayedDouble(n) {\n  // viết ở đây\n}\n\ndelayedDouble(21).then(console.log);\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const { setTimeout: sleep } = require(\"timers/promises\");\n\nasync function delayedDouble(n) {\n  await sleep(20);\n  return n * 2;\n}\n\ndelayedDouble(21).then(console.log);\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 42",
+            "en": "Prints 42"
+          },
+          "test": "logs.join('|')==='42'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Dùng Promise.all để chạy song song a() và b() (đã cho) rồi in tổng hai kết quả.",
+        "en": "Use Promise.all to run a() and b() (given) in parallel, then print the sum of the two results."
+      },
+      "hint": {
+        "vi": "const [x, y] = await Promise.all([a(), b()]); console.log(x + y);",
+        "en": "const [x, y] = await Promise.all([a(), b()]); console.log(x + y);"
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const a = () => new Promise((r) => setTimeout(() => r(10), 30));\nconst b = () => new Promise((r) => setTimeout(() => r(5), 30));\n\nasync function main() {\n  // viết ở đây\n}\nmain();\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const a = () => new Promise((r) => setTimeout(() => r(10), 30));\nconst b = () => new Promise((r) => setTimeout(() => r(5), 30));\n\nasync function main() {\n  const [x, y] = await Promise.all([a(), b()]);\n  console.log(x + y);\n}\nmain();\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 15",
+            "en": "Prints 15"
+          },
+          "test": "logs.join('|')==='15'"
+        }
+      ]
+    },
+    {
+      "id": "ex3",
+      "prompt": {
+        "vi": "Viết async function safeRead(path) trả về nội dung file, hoặc chuỗi \"missing\" nếu file không tồn tại (bắt lỗi bằng try/catch). In safeRead(\"/nope.txt\").",
+        "en": "Write async function safeRead(path) returning the file content, or the string \"missing\" if the file doesn't exist (catch with try/catch). Print safeRead(\"/nope.txt\")."
+      },
+      "hint": {
+        "vi": "try { return await fs.promises.readFile(path, \"utf8\"); } catch { return \"missing\"; }",
+        "en": "try { return await fs.promises.readFile(path, \"utf8\"); } catch { return \"missing\"; }"
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const fs = require(\"fs\");\n\nasync function safeRead(path) {\n  // viết ở đây\n}\n\nsafeRead(\"/nope.txt\").then(console.log);\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const fs = require(\"fs\");\n\nasync function safeRead(path) {\n  try {\n    return await fs.promises.readFile(path, \"utf8\");\n  } catch (err) {\n    return \"missing\";\n  }\n}\n\nsafeRead(\"/nope.txt\").then(console.log);\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In missing",
+            "en": "Prints missing"
+          },
+          "test": "logs.join('|')==='missing'"
+        }
+      ]
+    }
+  ],
+  "runtime": "node"
+}

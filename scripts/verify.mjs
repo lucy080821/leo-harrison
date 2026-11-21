@@ -8,8 +8,9 @@ const require = createRequire(import.meta.url);
 const ts = require("typescript");
 const { chromium } = require("playwright");
 
-const src = fs.readFileSync("src/lib/sandbox.ts", "utf8");
-const js = ts.transpileModule(src, { compilerOptions: { module: ts.ModuleKind.CommonJS, target: "ES2020" } }).outputText;
+const shim = fs.readFileSync("src/lib/nodeShim.ts", "utf8");
+const src = fs.readFileSync("src/lib/sandbox.ts", "utf8").replace('import { NODE_SHIM } from "@/lib/nodeShim";', "");
+const js = ts.transpileModule(shim + "\n" + src, { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 } }).outputText;
 const m = { exports: {} };
 new Function("module", "exports", js)(m, m.exports);
 const { buildSrcDoc } = m.exports;
@@ -20,15 +21,15 @@ const root = "content";
 const browser = await chromium.launch();
 let bad = 0, total = 0;
 
-async function run(files, tests) {
+async function run(files, tests, runtime) {
   const page = await browser.newPage();
   await page.setContent("<html><body></body></html>");
-  const doc = buildSrcDoc(files);
+  const doc = buildSrcDoc(files, runtime);
   await page.evaluate(
     ({ doc }) =>
       new Promise((res) => {
         const f = document.createElement("iframe");
-        f.sandbox = "allow-scripts";
+        f.sandbox = "allow-scripts allow-forms";
         f.srcdoc = doc;
         f.id = "f";
         f.onload = () => setTimeout(res, 800);
@@ -43,7 +44,7 @@ async function run(files, tests) {
           if (e.data && e.data.type === "checked") res(e.data.results);
         });
         document.getElementById("f").contentWindow.postMessage({ lexi: true, type: "check", tests }, "*");
-        setTimeout(() => res(null), 3000);
+        setTimeout(() => res(null), 45000);
       }),
     tests,
   );
@@ -125,8 +126,8 @@ for (const course of fs.readdirSync(root)) {
         const a = await runSql(ex.solution, tests, dataset); sol = a.results; solErr = a.error;
         st = (await runSql(ex.starter, tests, dataset)).results;
       } else {
-        sol = await run(ex.solution, tests);
-        st = await run(ex.starter, tests);
+        sol = await run(ex.solution, tests, meta.runtime);
+        st = await run(ex.starter, tests, meta.runtime);
       }
       if (!sol || !sol.every(Boolean)) { console.log(`SOLUTION FAILS  ${label}`, JSON.stringify(sol), solErr ? "\n  " + String(solErr).split("\n").slice(-3).join(" | ") : ""); bad++; }
       if (st && st.length && st.every(Boolean)) { console.log(`STARTER ALREADY PASSES  ${label}`); bad++; }

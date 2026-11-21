@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "REST API: CRUD với JSON",
+    "en": "REST API: CRUD with JSON"
+  },
+  "summary": {
+    "vi": "POST/PUT/DELETE, express.json, mã trạng thái chuẩn",
+    "en": "POST/PUT/DELETE, express.json, proper status codes"
+  },
+  "minutes": 25,
+  "preview": "console",
+  "files": [
+    {
+      "name": "index.js",
+      "lang": "javascript",
+      "code": "const express = require(\"express\");\nconst app = express();\napp.use(express.json());\n\nlet nextId = 3;\nconst todos = [\n  { id: 1, title: \"Học Node\", done: false },\n  { id: 2, title: \"Viết API\", done: false },\n];\n\napp.get(\"/todos\", (req, res) => res.json(todos));\n\napp.post(\"/todos\", (req, res) => {\n  const todo = { id: nextId++, title: req.body.title, done: false };\n  todos.push(todo);\n  res.status(201).json(todo);\n});\n\napp.delete(\"/todos/:id\", (req, res) => {\n  const i = todos.findIndex((t) => t.id === Number(req.params.id));\n  if (i === -1) return res.status(404).json({ error: \"not found\" });\n  todos.splice(i, 1);\n  res.sendStatus(204);\n});\n\n(async () => {\n  const r = await app.inject({ method: \"POST\", url: \"/todos\", body: { title: \"Deploy\" } });\n  console.log(r.statusCode, r.body);\n  console.log((await app.inject(\"/todos\")).json().length);\n})();\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Thêm route GET /todos/:id trả todo theo id, hoặc 404 {\"error\":\"not found\"} nếu không có.",
+        "en": "Add a GET /todos/:id route returning the todo by id, or 404 {\"error\":\"not found\"} if missing."
+      },
+      "hint": {
+        "vi": "const t = todos.find((x) => x.id === Number(req.params.id)); if (!t) return res.status(404).json({ error: \"not found\" }); res.json(t);",
+        "en": "const t = todos.find((x) => x.id === Number(req.params.id)); if (!t) return res.status(404).json({ error: \"not found\" }); res.json(t);"
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const express = require(\"express\");\nconst app = express();\napp.use(express.json());\n\nconst todos = [{ id: 1, title: \"A\" }, { id: 2, title: \"B\" }];\n\n// thêm GET /todos/:id ở đây\n\n(async () => {\n  const a = await app.inject(\"/todos/2\");\n  const b = await app.inject(\"/todos/99\");\n  console.log(a.statusCode, a.body);\n  console.log(b.statusCode, b.body);\n})();\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const express = require(\"express\");\nconst app = express();\napp.use(express.json());\n\nconst todos = [{ id: 1, title: \"A\" }, { id: 2, title: \"B\" }];\n\napp.get(\"/todos/:id\", (req, res) => {\n  const t = todos.find((x) => x.id === Number(req.params.id));\n  if (!t) return res.status(404).json({ error: \"not found\" });\n  res.json(t);\n});\n\n(async () => {\n  const a = await app.inject(\"/todos/2\");\n  const b = await app.inject(\"/todos/99\");\n  console.log(a.statusCode, a.body);\n  console.log(b.statusCode, b.body);\n})();\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Tìm thấy → 200 + todo, không thấy → 404",
+            "en": "Found → 200 + todo, missing → 404"
+          },
+          "test": "logs.join('|')==='200 {\"id\":2,\"title\":\"B\"}|404 {\"error\":\"not found\"}'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Thêm route PUT /todos/:id cập nhật title từ req.body.title và trả todo mới (404 nếu không có).",
+        "en": "Add a PUT /todos/:id route updating title from req.body.title and returning the updated todo (404 if missing)."
+      },
+      "hint": {
+        "vi": "t.title = req.body.title; res.json(t);",
+        "en": "t.title = req.body.title; res.json(t);"
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const express = require(\"express\");\nconst app = express();\napp.use(express.json());\n\nconst todos = [{ id: 1, title: \"A\" }];\n\n// thêm PUT /todos/:id ở đây\n\n(async () => {\n  const a = await app.inject({ method: \"PUT\", url: \"/todos/1\", body: { title: \"Mới\" } });\n  const b = await app.inject({ method: \"PUT\", url: \"/todos/5\", body: { title: \"x\" } });\n  console.log(a.statusCode, a.body);\n  console.log(b.statusCode);\n})();\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const express = require(\"express\");\nconst app = express();\napp.use(express.json());\n\nconst todos = [{ id: 1, title: \"A\" }];\n\napp.put(\"/todos/:id\", (req, res) => {\n  const t = todos.find((x) => x.id === Number(req.params.id));\n  if (!t) return res.status(404).json({ error: \"not found\" });\n  t.title = req.body.title;\n  res.json(t);\n});\n\n(async () => {\n  const a = await app.inject({ method: \"PUT\", url: \"/todos/1\", body: { title: \"Mới\" } });\n  const b = await app.inject({ method: \"PUT\", url: \"/todos/5\", body: { title: \"x\" } });\n  console.log(a.statusCode, a.body);\n  console.log(b.statusCode);\n})();\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Sửa được và 404 khi sai id",
+            "en": "Updates, and 404 for a bad id"
+          },
+          "test": "logs.join('|')==='200 {\"id\":1,\"title\":\"Mới\"}|404'"
+        }
+      ]
+    }
+  ],
+  "runtime": "node"
+}

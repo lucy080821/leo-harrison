@@ -1,0 +1,97 @@
+{
+  "title": {
+    "vi": "useEffect: tác dụng phụ",
+    "en": "useEffect: side effects"
+  },
+  "summary": {
+    "vi": "Chạy code sau khi vẽ, mảng phụ thuộc, dọn dẹp",
+    "en": "Run code after render, dependency array, cleanup"
+  },
+  "minutes": 18,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { useState, useEffect } from \"react\";\n\nexport default function App() {\n  const [seconds, setSeconds] = useState(0);\n\n  useEffect(() => {\n    const id = setInterval(() => setSeconds((s) => s + 1), 1000);\n    return () => clearInterval(id); // dọn dẹp khi component biến mất\n  }, []);\n\n  useEffect(() => {\n    document.title = \"Đã chạy \" + seconds + \"s\";\n  }, [seconds]);\n\n  return <p>Đã chạy {seconds} giây</p>;\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Dùng useEffect để đặt document.title = \"Count: \" + count mỗi khi count đổi.",
+        "en": "Use useEffect to set document.title = \"Count: \" + count whenever count changes."
+      },
+      "hint": {
+        "vi": "useEffect(() => { document.title = \"Count: \" + count; }, [count]);",
+        "en": "useEffect(() => { document.title = \"Count: \" + count; }, [count]);"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, useEffect } from \"react\";\n\nexport default function App() {\n  const [count, setCount] = useState(0);\n  // viết useEffect ở đây\n  return <button onClick={() => setCount(count + 1)}>Count {count}</button>;\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, useEffect } from \"react\";\n\nexport default function App() {\n  const [count, setCount] = useState(0);\n  useEffect(() => {\n    document.title = \"Count: \" + count;\n  }, [count]);\n  return <button onClick={() => setCount(count + 1)}>Count {count}</button>;\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Title ban đầu là Count: 0",
+            "en": "Initial title is Count: 0"
+          },
+          "test": "document.title==='Count: 0'"
+        },
+        {
+          "label": {
+            "vi": "Title đổi theo khi bấm",
+            "en": "Title follows clicks"
+          },
+          "test": "(async()=>{document.querySelector('button').click();await new Promise(r=>setTimeout(r,60));return document.title==='Count: 1'})()"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Dùng useEffect (mảng phụ thuộc rỗng) để sau khi vẽ lần đầu, đặt state ready = true. <p id=\"s\"> hiện \"ready\" khi xong.",
+        "en": "Use useEffect (empty dependency array) to set state ready = true after the first render. <p id=\"s\"> shows \"ready\" when done."
+      },
+      "hint": {
+        "vi": "useEffect(() => { setReady(true); }, []);",
+        "en": "useEffect(() => { setReady(true); }, []);"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, useEffect } from \"react\";\n\nexport default function App() {\n  const [ready, setReady] = useState(false);\n  // useEffect ở đây\n  return <p id=\"s\">{ready ? \"ready\" : \"loading\"}</p>;\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, useEffect } from \"react\";\n\nexport default function App() {\n  const [ready, setReady] = useState(false);\n  useEffect(() => {\n    setReady(true);\n  }, []);\n  return <p id=\"s\">{ready ? \"ready\" : \"loading\"}</p>;\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Hiện ready",
+            "en": "Shows ready"
+          },
+          "test": "(async()=>{await new Promise(r=>setTimeout(r,60));return document.getElementById('s').textContent==='ready'})()"
+        }
+      ]
+    }
+  ],
+  "runtime": "react"
+}

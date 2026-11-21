@@ -1,0 +1,97 @@
+{
+  "title": {
+    "vi": "useReducer và Context",
+    "en": "useReducer and Context"
+  },
+  "summary": {
+    "vi": "Quản lý state phức tạp, chia sẻ dữ liệu toàn app",
+    "en": "Manage complex state, share data app-wide"
+  },
+  "minutes": 22,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { createContext, useContext, useReducer } from \"react\";\n\nfunction reducer(state, action) {\n  switch (action.type) {\n    case \"inc\": return { count: state.count + 1 };\n    case \"dec\": return { count: state.count - 1 };\n    case \"reset\": return { count: 0 };\n    default: return state;\n  }\n}\n\nconst CounterContext = createContext(null);\n\nfunction Display() {\n  const { state } = useContext(CounterContext);\n  return <h2>{state.count}</h2>;\n}\n\nfunction Buttons() {\n  const { dispatch } = useContext(CounterContext);\n  return (\n    <>\n      <button onClick={() => dispatch({ type: \"dec\" })}>-</button>\n      <button onClick={() => dispatch({ type: \"inc\" })}>+</button>\n    </>\n  );\n}\n\nexport default function App() {\n  const [state, dispatch] = useReducer(reducer, { count: 0 });\n  return (\n    <CounterContext.Provider value={{ state, dispatch }}>\n      <Display />\n      <Buttons />\n    </CounterContext.Provider>\n  );\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Hoàn thiện reducer cho giỏ hàng: action \"add\" tăng total thêm action.price, \"clear\" đưa total về 0.",
+        "en": "Finish the cart reducer: action \"add\" increases total by action.price, \"clear\" resets total to 0."
+      },
+      "hint": {
+        "vi": "case \"add\": return { total: state.total + action.price }; case \"clear\": return { total: 0 };",
+        "en": "case \"add\": return { total: state.total + action.price }; case \"clear\": return { total: 0 };"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useReducer } from \"react\";\n\nfunction reducer(state, action) {\n  switch (action.type) {\n    // viết các case ở đây\n    default: return state;\n  }\n}\n\nexport default function App() {\n  const [state, dispatch] = useReducer(reducer, { total: 0 });\n  return (\n    <div>\n      <p id=\"t\">{state.total}</p>\n      <button id=\"a\" onClick={() => dispatch({ type: \"add\", price: 25 })}>+25</button>\n      <button id=\"c\" onClick={() => dispatch({ type: \"clear\" })}>Xóa</button>\n    </div>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useReducer } from \"react\";\n\nfunction reducer(state, action) {\n  switch (action.type) {\n    case \"add\": return { total: state.total + action.price };\n    case \"clear\": return { total: 0 };\n    default: return state;\n  }\n}\n\nexport default function App() {\n  const [state, dispatch] = useReducer(reducer, { total: 0 });\n  return (\n    <div>\n      <p id=\"t\">{state.total}</p>\n      <button id=\"a\" onClick={() => dispatch({ type: \"add\", price: 25 })}>+25</button>\n      <button id=\"c\" onClick={() => dispatch({ type: \"clear\" })}>Xóa</button>\n    </div>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Bấm +25 hai lần được 50",
+            "en": "Two +25 clicks give 50"
+          },
+          "test": "(async()=>{document.getElementById('a').click();await new Promise(r=>setTimeout(r,60));document.getElementById('a').click();await new Promise(r=>setTimeout(r,60));return document.getElementById('t').textContent==='50'})()"
+        },
+        {
+          "label": {
+            "vi": "Xóa đưa về 0",
+            "en": "Clear returns to 0"
+          },
+          "test": "(async()=>{document.getElementById('c').click();await new Promise(r=>setTimeout(r,60));return document.getElementById('t').textContent==='0'})()"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Dùng Context để chia sẻ theme: component Label đọc theme bằng useContext và hiện <span id=\"th\">theme: dark</span>. Provider đặt value=\"dark\".",
+        "en": "Use Context to share a theme: the Label component reads it with useContext and renders <span id=\"th\">theme: dark</span>. The provider sets value=\"dark\"."
+      },
+      "hint": {
+        "vi": "const theme = useContext(ThemeContext); ... <ThemeContext.Provider value=\"dark\">",
+        "en": "const theme = useContext(ThemeContext); ... <ThemeContext.Provider value=\"dark\">"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { createContext, useContext } from \"react\";\n\nconst ThemeContext = createContext(\"light\");\n\nfunction Label() {\n  // đọc theme từ context\n  return <span id=\"th\">theme: ?</span>;\n}\n\nexport default function App() {\n  return <Label />; // bọc bằng Provider\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { createContext, useContext } from \"react\";\n\nconst ThemeContext = createContext(\"light\");\n\nfunction Label() {\n  const theme = useContext(ThemeContext);\n  return <span id=\"th\">theme: {theme}</span>;\n}\n\nexport default function App() {\n  return (\n    <ThemeContext.Provider value=\"dark\">\n      <Label />\n    </ThemeContext.Provider>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Hiện theme: dark",
+            "en": "Shows theme: dark"
+          },
+          "test": "document.getElementById('th')?.textContent==='theme: dark'"
+        }
+      ]
+    }
+  ],
+  "runtime": "react"
+}

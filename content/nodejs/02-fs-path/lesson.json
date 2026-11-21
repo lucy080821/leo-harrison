@@ -1,0 +1,124 @@
+{
+  "title": {
+    "vi": "File và đường dẫn: fs, path",
+    "en": "Files and paths: fs, path"
+  },
+  "summary": {
+    "vi": "Đọc/ghi file, thư mục, ghép đường dẫn an toàn",
+    "en": "Read/write files, directories, safe path joining"
+  },
+  "minutes": 18,
+  "preview": "console",
+  "files": [
+    {
+      "name": "index.js",
+      "lang": "javascript",
+      "code": "const fs = require(\"fs\");\nconst path = require(\"path\");\n\nconst dir = path.join(\"/data\", \"notes\");\nfs.mkdirSync(dir, { recursive: true });\n\nconst file = path.join(dir, \"hello.txt\");\nfs.writeFileSync(file, \"Xin chào Node\\n\");\nfs.appendFileSync(file, \"Dòng thứ hai\\n\");\n\nconsole.log(fs.readFileSync(file, \"utf8\"));\nconsole.log(fs.readdirSync(dir));\nconsole.log(path.basename(file), path.extname(file));\nconsole.log(fs.existsSync(\"/khong-co.txt\"));\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Ghi chuỗi \"abc\" vào /out.txt, đọc lại và in ra nội dung.",
+        "en": "Write the string \"abc\" to /out.txt, read it back and print the content."
+      },
+      "hint": {
+        "vi": "fs.writeFileSync(\"/out.txt\", \"abc\"); console.log(fs.readFileSync(\"/out.txt\", \"utf8\"));",
+        "en": "fs.writeFileSync(\"/out.txt\", \"abc\"); console.log(fs.readFileSync(\"/out.txt\", \"utf8\"));"
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const fs = require(\"fs\");\n// viết ở đây\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const fs = require(\"fs\");\nfs.writeFileSync(\"/out.txt\", \"abc\");\nconsole.log(fs.readFileSync(\"/out.txt\", \"utf8\"));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In ra abc",
+            "en": "Prints abc"
+          },
+          "test": "logs.join('|')==='abc'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Dùng path để in đuôi file (extname) và tên không đuôi (basename với đuôi) của \"/src/app/index.js\", mỗi giá trị một dòng.",
+        "en": "Use path to print the extension (extname) and the name without extension (basename with ext) of \"/src/app/index.js\", one per line."
+      },
+      "hint": {
+        "vi": "path.extname(p) → .js ; path.basename(p, \".js\") → index",
+        "en": "path.extname(p) → .js ; path.basename(p, \".js\") → index"
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const path = require(\"path\");\nconst p = \"/src/app/index.js\";\n// in extname rồi basename (không đuôi)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const path = require(\"path\");\nconst p = \"/src/app/index.js\";\nconsole.log(path.extname(p));\nconsole.log(path.basename(p, \".js\"));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In .js rồi index",
+            "en": "Prints .js then index"
+          },
+          "test": "logs.join('|')==='.js|index'"
+        }
+      ]
+    },
+    {
+      "id": "ex3",
+      "prompt": {
+        "vi": "Tạo thư mục /logs, ghi 3 file a.txt, b.txt, c.txt vào đó (nội dung tùy ý) và in danh sách file bằng readdirSync (sắp xếp).",
+        "en": "Create folder /logs, write 3 files a.txt, b.txt, c.txt in it (any content) and print the file list with readdirSync (sorted)."
+      },
+      "hint": {
+        "vi": "fs.mkdirSync(\"/logs\"); for each name → fs.writeFileSync(path.join(\"/logs\", name), \"x\")",
+        "en": "fs.mkdirSync(\"/logs\"); for each name → fs.writeFileSync(path.join(\"/logs\", name), \"x\")"
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const fs = require(\"fs\");\nconst path = require(\"path\");\n// viết ở đây\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const fs = require(\"fs\");\nconst path = require(\"path\");\nfs.mkdirSync(\"/logs\");\nfor (const n of [\"a.txt\", \"b.txt\", \"c.txt\"]) fs.writeFileSync(path.join(\"/logs\", n), \"x\");\nconsole.log(fs.readdirSync(\"/logs\").join(\",\"));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In a.txt,b.txt,c.txt",
+            "en": "Prints a.txt,b.txt,c.txt"
+          },
+          "test": "logs.join('|')==='a.txt,b.txt,c.txt'"
+        }
+      ]
+    }
+  ],
+  "runtime": "node"
+}

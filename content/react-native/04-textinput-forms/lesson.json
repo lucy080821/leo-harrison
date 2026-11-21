@@ -1,0 +1,97 @@
+{
+  "title": {
+    "vi": "TextInput và biểu mẫu",
+    "en": "TextInput and forms"
+  },
+  "summary": {
+    "vi": "onChangeText, giá trị được điều khiển, kiểm tra dữ liệu",
+    "en": "onChangeText, controlled values, validation"
+  },
+  "minutes": 18,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { useState } from \"react\";\nimport { View, Text, TextInput, StyleSheet } from \"react-native\";\n\nexport default function App() {\n  const [name, setName] = useState(\"\");\n  return (\n    <View style={styles.wrap}>\n      <TextInput\n        style={styles.input}\n        placeholder=\"Nhập tên\"\n        value={name}\n        onChangeText={setName}\n      />\n      <Text>Xin chào, {name || \"bạn\"}!</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  wrap: { padding: 20, gap: 10 },\n  input: { borderWidth: 1, borderColor: \"#999\", padding: 8, borderRadius: 6 },\n});\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Làm TextInput testID=\"in\" điều khiển được: chữ gõ vào hiện trong <Text testID=\"echo\">.",
+        "en": "Make the TextInput testID=\"in\" controlled: the typed text shows in <Text testID=\"echo\">."
+      },
+      "hint": {
+        "vi": "value={text} onChangeText={setText}",
+        "en": "value={text} onChangeText={setText}"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\nimport { View, Text, TextInput } from \"react-native\";\n\nexport default function App() {\n  const [text, setText] = useState(\"\");\n  return (\n    <View>\n      <TextInput testID=\"in\" />\n      <Text testID=\"echo\">{text}</Text>\n    </View>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\nimport { View, Text, TextInput } from \"react-native\";\n\nexport default function App() {\n  const [text, setText] = useState(\"\");\n  return (\n    <View>\n      <TextInput testID=\"in\" value={text} onChangeText={setText} />\n      <Text testID=\"echo\">{text}</Text>\n    </View>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Chữ gõ hiện ở echo",
+            "en": "Typed text shows in echo"
+          },
+          "test": "(async()=>{const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;const i=document.querySelector('[data-testid=\"in\"]');set.call(i,'abc');i.dispatchEvent(new Event('input',{bubbles:true}));await new Promise(r=>setTimeout(r,60));return document.querySelector('[data-testid=\"echo\"]').textContent==='abc'})()"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Hiển thị <Text testID=\"err\"> với \"Quá ngắn\" khi text có ít hơn 3 ký tự (và đã gõ ít nhất 1), ngược lại không hiển thị gì.",
+        "en": "Show <Text testID=\"err\"> with \"Too short\" when the text has fewer than 3 characters (and at least 1 typed); otherwise render nothing."
+      },
+      "hint": {
+        "vi": "{text.length > 0 && text.length < 3 && <Text testID=\"err\">Too short</Text>}",
+        "en": "{text.length > 0 && text.length < 3 && <Text testID=\"err\">Too short</Text>}"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\nimport { View, Text, TextInput } from \"react-native\";\n\nexport default function App() {\n  const [text, setText] = useState(\"\");\n  return (\n    <View>\n      <TextInput testID=\"in\" value={text} onChangeText={setText} />\n      {/* hiện lỗi ở đây */}\n    </View>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\nimport { View, Text, TextInput } from \"react-native\";\n\nexport default function App() {\n  const [text, setText] = useState(\"\");\n  return (\n    <View>\n      <TextInput testID=\"in\" value={text} onChangeText={setText} />\n      {text.length > 0 && text.length < 3 && <Text testID=\"err\">Too short</Text>}\n    </View>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Ban đầu không có lỗi",
+            "en": "No error at first"
+          },
+          "test": "!document.querySelector('[data-testid=\"err\"]')"
+        },
+        {
+          "label": {
+            "vi": "Gõ 'ab' thì hiện Too short",
+            "en": "Typing 'ab' shows Too short"
+          },
+          "test": "(async()=>{const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;const i=document.querySelector('[data-testid=\"in\"]');set.call(i,'ab');i.dispatchEvent(new Event('input',{bubbles:true}));await new Promise(r=>setTimeout(r,60));return document.querySelector('[data-testid=\"err\"]')?.textContent==='Too short'})()"
+        }
+      ]
+    }
+  ],
+  "runtime": "rn"
+}

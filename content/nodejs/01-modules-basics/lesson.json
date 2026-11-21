@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Node.js và module",
+    "en": "Node.js and modules"
+  },
+  "summary": {
+    "vi": "Node là gì, require/module.exports, process, Buffer",
+    "en": "What Node is, require/module.exports, process, Buffer"
+  },
+  "minutes": 15,
+  "preview": "console",
+  "files": [
+    {
+      "name": "index.js",
+      "lang": "javascript",
+      "code": "const fs = require(\"fs\");\n\n// Tạo một module nhỏ (ngoài máy thật đây là file math.js)\nfs.writeFileSync(\"/math.js\", `\n  exports.add = (a, b) => a + b;\n  exports.PI = 3.14159;\n`);\n\nconst math = require(\"/math.js\");\nconsole.log(math.add(2, 3));   // 5\nconsole.log(math.PI);\n\nconsole.log(typeof process.env);        // object\nconsole.log(Buffer.from(\"Lexi\").toString(\"hex\"));\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tạo module /greet.js xuất hàm hello(name) trả về \"Hello, \" + name, rồi require và in hello(\"Lexi\").",
+        "en": "Create module /greet.js exporting hello(name) that returns \"Hello, \" + name, then require it and print hello(\"Lexi\")."
+      },
+      "hint": {
+        "vi": "exports.hello = (name) => \"Hello, \" + name;",
+        "en": "exports.hello = (name) => \"Hello, \" + name;"
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const fs = require(\"fs\");\n\nfs.writeFileSync(\"/greet.js\", `\n  // viết module ở đây\n`);\n\nconst greet = require(\"/greet.js\");\n// in kết quả ở đây\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const fs = require(\"fs\");\n\nfs.writeFileSync(\"/greet.js\", `\n  exports.hello = (name) => \"Hello, \" + name;\n`);\n\nconst greet = require(\"/greet.js\");\nconsole.log(greet.hello(\"Lexi\"));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In ra Hello, Lexi",
+            "en": "Prints Hello, Lexi"
+          },
+          "test": "logs.join('|')==='Hello, Lexi'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "In ra dạng hex của chuỗi \"hi\" dùng Buffer.",
+        "en": "Print the hex form of the string \"hi\" using Buffer."
+      },
+      "hint": {
+        "vi": "Buffer.from(\"hi\").toString(\"hex\")",
+        "en": "Buffer.from(\"hi\").toString(\"hex\")"
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "// dùng Buffer.from(...).toString(\"hex\")\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "console.log(Buffer.from(\"hi\").toString(\"hex\"));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In ra 6869",
+            "en": "Prints 6869"
+          },
+          "test": "logs.join('|')==='6869'"
+        }
+      ]
+    }
+  ],
+  "runtime": "node"
+}

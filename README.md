@@ -34,17 +34,23 @@ Build production (để deploy VPS): `npm run build && npm start`.
 - [x] Giai đoạn 2: HTML (13 bài), CSS (16 bài), JavaScript (22 bài) — song ngữ, 102 bài tập tự chấm
 - [x] Giai đoạn 3: Python cơ bản (16 bài), Python Data Analyst (14 bài), SQL (15 bài) — chạy bằng Pyodide và SQLite WASM
 - [x] Giai đoạn 4: Toán cho ML (7 bài), Machine Learning (13), Deep Learning (10), AI hiện đại (8) — scikit-learn chạy trong trình duyệt, mạng nơ-ron tự cài bằng NumPy
-- [ ] Giai đoạn 5: React, Next.js, React Native, Node.js (WebContainers)
+- [x] Giai đoạn 5: React (8 bài), Node.js (9), Next.js (6), React Native (5) — React/JSX chạy bằng Babel + esm.sh, Node chạy bằng bản mô phỏng trong trình duyệt
+- [ ] Ý tưởng sau này: WebContainers (Node thật trong trình duyệt, cần giấy phép thương mại và header COOP/COEP), tài khoản đăng nhập để đồng bộ tiến độ
 
 ## Engine chạy code
 
 | Engine | Dùng cho | Cách chạy |
 |---|---|---|
 | `web` (mặc định) | HTML, CSS, JavaScript | iframe sandbox (`src/lib/sandbox.ts`) |
+| `web` + `runtime: "react"` | React, Next.js (ý tưởng cốt lõi) | JSX biên dịch bằng Babel standalone, React 18 từ esm.sh |
+| `web` + `runtime: "rn"` | React Native | như trên, `react-native` ánh xạ sang react-native-web |
+| `web` + `runtime: "node"` | Node.js, Express | lớp mô phỏng `src/lib/nodeShim.ts`: `fs` trong bộ nhớ, `http`, Express thu nhỏ, kiểm thử bằng `app.inject()` |
 | `python` | Python, NumPy, pandas, matplotlib | Pyodide trong Web Worker (`public/workers/python-worker.js`) |
 | `sql` | SQL | SQLite WASM (sql.js) trong Web Worker (`public/workers/sql-worker.js`) |
 
 - **Python cần Internet** ở lần đầu: Pyodide và các thư viện (numpy, pandas...) được tải từ CDN jsDelivr rồi trình duyệt cache lại. SQLite WASM nằm sẵn trong `public/vendor/sqljs/` nên SQL chạy offline được.
+- **React và React Native cần Internet** (Babel + React tải từ CDN). Node mô phỏng chạy offline được. Next.js cần Node thật nên bài học chỉ luyện ý tưởng cốt lõi và có hướng dẫn chạy trên máy.
+- Với `react`/`rn`, `test` là biểu thức JS chạy trong iframe sau khi trang dựng xong (có thể trả về Promise, ví dụ bấm nút rồi chờ). Với `node`, `test` đọc mảng `logs`.
 - Mỗi lần chạy dùng **môi trường sạch** (namespace Python mới / CSDL SQL nạp lại từ đầu).
 - Dữ liệu mẫu: `content/_data/files/*.csv` (Python), `content/_data/sql/*.sql` (SQL). Khai báo trong `lesson.json` bằng `"data": [...]` hoặc `"dataset": "all"`.
 - Với Python, `test` của bài tập là **biểu thức Python** chạy sau khi code của người học chạy xong (có biến `_out` chứa toàn bộ chữ đã in). Với SQL, `test` là **biểu thức JS** có `columns`, `rows`, `tables` và hàm `q(sql)`.

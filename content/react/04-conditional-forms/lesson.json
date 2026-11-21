@@ -1,0 +1,97 @@
+{
+  "title": {
+    "vi": "Hiển thị có điều kiện và form",
+    "en": "Conditional rendering and forms"
+  },
+  "summary": {
+    "vi": "&&, toán tử 3 ngôi, input được điều khiển",
+    "en": "&&, ternary, controlled inputs"
+  },
+  "minutes": 18,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { useState } from \"react\";\n\nexport default function App() {\n  const [name, setName] = useState(\"\");\n  const [show, setShow] = useState(true);\n\n  return (\n    <div>\n      <input\n        value={name}\n        onChange={(e) => setName(e.target.value)}\n        placeholder=\"Tên của bạn\"\n      />\n      <button onClick={() => setShow(!show)}>Ẩn/hiện</button>\n      {show && <p>Xin chào, {name || \"bạn\"}!</p>}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Chỉ hiện <p id=\"msg\">Đã đăng nhập</p> khi loggedIn là true, ngược lại hiện <p id=\"msg\">Chưa đăng nhập</p>. Nút bấm đổi trạng thái.",
+        "en": "Show <p id=\"msg\">Logged in</p> when loggedIn is true, otherwise <p id=\"msg\">Logged out</p>. The button toggles it."
+      },
+      "hint": {
+        "vi": "{loggedIn ? <p id=\"msg\">Logged in</p> : <p id=\"msg\">Logged out</p>}",
+        "en": "{loggedIn ? <p id=\"msg\">Logged in</p> : <p id=\"msg\">Logged out</p>}"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\n\nexport default function App() {\n  const [loggedIn, setLoggedIn] = useState(false);\n  return (\n    <div>\n      <p id=\"msg\">?</p>\n      <button onClick={() => setLoggedIn(!loggedIn)}>Đổi</button>\n    </div>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\n\nexport default function App() {\n  const [loggedIn, setLoggedIn] = useState(false);\n  return (\n    <div>\n      {loggedIn ? <p id=\"msg\">Logged in</p> : <p id=\"msg\">Logged out</p>}\n      <button onClick={() => setLoggedIn(!loggedIn)}>Đổi</button>\n    </div>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Ban đầu là Logged out",
+            "en": "Starts as Logged out"
+          },
+          "test": "document.getElementById('msg')?.textContent==='Logged out'"
+        },
+        {
+          "label": {
+            "vi": "Bấm thì thành Logged in",
+            "en": "Click switches to Logged in"
+          },
+          "test": "(async()=>{document.querySelector('button').click();await new Promise(r=>setTimeout(r,60));return document.getElementById('msg')?.textContent==='Logged in'})()"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Làm input điều khiển được: gõ chữ vào thì <p id=\"echo\"> hiện đúng chữ đó.",
+        "en": "Make the input controlled: whatever you type must appear in <p id=\"echo\">."
+      },
+      "hint": {
+        "vi": "value={text} onChange={(e) => setText(e.target.value)}",
+        "en": "value={text} onChange={(e) => setText(e.target.value)}"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\n\nexport default function App() {\n  const [text, setText] = useState(\"\");\n  return (\n    <div>\n      <input id=\"box\" />\n      <p id=\"echo\">{text}</p>\n    </div>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\n\nexport default function App() {\n  const [text, setText] = useState(\"\");\n  return (\n    <div>\n      <input id=\"box\" value={text} onChange={(e) => setText(e.target.value)} />\n      <p id=\"echo\">{text}</p>\n    </div>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Gõ chữ hiện ở #echo",
+            "en": "Typed text shows in #echo"
+          },
+          "test": "(async()=>{const i=document.getElementById('box');const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;set.call(i,'abc');i.dispatchEvent(new Event('input',{bubbles:true}));await new Promise(r=>setTimeout(r,60));return document.getElementById('echo').textContent==='abc'})()"
+        }
+      ]
+    }
+  ],
+  "runtime": "react"
+}

@@ -1,0 +1,104 @@
+{
+  "title": {
+    "vi": "Chạm, bấm và state",
+    "en": "Touch, press and state"
+  },
+  "summary": {
+    "vi": "Pressable, Button, onPress, useState",
+    "en": "Pressable, Button, onPress, useState"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { useState } from \"react\";\nimport { View, Text, Pressable, StyleSheet } from \"react-native\";\n\nexport default function App() {\n  const [count, setCount] = useState(0);\n  return (\n    <View style={styles.wrap}>\n      <Text style={styles.num}>{count}</Text>\n      <Pressable style={styles.btn} onPress={() => setCount(count + 1)}>\n        <Text style={styles.btnText}>Chạm để tăng</Text>\n      </Pressable>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  wrap: { alignItems: \"center\", padding: 20 },\n  num: { fontSize: 40, fontWeight: \"bold\" },\n  btn: { backgroundColor: \"#0f766e\", padding: 12, borderRadius: 8 },\n  btnText: { color: \"white\" },\n});\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Làm Pressable testID=\"plus\" tăng số trong <Text testID=\"n\"> (khởi đầu 0) mỗi lần onPress.",
+        "en": "Make the Pressable testID=\"plus\" increase the number in <Text testID=\"n\"> (starts at 0) on every onPress."
+      },
+      "hint": {
+        "vi": "const [n, setN] = useState(0); onPress={() => setN(n + 1)}",
+        "en": "const [n, setN] = useState(0); onPress={() => setN(n + 1)}"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\nimport { View, Text, Pressable } from \"react-native\";\n\nexport default function App() {\n  return (\n    <View>\n      <Text testID=\"n\">0</Text>\n      <Pressable testID=\"plus\">\n        <Text>+1</Text>\n      </Pressable>\n    </View>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\nimport { View, Text, Pressable } from \"react-native\";\n\nexport default function App() {\n  const [n, setN] = useState(0);\n  return (\n    <View>\n      <Text testID=\"n\">{n}</Text>\n      <Pressable testID=\"plus\" onPress={() => setN(n + 1)}>\n        <Text>+1</Text>\n      </Pressable>\n    </View>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Bắt đầu ở 0",
+            "en": "Starts at 0"
+          },
+          "test": "document.querySelector('[data-testid=\"n\"]')?.textContent==='0'"
+        },
+        {
+          "label": {
+            "vi": "Chạm hai lần được 2",
+            "en": "Two presses give 2"
+          },
+          "test": "(async()=>{const b=document.querySelector('[data-testid=\"plus\"]');b.click();await new Promise(r=>setTimeout(r,60));b.click();await new Promise(r=>setTimeout(r,60));return document.querySelector('[data-testid=\"n\"]').textContent==='2'})()"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Làm công tắc: Pressable testID=\"sw\" đổi chữ trong <Text testID=\"state\"> giữa \"OFF\" (mặc định) và \"ON\".",
+        "en": "Build a switch: Pressable testID=\"sw\" toggles the text in <Text testID=\"state\"> between \"OFF\" (default) and \"ON\"."
+      },
+      "hint": {
+        "vi": "const [on, setOn] = useState(false); onPress={() => setOn(!on)}",
+        "en": "const [on, setOn] = useState(false); onPress={() => setOn(!on)}"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\nimport { View, Text, Pressable } from \"react-native\";\n\nexport default function App() {\n  return (\n    <View>\n      <Text testID=\"state\">OFF</Text>\n      <Pressable testID=\"sw\">\n        <Text>Đổi</Text>\n      </Pressable>\n    </View>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\nimport { View, Text, Pressable } from \"react-native\";\n\nexport default function App() {\n  const [on, setOn] = useState(false);\n  return (\n    <View>\n      <Text testID=\"state\">{on ? \"ON\" : \"OFF\"}</Text>\n      <Pressable testID=\"sw\" onPress={() => setOn(!on)}>\n        <Text>Đổi</Text>\n      </Pressable>\n    </View>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Mặc định OFF",
+            "en": "Defaults to OFF"
+          },
+          "test": "document.querySelector('[data-testid=\"state\"]')?.textContent==='OFF'"
+        },
+        {
+          "label": {
+            "vi": "Chạm thì thành ON",
+            "en": "Press switches to ON"
+          },
+          "test": "(async()=>{document.querySelector('[data-testid=\"sw\"]').click();await new Promise(r=>setTimeout(r,60));return document.querySelector('[data-testid=\"state\"]').textContent==='ON'})()"
+        }
+      ]
+    }
+  ],
+  "runtime": "rn"
+}

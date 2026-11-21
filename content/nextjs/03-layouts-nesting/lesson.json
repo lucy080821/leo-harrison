@@ -1,0 +1,104 @@
+{
+  "title": {
+    "vi": "Layout và trang lồng nhau",
+    "en": "Layouts and nested pages"
+  },
+  "summary": {
+    "vi": "layout.js bọc children, nhiều tầng layout, Link",
+    "en": "layout.js wraps children, multiple layers, Link"
+  },
+  "minutes": 18,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "// app/layout.js — khung chung, nhận trang con qua children\nfunction RootLayout({ children }) {\n  return (\n    <div className=\"shell\">\n      <header><strong>Lexi Shop</strong></header>\n      <main>{children}</main>\n      <footer>© 2025</footer>\n    </div>\n  );\n}\n\n// app/page.js — trang chủ\nfunction HomePage() {\n  return <h1>Trang chủ</h1>;\n}\n\nexport default function App() {\n  return (\n    <RootLayout>\n      <HomePage />\n    </RootLayout>\n  );\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Hoàn thiện RootLayout: bọc children trong <main id=\"content\"> và đặt <nav id=\"nav\"> ở trên với hai liên kết (a) \"Home\" và \"About\".",
+        "en": "Finish RootLayout: wrap children in <main id=\"content\"> and put a <nav id=\"nav\"> above it with two links (a) \"Home\" and \"About\"."
+      },
+      "hint": {
+        "vi": "<nav id=\"nav\"><a href=\"/\">Home</a><a href=\"/about\">About</a></nav><main id=\"content\">{children}</main>",
+        "en": "<nav id=\"nav\"><a href=\"/\">Home</a><a href=\"/about\">About</a></nav><main id=\"content\">{children}</main>"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "function RootLayout({ children }) {\n  return <div>{/* viết layout ở đây */}</div>;\n}\n\nfunction AboutPage() {\n  return <h1 id=\"title\">About us</h1>;\n}\n\nexport default function App() {\n  return (\n    <RootLayout>\n      <AboutPage />\n    </RootLayout>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "function RootLayout({ children }) {\n  return (\n    <div>\n      <nav id=\"nav\">\n        <a href=\"/\">Home</a>\n        <a href=\"/about\">About</a>\n      </nav>\n      <main id=\"content\">{children}</main>\n    </div>\n  );\n}\n\nfunction AboutPage() {\n  return <h1 id=\"title\">About us</h1>;\n}\n\nexport default function App() {\n  return (\n    <RootLayout>\n      <AboutPage />\n    </RootLayout>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có nav với 2 liên kết Home và About",
+            "en": "Has a nav with Home and About links"
+          },
+          "test": "[...document.querySelectorAll('#nav a')].map(a=>a.textContent).join()==='Home,About'"
+        },
+        {
+          "label": {
+            "vi": "Trang con nằm trong #content",
+            "en": "The page sits inside #content"
+          },
+          "test": "!!document.querySelector('#content #title')"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Lồng hai layout: DashboardLayout thêm <aside id=\"side\">Menu</aside> bên cạnh children. App dùng RootLayout > DashboardLayout > Page.",
+        "en": "Nest two layouts: DashboardLayout adds <aside id=\"side\">Menu</aside> next to children. App uses RootLayout > DashboardLayout > Page."
+      },
+      "hint": {
+        "vi": "<div><aside id=\"side\">Menu</aside><section>{children}</section></div>",
+        "en": "<div><aside id=\"side\">Menu</aside><section>{children}</section></div>"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "function RootLayout({ children }) {\n  return <div id=\"root-layout\">{children}</div>;\n}\n\nfunction DashboardLayout({ children }) {\n  return <div>{children}</div>; // thêm aside\n}\n\nfunction Page() {\n  return <h1 id=\"p\">Dashboard</h1>;\n}\n\nexport default function App() {\n  return (\n    <RootLayout>\n      <DashboardLayout>\n        <Page />\n      </DashboardLayout>\n    </RootLayout>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "function RootLayout({ children }) {\n  return <div id=\"root-layout\">{children}</div>;\n}\n\nfunction DashboardLayout({ children }) {\n  return (\n    <div>\n      <aside id=\"side\">Menu</aside>\n      <section>{children}</section>\n    </div>\n  );\n}\n\nfunction Page() {\n  return <h1 id=\"p\">Dashboard</h1>;\n}\n\nexport default function App() {\n  return (\n    <RootLayout>\n      <DashboardLayout>\n        <Page />\n      </DashboardLayout>\n    </RootLayout>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có aside Menu",
+            "en": "Has the Menu aside"
+          },
+          "test": "document.getElementById('side')?.textContent==='Menu'"
+        },
+        {
+          "label": {
+            "vi": "Trang nằm trong cả hai layout",
+            "en": "The page is inside both layouts"
+          },
+          "test": "!!document.querySelector('#root-layout #p')"
+        }
+      ]
+    }
+  ],
+  "runtime": "react"
+}
