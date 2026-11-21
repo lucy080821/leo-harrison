@@ -1,0 +1,142 @@
+{
+  "title": {
+    "vi": "CSS Grid (2): vùng và lưới tự co giãn",
+    "en": "CSS Grid (2): areas and auto-fit"
+  },
+  "summary": {
+    "vi": "grid-template-areas, grid-area, auto-fit, minmax()",
+    "en": "grid-template-areas, grid-area, auto-fit, minmax()"
+  },
+  "minutes": 18,
+  "preview": "web",
+  "files": [
+    {
+      "name": "index.html",
+      "lang": "html",
+      "code": "<div class=\"page\">\n  <header class=\"header\">Header</header>\n  <aside class=\"sidebar\">Sidebar</aside>\n  <main class=\"main\">Main</main>\n  <footer class=\"footer\">Footer</footer>\n</div>\n"
+    },
+    {
+      "name": "style.css",
+      "lang": "css",
+      "code": "* { box-sizing: border-box; }\n.page { width: 600px; gap: 8px; }\n.header { background: #0b6fd6; color: white; padding: 12px; }\n.sidebar { background: #0aa5b8; color: white; padding: 12px; }\n.main { background: #dcebfb; padding: 12px; min-height: 80px; }\n.footer { background: #12304f; color: white; padding: 12px; }\n.page {\n  display: grid;\n  grid-template-columns: 160px 1fr;\n  grid-template-areas:\n    \"header  header\"\n    \"sidebar main\"\n    \"footer  footer\";\n}\n.header  { grid-area: header; }\n.sidebar { grid-area: sidebar; }\n.main    { grid-area: main; }\n.footer  { grid-area: footer; }\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Dựng bố cục trang bằng grid-template-areas: header và footer trải suốt bề ngang, sidebar bên trái, main bên phải (cột sidebar rộng 160px).",
+        "en": "Build the page layout with grid-template-areas: header and footer span the full width, the sidebar sits left and main sits right (160px sidebar column)."
+      },
+      "hint": {
+        "vi": "Đặt tên vùng trong container và gán grid-area cho từng con, ví dụ .header { grid-area: header; }",
+        "en": "Name the areas on the container and assign grid-area to each child, e.g. .header { grid-area: header; }"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<div class=\"page\">\n  <header class=\"header\">Header</header>\n  <aside class=\"sidebar\">Sidebar</aside>\n  <main class=\"main\">Main</main>\n  <footer class=\"footer\">Footer</footer>\n</div>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "* { box-sizing: border-box; }\n.page { width: 600px; gap: 8px; }\n.header { background: #0b6fd6; color: white; padding: 12px; }\n.sidebar { background: #0aa5b8; color: white; padding: 12px; }\n.main { background: #dcebfb; padding: 12px; min-height: 80px; }\n.footer { background: #12304f; color: white; padding: 12px; }\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<div class=\"page\">\n  <header class=\"header\">Header</header>\n  <aside class=\"sidebar\">Sidebar</aside>\n  <main class=\"main\">Main</main>\n  <footer class=\"footer\">Footer</footer>\n</div>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "* { box-sizing: border-box; }\n.page { width: 600px; gap: 8px; }\n.header { background: #0b6fd6; color: white; padding: 12px; }\n.sidebar { background: #0aa5b8; color: white; padding: 12px; }\n.main { background: #dcebfb; padding: 12px; min-height: 80px; }\n.footer { background: #12304f; color: white; padding: 12px; }\n.page {\n  display: grid;\n  grid-template-columns: 160px 1fr;\n  grid-template-areas:\n    \"header  header\"\n    \"sidebar main\"\n    \"footer  footer\";\n}\n.header  { grid-area: header; }\n.sidebar { grid-area: sidebar; }\n.main    { grid-area: main; }\n.footer  { grid-area: footer; }\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Header nằm trên cùng và rộng bằng cả trang",
+            "en": "Header is on top and as wide as the page"
+          },
+          "test": "(function(){var p=document.querySelector('.page').getBoundingClientRect(),h=document.querySelector('.header').getBoundingClientRect(),m=document.querySelector('.main').getBoundingClientRect();return h.top<m.top&&Math.abs(h.width-p.width)<2})()"
+        },
+        {
+          "label": {
+            "vi": "Sidebar bên trái main, cùng một hàng",
+            "en": "Sidebar is left of main on the same row"
+          },
+          "test": "(function(){var s=document.querySelector('.sidebar').getBoundingClientRect(),m=document.querySelector('.main').getBoundingClientRect();return Math.abs(s.top-m.top)<2&&s.right<=m.left+1})()"
+        },
+        {
+          "label": {
+            "vi": "Footer nằm dưới cùng và rộng bằng cả trang",
+            "en": "Footer is at the bottom and as wide as the page"
+          },
+          "test": "(function(){var p=document.querySelector('.page').getBoundingClientRect(),f=document.querySelector('.footer').getBoundingClientRect(),m=document.querySelector('.main').getBoundingClientRect();return f.top>=m.bottom-1&&Math.abs(f.width-p.width)<2})()"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Làm lưới thẻ tự động: dùng repeat(auto-fit, minmax(150px, 1fr)) để số cột tự điều chỉnh theo bề rộng.",
+        "en": "Make the card grid automatic: use repeat(auto-fit, minmax(150px, 1fr)) so the column count adapts to the width."
+      },
+      "hint": {
+        "vi": "grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));",
+        "en": "grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<div class=\"cards\"><div class=\"c\">Thẻ 1</div><div class=\"c\">Thẻ 2</div><div class=\"c\">Thẻ 3</div><div class=\"c\">Thẻ 4</div><div class=\"c\">Thẻ 5</div><div class=\"c\">Thẻ 6</div></div>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": ".cards { width: 560px; gap: 12px; }\n.c { background: #0b6fd6; color: white; padding: 24px; border-radius: 8px; }\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<div class=\"cards\"><div class=\"c\">Thẻ 1</div><div class=\"c\">Thẻ 2</div><div class=\"c\">Thẻ 3</div><div class=\"c\">Thẻ 4</div><div class=\"c\">Thẻ 5</div><div class=\"c\">Thẻ 6</div></div>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": ".cards { width: 560px; gap: 12px; }\n.c { background: #0b6fd6; color: white; padding: 24px; border-radius: 8px; }\n.cards {\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": ".cards là grid",
+            "en": ".cards is a grid"
+          },
+          "test": "getComputedStyle(document.querySelector('.cards')).display==='grid'"
+        },
+        {
+          "label": {
+            "vi": "CSS dùng auto-fit hoặc auto-fill cùng minmax()",
+            "en": "CSS uses auto-fit or auto-fill with minmax()"
+          },
+          "test": "Array.from(document.querySelectorAll('style')).some(function(s){return /(auto-fit|auto-fill)\\s*,\\s*minmax\\(/.test(s.textContent)})"
+        },
+        {
+          "label": {
+            "vi": "Bề rộng 560px chia được 3 cột",
+            "en": "560px width splits into 3 columns"
+          },
+          "test": "getComputedStyle(document.querySelector('.cards')).gridTemplateColumns.trim().split(/\\s+/).length===3"
+        }
+      ]
+    }
+  ]
+}

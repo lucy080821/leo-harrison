@@ -1,0 +1,135 @@
+{
+  "title": {
+    "vi": "Hoạt ảnh với @keyframes",
+    "en": "Animations with @keyframes"
+  },
+  "summary": {
+    "vi": "@keyframes, animation-name/duration/iteration-count/direction",
+    "en": "@keyframes, animation-name/duration/iteration-count/direction"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "index.html",
+      "lang": "html",
+      "code": "<div class=\"dot\"></div>\n<p class=\"hint\">Chấm tròn sẽ đập nhịp.</p>\n"
+    },
+    {
+      "name": "style.css",
+      "lang": "css",
+      "code": ".dot { width: 60px; height: 60px; background: #0aa5b8; border-radius: 50%; margin: 40px; }\n@keyframes pulse {\n  0%   { transform: scale(1);   opacity: 1; }\n  50%  { transform: scale(1.4); opacity: 0.6; }\n  100% { transform: scale(1);   opacity: 1; }\n}\n.dot { animation: pulse 1.5s ease-in-out infinite; }\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Định nghĩa @keyframes tên pulse (đổi transform: scale từ 1 lên 1.3 rồi về 1) và gắn cho .dot với animation-name là pulse.",
+        "en": "Define @keyframes named pulse (transform: scale from 1 up to 1.3 and back to 1) and apply it to .dot with animation-name pulse."
+      },
+      "hint": {
+        "vi": "@keyframes pulse { 0%{...} 50%{...} 100%{...} } rồi .dot { animation: pulse 1s infinite; }",
+        "en": "@keyframes pulse { 0%{...} 50%{...} 100%{...} } then .dot { animation: pulse 1s infinite; }"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<div class=\"dot\"></div>\n<p class=\"hint\">Chấm tròn sẽ đập nhịp.</p>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": ".dot { width: 60px; height: 60px; background: #0aa5b8; border-radius: 50%; margin: 40px; }\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<div class=\"dot\"></div>\n<p class=\"hint\">Chấm tròn sẽ đập nhịp.</p>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": ".dot { width: 60px; height: 60px; background: #0aa5b8; border-radius: 50%; margin: 40px; }\n@keyframes pulse {\n  0% { transform: scale(1); }\n  50% { transform: scale(1.3); }\n  100% { transform: scale(1); }\n}\n.dot { animation: pulse 1s infinite; }\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có @keyframes pulse",
+            "en": "There is @keyframes pulse"
+          },
+          "test": "Array.from(document.styleSheets).some(function(s){return Array.from(s.cssRules).some(function(r){return r.type===CSSRule.KEYFRAMES_RULE&&r.name==='pulse'})})"
+        },
+        {
+          "label": {
+            "vi": ".dot dùng animation-name pulse",
+            "en": ".dot uses animation-name pulse"
+          },
+          "test": "getComputedStyle(document.querySelector('.dot')).animationName==='pulse'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Cho animation của .dot lặp vô hạn (infinite), mỗi lượt dài ít nhất 1 giây, và chạy đi rồi chạy về (alternate).",
+        "en": "Make .dot's animation repeat forever (infinite), each cycle at least 1 second long, and run forwards then backwards (alternate)."
+      },
+      "hint": {
+        "vi": "animation: pulse 1.5s ease-in-out infinite alternate;",
+        "en": "animation: pulse 1.5s ease-in-out infinite alternate;"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<div class=\"dot\"></div>\n<p class=\"hint\">Chấm tròn sẽ đập nhịp.</p>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": ".dot { width: 60px; height: 60px; background: #0aa5b8; border-radius: 50%; margin: 40px; }\n@keyframes pulse {\n  from { transform: scale(1); }\n  to { transform: scale(1.4); }\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<div class=\"dot\"></div>\n<p class=\"hint\">Chấm tròn sẽ đập nhịp.</p>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": ".dot { width: 60px; height: 60px; background: #0aa5b8; border-radius: 50%; margin: 40px; }\n@keyframes pulse {\n  from { transform: scale(1); }\n  to { transform: scale(1.4); }\n}\n.dot { animation: pulse 1.5s ease-in-out infinite alternate; }\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Lặp vô hạn",
+            "en": "Repeats forever"
+          },
+          "test": "getComputedStyle(document.querySelector('.dot')).animationIterationCount==='infinite'"
+        },
+        {
+          "label": {
+            "vi": "Thời lượng ≥ 1 giây",
+            "en": "Duration ≥ 1 second"
+          },
+          "test": "parseFloat(getComputedStyle(document.querySelector('.dot')).animationDuration)>=1"
+        },
+        {
+          "label": {
+            "vi": "Hướng là alternate",
+            "en": "Direction is alternate"
+          },
+          "test": "getComputedStyle(document.querySelector('.dot')).animationDirection==='alternate'"
+        }
+      ]
+    }
+  ]
+}

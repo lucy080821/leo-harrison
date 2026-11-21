@@ -1,0 +1,135 @@
+{
+  "title": {
+    "vi": "CSS Grid (1): hàng, cột và fr",
+    "en": "CSS Grid (1): rows, columns and fr"
+  },
+  "summary": {
+    "vi": "display: grid, grid-template-columns, fr, repeat(), gap, span",
+    "en": "display: grid, grid-template-columns, fr, repeat(), gap, span"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "index.html",
+      "lang": "html",
+      "code": "<div class=\"grid\">\n  <div class=\"cell\">1</div><div class=\"cell\">2</div><div class=\"cell\">3</div>\n  <div class=\"cell wide\">4 (wide)</div><div class=\"cell\">5</div>\n  <div class=\"cell\">6</div><div class=\"cell\">7</div>\n</div>\n"
+    },
+    {
+      "name": "style.css",
+      "lang": "css",
+      "code": ".grid { width: 480px; background: #eaf2fb; padding: 8px; }\n.cell { background: #0b6fd6; color: white; padding: 16px; }\n.grid {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: 12px;\n}\n.wide { grid-column: span 2; }\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Biến .grid thành lưới 3 cột bằng nhau (repeat(3, 1fr)) với gap ít nhất 8px.",
+        "en": "Turn .grid into a 3-equal-column grid (repeat(3, 1fr)) with a gap of at least 8px."
+      },
+      "hint": {
+        "vi": "display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;",
+        "en": "display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<div class=\"grid\">\n  <div class=\"cell\">1</div><div class=\"cell\">2</div><div class=\"cell\">3</div>\n  <div class=\"cell wide\">4 (wide)</div><div class=\"cell\">5</div>\n  <div class=\"cell\">6</div><div class=\"cell\">7</div>\n</div>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": ".grid { width: 480px; background: #eaf2fb; padding: 8px; }\n.cell { background: #0b6fd6; color: white; padding: 16px; }\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<div class=\"grid\">\n  <div class=\"cell\">1</div><div class=\"cell\">2</div><div class=\"cell\">3</div>\n  <div class=\"cell wide\">4 (wide)</div><div class=\"cell\">5</div>\n  <div class=\"cell\">6</div><div class=\"cell\">7</div>\n</div>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": ".grid { width: 480px; background: #eaf2fb; padding: 8px; }\n.cell { background: #0b6fd6; color: white; padding: 16px; }\n.grid {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: 12px;\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": ".grid có display: grid",
+            "en": ".grid has display: grid"
+          },
+          "test": "getComputedStyle(document.querySelector('.grid')).display==='grid'"
+        },
+        {
+          "label": {
+            "vi": "Có đúng 3 cột",
+            "en": "Exactly 3 columns"
+          },
+          "test": "getComputedStyle(document.querySelector('.grid')).gridTemplateColumns.trim().split(/\\s+/).length===3"
+        },
+        {
+          "label": {
+            "vi": "gap ≥ 8px",
+            "en": "gap ≥ 8px"
+          },
+          "test": "parseFloat(getComputedStyle(document.querySelector('.grid')).columnGap)>=8"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Cho ô .wide trải rộng qua 2 cột bằng grid-column: span 2 (lưới đã có 3 cột).",
+        "en": "Make the .wide cell span 2 columns with grid-column: span 2 (the grid already has 3 columns)."
+      },
+      "hint": {
+        "vi": ".wide { grid-column: span 2; }",
+        "en": ".wide { grid-column: span 2; }"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<div class=\"grid\">\n  <div class=\"cell\">1</div><div class=\"cell\">2</div><div class=\"cell\">3</div>\n  <div class=\"cell wide\">4 (wide)</div><div class=\"cell\">5</div>\n  <div class=\"cell\">6</div><div class=\"cell\">7</div>\n</div>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": ".grid { width: 480px; background: #eaf2fb; padding: 8px; }\n.cell { background: #0b6fd6; color: white; padding: 16px; }\n.grid {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: 12px;\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<div class=\"grid\">\n  <div class=\"cell\">1</div><div class=\"cell\">2</div><div class=\"cell\">3</div>\n  <div class=\"cell wide\">4 (wide)</div><div class=\"cell\">5</div>\n  <div class=\"cell\">6</div><div class=\"cell\">7</div>\n</div>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": ".grid { width: 480px; background: #eaf2fb; padding: 8px; }\n.cell { background: #0b6fd6; color: white; padding: 16px; }\n.grid {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: 12px;\n}\n.wide { grid-column: span 2; }\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": ".wide rộng hơn một ô thường (trải 2 cột)",
+            "en": ".wide is wider than a normal cell (spans 2 columns)"
+          },
+          "test": "document.querySelector('.wide').getBoundingClientRect().width>document.querySelectorAll('.cell')[0].getBoundingClientRect().width*1.5"
+        },
+        {
+          "label": {
+            "vi": "Ô số 5 nằm cùng hàng với .wide (chiếm cột thứ 3)",
+            "en": "Cell 5 sits on the same row as .wide (the 3rd column)"
+          },
+          "test": "Math.abs(document.querySelector('.wide').getBoundingClientRect().top-document.querySelectorAll('.cell')[4].getBoundingClientRect().top)<2"
+        }
+      ]
+    }
+  ]
+}

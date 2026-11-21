@@ -1,0 +1,135 @@
+{
+  "title": {
+    "vi": "Thiết kế responsive",
+    "en": "Responsive design"
+  },
+  "summary": {
+    "vi": "viewport, media query, mobile-first, ảnh linh hoạt",
+    "en": "viewport, media queries, mobile-first, fluid images"
+  },
+  "minutes": 18,
+  "preview": "web",
+  "files": [
+    {
+      "name": "index.html",
+      "lang": "html",
+      "code": "<div class=\"container\">\n  <div class=\"box\">Một</div><div class=\"box\">Hai</div><div class=\"box\">Ba</div>\n</div>\n<img class=\"pic\" src=\"https://placehold.co/1200x300\" alt=\"Banner\" />\n"
+    },
+    {
+      "name": "style.css",
+      "lang": "css",
+      "code": "* { box-sizing: border-box; }\n.container { display: flex; gap: 12px; }\n.box { flex: 1; background: #0b6fd6; color: white; padding: 20px; }\nimg { max-width: 100%; height: auto; }\n\n/* Mobile-first: mặc định cho màn hình nhỏ, rồi mở rộng dần */\n.container { flex-direction: column; }\n\n@media (min-width: 600px) {\n  .container { flex-direction: row; }\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Thêm một media query (max-width hoặc min-width) và bên trong đó đặt .container thành flex-direction: column.",
+        "en": "Add a media query (max-width or min-width) and inside it set .container to flex-direction: column."
+      },
+      "hint": {
+        "vi": "@media (max-width: 600px) { .container { flex-direction: column; } }",
+        "en": "@media (max-width: 600px) { .container { flex-direction: column; } }"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<div class=\"container\">\n  <div class=\"box\">Một</div><div class=\"box\">Hai</div><div class=\"box\">Ba</div>\n</div>\n<img class=\"pic\" src=\"https://placehold.co/1200x300\" alt=\"Banner\" />\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "* { box-sizing: border-box; }\n.container { display: flex; gap: 12px; }\n.box { flex: 1; background: #0b6fd6; color: white; padding: 20px; }\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<div class=\"container\">\n  <div class=\"box\">Một</div><div class=\"box\">Hai</div><div class=\"box\">Ba</div>\n</div>\n<img class=\"pic\" src=\"https://placehold.co/1200x300\" alt=\"Banner\" />\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "* { box-sizing: border-box; }\n.container { display: flex; gap: 12px; }\n.box { flex: 1; background: #0b6fd6; color: white; padding: 20px; }\n@media (max-width: 600px) {\n  .container { flex-direction: column; }\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có @media với max-width hoặc min-width",
+            "en": "There is an @media with max-width or min-width"
+          },
+          "test": "Array.from(document.styleSheets).some(function(s){return Array.from(s.cssRules).some(function(r){return r.type===CSSRule.MEDIA_RULE&&/(max|min)-width/.test(r.conditionText||r.media.mediaText)})})"
+        },
+        {
+          "label": {
+            "vi": "Trong @media có .container { flex-direction: column }",
+            "en": "Inside @media there's .container { flex-direction: column }"
+          },
+          "test": "Array.from(document.styleSheets).some(function(s){return Array.from(s.cssRules).some(function(r){return r.type===CSSRule.MEDIA_RULE&&Array.from(r.cssRules).some(function(x){return x.selectorText&&x.selectorText.indexOf('.container')>=0&&x.style.flexDirection==='column'})})})"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Làm ảnh .pic co theo khung chứa: img { max-width: 100%; height: auto; } (ảnh không bao giờ tràn ra ngoài).",
+        "en": "Make the .pic image shrink with its container: img { max-width: 100%; height: auto; } (the image never overflows)."
+      },
+      "hint": {
+        "vi": "img { max-width: 100%; height: auto; }",
+        "en": "img { max-width: 100%; height: auto; }"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<div class=\"container\">\n  <div class=\"box\">Một</div><div class=\"box\">Hai</div><div class=\"box\">Ba</div>\n</div>\n<img class=\"pic\" src=\"https://placehold.co/1200x300\" alt=\"Banner\" />\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "* { box-sizing: border-box; }\n.container { display: flex; gap: 12px; }\n.box { flex: 1; background: #0b6fd6; color: white; padding: 20px; }\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<div class=\"container\">\n  <div class=\"box\">Một</div><div class=\"box\">Hai</div><div class=\"box\">Ba</div>\n</div>\n<img class=\"pic\" src=\"https://placehold.co/1200x300\" alt=\"Banner\" />\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "* { box-sizing: border-box; }\n.container { display: flex; gap: 12px; }\n.box { flex: 1; background: #0b6fd6; color: white; padding: 20px; }\nimg {\n  max-width: 100%;\n  height: auto;\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "max-width của ảnh là 100%",
+            "en": "The image's max-width is 100%"
+          },
+          "test": "getComputedStyle(document.querySelector('.pic')).maxWidth==='100%'"
+        },
+        {
+          "label": {
+            "vi": "Ảnh không rộng hơn trang",
+            "en": "The image is not wider than the page"
+          },
+          "test": "document.querySelector('.pic').getBoundingClientRect().width<=document.documentElement.clientWidth+1"
+        },
+        {
+          "label": {
+            "vi": "Ảnh giữ đúng tỉ lệ 4:1",
+            "en": "The image keeps its 4:1 ratio"
+          },
+          "test": "(function(){var r=document.querySelector('.pic').getBoundingClientRect();return Math.abs(r.width/r.height-4)<0.1})()"
+        }
+      ]
+    }
+  ]
+}

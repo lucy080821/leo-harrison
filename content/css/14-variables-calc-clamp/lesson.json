@@ -1,0 +1,142 @@
+{
+  "title": {
+    "vi": "Biến CSS, calc() và clamp()",
+    "en": "CSS variables, calc() and clamp()"
+  },
+  "summary": {
+    "vi": "--custom-property, var(), calc(), min(), max(), clamp()",
+    "en": "--custom-property, var(), calc(), min(), max(), clamp()"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "index.html",
+      "lang": "html",
+      "code": "<h1>Tiêu đề</h1>\n<p>Đoạn văn mẫu để thử biến CSS.</p>\n<button class=\"btn\">Nút</button>\n"
+    },
+    {
+      "name": "style.css",
+      "lang": "css",
+      "code": "body { font-family: system-ui, sans-serif; padding: 16px; }\n:root {\n  --brand: #0b6fd6;\n  --radius: 8px;\n  --space: 1rem;\n}\nh1 { color: var(--brand); font-size: clamp(1.5rem, 5vw, 3rem); }\n.btn {\n  background: var(--brand);\n  color: white;\n  border: 0;\n  border-radius: var(--radius);\n  padding: calc(var(--space) / 2) var(--space);\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Khai báo biến --brand trên :root, rồi dùng var(--brand) cho cả màu chữ của h1 và màu nền của .btn (hai giá trị phải giống nhau).",
+        "en": "Declare a --brand variable on :root, then use var(--brand) for both the h1 text color and the .btn background (they must match)."
+      },
+      "hint": {
+        "vi": ":root { --brand: #0b6fd6; } h1 { color: var(--brand); } .btn { background: var(--brand); }",
+        "en": ":root { --brand: #0b6fd6; } h1 { color: var(--brand); } .btn { background: var(--brand); }"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<h1>Tiêu đề</h1>\n<p>Đoạn văn mẫu để thử biến CSS.</p>\n<button class=\"btn\">Nút</button>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "body { font-family: system-ui, sans-serif; padding: 16px; }\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<h1>Tiêu đề</h1>\n<p>Đoạn văn mẫu để thử biến CSS.</p>\n<button class=\"btn\">Nút</button>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "body { font-family: system-ui, sans-serif; padding: 16px; }\n:root { --brand: #0b6fd6; }\nh1 { color: var(--brand); }\n.btn { background: var(--brand); color: white; border: 0; }\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có biến --brand trên :root",
+            "en": "The --brand variable exists on :root"
+          },
+          "test": "getComputedStyle(document.documentElement).getPropertyValue('--brand').trim()!==''"
+        },
+        {
+          "label": {
+            "vi": "Màu chữ h1 trùng màu nền .btn",
+            "en": "The h1 color matches the .btn background"
+          },
+          "test": "getComputedStyle(document.querySelector('h1')).color===getComputedStyle(document.querySelector('.btn')).backgroundColor"
+        },
+        {
+          "label": {
+            "vi": "CSS dùng var(--brand)",
+            "en": "The CSS uses var(--brand)"
+          },
+          "test": "Array.from(document.querySelectorAll('style')).some(function(s){return /var\\(--brand\\)/.test(s.textContent)})"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Dùng clamp() cho font-size của h1 (nhỏ nhất 1.5rem, lớn nhất 3rem), và calc() cho padding của .btn.",
+        "en": "Use clamp() for the h1 font-size (min 1.5rem, max 3rem) and calc() for the .btn padding."
+      },
+      "hint": {
+        "vi": "h1 { font-size: clamp(1.5rem, 5vw, 3rem); } .btn { padding: calc(0.5rem + 4px); }",
+        "en": "h1 { font-size: clamp(1.5rem, 5vw, 3rem); } .btn { padding: calc(0.5rem + 4px); }"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<h1>Tiêu đề</h1>\n<p>Đoạn văn mẫu để thử biến CSS.</p>\n<button class=\"btn\">Nút</button>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "body { font-family: system-ui, sans-serif; padding: 16px; }\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<h1>Tiêu đề</h1>\n<p>Đoạn văn mẫu để thử biến CSS.</p>\n<button class=\"btn\">Nút</button>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "body { font-family: system-ui, sans-serif; padding: 16px; }\nh1 { font-size: clamp(1.5rem, 5vw, 3rem); }\n.btn { padding: calc(0.5rem + 4px); }\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "CSS dùng clamp() cho h1",
+            "en": "The CSS uses clamp() for h1"
+          },
+          "test": "Array.from(document.querySelectorAll('style')).some(function(s){return /h1\\s*\\{[^}]*font-size\\s*:\\s*clamp\\(/.test(s.textContent)})"
+        },
+        {
+          "label": {
+            "vi": "CSS dùng calc() cho .btn",
+            "en": "The CSS uses calc() for .btn"
+          },
+          "test": "Array.from(document.querySelectorAll('style')).some(function(s){return /\\.btn\\s*\\{[^}]*calc\\(/.test(s.textContent)})"
+        },
+        {
+          "label": {
+            "vi": "font-size của h1 nằm trong 24px–48px",
+            "en": "The h1 font-size is within 24px–48px"
+          },
+          "test": "(function(){var f=parseFloat(getComputedStyle(document.querySelector('h1')).fontSize);return f>=24&&f<=48})()"
+        }
+      ]
+    }
+  ]
+}

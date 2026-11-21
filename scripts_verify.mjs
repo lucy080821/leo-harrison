@@ -30,7 +30,7 @@ async function run(files, tests) {
         f.sandbox = "allow-scripts";
         f.srcdoc = doc;
         f.id = "f";
-        f.onload = () => setTimeout(res, 150);
+        f.onload = () => setTimeout(res, 800);
         document.body.appendChild(f);
       }),
     { doc },

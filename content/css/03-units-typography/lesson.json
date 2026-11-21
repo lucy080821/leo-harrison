@@ -1,0 +1,128 @@
+{
+  "title": {
+    "vi": "Đơn vị và chữ (Typography)",
+    "en": "Units and typography"
+  },
+  "summary": {
+    "vi": "px, rem, em, %, vw/vh, font-family, line-height",
+    "en": "px, rem, em, %, vw/vh, font-family, line-height"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "index.html",
+      "lang": "html",
+      "code": "<h1>Typography</h1>\n<p>Chữ đẹp là nửa của thiết kế. Hãy chọn cỡ chữ, khoảng cách dòng và phông chữ cho dễ đọc.</p>\n"
+    },
+    {
+      "name": "style.css",
+      "lang": "css",
+      "code": "html { font-size: 16px; }          /* 1rem = 16px */\n\nh1 {\n  font-size: 2.5rem;                /* = 40px */\n  font-family: Georgia, serif;\n}\n\np {\n  font-size: 1.125rem;              /* = 18px */\n  line-height: 1.7;                 /* không đơn vị: nhân với font-size */\n  max-width: 60ch;                  /* ~60 ký tự mỗi dòng */\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Đặt font-size của <p> bằng đơn vị rem sao cho bằng đúng 20px (gốc là 16px) — dùng đơn vị rem.",
+        "en": "Set the <p> font-size using rem so that it equals exactly 20px (root is 16px) — use the rem unit."
+      },
+      "hint": {
+        "vi": "20 ÷ 16 = 1.25, nên font-size: 1.25rem;",
+        "en": "20 ÷ 16 = 1.25, so font-size: 1.25rem;"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<h1>Typography</h1>\n<p>Chữ đẹp là nửa của thiết kế. Hãy chọn cỡ chữ, khoảng cách dòng và phông chữ cho dễ đọc.</p>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "html { font-size: 16px; }\n\np {\n  /* viết ở đây */\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<h1>Typography</h1>\n<p>Chữ đẹp là nửa của thiết kế. Hãy chọn cỡ chữ, khoảng cách dòng và phông chữ cho dễ đọc.</p>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "html { font-size: 16px; }\n\np {\n  font-size: 1.25rem;\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "font-size của <p> là 20px",
+            "en": "The <p> font-size is 20px"
+          },
+          "test": "getComputedStyle(document.querySelector('p')).fontSize==='20px'"
+        },
+        {
+          "label": {
+            "vi": "CSS có dùng đơn vị rem",
+            "en": "The CSS uses the rem unit"
+          },
+          "test": "Array.from(document.querySelectorAll('style')).some(function(s){return /\\d(\\.\\d+)?rem/.test(s.textContent)})"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Cho <p> line-height gấp ít nhất 1.5 lần cỡ chữ và chọn font-family có kèm họ phông dự phòng (serif hoặc sans-serif).",
+        "en": "Give <p> a line-height at least 1.5 times the font size and a font-family that includes a generic fallback (serif or sans-serif)."
+      },
+      "hint": {
+        "vi": "line-height: 1.6; font-family: \"Segoe UI\", Arial, sans-serif;",
+        "en": "line-height: 1.6; font-family: \"Segoe UI\", Arial, sans-serif;"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<h1>Typography</h1>\n<p>Chữ đẹp là nửa của thiết kế. Hãy chọn cỡ chữ, khoảng cách dòng và phông chữ cho dễ đọc.</p>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "p {\n  font-size: 18px;\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<h1>Typography</h1>\n<p>Chữ đẹp là nửa của thiết kế. Hãy chọn cỡ chữ, khoảng cách dòng và phông chữ cho dễ đọc.</p>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "p {\n  font-size: 18px;\n  line-height: 1.6;\n  font-family: \"Segoe UI\", Arial, sans-serif;\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "line-height ≥ 1.5 × font-size",
+            "en": "line-height ≥ 1.5 × font-size"
+          },
+          "test": "(function(){var s=getComputedStyle(document.querySelector('p'));return parseFloat(s.lineHeight)/parseFloat(s.fontSize)>=1.5})()"
+        },
+        {
+          "label": {
+            "vi": "font-family có họ dự phòng serif/sans-serif",
+            "en": "font-family has a serif/sans-serif fallback"
+          },
+          "test": "/serif/.test(getComputedStyle(document.querySelector('p')).fontFamily)"
+        }
+      ]
+    }
+  ]
+}

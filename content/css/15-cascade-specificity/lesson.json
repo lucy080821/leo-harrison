@@ -1,0 +1,135 @@
+{
+  "title": {
+    "vi": "Cascade, độ ưu tiên và kế thừa",
+    "en": "Cascade, specificity and inheritance"
+  },
+  "summary": {
+    "vi": "thứ tự ưu tiên, specificity, !important, inherit",
+    "en": "rule order, specificity, !important, inherit"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "index.html",
+      "lang": "html",
+      "code": "<h1 id=\"heading\" class=\"title\">Tiêu đề cần màu đỏ</h1>\n"
+    },
+    {
+      "name": "style.css",
+      "lang": "css",
+      "code": "/* id (1,0,0) thắng class (0,1,0) dù class viết sau */\n#heading { color: blue; }\n.title { color: red; }\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tiêu đề phải hiện màu đỏ nhưng id đang thắng class. Sửa CSS (không dùng !important, không sửa HTML) để chữ thành màu đỏ.",
+        "en": "The heading must be red but the id is beating the class. Fix the CSS (no !important, don't edit the HTML) so the text is red."
+      },
+      "hint": {
+        "vi": "Xoá quy tắc #heading, hoặc đổi màu của nó thành red. Đừng chạy đua độ ưu tiên bằng !important.",
+        "en": "Delete the #heading rule or change its color to red. Don't win specificity wars with !important."
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<h1 id=\"heading\" class=\"title\">Tiêu đề cần màu đỏ</h1>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "#heading { color: blue; }\n.title { color: red; }\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<h1 id=\"heading\" class=\"title\">Tiêu đề cần màu đỏ</h1>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": ".title { color: red; }\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Màu chữ h1 là đỏ",
+            "en": "The h1 text is red"
+          },
+          "test": "getComputedStyle(document.querySelector('h1')).color==='rgb(255, 0, 0)'"
+        },
+        {
+          "label": {
+            "vi": "CSS không dùng !important",
+            "en": "The CSS doesn't use !important"
+          },
+          "test": "!Array.from(document.querySelectorAll('style')).some(function(s){return /!important/.test(s.textContent)})"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Gom màu chữ và phông chữ vào body để h1 và p thừa hưởng (kế thừa): xoá color và font-family khỏi h1, p và đặt chúng trên body.",
+        "en": "Move the color and font-family to body so h1 and p inherit them: remove color and font-family from h1 and p and set them on body."
+      },
+      "hint": {
+        "vi": "body { color: #0b6fd6; font-family: Georgia, serif; } rồi bỏ hai thuộc tính đó ở h1 và p.",
+        "en": "body { color: #0b6fd6; font-family: Georgia, serif; } then drop those two properties from h1 and p."
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<h1>Tiêu đề</h1>\n<p>Đoạn văn một.</p>\n<p>Đoạn văn hai.</p>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "h1 { color: #0b6fd6; font-family: Georgia, serif; }\np { color: #0b6fd6; font-family: Georgia, serif; }\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<h1>Tiêu đề</h1>\n<p>Đoạn văn một.</p>\n<p>Đoạn văn hai.</p>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "body { color: #0b6fd6; font-family: Georgia, serif; }\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "body có color khác đen mặc định",
+            "en": "body has a non-default color"
+          },
+          "test": "getComputedStyle(document.body).color!=='rgb(0, 0, 0)'"
+        },
+        {
+          "label": {
+            "vi": "h1 và p kế thừa đúng màu và phông của body",
+            "en": "h1 and p inherit body's color and font"
+          },
+          "test": "['h1','p'].every(function(t){var e=getComputedStyle(document.querySelector(t)),b=getComputedStyle(document.body);return e.color===b.color&&e.fontFamily===b.fontFamily})"
+        },
+        {
+          "label": {
+            "vi": "h1 và p không tự đặt color",
+            "en": "h1 and p don't set their own color"
+          },
+          "test": "!Array.from(document.styleSheets).some(function(s){return Array.from(s.cssRules).some(function(r){return r.selectorText&&/^(h1|p)$/.test(r.selectorText.trim())&&r.style.color})})"
+        }
+      ]
+    }
+  ]
+}

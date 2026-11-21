@@ -13,11 +13,27 @@ const BRIDGE = `
   function send(level, text){ logs.push(text); try { parent.postMessage({lexi:true,type:'log',level:level,text:text},'*'); } catch(e){} }
   function fmt(a){
     try {
-      if (typeof a === 'string') return a;
+      var t = typeof a;
+      if (t === 'string') return a;
+      if (a === null || t === 'number' || t === 'boolean' || t === 'bigint' || t === 'symbol' || t === 'undefined') return String(a);
+      if (t === 'function') return '[Function' + (a.name ? ': ' + a.name : '') + ']';
       if (a instanceof Error) return a.name + ': ' + a.message;
-      if (typeof a === 'undefined') return 'undefined';
-      return JSON.stringify(a, function(k,v){ return typeof v === 'function' ? '[Function]' : v; }, 2);
+      if (a instanceof Map) return 'Map(' + a.size + ') {' + Array.from(a.entries()).map(function(e){ return fmt1(e[0]) + ' => ' + fmt1(e[1]); }).join(', ') + '}';
+      if (a instanceof Set) return 'Set(' + a.size + ') {' + Array.from(a.values()).map(fmt1).join(', ') + '}';
+      if (typeof Node !== 'undefined' && a instanceof Node) return a.outerHTML || String(a.nodeName);
+      var compact = JSON.stringify(a, rep);
+      if (compact.length <= 72) return compact;
+      return JSON.stringify(a, rep, 2);
     } catch(e){ return String(a); }
+  }
+  function fmt1(a){ return typeof a === 'string' ? JSON.stringify(a) : fmt(a); }
+  function rep(k, v){
+    if (typeof v === 'function') return '[Function]';
+    if (typeof v === 'undefined') return '[undefined]';
+    if (typeof v === 'number' && !isFinite(v)) return String(v);
+    if (v instanceof Map) return {Map: Array.from(v.entries())};
+    if (v instanceof Set) return {Set: Array.from(v.values())};
+    return v;
   }
   ['log','info','warn','error'].forEach(function(m){
     var orig = console[m];

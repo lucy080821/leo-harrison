@@ -1,0 +1,142 @@
+{
+  "title": {
+    "vi": "Flexbox (2): wrap, gap và flex-grow",
+    "en": "Flexbox (2): wrap, gap and flex-grow"
+  },
+  "summary": {
+    "vi": "flex-wrap, gap, flex: 1, flex-basis, order",
+    "en": "flex-wrap, gap, flex: 1, flex-basis, order"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "index.html",
+      "lang": "html",
+      "code": "<div class=\"wrap\">\n  <div class=\"tag\">HTML</div><div class=\"tag\">CSS</div><div class=\"tag\">JavaScript</div>\n  <div class=\"tag\">React</div><div class=\"tag\">Next.js</div><div class=\"tag\">Node.js</div>\n</div>\n<div class=\"layout\">\n  <aside class=\"sidebar\">Sidebar</aside>\n  <main class=\"content\">Nội dung chính</main>\n</div>\n"
+    },
+    {
+      "name": "style.css",
+      "lang": "css",
+      "code": "* { box-sizing: border-box; }\n.wrap { width: 300px; background: #eaf2fb; padding: 8px; }\n.tag { background: #0b6fd6; color: white; padding: 6px 12px; border-radius: 6px; }\n.layout { margin-top: 16px; width: 500px; }\n.sidebar { background: #0aa5b8; color: white; padding: 12px; }\n.content { background: #dcebfb; padding: 12px; }\n.wrap { display: flex; flex-wrap: wrap; gap: 8px; }\n.layout { display: flex; gap: 12px; }\n.sidebar { flex: 0 0 140px; }\n.content { flex: 1; }\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Cho .wrap xếp các .tag thành nhiều hàng khi hết chỗ: display flex, flex-wrap wrap và gap ít nhất 8px.",
+        "en": "Make .wrap lay the .tag items out in multiple rows when space runs out: display flex, flex-wrap wrap and a gap of at least 8px."
+      },
+      "hint": {
+        "vi": "display: flex; flex-wrap: wrap; gap: 8px;",
+        "en": "display: flex; flex-wrap: wrap; gap: 8px;"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<div class=\"wrap\">\n  <div class=\"tag\">HTML</div><div class=\"tag\">CSS</div><div class=\"tag\">JavaScript</div>\n  <div class=\"tag\">React</div><div class=\"tag\">Next.js</div><div class=\"tag\">Node.js</div>\n</div>\n<div class=\"layout\">\n  <aside class=\"sidebar\">Sidebar</aside>\n  <main class=\"content\">Nội dung chính</main>\n</div>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "* { box-sizing: border-box; }\n.wrap { width: 300px; background: #eaf2fb; padding: 8px; }\n.tag { background: #0b6fd6; color: white; padding: 6px 12px; border-radius: 6px; }\n.layout { margin-top: 16px; width: 500px; }\n.sidebar { background: #0aa5b8; color: white; padding: 12px; }\n.content { background: #dcebfb; padding: 12px; }\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<div class=\"wrap\">\n  <div class=\"tag\">HTML</div><div class=\"tag\">CSS</div><div class=\"tag\">JavaScript</div>\n  <div class=\"tag\">React</div><div class=\"tag\">Next.js</div><div class=\"tag\">Node.js</div>\n</div>\n<div class=\"layout\">\n  <aside class=\"sidebar\">Sidebar</aside>\n  <main class=\"content\">Nội dung chính</main>\n</div>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "* { box-sizing: border-box; }\n.wrap { width: 300px; background: #eaf2fb; padding: 8px; }\n.tag { background: #0b6fd6; color: white; padding: 6px 12px; border-radius: 6px; }\n.layout { margin-top: 16px; width: 500px; }\n.sidebar { background: #0aa5b8; color: white; padding: 12px; }\n.content { background: #dcebfb; padding: 12px; }\n.wrap { display: flex; flex-wrap: wrap; gap: 8px; }\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "flex-wrap là wrap",
+            "en": "flex-wrap is wrap"
+          },
+          "test": "getComputedStyle(document.querySelector('.wrap')).flexWrap==='wrap'"
+        },
+        {
+          "label": {
+            "vi": "gap ≥ 8px",
+            "en": "gap ≥ 8px"
+          },
+          "test": "parseFloat(getComputedStyle(document.querySelector('.wrap')).columnGap)>=8"
+        },
+        {
+          "label": {
+            "vi": "Các tag tràn xuống nhiều hàng",
+            "en": "Tags wrap onto several rows"
+          },
+          "test": "new Set(Array.from(document.querySelectorAll('.tag')).map(function(e){return Math.round(e.getBoundingClientRect().top)})).size>=2"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Tạo bố cục 2 cột: .sidebar rộng cố định 140px (không co) và .content chiếm toàn bộ phần còn lại (flex: 1).",
+        "en": "Create a 2-column layout: .sidebar fixed at 140px (no shrinking) and .content taking all the remaining space (flex: 1)."
+      },
+      "hint": {
+        "vi": ".layout { display: flex; } .sidebar { flex: 0 0 140px; } .content { flex: 1; }",
+        "en": ".layout { display: flex; } .sidebar { flex: 0 0 140px; } .content { flex: 1; }"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<div class=\"wrap\">\n  <div class=\"tag\">HTML</div><div class=\"tag\">CSS</div><div class=\"tag\">JavaScript</div>\n  <div class=\"tag\">React</div><div class=\"tag\">Next.js</div><div class=\"tag\">Node.js</div>\n</div>\n<div class=\"layout\">\n  <aside class=\"sidebar\">Sidebar</aside>\n  <main class=\"content\">Nội dung chính</main>\n</div>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "* { box-sizing: border-box; }\n.wrap { width: 300px; background: #eaf2fb; padding: 8px; }\n.tag { background: #0b6fd6; color: white; padding: 6px 12px; border-radius: 6px; }\n.layout { margin-top: 16px; width: 500px; }\n.sidebar { background: #0aa5b8; color: white; padding: 12px; }\n.content { background: #dcebfb; padding: 12px; }\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<div class=\"wrap\">\n  <div class=\"tag\">HTML</div><div class=\"tag\">CSS</div><div class=\"tag\">JavaScript</div>\n  <div class=\"tag\">React</div><div class=\"tag\">Next.js</div><div class=\"tag\">Node.js</div>\n</div>\n<div class=\"layout\">\n  <aside class=\"sidebar\">Sidebar</aside>\n  <main class=\"content\">Nội dung chính</main>\n</div>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "* { box-sizing: border-box; }\n.wrap { width: 300px; background: #eaf2fb; padding: 8px; }\n.tag { background: #0b6fd6; color: white; padding: 6px 12px; border-radius: 6px; }\n.layout { margin-top: 16px; width: 500px; }\n.sidebar { background: #0aa5b8; color: white; padding: 12px; }\n.content { background: #dcebfb; padding: 12px; }\n.layout { display: flex; }\n.sidebar { flex: 0 0 140px; }\n.content { flex: 1; }\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Sidebar rộng 140px",
+            "en": "Sidebar is 140px wide"
+          },
+          "test": "Math.round(document.querySelector('.sidebar').getBoundingClientRect().width)===140"
+        },
+        {
+          "label": {
+            "vi": "Hai cột nằm cạnh nhau",
+            "en": "The two columns are side by side"
+          },
+          "test": "(function(){var a=document.querySelector('.sidebar').getBoundingClientRect(),b=document.querySelector('.content').getBoundingClientRect();return Math.abs(a.top-b.top)<2&&b.left>=a.right-1})()"
+        },
+        {
+          "label": {
+            "vi": "Content lấp đầy phần còn lại",
+            "en": "Content fills the rest"
+          },
+          "test": "(function(){var l=document.querySelector('.layout').getBoundingClientRect(),c=document.querySelector('.content').getBoundingClientRect();return Math.abs(c.right-l.right)<2})()"
+        }
+      ]
+    }
+  ]
+}

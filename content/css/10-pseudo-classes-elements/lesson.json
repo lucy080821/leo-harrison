@@ -1,0 +1,128 @@
+{
+  "title": {
+    "vi": "Pseudo-class, pseudo-element và combinator",
+    "en": "Pseudo-classes, pseudo-elements and combinators"
+  },
+  "summary": {
+    "vi": ":hover, :focus, :nth-child, ::before, ::after, > + ~",
+    "en": ":hover, :focus, :nth-child, ::before, ::after, > + ~"
+  },
+  "minutes": 18,
+  "preview": "web",
+  "files": [
+    {
+      "name": "index.html",
+      "lang": "html",
+      "code": "<button class=\"btn\">Bấm vào tôi</button>\n<ul class=\"list\"><li>Một</li><li>Hai</li><li>Ba</li><li>Bốn</li></ul>\n<p class=\"new\">Tin mới nhất</p>\n"
+    },
+    {
+      "name": "style.css",
+      "lang": "css",
+      "code": "li { padding: 6px; list-style: none; }\n.btn { background: #0b6fd6; color: white; border: 0; padding: 10px 16px; border-radius: 8px; }\n.btn:hover { background: #0aa5b8; }\n.btn:focus-visible { outline: 3px solid orange; }\nli:nth-child(even) { background: #eaf2fb; }\n.new::before { content: \"🔥 \"; }\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Làm .btn đổi nền khi rê chuột (:hover) và tô sọc xen kẽ cho danh sách: li:nth-child(even) có màu nền.",
+        "en": "Make .btn change background on mouse hover (:hover) and stripe the list: li:nth-child(even) gets a background color."
+      },
+      "hint": {
+        "vi": ".btn:hover { background: tomato; } và li:nth-child(even) { background: #eaf2fb; }",
+        "en": ".btn:hover { background: tomato; } and li:nth-child(even) { background: #eaf2fb; }"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<button class=\"btn\">Bấm vào tôi</button>\n<ul class=\"list\"><li>Một</li><li>Hai</li><li>Ba</li><li>Bốn</li></ul>\n<p class=\"new\">Tin mới nhất</p>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "li { padding: 6px; list-style: none; }\n.btn { background: #0b6fd6; color: white; border: 0; padding: 10px 16px; border-radius: 8px; }\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<button class=\"btn\">Bấm vào tôi</button>\n<ul class=\"list\"><li>Một</li><li>Hai</li><li>Ba</li><li>Bốn</li></ul>\n<p class=\"new\">Tin mới nhất</p>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "li { padding: 6px; list-style: none; }\n.btn { background: #0b6fd6; color: white; border: 0; padding: 10px 16px; border-radius: 8px; }\n.btn:hover { background: tomato; }\nli:nth-child(even) { background: #eaf2fb; }\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có quy tắc .btn:hover",
+            "en": "There is a .btn:hover rule"
+          },
+          "test": "Array.from(document.styleSheets).some(function(s){return Array.from(s.cssRules).some(function(r){return r.selectorText&&/\\.btn:hover/.test(r.selectorText)})})"
+        },
+        {
+          "label": {
+            "vi": "Dòng li chẵn có màu nền, dòng lẻ thì không",
+            "en": "Even li has a background, odd li doesn't"
+          },
+          "test": "(function(){var l=document.querySelectorAll('li');return getComputedStyle(l[1]).backgroundColor!=='rgba(0, 0, 0, 0)'&&getComputedStyle(l[0]).backgroundColor==='rgba(0, 0, 0, 0)'})()"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Dùng ::before để chèn nội dung (content) trước .new, và ::after chèn nội dung sau nó.",
+        "en": "Use ::before to insert content before .new, and ::after to insert content after it."
+      },
+      "hint": {
+        "vi": ".new::before { content: \"★ \"; } .new::after { content: \" !\"; }",
+        "en": ".new::before { content: \"★ \"; } .new::after { content: \" !\"; }"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<button class=\"btn\">Bấm vào tôi</button>\n<ul class=\"list\"><li>Một</li><li>Hai</li><li>Ba</li><li>Bốn</li></ul>\n<p class=\"new\">Tin mới nhất</p>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "li { padding: 6px; list-style: none; }\n.btn { background: #0b6fd6; color: white; border: 0; padding: 10px 16px; border-radius: 8px; }\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<button class=\"btn\">Bấm vào tôi</button>\n<ul class=\"list\"><li>Một</li><li>Hai</li><li>Ba</li><li>Bốn</li></ul>\n<p class=\"new\">Tin mới nhất</p>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "li { padding: 6px; list-style: none; }\n.btn { background: #0b6fd6; color: white; border: 0; padding: 10px 16px; border-radius: 8px; }\n.new::before { content: \"★ \"; }\n.new::after { content: \" !\"; }\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": ".new::before có content",
+            "en": ".new::before has content"
+          },
+          "test": "(function(){var c=getComputedStyle(document.querySelector('.new'),'::before').content;return c!=='none'&&c!=='normal'&&c.length>2})()"
+        },
+        {
+          "label": {
+            "vi": ".new::after có content",
+            "en": ".new::after has content"
+          },
+          "test": "(function(){var c=getComputedStyle(document.querySelector('.new'),'::after').content;return c!=='none'&&c!=='normal'&&c.length>2})()"
+        }
+      ]
+    }
+  ]
+}

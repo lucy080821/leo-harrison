@@ -344,7 +344,8 @@ export function LessonWorkspace(p: Props) {
             sandbox="allow-scripts"
             srcDoc={srcDoc}
             onLoad={() => {
-              if (pendingCheck.current) sendCheck(pendingCheck.current);
+              // Chờ một chút để các timer/promise ngắn trong code của bạn kịp chạy xong rồi mới chấm.
+              if (pendingCheck.current) setTimeout(() => pendingCheck.current && sendCheck(pendingCheck.current), 700);
             }}
             className={`h-full w-full bg-white ${outTab === "preview" ? "" : "hidden"}`}
           />

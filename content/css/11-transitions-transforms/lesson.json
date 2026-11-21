@@ -1,0 +1,128 @@
+{
+  "title": {
+    "vi": "Transition và Transform",
+    "en": "Transitions and transforms"
+  },
+  "summary": {
+    "vi": "transition, transform: translate/scale/rotate",
+    "en": "transition, transform: translate/scale/rotate"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "index.html",
+      "lang": "html",
+      "code": "<button class=\"btn\">Rê chuột vào tôi</button>\n<div class=\"box\">Hộp</div>\n"
+    },
+    {
+      "name": "style.css",
+      "lang": "css",
+      "code": ".btn { background: #0b6fd6; color: white; border: 0; padding: 12px 20px; border-radius: 8px; cursor: pointer; margin: 16px; }\n.box { width: 80px; height: 80px; background: #0aa5b8; color: white; display: grid; place-items: center; margin: 40px; }\n.btn { transition: background-color 0.3s ease, transform 0.2s; }\n.btn:hover { background: #0aa5b8; transform: translateY(-2px) scale(1.05); }\n.box { transform: rotate(15deg); }\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Cho .btn hiệu ứng chuyển mượt: transition với thời lượng lớn hơn 0, và khi :hover thì phóng to nhẹ bằng transform: scale(...).",
+        "en": "Give .btn a smooth effect: a transition with a duration above 0, and a slight enlargement on :hover using transform: scale(...)."
+      },
+      "hint": {
+        "vi": ".btn { transition: transform 0.2s; } .btn:hover { transform: scale(1.1); }",
+        "en": ".btn { transition: transform 0.2s; } .btn:hover { transform: scale(1.1); }"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<button class=\"btn\">Rê chuột vào tôi</button>\n<div class=\"box\">Hộp</div>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": ".btn { background: #0b6fd6; color: white; border: 0; padding: 12px 20px; border-radius: 8px; cursor: pointer; margin: 16px; }\n.box { width: 80px; height: 80px; background: #0aa5b8; color: white; display: grid; place-items: center; margin: 40px; }\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<button class=\"btn\">Rê chuột vào tôi</button>\n<div class=\"box\">Hộp</div>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": ".btn { background: #0b6fd6; color: white; border: 0; padding: 12px 20px; border-radius: 8px; cursor: pointer; margin: 16px; }\n.box { width: 80px; height: 80px; background: #0aa5b8; color: white; display: grid; place-items: center; margin: 40px; }\n.btn { transition: transform 0.2s; }\n.btn:hover { transform: scale(1.1); }\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": ".btn có transition thời lượng > 0",
+            "en": ".btn has a transition duration > 0"
+          },
+          "test": "parseFloat(getComputedStyle(document.querySelector('.btn')).transitionDuration)>0"
+        },
+        {
+          "label": {
+            "vi": ".btn:hover có transform scale",
+            "en": ".btn:hover has a transform scale"
+          },
+          "test": "Array.from(document.styleSheets).some(function(s){return Array.from(s.cssRules).some(function(r){return r.selectorText&&/\\.btn:hover/.test(r.selectorText)&&/scale/.test(r.style.transform||'')})})"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Xoay .box đúng 45 độ bằng transform: rotate(45deg).",
+        "en": "Rotate .box by exactly 45 degrees with transform: rotate(45deg)."
+      },
+      "hint": {
+        "vi": ".box { transform: rotate(45deg); }",
+        "en": ".box { transform: rotate(45deg); }"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<button class=\"btn\">Rê chuột vào tôi</button>\n<div class=\"box\">Hộp</div>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": ".btn { background: #0b6fd6; color: white; border: 0; padding: 12px 20px; border-radius: 8px; cursor: pointer; margin: 16px; }\n.box { width: 80px; height: 80px; background: #0aa5b8; color: white; display: grid; place-items: center; margin: 40px; }\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<button class=\"btn\">Rê chuột vào tôi</button>\n<div class=\"box\">Hộp</div>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": ".btn { background: #0b6fd6; color: white; border: 0; padding: 12px 20px; border-radius: 8px; cursor: pointer; margin: 16px; }\n.box { width: 80px; height: 80px; background: #0aa5b8; color: white; display: grid; place-items: center; margin: 40px; }\n.box { transform: rotate(45deg); }\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": ".box có transform",
+            "en": ".box has a transform"
+          },
+          "test": "getComputedStyle(document.querySelector('.box')).transform!=='none'"
+        },
+        {
+          "label": {
+            "vi": "Góc xoay là 45°",
+            "en": "The rotation is 45°"
+          },
+          "test": "(function(){var m=new DOMMatrix(getComputedStyle(document.querySelector('.box')).transform);return Math.abs(Math.atan2(m.b,m.a)*180/Math.PI-45)<0.5})()"
+        }
+      ]
+    }
+  ]
+}

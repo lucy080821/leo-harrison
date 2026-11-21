@@ -1,0 +1,142 @@
+{
+  "title": {
+    "vi": "Flexbox (1): trục chính và trục phụ",
+    "en": "Flexbox (1): main and cross axis"
+  },
+  "summary": {
+    "vi": "display: flex, flex-direction, justify-content, align-items",
+    "en": "display: flex, flex-direction, justify-content, align-items"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "index.html",
+      "lang": "html",
+      "code": "<div class=\"row\">\n  <div class=\"item\">A</div>\n  <div class=\"item\">B</div>\n  <div class=\"item\">C</div>\n</div>\n"
+    },
+    {
+      "name": "style.css",
+      "lang": "css",
+      "code": ".row { background: #eaf2fb; padding: 8px; }\n.item { background: #0b6fd6; color: white; padding: 16px; margin: 4px; }\n\n.row {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  height: 120px;\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Biến .row thành flex container để ba .item nằm trên cùng một hàng ngang, và dàn đều với khoảng cách ở giữa (space-between).",
+        "en": "Turn .row into a flex container so the three .item sit on one horizontal row, spread out with space-between."
+      },
+      "hint": {
+        "vi": "display: flex; justify-content: space-between;",
+        "en": "display: flex; justify-content: space-between;"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<div class=\"row\">\n  <div class=\"item\">A</div>\n  <div class=\"item\">B</div>\n  <div class=\"item\">C</div>\n</div>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": ".row { background: #eaf2fb; padding: 8px; }\n.item { background: #0b6fd6; color: white; padding: 16px; margin: 4px; }\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<div class=\"row\">\n  <div class=\"item\">A</div>\n  <div class=\"item\">B</div>\n  <div class=\"item\">C</div>\n</div>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": ".row { background: #eaf2fb; padding: 8px; }\n.item { background: #0b6fd6; color: white; padding: 16px; margin: 4px; }\n\n.row {\n  display: flex;\n  justify-content: space-between;\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": ".row có display: flex",
+            "en": ".row has display: flex"
+          },
+          "test": "getComputedStyle(document.querySelector('.row')).display==='flex'"
+        },
+        {
+          "label": {
+            "vi": "Ba .item cùng một hàng",
+            "en": "All three .item on one row"
+          },
+          "test": "(function(){var t=Array.from(document.querySelectorAll('.item')).map(function(e){return Math.round(e.getBoundingClientRect().top)});return t.length===3&&new Set(t).size===1})()"
+        },
+        {
+          "label": {
+            "vi": "justify-content là space-between",
+            "en": "justify-content is space-between"
+          },
+          "test": "getComputedStyle(document.querySelector('.row')).justifyContent==='space-between'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Căn giữa .item cả chiều ngang lẫn chiều dọc trong .row cao 200px (justify-content và align-items đều là center).",
+        "en": "Center the .item both horizontally and vertically inside the 200px-tall .row (justify-content and align-items both center)."
+      },
+      "hint": {
+        "vi": "display: flex; justify-content: center; align-items: center;",
+        "en": "display: flex; justify-content: center; align-items: center;"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<div class=\"row\">\n  <div class=\"item\">A</div>\n  <div class=\"item\">B</div>\n  <div class=\"item\">C</div>\n</div>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": ".row { background: #eaf2fb; padding: 8px; }\n.item { background: #0b6fd6; color: white; padding: 16px; margin: 4px; }\n.row { height: 200px; }\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<div class=\"row\">\n  <div class=\"item\">A</div>\n  <div class=\"item\">B</div>\n  <div class=\"item\">C</div>\n</div>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": ".row { background: #eaf2fb; padding: 8px; }\n.item { background: #0b6fd6; color: white; padding: 16px; margin: 4px; }\n.row {\n  height: 200px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "justify-content là center",
+            "en": "justify-content is center"
+          },
+          "test": "getComputedStyle(document.querySelector('.row')).justifyContent==='center'"
+        },
+        {
+          "label": {
+            "vi": "align-items là center",
+            "en": "align-items is center"
+          },
+          "test": "getComputedStyle(document.querySelector('.row')).alignItems==='center'"
+        },
+        {
+          "label": {
+            "vi": "Các item nằm giữa theo chiều dọc",
+            "en": "The items are vertically centered"
+          },
+          "test": "(function(){var r=document.querySelector('.row').getBoundingClientRect(),i=document.querySelector('.item').getBoundingClientRect();return Math.abs((i.top+i.bottom)/2-(r.top+r.bottom)/2)<4})()"
+        }
+      ]
+    }
+  ]
+}

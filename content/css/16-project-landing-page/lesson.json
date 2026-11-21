@@ -1,0 +1,156 @@
+{
+  "title": {
+    "vi": "Dự án: Landing page responsive",
+    "en": "Project: a responsive landing page"
+  },
+  "summary": {
+    "vi": "Kết hợp flex, grid, biến, hiệu ứng và media query",
+    "en": "Combine flex, grid, variables, effects and media queries"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "index.html",
+      "lang": "html",
+      "code": "<header class=\"nav\">\n  <a class=\"logo\" href=\"#\">Lexi<span>Shop</span></a>\n  <nav><a href=\"#features\">Tính năng</a> <a href=\"#\">Giá</a> <a href=\"#\">Liên hệ</a></nav>\n</header>\n<section class=\"hero\">\n  <h1>Học nhanh hơn, nhớ lâu hơn</h1>\n  <p>Nền tảng học lập trình song ngữ với trình soạn code chạy ngay.</p>\n  <a class=\"cta\" href=\"#features\">Bắt đầu miễn phí</a>\n</section>\n<section id=\"features\" class=\"features\">\n  <article class=\"card\"><h3>Lý thuyết đầy đủ</h3><p>Giải thích từng bước, có công thức.</p></article>\n  <article class=\"card\"><h3>Code realtime</h3><p>Gõ đến đâu thấy kết quả đến đó.</p></article>\n  <article class=\"card\"><h3>Bài tập tự chấm</h3><p>Biết ngay mình làm đúng hay sai.</p></article>\n</section>\n"
+    },
+    {
+      "name": "style.css",
+      "lang": "css",
+      "code": "* { box-sizing: border-box; }\nbody { margin: 0; font-family: system-ui, sans-serif; color: #0b2540; }\na { text-decoration: none; }\n:root { --brand: #0b6fd6; --accent: #0aa5b8; }\n\n.nav {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  padding: 16px 24px;\n}\n.logo { font-weight: 800; font-size: 1.4rem; color: var(--brand); }\n.logo span { color: var(--accent); }\n.nav nav a { margin-left: 16px; color: inherit; }\n\n.hero {\n  text-align: center;\n  padding: 64px 24px;\n  background: linear-gradient(135deg, var(--brand), var(--accent));\n  color: white;\n}\n.hero h1 { font-size: clamp(1.8rem, 5vw, 3rem); margin: 0 0 12px; }\n.cta {\n  display: inline-block;\n  margin-top: 16px;\n  padding: 12px 24px;\n  background: white;\n  color: var(--brand);\n  border-radius: 999px;\n  font-weight: 700;\n  transition: transform 0.2s;\n}\n.cta:hover { transform: translateY(-2px) scale(1.04); }\n\n.features {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: 16px;\n  padding: 32px 24px;\n}\n.card {\n  padding: 20px;\n  border-radius: 12px;\n  box-shadow: 0 4px 16px rgba(11, 111, 214, 0.15);\n}\n\n@media (max-width: 600px) {\n  .features { grid-template-columns: 1fr; }\n  .nav { flex-direction: column; gap: 8px; }\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tạo kiểu cho phần đầu: .nav là flex (space-between, căn giữa dọc); .hero căn chữ giữa, có nền gradient; .cta là nút bo tròn có hiệu ứng :hover.",
+        "en": "Style the top section: .nav is flex (space-between, vertically centered); .hero has centered text and a gradient background; .cta is a rounded button with a :hover effect."
+      },
+      "hint": {
+        "vi": ".nav { display: flex; justify-content: space-between; align-items: center; } .hero { text-align: center; background: linear-gradient(...); } .cta:hover { ... }",
+        "en": ".nav { display: flex; justify-content: space-between; align-items: center; } .hero { text-align: center; background: linear-gradient(...); } .cta:hover { ... }"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<header class=\"nav\">\n  <a class=\"logo\" href=\"#\">Lexi<span>Shop</span></a>\n  <nav><a href=\"#features\">Tính năng</a> <a href=\"#\">Giá</a> <a href=\"#\">Liên hệ</a></nav>\n</header>\n<section class=\"hero\">\n  <h1>Học nhanh hơn, nhớ lâu hơn</h1>\n  <p>Nền tảng học lập trình song ngữ với trình soạn code chạy ngay.</p>\n  <a class=\"cta\" href=\"#features\">Bắt đầu miễn phí</a>\n</section>\n<section id=\"features\" class=\"features\">\n  <article class=\"card\"><h3>Lý thuyết đầy đủ</h3><p>Giải thích từng bước, có công thức.</p></article>\n  <article class=\"card\"><h3>Code realtime</h3><p>Gõ đến đâu thấy kết quả đến đó.</p></article>\n  <article class=\"card\"><h3>Bài tập tự chấm</h3><p>Biết ngay mình làm đúng hay sai.</p></article>\n</section>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "* { box-sizing: border-box; }\nbody { margin: 0; font-family: system-ui, sans-serif; color: #0b2540; }\na { text-decoration: none; }\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<header class=\"nav\">\n  <a class=\"logo\" href=\"#\">Lexi<span>Shop</span></a>\n  <nav><a href=\"#features\">Tính năng</a> <a href=\"#\">Giá</a> <a href=\"#\">Liên hệ</a></nav>\n</header>\n<section class=\"hero\">\n  <h1>Học nhanh hơn, nhớ lâu hơn</h1>\n  <p>Nền tảng học lập trình song ngữ với trình soạn code chạy ngay.</p>\n  <a class=\"cta\" href=\"#features\">Bắt đầu miễn phí</a>\n</section>\n<section id=\"features\" class=\"features\">\n  <article class=\"card\"><h3>Lý thuyết đầy đủ</h3><p>Giải thích từng bước, có công thức.</p></article>\n  <article class=\"card\"><h3>Code realtime</h3><p>Gõ đến đâu thấy kết quả đến đó.</p></article>\n  <article class=\"card\"><h3>Bài tập tự chấm</h3><p>Biết ngay mình làm đúng hay sai.</p></article>\n</section>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "* { box-sizing: border-box; }\nbody { margin: 0; font-family: system-ui, sans-serif; color: #0b2540; }\na { text-decoration: none; }\n.nav { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; }\n.hero { text-align: center; padding: 64px 24px; background: linear-gradient(135deg, #0b6fd6, #0aa5b8); color: white; }\n.cta { display: inline-block; padding: 12px 24px; background: white; color: #0b6fd6; border-radius: 999px; transition: transform .2s; }\n.cta:hover { transform: scale(1.05); }\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": ".nav là flex, space-between, căn giữa dọc",
+            "en": ".nav is flex, space-between, vertically centered"
+          },
+          "test": "(function(){var s=getComputedStyle(document.querySelector('.nav'));return s.display==='flex'&&s.justifyContent==='space-between'&&s.alignItems==='center'})()"
+        },
+        {
+          "label": {
+            "vi": ".hero căn giữa và có nền gradient",
+            "en": ".hero is centered with a gradient background"
+          },
+          "test": "(function(){var s=getComputedStyle(document.querySelector('.hero'));return s.textAlign==='center'&&s.backgroundImage.indexOf('gradient')>=0})()"
+        },
+        {
+          "label": {
+            "vi": ".cta bo tròn (≥ 8px)",
+            "en": ".cta is rounded (≥ 8px)"
+          },
+          "test": "parseFloat(getComputedStyle(document.querySelector('.cta')).borderTopLeftRadius)>=8"
+        },
+        {
+          "label": {
+            "vi": "Có quy tắc .cta:hover",
+            "en": "There is a .cta:hover rule"
+          },
+          "test": "Array.from(document.styleSheets).some(function(s){return Array.from(s.cssRules).some(function(r){return r.selectorText&&/\\.cta:hover/.test(r.selectorText)})})"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Tạo lưới tính năng: .features là grid 3 cột (repeat(3, 1fr)) có gap; .card có bo góc và bóng. Thêm media query (max-width) đổi về 1 cột.",
+        "en": "Build the feature grid: .features is a 3-column grid (repeat(3, 1fr)) with a gap; .card has rounded corners and a shadow. Add a (max-width) media query that switches to 1 column."
+      },
+      "hint": {
+        "vi": ".features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; } @media (max-width: 600px) { .features { grid-template-columns: 1fr; } }",
+        "en": ".features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; } @media (max-width: 600px) { .features { grid-template-columns: 1fr; } }"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<header class=\"nav\">\n  <a class=\"logo\" href=\"#\">Lexi<span>Shop</span></a>\n  <nav><a href=\"#features\">Tính năng</a> <a href=\"#\">Giá</a> <a href=\"#\">Liên hệ</a></nav>\n</header>\n<section class=\"hero\">\n  <h1>Học nhanh hơn, nhớ lâu hơn</h1>\n  <p>Nền tảng học lập trình song ngữ với trình soạn code chạy ngay.</p>\n  <a class=\"cta\" href=\"#features\">Bắt đầu miễn phí</a>\n</section>\n<section id=\"features\" class=\"features\">\n  <article class=\"card\"><h3>Lý thuyết đầy đủ</h3><p>Giải thích từng bước, có công thức.</p></article>\n  <article class=\"card\"><h3>Code realtime</h3><p>Gõ đến đâu thấy kết quả đến đó.</p></article>\n  <article class=\"card\"><h3>Bài tập tự chấm</h3><p>Biết ngay mình làm đúng hay sai.</p></article>\n</section>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "* { box-sizing: border-box; }\nbody { margin: 0; font-family: system-ui, sans-serif; color: #0b2540; }\na { text-decoration: none; }\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<header class=\"nav\">\n  <a class=\"logo\" href=\"#\">Lexi<span>Shop</span></a>\n  <nav><a href=\"#features\">Tính năng</a> <a href=\"#\">Giá</a> <a href=\"#\">Liên hệ</a></nav>\n</header>\n<section class=\"hero\">\n  <h1>Học nhanh hơn, nhớ lâu hơn</h1>\n  <p>Nền tảng học lập trình song ngữ với trình soạn code chạy ngay.</p>\n  <a class=\"cta\" href=\"#features\">Bắt đầu miễn phí</a>\n</section>\n<section id=\"features\" class=\"features\">\n  <article class=\"card\"><h3>Lý thuyết đầy đủ</h3><p>Giải thích từng bước, có công thức.</p></article>\n  <article class=\"card\"><h3>Code realtime</h3><p>Gõ đến đâu thấy kết quả đến đó.</p></article>\n  <article class=\"card\"><h3>Bài tập tự chấm</h3><p>Biết ngay mình làm đúng hay sai.</p></article>\n</section>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "* { box-sizing: border-box; }\nbody { margin: 0; font-family: system-ui, sans-serif; color: #0b2540; }\na { text-decoration: none; }\n.features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding: 32px 24px; }\n.card { padding: 20px; border-radius: 12px; box-shadow: 0 4px 16px rgba(11,111,214,.15); }\n@media (max-width: 600px) {\n  .features { grid-template-columns: 1fr; }\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": ".features là grid",
+            "en": ".features is a grid"
+          },
+          "test": "getComputedStyle(document.querySelector('.features')).display==='grid'"
+        },
+        {
+          "label": {
+            "vi": "CSS có repeat(3, 1fr) và gap",
+            "en": "The CSS has repeat(3, 1fr) and a gap"
+          },
+          "test": "Array.from(document.querySelectorAll('style')).some(function(s){return /repeat\\(\\s*3\\s*,\\s*1fr\\s*\\)/.test(s.textContent)})&&parseFloat(getComputedStyle(document.querySelector('.features')).rowGap)>0"
+        },
+        {
+          "label": {
+            "vi": ".card có bo góc và box-shadow",
+            "en": ".card has rounded corners and a box-shadow"
+          },
+          "test": "(function(){var s=getComputedStyle(document.querySelector('.card'));return parseFloat(s.borderTopLeftRadius)>0&&s.boxShadow!=='none'})()"
+        },
+        {
+          "label": {
+            "vi": "Có @media (max-width) đổi .features về 1 cột",
+            "en": "There is a (max-width) @media making .features 1 column"
+          },
+          "test": "Array.from(document.styleSheets).some(function(s){return Array.from(s.cssRules).some(function(r){return r.type===CSSRule.MEDIA_RULE&&/max-width/.test(r.conditionText||r.media.mediaText)&&Array.from(r.cssRules).some(function(x){return x.selectorText&&x.selectorText.indexOf('.features')>=0&&/^1fr$/.test((x.style.gridTemplateColumns||'').trim())})})})"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "title": {
+    "vi": "display và position",
+    "en": "display and position"
+  },
+  "summary": {
+    "vi": "block/inline/none, relative, absolute, fixed, sticky, z-index",
+    "en": "block/inline/none, relative, absolute, fixed, sticky, z-index"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "index.html",
+      "lang": "html",
+      "code": "<nav class=\"nav\">Thanh điều hướng</nav>\n<div class=\"card\">\n  <span class=\"badge\">NEW</span>\n  <h3>Sản phẩm</h3>\n  <p>Mô tả sản phẩm.</p>\n</div>\n"
+    },
+    {
+      "name": "style.css",
+      "lang": "css",
+      "code": ".nav { background: #0b6fd6; color: white; padding: 12px; }\n\n.card {\n  position: relative;      /* làm \"mốc\" cho phần tử absolute bên trong */\n  width: 240px;\n  margin: 24px;\n  padding: 16px;\n  border: 1px solid #ccc;\n}\n\n.badge {\n  position: absolute;      /* thoát khỏi luồng, định vị theo .card */\n  top: 8px;\n  right: 8px;\n  background: tomato;\n  color: white;\n  padding: 2px 8px;\n  border-radius: 99px;\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Làm .card thành mốc định vị (relative) và đặt .badge (absolute) vào sát góc trên phải của thẻ (top và right nhỏ hơn 20px).",
+        "en": "Make .card the positioning anchor (relative) and place .badge (absolute) at the card's top-right corner (top and right under 20px)."
+      },
+      "hint": {
+        "vi": "Cha: position: relative; con: position: absolute; top: 0; right: 0;",
+        "en": "Parent: position: relative; child: position: absolute; top: 0; right: 0;"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<nav class=\"nav\">Thanh điều hướng</nav>\n<div class=\"card\">\n  <span class=\"badge\">NEW</span>\n  <h3>Sản phẩm</h3>\n  <p>Mô tả sản phẩm.</p>\n</div>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": ".card {\n  width: 240px;\n  margin: 24px;\n  padding: 16px;\n  border: 1px solid #ccc;\n}\n\n.badge {\n  background: tomato;\n  color: white;\n  padding: 2px 8px;\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<nav class=\"nav\">Thanh điều hướng</nav>\n<div class=\"card\">\n  <span class=\"badge\">NEW</span>\n  <h3>Sản phẩm</h3>\n  <p>Mô tả sản phẩm.</p>\n</div>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": ".card {\n  position: relative;\n  width: 240px;\n  margin: 24px;\n  padding: 16px;\n  border: 1px solid #ccc;\n}\n\n.badge {\n  position: absolute;\n  top: 0;\n  right: 0;\n  background: tomato;\n  color: white;\n  padding: 2px 8px;\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": ".card là relative, .badge là absolute",
+            "en": ".card is relative, .badge is absolute"
+          },
+          "test": "getComputedStyle(document.querySelector('.card')).position==='relative' && getComputedStyle(document.querySelector('.badge')).position==='absolute'"
+        },
+        {
+          "label": {
+            "vi": ".badge nằm ở góc trên phải của .card",
+            "en": ".badge sits at the .card's top-right"
+          },
+          "test": "(function(){var c=document.querySelector('.card').getBoundingClientRect(),b=document.querySelector('.badge').getBoundingClientRect();return Math.abs(b.top-c.top)<20&&Math.abs(c.right-b.right)<20})()"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Cho .nav dính (sticky) ở đỉnh khi cuộn: position sticky, top 0 và z-index lớn hơn 0.",
+        "en": "Make .nav stick to the top while scrolling: position sticky, top 0 and a z-index above 0."
+      },
+      "hint": {
+        "vi": "position: sticky; top: 0; z-index: 10;",
+        "en": "position: sticky; top: 0; z-index: 10;"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<nav class=\"nav\">Thanh điều hướng</nav>\n<div class=\"card\">\n  <span class=\"badge\">NEW</span>\n  <h3>Sản phẩm</h3>\n  <p>Mô tả sản phẩm.</p>\n</div>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": ".nav {\n  background: #0b6fd6;\n  color: white;\n  padding: 12px;\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<nav class=\"nav\">Thanh điều hướng</nav>\n<div class=\"card\">\n  <span class=\"badge\">NEW</span>\n  <h3>Sản phẩm</h3>\n  <p>Mô tả sản phẩm.</p>\n</div>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": ".nav {\n  position: sticky;\n  top: 0;\n  z-index: 10;\n  background: #0b6fd6;\n  color: white;\n  padding: 12px;\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "position là sticky",
+            "en": "position is sticky"
+          },
+          "test": "getComputedStyle(document.querySelector('.nav')).position==='sticky'"
+        },
+        {
+          "label": {
+            "vi": "top là 0",
+            "en": "top is 0"
+          },
+          "test": "getComputedStyle(document.querySelector('.nav')).top==='0px'"
+        },
+        {
+          "label": {
+            "vi": "z-index lớn hơn 0",
+            "en": "z-index above 0"
+          },
+          "test": "parseInt(getComputedStyle(document.querySelector('.nav')).zIndex,10)>0"
+        }
+      ]
+    }
+  ]
+}
