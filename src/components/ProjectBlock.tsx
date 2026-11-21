@@ -12,10 +12,25 @@ function Monogram({ name }: { name: string }) {
 }
 
 /** Thay cho ảnh chụp màn hình khi dự án là kênh nội dung: tên kênh và địa chỉ trên từng nền tảng. */
-function ChannelPanel({ p }: { p: Project }) {
+function ChannelPanel({ p, lang }: { p: Project; lang: Locale }) {
   return (
     <div className="rounded-2xl border border-line bg-bg p-6 sm:p-8">
       <p className="h-display text-3xl sm:text-4xl">{p.name}</p>
+      {p.channelStats && (
+        <div className="mt-6">
+          <dl className="grid grid-cols-2 gap-x-6 gap-y-5">
+            {p.channelStats.items.map((it, i) => (
+              <div key={i}>
+                <dt className="h-display text-3xl">{it.n[lang]}</dt>
+                <dd className="label mt-1">{it.label[lang]}</dd>
+              </div>
+            ))}
+          </dl>
+          <p className="mt-3 text-xs text-muted">
+            {t.statsAsOf[lang]} {p.channelStats.asOf}
+          </p>
+        </div>
+      )}
       <ul className="mt-6 space-y-3">
         {p.channels?.map((c) => (
           <li key={c.name}>
@@ -82,7 +97,7 @@ export function ProjectBlock({ p, lang, flip = false }: { p: Project; lang: Loca
         </div>
       </div>
       <div className={flip ? "md:order-1" : ""}>
-        {p.shot ? <LaptopFrame src={p.shot} alt={`${p.name}: ${p.tagline[lang]}`} /> : <ChannelPanel p={p} />}
+        {p.shot ? <LaptopFrame src={p.shot} alt={`${p.name}: ${p.tagline[lang]}`} /> : <ChannelPanel p={p} lang={lang} />}
       </div>
     </article>
   );

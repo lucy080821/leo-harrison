@@ -31,6 +31,8 @@ export type Project = {
   links?: { label: L10n; url: string }[];
   /** Kênh nội dung: hiện danh sách kênh thay cho ảnh chụp màn hình. */
   channels?: { name: string; handle: string; url: string }[];
+  /** Số liệu kênh (nhập tay từ YouTube Studio), kèm ngày lấy số liệu. */
+  channelStats?: { asOf: string; items: { n: L10n; label: L10n }[] };
   tagline: L10n;
   summary: L10n;
   points: L10n[];
@@ -91,6 +93,16 @@ export const projects: Project[] = [
     name: "Tiếng Anh Không Khó",
     url: "https://www.youtube.com/@tienganhkhongkho-e2e",
     host: "YouTube, TikTok",
+    logo: "/projects/tienganhkhongkho.png",
+    channelStats: {
+      asOf: "21/11/2026",
+      items: [
+        { n: { vi: "81", en: "81" }, label: { vi: "người đăng ký YouTube", en: "YouTube subscribers" } },
+        { n: { vi: "+39", en: "+39" }, label: { vi: "người đăng ký mới trong 28 ngày", en: "new subscribers in 28 days" } },
+        { n: { vi: "10,1 nghìn", en: "10.1K" }, label: { vi: "lượt xem trong 28 ngày", en: "views in 28 days" } },
+        { n: { vi: "47,6", en: "47.6" }, label: { vi: "giờ xem trong 28 ngày", en: "hours watched in 28 days" } },
+      ],
+    },
     tagline: { vi: "Kênh chia sẻ tiếng Anh trên YouTube và TikTok", en: "An English-learning channel on YouTube and TikTok" },
     summary: {
       vi: "Kênh nội dung về học tiếng Anh, với cái tên nói lên mục tiêu: làm cho tiếng Anh bớt nặng nề và dễ tiếp cận hơn.",
@@ -98,7 +110,7 @@ export const projects: Project[] = [
     },
     points: [
       { vi: "Có mặt trên YouTube và TikTok", en: "On both YouTube and TikTok" },
-      { vi: "Nội dung xoay quanh việc học tiếng Anh", en: "Content built around learning English" },
+      { vi: "Chủ đề nổi bật: cách luyện viết tiếng Anh", en: "Top topic: how to practise English writing" },
     ],
     channels: [
       { name: "YouTube", handle: "@tienganhkhongkho-e2e", url: "https://www.youtube.com/@tienganhkhongkho-e2e" },
@@ -192,5 +204,6 @@ export const t = {
     en: "In the meantime, you can practise English right now on Lucy Tutor.",
   } as L10n,
   backToLearning: { vi: "Về trang Học", en: "Back to Learning" } as L10n,
+  statsAsOf: { vi: "Số liệu YouTube tính đến", en: "YouTube figures as of" } as L10n,
   rights: { vi: "Mọi quyền được bảo lưu.", en: "All rights reserved." } as L10n,
 };
