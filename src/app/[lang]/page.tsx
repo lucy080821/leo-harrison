@@ -68,7 +68,13 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           {projects.map((p) => (
             <li key={p.id}>
               <a href={`#${p.id}`} className="flex items-center gap-2 rounded-full border border-line bg-surface py-1.5 pl-1.5 pr-4 text-sm font-semibold hover:border-hl">
-                <img src={p.logo} alt="" className="h-7 w-7 rounded-full object-cover" />
+                {p.logo ? (
+                  <img src={p.logo} alt="" className="h-7 w-7 rounded-full object-cover" />
+                ) : (
+                  <span className="grid h-7 w-7 place-items-center rounded-full bg-surface2 text-[0.65rem] font-bold text-label" aria-hidden="true">
+                    {p.name.split(" ").map((w) => w[0]).join("").slice(0, 3)}
+                  </span>
+                )}
                 {p.name}
               </a>
             </li>

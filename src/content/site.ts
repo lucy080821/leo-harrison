@@ -25,8 +25,12 @@ export type Project = {
   name: string;
   url: string;
   host: string;
-  logo: string;
-  shot: string;
+  logo?: string;
+  shot?: string;
+  /** Liên kết phụ cạnh nút chính (blog, game...). */
+  links?: { label: L10n; url: string }[];
+  /** Kênh nội dung: hiện danh sách kênh thay cho ảnh chụp màn hình. */
+  channels?: { name: string; handle: string; url: string }[];
   tagline: L10n;
   summary: L10n;
   points: L10n[];
@@ -42,14 +46,25 @@ export const projects: Project[] = [
     shot: "/projects/lucytutor-d.jpg",
     tagline: { vi: "Học và luyện thi tiếng Anh cùng AI", en: "Learn English and prepare for exams with AI" },
     summary: {
-      vi: "Nền tảng cho cả học viên và giáo viên. Học viên làm bài kiểm tra trình độ, luyện bốn kỹ năng và được AI chấm Writing. Giáo viên quản lý lớp, điểm danh và học phí trong cùng một nơi.",
-      en: "A platform for both students and teachers. Students take a level test, practise all four skills and get Writing graded by AI. Teachers manage classes, attendance and tuition in one place.",
+      vi: "Nền tảng cho cả học viên và giáo viên. Học viên làm bài kiểm tra trình độ, luyện bốn kỹ năng và được AI chấm Writing; trang còn có blog chia sẻ cách học và các game để học mà chơi. Giáo viên quản lý lớp, điểm danh và học phí trong cùng một nơi.",
+      en: "A platform for both students and teachers. Students take a level test, practise all four skills and get Writing graded by AI; the site also has a blog on how to study and games that make learning feel like play. Teachers manage classes, attendance and tuition in one place.",
     },
+    links: [
+      { label: { vi: "Blog", en: "Blog" }, url: "https://lucytutor.online/blog" },
+      { label: { vi: "Game học tiếng Anh", en: "English games" }, url: "https://lucytutor.online/game-hoc-tieng-anh" },
+    ],
     points: [
       { vi: "Kiểm tra trình độ từ A1 đến C1", en: "Level test from A1 to C1" },
       { vi: "Bảng 44 âm IPA và luyện phát âm với AI", en: "A 44-sound IPA chart and pronunciation practice with AI" },
       { vi: "Đề THPT Quốc gia và IELTS Cambridge", en: "National high-school exam and IELTS Cambridge papers" },
-      { vi: "Từ vựng ôn theo thuật toán lặp lại ngắt quãng (SM-2)", en: "Vocabulary reviewed with spaced repetition (SM-2)" },
+      {
+        vi: "Blog: mẹo luyện thi, phát âm, ngữ pháp và phương pháp tự học từ giáo viên",
+        en: "Blog: exam tips, pronunciation, grammar and self-study methods from teachers",
+      },
+      {
+        vi: "Game: Qilin Run (chạy và vượt cổng bằng cách trả lời câu hỏi), Nông Trại Qilin (cây chín theo lịch ôn lặp lại ngắt quãng) và bộ trò chơi cho học sinh lớp 3",
+        en: "Games: Qilin Run (run and clear gates by answering questions), Qilin Farm (plants ripen on a spaced-repetition schedule) and a set of games for grade 3",
+      },
     ],
   },
   {
@@ -71,11 +86,30 @@ export const projects: Project[] = [
       { vi: "Chia sẻ bằng liên kết, lời mời email hoặc iframe", en: "Share by link, email invite or iframe" },
     ],
   },
+  {
+    id: "tienganhkhongkho",
+    name: "Tiếng Anh Không Khó",
+    url: "https://www.youtube.com/@tienganhkhongkho-e2e",
+    host: "YouTube, TikTok",
+    tagline: { vi: "Kênh chia sẻ tiếng Anh trên YouTube và TikTok", en: "An English-learning channel on YouTube and TikTok" },
+    summary: {
+      vi: "Kênh nội dung về học tiếng Anh, với cái tên nói lên mục tiêu: làm cho tiếng Anh bớt nặng nề và dễ tiếp cận hơn.",
+      en: "A content channel about learning English, named for its goal: to make English feel lighter and easier to approach.",
+    },
+    points: [
+      { vi: "Có mặt trên YouTube và TikTok", en: "On both YouTube and TikTok" },
+      { vi: "Nội dung xoay quanh việc học tiếng Anh", en: "Content built around learning English" },
+    ],
+    channels: [
+      { name: "YouTube", handle: "@tienganhkhongkho-e2e", url: "https://www.youtube.com/@tienganhkhongkho-e2e" },
+      { name: "TikTok", handle: "@tienganhkhongkho7", url: "https://www.tiktok.com/@tienganhkhongkho7" },
+    ],
+  },
 ];
 
 /** Ba con số ở đầu trang chủ. Giá trị được tính từ dữ liệu thật (xem app/[lang]/page.tsx), không gõ tay. */
 export const stats: { key: "products" | "lessons" | "languages"; label: L10n }[] = [
-  { key: "products", label: { vi: "sản phẩm", en: "products" } },
+  { key: "products", label: { vi: "dự án", en: "projects" } },
   { key: "lessons", label: { vi: "bài học có bài tập", en: "lessons with exercises" } },
   { key: "languages", label: { vi: "ngôn ngữ", en: "languages" } },
 ];
@@ -106,8 +140,8 @@ export const t = {
   startLearning: { vi: "Vào học", en: "Start learning" } as L10n,
   projectsTitle: { vi: "Dự án", en: "Projects" } as L10n,
   projectsIntro: {
-    vi: "Hai sản phẩm đang chạy thật mà tôi đã thiết kế và xây dựng.",
-    en: "Two live products that I designed and built.",
+    vi: "Những sản phẩm và kênh nội dung tôi đã thiết kế, xây dựng và vận hành.",
+    en: "Products and content channels I designed, built and run.",
   } as L10n,
   visit: { vi: "Mở", en: "Visit" } as L10n,
   allProjects: { vi: "Tất cả dự án", en: "All projects" } as L10n,
@@ -140,8 +174,8 @@ export const t = {
       en: "I'm Tạ Hoàng Anh Tuấn, and people call me Leo. I build tools that make learning and reading data less of a chore.",
     },
     {
-      vi: "Lucy Tutor ra đời để học và luyện thi tiếng Anh có người đồng hành là AI. Cerno dành cho ai có dữ liệu trong Google Sheets nhưng chưa có cách trình bày. Lexi Learn là nơi tôi viết lại những gì mình học về lập trình, để người khác bắt đầu từ con số 0 mà không bị lạc.",
-      en: "Lucy Tutor lets people study and prepare for English exams with an AI alongside them. Cerno is for anyone whose data sits in Google Sheets with no good way to show it. Lexi Learn is where I write down what I learn about programming so others can start from zero without getting lost.",
+      vi: "Lucy Tutor ra đời để học và luyện thi tiếng Anh có người đồng hành là AI. Cerno dành cho ai có dữ liệu trong Google Sheets nhưng chưa có cách trình bày. Lexi Learn là nơi tôi viết lại những gì mình học về lập trình, để người khác bắt đầu từ con số 0 mà không bị lạc. Kênh Tiếng Anh Không Khó trên YouTube và TikTok đưa tiếng Anh đến người học theo cách nhẹ nhàng hơn.",
+      en: "Lucy Tutor lets people study and prepare for English exams with an AI alongside them. Cerno is for anyone whose data sits in Google Sheets with no good way to show it. Lexi Learn is where I write down what I learn about programming so others can start from zero without getting lost. The Tiếng Anh Không Khó channel on YouTube and TikTok brings English to learners in a lighter way.",
     },
     {
       vi: "Trang này gom tất cả lại một chỗ, kèm những gì tôi học được và muốn chia sẻ. Phần tiếng Anh chuyên sâu sẽ là chủ đề tiếp theo.",
