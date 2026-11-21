@@ -73,11 +73,21 @@ export const projects: Project[] = [
   },
 ];
 
-export const stats: { n: string | null; label: L10n }[] = [
-  { n: "3", label: { vi: "sản phẩm", en: "products" } },
-  { n: null, label: { vi: "bài học có bài tập", en: "lessons with exercises" } },
-  { n: "2", label: { vi: "ngôn ngữ: Việt và Anh", en: "languages: Vietnamese and English" } },
+/** Ba con số ở đầu trang chủ. Giá trị được tính từ dữ liệu thật (xem app/[lang]/page.tsx), không gõ tay. */
+export const stats: { key: "products" | "lessons" | "languages"; label: L10n }[] = [
+  { key: "products", label: { vi: "sản phẩm", en: "products" } },
+  { key: "lessons", label: { vi: "bài học có bài tập", en: "lessons with exercises" } },
+  { key: "languages", label: { vi: "ngôn ngữ", en: "languages" } },
 ];
+
+/** Tên của từng ngôn ngữ giao diện, viết theo ngôn ngữ đang xem. */
+export const languageNames: Record<"vi" | "en", Record<"vi" | "en", string>> = {
+  vi: { vi: "Việt", en: "Anh" },
+  en: { vi: "Vietnamese", en: "English" },
+};
+
+/** Lexi Learn nằm trong mục Học, không nằm trong mảng projects, nên cộng thêm 1. */
+export const extraProducts = 1;
 
 export const t = {
   learningLabel: { vi: "Chia sẻ kiến thức", en: "Knowledge sharing" } as L10n,

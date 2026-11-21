@@ -8,14 +8,21 @@ import { SectionHead } from "@/components/SectionHead";
 import { Logo } from "@/components/Logo";
 import { categories, coursesOf } from "@/content/registry";
 import { getLessons } from "@/lib/content";
-import { heroChunks, owner, projects, stats, t } from "@/content/site";
-import { isLocale } from "@/lib/i18n";
+import { extraProducts, heroChunks, languageNames, owner, projects, stats, t } from "@/content/site";
+import { isLocale, locales } from "@/lib/i18n";
 
 /* eslint-disable @next/next/no-img-element */
 export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
+  const values = {
+    products: projects.length + extraProducts,
+    lessons: 0,
+    languages: locales.length,
+  };
   const lessonCount = categories.flatMap((c) => coursesOf(c.id)).reduce((n, co) => n + getLessons(co.id).length, 0);
+  values.lessons = lessonCount;
+  const langList = locales.map((l) => languageNames[lang][l]).join(lang === "vi" ? " và " : " and ");
 
   return (
     <div className="relative isolate overflow-x-clip">
@@ -31,10 +38,13 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           <p className="mt-9 max-w-xl text-lg leading-relaxed text-muted">{t.heroSub[lang]}</p>
 
           <dl className="mt-8 flex flex-wrap gap-x-10 gap-y-4">
-            {stats.map((s, i) => (
-              <div key={i}>
-                <dt className="h-display text-3xl sm:text-4xl">{s.n ?? lessonCount}</dt>
-                <dd className="label mt-1 max-w-[11rem]">{s.label[lang]}</dd>
+            {stats.map((s) => (
+              <div key={s.key}>
+                <dt className="h-display text-3xl sm:text-4xl">{values[s.key]}</dt>
+                <dd className="label mt-1 max-w-[11rem]">
+                  {s.label[lang]}
+                  {s.key === "languages" ? `: ${langList}` : ""}
+                </dd>
               </div>
             ))}
           </dl>
