@@ -1,0 +1,84 @@
+{
+  "title": {
+    "vi": "Âm vị và biến thể",
+    "en": "Phonemes and allophones"
+  },
+  "summary": {
+    "vi": "Cùng một âm vị nhưng phát âm khác nhau tuỳ vị trí",
+    "en": "One phoneme, different pronunciations depending on position"
+  },
+  "minutes": 11,
+  "module": "m5",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Âm bật hơi (aspirated) [pʰ] xuất hiện ở từ nào?",
+        "en": "In which word does the aspirated [pʰ] appear?"
+      },
+      "options": [
+        {
+          "vi": "pin",
+          "en": "pin"
+        },
+        {
+          "vi": "spin",
+          "en": "spin"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Ở đầu âm tiết được nhấn, /p/ bật hơi mạnh [pʰ]. Sau /s/ như trong spin thì không bật hơi [p].",
+        "en": "At the start of a stressed syllable, /p/ is aspirated [pʰ]. After /s/ as in spin it is not aspirated [p]."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Hai âm là biến thể (allophone) của cùng một âm vị khi nào?",
+        "en": "When are two sounds allophones of the same phoneme?"
+      },
+      "options": [
+        {
+          "vi": "Thay cho nhau không làm đổi nghĩa từ và thường xuất hiện ở môi trường khác nhau",
+          "en": "Swapping them does not change the word's meaning, and they usually occur in different environments"
+        },
+        {
+          "vi": "Khi chúng được viết bằng cùng một chữ cái",
+          "en": "When they are written with the same letter"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Đó là định nghĩa cốt lõi của allophone. Chữ viết không phải tiêu chí.",
+        "en": "That is the core definition of an allophone. Spelling is not the criterion."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Dấu ngoặc [ ] trong phiên âm dùng cho loại nào?",
+        "en": "What do square brackets [ ] indicate in transcription?"
+      },
+      "options": [
+        {
+          "vi": "Phiên âm ngữ âm chi tiết (narrow, phonetic)",
+          "en": "Detailed phonetic (narrow) transcription"
+        },
+        {
+          "vi": "Phiên âm âm vị đơn giản (broad, phonemic)",
+          "en": "Simple phonemic (broad) transcription"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "/ / dùng cho âm vị, [ ] dùng cho cách đọc cụ thể và chi tiết.",
+        "en": "/ / is for phonemes, [ ] for specific, detailed pronunciation."
+      }
+    }
+  ]
+}

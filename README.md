@@ -49,6 +49,14 @@ Build production (để deploy VPS): `npm run build && npm start`.
 
 Nội dung portfolio (tên, email, dự án, câu chữ) nằm trong `src/content/site.ts`; logo dự án trong `public/projects/`. Font Be Vietnam Pro và Newsreader được đóng gói sẵn (`@fontsource`), không tải từ Google.
 
+## Khoá Ngữ âm học tiếng Anh (dạng bài viết)
+
+- Nằm ở `/learning/english/phonetics`. Mỗi bài là một thư mục trong `content/phonetics/NN-slug/` gồm `lesson.json`, `vi.md`, `en.md`.
+- `lesson.json` khai báo `module` (m1 đến m5, định nghĩa trong `src/content/english.ts`), `kind` (`lesson` hoặc `practice`) và `quiz` (câu hỏi trắc nghiệm `choice` hoặc gõ đáp án `text`, kèm giải thích song ngữ).
+- Phiên âm viết trong dấu backtick, ví dụ `` `/θɪŋk/` ``, sẽ tự hiện bằng font IPA (Charis SIL).
+- `node scripts/verify.mjs phonetics` kiểm tra mỗi bài có đủ bản VI/EN và câu hỏi hợp lệ.
+- Chưa có video và âm thanh; sau này thêm trường `video` vào `lesson.json` và nhúng ở `ArticleLesson`.
+
 ## SEO
 
 - Đặt địa chỉ thật của website trước khi build: `NEXT_PUBLIC_SITE_URL=https://ten-mien-cua-ban.com npm run build` (dùng cho canonical, hreflang, sitemap, ảnh chia sẻ).

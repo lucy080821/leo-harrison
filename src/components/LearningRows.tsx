@@ -3,14 +3,16 @@ import { categories, coursesOf } from "@/content/registry";
 import { getLessons } from "@/lib/content";
 import type { Locale } from "@/lib/i18n";
 import { t } from "@/content/site";
+import { getArticles } from "@/lib/articles";
 
 /** Hai hướng học: một dòng cho mỗi hướng, ngăn cách bằng đường kẻ. */
 export function LearningRows({ lang }: { lang: Locale }) {
   const lessonCount = categories.flatMap((c) => coursesOf(c.id)).reduce((n, co) => n + getLessons(co.id).length, 0);
 
+  const phoneticsCount = getArticles("phonetics").length;
   const rows = [
     { href: `/${lang}/learning/programming`, name: t.programming[lang], desc: t.programmingDesc[lang], status: `${lessonCount} ${t.lessons[lang]}`, live: true },
-    { href: `/${lang}/learning/english`, name: t.english[lang], desc: t.englishDesc[lang], status: t.soon[lang], live: false },
+    { href: `/${lang}/learning/english`, name: t.english[lang], desc: t.englishDesc[lang], status: phoneticsCount > 0 ? `${phoneticsCount} ${t.lessons[lang]}` : t.soon[lang], live: phoneticsCount > 0 },
   ];
 
   return (

@@ -1,0 +1,96 @@
+{
+  "title": {
+    "vi": "Bản đồ phụ âm",
+    "en": "The consonant map"
+  },
+  "summary": {
+    "vi": "Vị trí, phương thức và hữu thanh: ba chìa khoá đọc mọi phụ âm",
+    "en": "Place, manner and voicing: three keys to read any consonant"
+  },
+  "minutes": 10,
+  "module": "m2",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Âm /s/ được mô tả đúng là gì?",
+        "en": "How is /s/ described correctly?"
+      },
+      "options": [
+        {
+          "vi": "Vô thanh, lợi, xát",
+          "en": "Voiceless alveolar fricative"
+        },
+        {
+          "vi": "Hữu thanh, lợi, xát",
+          "en": "Voiced alveolar fricative"
+        },
+        {
+          "vi": "Vô thanh, hai môi, tắc",
+          "en": "Voiceless bilabial plosive"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "/s/: dây thanh không rung (vô thanh), đầu lưỡi gần lợi (lợi), hơi ma sát (xát).",
+        "en": "/s/: vocal folds do not vibrate (voiceless), tongue near the alveolar ridge (alveolar), friction airflow (fricative)."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Cặp nào chỉ khác nhau ở hữu thanh và vô thanh?",
+        "en": "Which pair differs only in voicing?"
+      },
+      "options": [
+        {
+          "vi": "/p/ và /b/",
+          "en": "/p/ and /b/"
+        },
+        {
+          "vi": "/p/ và /t/",
+          "en": "/p/ and /t/"
+        },
+        {
+          "vi": "/m/ và /s/",
+          "en": "/m/ and /s/"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "/p/ và /b/ cùng hai môi, cùng tắc; chỉ khác dây thanh rung (/b/) hay không (/p/).",
+        "en": "/p/ and /b/ are both bilabial plosives; only the vocal folds differ (/b/ vibrates, /p/ does not)."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Âm /ŋ/ (cuối từ sing) có vị trí cấu âm nào?",
+        "en": "What is the place of articulation of /ŋ/ (end of sing)?"
+      },
+      "options": [
+        {
+          "vi": "Hai môi (bilabial)",
+          "en": "Bilabial"
+        },
+        {
+          "vi": "Lợi (alveolar)",
+          "en": "Alveolar"
+        },
+        {
+          "vi": "Vòm mềm (velar)",
+          "en": "Velar"
+        }
+      ],
+      "answer": 2,
+      "explain": {
+        "vi": "/ŋ/ là âm mũi vòm mềm: mặt sau của lưỡi chạm vòm mềm, hơi thoát ra qua mũi.",
+        "en": "/ŋ/ is a velar nasal: the back of the tongue touches the soft palate and air escapes through the nose."
+      }
+    }
+  ]
+}

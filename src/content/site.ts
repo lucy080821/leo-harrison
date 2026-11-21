@@ -147,8 +147,8 @@ export const t = {
   } as L10n,
   english: { vi: "Tiếng Anh chuyên sâu", en: "Advanced English" } as L10n,
   englishDesc: {
-    vi: "Đang soạn: những điều đi sâu hơn giáo trình thông thường.",
-    en: "In the works: material that goes deeper than a usual course.",
+    vi: "Ngữ âm học tiếng Anh: từ cơ quan phát âm và IPA đến trọng âm, ngữ điệu. Giọng Anh-Anh và Anh-Mỹ song song, đọc nhẹ nhàng.",
+    en: "English phonetics: from the speech organs and IPA to stress and intonation. British and American side by side, in an easy read.",
   } as L10n,
   soon: { vi: "Sắp ra mắt", en: "Coming soon" } as L10n,
   lessons: { vi: "bài học", en: "lessons" } as L10n,
@@ -174,8 +174,8 @@ export const t = {
   ] as L10n[],
   englishPageTitle: { vi: "Tiếng Anh chuyên sâu", en: "Advanced English" } as L10n,
   englishPageBody: {
-    vi: "Phần này đang được soạn. Mục tiêu là đi sâu hơn những gì một giáo trình thông thường dạy: cách dùng từ tự nhiên, ngữ pháp ở những chỗ người học hay sai, và kỹ năng cho bài thi.",
-    en: "This section is being written. The aim is to go deeper than a usual course: natural word choice, grammar where learners often slip, and exam skills.",
+    vi: "Các khoá học tiếng Anh đi sâu hơn giáo trình thông thường. Khoá đầu tiên là ngữ âm học, viết dạng bài đọc nhẹ nhàng, có bài ôn nhỏ và không tính điểm.",
+    en: "English courses that go deeper than a usual textbook. The first is phonetics, written as easy reads with small review questions and no scores.",
   } as L10n,
   englishPageNow: {
     vi: "Trong lúc chờ, bạn có thể luyện tiếng Anh ngay trên Lucy Tutor.",
@@ -218,10 +218,10 @@ export const seo: Record<"home" | "projects" | "learning" | "about" | "english",
     },
   },
   english: {
-    title: { vi: "Tiếng Anh chuyên sâu (sắp ra mắt) | Leo", en: "Advanced English (coming soon) | Leo" },
+    title: { vi: "Tiếng Anh chuyên sâu: ngữ âm học Anh-Anh và Anh-Mỹ | Leo", en: "Advanced English: British and American phonetics | Leo" },
     description: {
-      vi: "Phần tiếng Anh chuyên sâu đang được soạn: cách dùng từ tự nhiên, ngữ pháp người học hay sai và kỹ năng cho bài thi.",
-      en: "In-depth English is being written: natural word choice, grammar where learners often slip, and exam skills.",
+      vi: "Khoá ngữ âm học tiếng Anh song ngữ: IPA, phụ âm, nguyên âm, trọng âm, ngữ điệu, giọng Anh-Anh và Anh-Mỹ. Nhẹ nhàng cho người học, đủ sâu cho giáo viên.",
+      en: "A bilingual English phonetics course: IPA, consonants, vowels, stress, intonation, British and American accents. Gentle for learners, deep enough for teachers.",
     },
   },
 };

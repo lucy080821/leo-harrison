@@ -1,0 +1,96 @@
+{
+  "title": {
+    "vi": "Ngữ âm học là gì?",
+    "en": "What is phonetics?"
+  },
+  "summary": {
+    "vi": "Âm thanh khác chữ viết thế nào, và ngành này nghiên cứu những gì",
+    "en": "How sounds differ from spelling, and what this field studies"
+  },
+  "minutes": 8,
+  "module": "m1",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Giọng Anh-Anh chuẩn có khoảng bao nhiêu âm vị (đơn vị âm phân biệt nghĩa)?",
+        "en": "How many phonemes (meaning-distinguishing sounds) does standard British English have, roughly?"
+      },
+      "options": [
+        {
+          "vi": "26",
+          "en": "26"
+        },
+        {
+          "vi": "Khoảng 44",
+          "en": "About 44"
+        },
+        {
+          "vi": "Hơn 100",
+          "en": "More than 100"
+        }
+      ],
+      "answer": 1,
+      "explain": {
+        "vi": "Có 26 chữ cái nhưng khoảng 44 âm vị (24 phụ âm và 20 nguyên âm). Chữ và âm không khớp nhau 1-1.",
+        "en": "There are 26 letters but about 44 phonemes (24 consonants and 20 vowels). Letters and sounds do not match one to one."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "though, through, tough đều có \"ough\" nhưng đọc khác nhau. Điều này cho thấy gì?",
+        "en": "though, through and tough all have \"ough\" but sound different. What does this show?"
+      },
+      "options": [
+        {
+          "vi": "Chữ viết tiếng Anh không phản ánh đều đặn cách đọc",
+          "en": "English spelling does not reflect pronunciation consistently"
+        },
+        {
+          "vi": "Ba từ này viết sai",
+          "en": "These three words are misspelled"
+        },
+        {
+          "vi": "Chỉ giọng Mỹ mới như vậy",
+          "en": "Only American English does this"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Đúng vậy, nên ta học theo âm chứ không đoán theo chữ.",
+        "en": "Right, which is why we learn by sound and not by guessing from spelling."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Nhánh nào nghiên cứu cách âm được tạo ra bằng cơ quan phát âm?",
+        "en": "Which branch studies how sounds are produced by the speech organs?"
+      },
+      "options": [
+        {
+          "vi": "Cấu âm (articulatory phonetics)",
+          "en": "Articulatory phonetics"
+        },
+        {
+          "vi": "Âm vị học (phonology)",
+          "en": "Phonology"
+        },
+        {
+          "vi": "Ngữ pháp (grammar)",
+          "en": "Grammar"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Cấu âm nói về cách ta tạo ra âm. Đây cũng là hướng chính của khoá học này.",
+        "en": "Articulatory phonetics is about how we make sounds. It is also the main approach of this course."
+      }
+    }
+  ]
+}

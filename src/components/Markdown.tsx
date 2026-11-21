@@ -10,6 +10,20 @@ export function Markdown({ source }: { source: string }) {
       <ReactMarkdown
         remarkPlugins={[remarkGfm, remarkMath]}
         rehypePlugins={[[rehypeKatex, { strict: false, throwOnError: false }], [rehypeHighlight, { detect: false }]]}
+        components={{
+          // Đoạn code ngắn dạng /.../ hoặc [...] được coi là phiên âm IPA: dùng font riêng, không hiện như code.
+          code({ className, children, ...rest }) {
+            const text = typeof children === "string" ? children : "";
+            if (!className && /^[\/\[][\s\S]+[\/\]]$/.test(text) && !text.includes("\n")) {
+              return <span className="ipa">{text}</span>;
+            }
+            return (
+              <code className={className} {...rest}>
+                {children}
+              </code>
+            );
+          },
+        }}
       >
         {source}
       </ReactMarkdown>

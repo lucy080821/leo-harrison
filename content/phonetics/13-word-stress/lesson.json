@@ -1,0 +1,88 @@
+{
+  "title": {
+    "vi": "Trọng âm từ",
+    "en": "Word stress"
+  },
+  "summary": {
+    "vi": "Âm tiết nào được nhấn, và vài quy tắc giúp đoán trọng âm",
+    "en": "Which syllable is stressed, and some rules to predict it"
+  },
+  "minutes": 10,
+  "module": "m4",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Trọng âm chính của \"photography\" rơi vào âm tiết nào?",
+        "en": "Which syllable carries the main stress of \"photography\"?"
+      },
+      "options": [
+        {
+          "vi": "pho-to-gra-phy (âm 1)",
+          "en": "PHO-to-gra-phy (1st)"
+        },
+        {
+          "vi": "pho-TO-gra-phy (âm 2)",
+          "en": "pho-TO-gra-phy (2nd)"
+        },
+        {
+          "vi": "pho-to-GRA-phy (âm 3)",
+          "en": "pho-to-GRA-phy (3rd)"
+        }
+      ],
+      "answer": 1,
+      "explain": {
+        "vi": "photography /fəˈtɒɡrəfi/: trọng âm ở âm tiết thứ hai. Trong photograph /ˈfəʊtəɡrɑːf/ thì ở âm đầu.",
+        "en": "photography /fəˈtɒɡrəfi/: the stress is on the second syllable. In photograph /ˈfəʊtəɡrɑːf/ it is on the first."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Danh từ \"record\" (a record) nhấn âm tiết nào?",
+        "en": "Which syllable does the noun \"record\" stress?"
+      },
+      "options": [
+        {
+          "vi": "Âm thứ nhất: RE-cord",
+          "en": "The first: RE-cord"
+        },
+        {
+          "vi": "Âm thứ hai: re-CORD",
+          "en": "The second: re-CORD"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Danh từ nhấn âm đầu /ˈrekɔːd/, động từ nhấn âm sau /rɪˈkɔːd/.",
+        "en": "The noun stresses the first /ˈrekɔːd/, the verb the second /rɪˈkɔːd/."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Một âm tiết được nhấn thường có đặc điểm nào?",
+        "en": "What is typical of a stressed syllable?"
+      },
+      "options": [
+        {
+          "vi": "To hơn, dài hơn, cao độ hơn và nguyên âm rõ",
+          "en": "Louder, longer, higher in pitch and with a clear vowel"
+        },
+        {
+          "vi": "Nhỏ và nhanh, nguyên âm thành /ə/",
+          "en": "Quiet and quick, with the vowel reduced to /ə/"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Âm tiết không nhấn mới hay rút gọn thành /ə/.",
+        "en": "It is the unstressed syllables that tend to reduce to /ə/."
+      }
+    }
+  ]
+}

@@ -114,7 +114,18 @@ for (const course of fs.readdirSync(root)) {
     for (const lang of ["vi", "en"]) {
       if (!fs.existsSync(path.join(dir, `${lang}.md`))) { console.log(`MISSING ${dir}/${lang}.md`); bad++; }
     }
-    for (const ex of meta.exercises) {
+    // Bài dạng bài viết (khoá ngữ âm): kiểm tra cấu trúc câu hỏi trắc nghiệm / gõ đáp án.
+    for (const q of meta.quiz || []) {
+      total++;
+      const label = `${course}/${slug}/${q.id}`;
+      const okText = (v) => v && v.vi && v.en;
+      let ok = okText(q.q) && okText(q.explain);
+      if (q.type === "choice") ok = ok && Array.isArray(q.options) && q.options.length >= 2 && Number.isInteger(q.answer) && q.answer >= 0 && q.answer < q.options.length && q.options.every((o) => o.vi && o.en);
+      else if (q.type === "text") ok = ok && Array.isArray(q.answers) && q.answers.length > 0;
+      else ok = false;
+      if (!ok) { console.log(`QUIZ INVALID    ${label}`); bad++; }
+    }
+    for (const ex of meta.exercises || []) {
       total++;
       const tests = ex.checks.map((c) => c.test);
       const label = `${course}/${slug}/${ex.id}`;

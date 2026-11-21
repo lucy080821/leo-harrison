@@ -1,0 +1,154 @@
+{
+  "title": {
+    "vi": "Ôn tập Module 1",
+    "en": "Module 1 review"
+  },
+  "summary": {
+    "vi": "Vài câu hỏi nhỏ để nhớ lại, không tính điểm",
+    "en": "A few small questions to recall, no score"
+  },
+  "minutes": 6,
+  "module": "m1",
+  "kind": "practice",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Cách ghi âm bằng ký hiệu quốc tế gọi là gì?",
+        "en": "What do we call writing sounds with international symbols?"
+      },
+      "options": [
+        {
+          "vi": "Phiên âm (transcription)",
+          "en": "Transcription"
+        },
+        {
+          "vi": "Chính tả (spelling)",
+          "en": "Spelling"
+        },
+        {
+          "vi": "Ngữ pháp (grammar)",
+          "en": "Grammar"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Phiên âm là ghi lại âm, khác với chính tả là ghi chữ.",
+        "en": "Transcription records sounds, unlike spelling, which records letters."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Âm nào là âm hữu thanh (dây thanh rung)?",
+        "en": "Which sound is voiced (the vocal folds vibrate)?"
+      },
+      "options": [
+        {
+          "vi": "/s/",
+          "en": "/s/"
+        },
+        {
+          "vi": "/f/",
+          "en": "/f/"
+        },
+        {
+          "vi": "/z/",
+          "en": "/z/"
+        }
+      ],
+      "answer": 2,
+      "explain": {
+        "vi": "Chỉ /z/ làm cổ rung, còn /s/ và /f/ là vô thanh.",
+        "en": "Only /z/ makes the throat vibrate; /s/ and /f/ are voiceless."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Bộ phận nào hạ xuống để tạo ra âm mũi?",
+        "en": "Which part lowers to make a nasal sound?"
+      },
+      "options": [
+        {
+          "vi": "Vòm mềm (velum)",
+          "en": "The soft palate (velum)"
+        },
+        {
+          "vi": "Đầu lưỡi",
+          "en": "The tongue tip"
+        },
+        {
+          "vi": "Hai môi",
+          "en": "The lips"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Vòm mềm hạ xuống để hơi thoát qua mũi.",
+        "en": "The velum lowers so air escapes through the nose."
+      }
+    },
+    {
+      "id": "q4",
+      "type": "text",
+      "q": {
+        "vi": "Viết phiên âm của từ \"yes\" (giọng nào cũng được).",
+        "en": "Write the transcription of \"yes\" (either accent)."
+      },
+      "answers": [
+        "jes",
+        "jɛs"
+      ],
+      "explain": {
+        "vi": "\"y\" ở đầu từ là /j/, nguyên âm giữa là /e/ (GA hay viết /ɛ/), cuối là /s/.",
+        "en": "The initial \"y\" is /j/, the vowel is /e/ (GA often writes /ɛ/), and the end is /s/."
+      }
+    },
+    {
+      "id": "q5",
+      "type": "text",
+      "q": {
+        "vi": "Viết phiên âm của từ \"sing\".",
+        "en": "Write the transcription of \"sing\"."
+      },
+      "answers": [
+        "sɪŋ"
+      ],
+      "explain": {
+        "vi": "Chú ý âm cuối là /ŋ/ chứ không phải /n/ + /ɡ/.",
+        "en": "Note that the ending is /ŋ/, not /n/ + /ɡ/."
+      }
+    },
+    {
+      "id": "q6",
+      "type": "choice",
+      "q": {
+        "vi": "RP và GA là gì?",
+        "en": "What are RP and GA?"
+      },
+      "options": [
+        {
+          "vi": "Hai giọng chuẩn: Anh-Anh và Anh-Mỹ",
+          "en": "Two standard accents: British and American"
+        },
+        {
+          "vi": "Hai loại ký hiệu IPA",
+          "en": "Two kinds of IPA symbols"
+        },
+        {
+          "vi": "Hai nhóm phụ âm",
+          "en": "Two groups of consonants"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "RP là giọng Anh chuẩn truyền thống, GA là giọng Mỹ phổ thông.",
+        "en": "RP is the traditional standard British accent, GA is general American."
+      }
+    }
+  ]
+}

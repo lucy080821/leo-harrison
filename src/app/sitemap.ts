@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { categories, courses } from "@/content/registry";
 import { getLessons } from "@/lib/content";
+import { getArticles } from "@/lib/articles";
 import { locales } from "@/lib/i18n";
 import { abs, languageAlternates } from "@/lib/seo";
 
@@ -10,7 +11,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "", priority: 1, freq: "weekly" },
     { path: "/projects", priority: 0.9, freq: "monthly" },
     { path: "/learning", priority: 0.8, freq: "monthly" },
-    { path: "/learning/english", priority: 0.4, freq: "monthly" },
+    { path: "/learning/english", priority: 0.7, freq: "monthly" },
+    { path: "/learning/english/phonetics", priority: 0.8, freq: "weekly" },
+    ...getArticles("phonetics").map((l) => ({ path: `/learning/english/phonetics/${l.slug}`, priority: 0.6, freq: "monthly" as const })),
     { path: "/about", priority: 0.6, freq: "monthly" },
     { path: "/learning/programming", priority: 0.8, freq: "weekly" },
     ...categories.map((c) => ({ path: `/learning/programming/${c.id}`, priority: 0.7, freq: "monthly" as const })),

@@ -1,0 +1,96 @@
+{
+  "title": {
+    "vi": "Âm cuối và cụm phụ âm",
+    "en": "Final consonants and clusters"
+  },
+  "summary": {
+    "vi": "Vì sao tiếng Anh hay \"mất\" âm cuối, và đuôi -s, -ed đọc thế nào",
+    "en": "Why final sounds go missing, and how -s and -ed endings work"
+  },
+  "minutes": 10,
+  "module": "m2",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Đuôi \"-ed\" của từ \"worked\" đọc thế nào?",
+        "en": "How is the \"-ed\" ending of \"worked\" pronounced?"
+      },
+      "options": [
+        {
+          "vi": "/t/",
+          "en": "/t/"
+        },
+        {
+          "vi": "/d/",
+          "en": "/d/"
+        },
+        {
+          "vi": "/ɪd/",
+          "en": "/ɪd/"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "work kết thúc bằng /k/ (vô thanh) nên -ed đọc /t/: /wɜːkt/.",
+        "en": "work ends in voiceless /k/, so -ed is /t/: /wɜːkt/."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Đuôi \"-s\" của từ \"bags\" đọc thế nào?",
+        "en": "How is the \"-s\" ending of \"bags\" pronounced?"
+      },
+      "options": [
+        {
+          "vi": "/s/",
+          "en": "/s/"
+        },
+        {
+          "vi": "/z/",
+          "en": "/z/"
+        },
+        {
+          "vi": "/ɪz/",
+          "en": "/ɪz/"
+        }
+      ],
+      "answer": 1,
+      "explain": {
+        "vi": "bag kết thúc bằng /ɡ/ (hữu thanh) nên -s đọc /z/: /bæɡz/.",
+        "en": "bag ends in voiced /ɡ/, so -s is /z/: /bæɡz/."
+      }
+    },
+    {
+      "id": "q2b",
+      "type": "choice",
+      "q": {
+        "vi": "Đuôi \"-ed\" của từ \"wanted\" đọc thế nào?",
+        "en": "How is the \"-ed\" ending of \"wanted\" pronounced?"
+      },
+      "options": [
+        {
+          "vi": "/t/",
+          "en": "/t/"
+        },
+        {
+          "vi": "/d/",
+          "en": "/d/"
+        },
+        {
+          "vi": "/ɪd/",
+          "en": "/ɪd/"
+        }
+      ],
+      "answer": 2,
+      "explain": {
+        "vi": "want kết thúc bằng /t/ nên cần thêm một âm tiết /ɪd/ để tách hai âm giống nhau: /ˈwɒntɪd/.",
+        "en": "want ends in /t/, so an extra syllable /ɪd/ is added: /ˈwɒntɪd/."
+      }
+    }
+  ]
+}

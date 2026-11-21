@@ -1,0 +1,177 @@
+{
+  "title": {
+    "vi": "Ôn tập Module 2",
+    "en": "Module 2 review"
+  },
+  "summary": {
+    "vi": "Ôn phụ âm bằng vài câu hỏi nhỏ",
+    "en": "Review consonants with a few small questions"
+  },
+  "minutes": 7,
+  "module": "m2",
+  "kind": "practice",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Âm /b/ là gì?",
+        "en": "What is /b/?"
+      },
+      "options": [
+        {
+          "vi": "Hữu thanh, hai môi, tắc",
+          "en": "Voiced bilabial plosive"
+        },
+        {
+          "vi": "Vô thanh, hai môi, tắc",
+          "en": "Voiceless bilabial plosive"
+        },
+        {
+          "vi": "Hữu thanh, lợi, xát",
+          "en": "Voiced alveolar fricative"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "/b/ giống /p/ nhưng có rung dây thanh.",
+        "en": "/b/ is like /p/ but with the vocal folds vibrating."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Phương thức của /m n ŋ/ là gì?",
+        "en": "What is the manner of /m n ŋ/?"
+      },
+      "options": [
+        {
+          "vi": "Âm mũi (nasal)",
+          "en": "Nasal"
+        },
+        {
+          "vi": "Âm xát (fricative)",
+          "en": "Fricative"
+        },
+        {
+          "vi": "Âm bên (lateral)",
+          "en": "Lateral"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Cả ba đều để hơi thoát qua mũi.",
+        "en": "All three let air escape through the nose."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "text",
+      "q": {
+        "vi": "Viết phiên âm của từ \"this\".",
+        "en": "Write the transcription of \"this\"."
+      },
+      "answers": [
+        "ðɪs"
+      ],
+      "explain": {
+        "vi": "\"th\" trong this là /ð/ (hữu thanh), i ngắn /ɪ/, s /s/.",
+        "en": "The \"th\" in this is /ð/ (voiced), short i is /ɪ/, then /s/."
+      }
+    },
+    {
+      "id": "q4",
+      "type": "text",
+      "q": {
+        "vi": "Viết phiên âm của từ \"chair\" (giọng Anh-Anh).",
+        "en": "Write the transcription of \"chair\" (British)."
+      },
+      "answers": [
+        "tʃeə",
+        "tʃɛə"
+      ],
+      "explain": {
+        "vi": "\"ch\" là /tʃ/, phần còn lại là nguyên âm đôi /eə/ (GA thường /tʃer/).",
+        "en": "\"ch\" is /tʃ/ and the rest is the diphthong /eə/ (GA is usually /tʃer/)."
+      }
+    },
+    {
+      "id": "q5",
+      "type": "choice",
+      "q": {
+        "vi": "Cặp từ nào là cặp tối thiểu của /v/ và /w/?",
+        "en": "Which pair is a minimal pair for /v/ and /w/?"
+      },
+      "options": [
+        {
+          "vi": "vest và west",
+          "en": "vest and west"
+        },
+        {
+          "vi": "light và right",
+          "en": "light and right"
+        },
+        {
+          "vi": "ship và chip",
+          "en": "ship and chip"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "vest và west chỉ khác nhau /v/ và /w/.",
+        "en": "vest and west differ only in /v/ versus /w/."
+      }
+    },
+    {
+      "id": "q6",
+      "type": "choice",
+      "q": {
+        "vi": "Đuôi \"-ed\" của \"played\" đọc là gì?",
+        "en": "How is the \"-ed\" of \"played\" pronounced?"
+      },
+      "options": [
+        {
+          "vi": "/t/",
+          "en": "/t/"
+        },
+        {
+          "vi": "/d/",
+          "en": "/d/"
+        },
+        {
+          "vi": "/ɪd/",
+          "en": "/ɪd/"
+        }
+      ],
+      "answer": 1,
+      "explain": {
+        "vi": "play kết thúc bằng nguyên âm (hữu thanh) nên -ed đọc /d/.",
+        "en": "play ends in a vowel (voiced), so -ed is /d/."
+      }
+    },
+    {
+      "id": "q7",
+      "type": "choice",
+      "q": {
+        "vi": "Lỗi nào hay gặp với âm cuối?",
+        "en": "Which is a common mistake with final sounds?"
+      },
+      "options": [
+        {
+          "vi": "Bỏ mất âm cuối hoặc thêm nguyên âm sau nó",
+          "en": "Dropping the final sound or adding a vowel after it"
+        },
+        {
+          "vi": "Đọc quá chậm",
+          "en": "Speaking too slowly"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Hai lỗi này làm người nghe khó hiểu vì âm cuối thường mang nghĩa ngữ pháp.",
+        "en": "Both mistakes make you harder to understand because final sounds often carry grammar."
+      }
+    }
+  ]
+}

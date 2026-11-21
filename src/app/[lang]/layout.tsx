@@ -5,6 +5,8 @@ import "@fontsource/be-vietnam-pro/400.css";
 import "@fontsource/be-vietnam-pro/500.css";
 import "@fontsource/be-vietnam-pro/600.css";
 import "@fontsource/be-vietnam-pro/700.css";
+import "@fontsource/charis-sil/400.css";
+import "@fontsource/charis-sil/700.css";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { owner, t as site } from "@/content/site";

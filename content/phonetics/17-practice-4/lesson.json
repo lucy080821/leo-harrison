@@ -1,0 +1,172 @@
+{
+  "title": {
+    "vi": "Ôn tập Module 4",
+    "en": "Module 4 review"
+  },
+  "summary": {
+    "vi": "Ôn trọng âm, nhịp điệu và ngữ điệu bằng vài câu hỏi nhỏ",
+    "en": "Review stress, rhythm and intonation with a few small questions"
+  },
+  "minutes": 7,
+  "module": "m4",
+  "kind": "practice",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Danh từ \"present\" (món quà) nhấn âm tiết nào?",
+        "en": "Which syllable does the noun \"present\" (a gift) stress?"
+      },
+      "options": [
+        {
+          "vi": "PRE-sent",
+          "en": "PRE-sent"
+        },
+        {
+          "vi": "pre-SENT",
+          "en": "pre-SENT"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Danh từ nhấn âm đầu: /ˈprezənt/.",
+        "en": "The noun stresses the first: /ˈprezənt/."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Âm /ə/ chỉ xuất hiện ở loại âm tiết nào?",
+        "en": "In which kind of syllable does /ə/ appear?"
+      },
+      "options": [
+        {
+          "vi": "Âm tiết không nhấn",
+          "en": "Unstressed syllables"
+        },
+        {
+          "vi": "Âm tiết được nhấn",
+          "en": "Stressed syllables"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "/ə/ là âm của các âm tiết yếu.",
+        "en": "/ə/ belongs to weak syllables."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "text",
+      "q": {
+        "vi": "Viết dạng yếu thường gặp của \"to\" trong \"I want to go\".",
+        "en": "Write the usual weak form of \"to\" in \"I want to go\"."
+      },
+      "answers": [
+        "tə"
+      ],
+      "explain": {
+        "vi": "Dạng yếu /tə/, dạng mạnh /tuː/.",
+        "en": "Weak form /tə/, strong form /tuː/."
+      }
+    },
+    {
+      "id": "q4",
+      "type": "choice",
+      "q": {
+        "vi": "Hiện tượng nào làm \"did you\" nghe như \"dijoo\"?",
+        "en": "Which process makes \"did you\" sound like \"dijoo\"?"
+      },
+      "options": [
+        {
+          "vi": "Hoà âm (coalescence)",
+          "en": "Coalescence"
+        },
+        {
+          "vi": "Lược âm (elision)",
+          "en": "Elision"
+        },
+        {
+          "vi": "Nối /r/",
+          "en": "Linking /r/"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "/d/ + /j/ thành /dʒ/.",
+        "en": "/d/ + /j/ become /dʒ/."
+      }
+    },
+    {
+      "id": "q5",
+      "type": "choice",
+      "q": {
+        "vi": "Câu hỏi \"Is it far?\" thường kết thúc thế nào?",
+        "en": "How does \"Is it far?\" usually end?"
+      },
+      "options": [
+        {
+          "vi": "Lên giọng",
+          "en": "Rising"
+        },
+        {
+          "vi": "Xuống giọng",
+          "en": "Falling"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Câu hỏi Yes/No thường lên giọng.",
+        "en": "Yes/No questions usually rise."
+      }
+    },
+    {
+      "id": "q6",
+      "type": "choice",
+      "q": {
+        "vi": "Trong \"I didn't say HE stole it\", chữ HE được nhấn để nói điều gì?",
+        "en": "In \"I didn't say HE stole it\", what does stressing HE tell us?"
+      },
+      "options": [
+        {
+          "vi": "Có người khác đã nói như vậy",
+          "en": "Someone else said so"
+        },
+        {
+          "vi": "Tôi chỉ ngụ ý thôi",
+          "en": "I only implied it"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Nhấn vào đâu thì trọng tâm ở đó.",
+        "en": "The focus goes where the stress goes."
+      }
+    },
+    {
+      "id": "q7",
+      "type": "choice",
+      "q": {
+        "vi": "Tiếng Anh thường được mô tả là kiểu nhịp nào?",
+        "en": "Which rhythm type is English usually described as?"
+      },
+      "options": [
+        {
+          "vi": "Stress-timed (nhịp theo trọng âm)",
+          "en": "Stress-timed"
+        },
+        {
+          "vi": "Syllable-timed (nhịp theo âm tiết)",
+          "en": "Syllable-timed"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Các âm tiết nhấn cách đều nhau, âm yếu bị nén.",
+        "en": "Stressed syllables come at even intervals, weak ones are squeezed."
+      }
+    }
+  ]
+}

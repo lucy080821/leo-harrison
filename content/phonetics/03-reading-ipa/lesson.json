@@ -1,0 +1,72 @@
+{
+  "title": {
+    "vi": "Đọc IPA và hai giọng Anh-Anh, Anh-Mỹ",
+    "en": "Reading IPA and the two accents"
+  },
+  "summary": {
+    "vi": "Bảng ký hiệu IPA, dấu trọng âm, và RP với General American",
+    "en": "IPA symbols, stress marks, and RP versus General American"
+  },
+  "minutes": 10,
+  "module": "m1",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "text",
+      "q": {
+        "vi": "Viết phiên âm của từ \"cat\".",
+        "en": "Write the transcription of \"cat\"."
+      },
+      "answers": [
+        "kæt"
+      ],
+      "explain": {
+        "vi": "c đọc /k/, a đọc /æ/, t đọc /t/ nên được /kæt/.",
+        "en": "c is /k/, a is /æ/, t is /t/, so we get /kæt/."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "text",
+      "q": {
+        "vi": "Viết phiên âm của từ \"ship\".",
+        "en": "Write the transcription of \"ship\"."
+      },
+      "answers": [
+        "ʃɪp"
+      ],
+      "explain": {
+        "vi": "\"sh\" là một âm duy nhất /ʃ/, i ngắn là /ɪ/, p là /p/.",
+        "en": "\"sh\" is a single sound /ʃ/, the short i is /ɪ/, p is /p/."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Ký hiệu nào là âm cuối của từ \"sing\"?",
+        "en": "Which symbol is the final sound of \"sing\"?"
+      },
+      "options": [
+        {
+          "vi": "/n/",
+          "en": "/n/"
+        },
+        {
+          "vi": "/ŋ/",
+          "en": "/ŋ/"
+        },
+        {
+          "vi": "/ɡ/",
+          "en": "/ɡ/"
+        }
+      ],
+      "answer": 1,
+      "explain": {
+        "vi": "Âm cuối là một âm mũi phía sau /ŋ/, chứ không phải /n/ rồi /ɡ/.",
+        "en": "The ending is one back nasal sound /ŋ/, not /n/ followed by /ɡ/."
+      }
+    }
+  ]
+}

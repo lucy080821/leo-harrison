@@ -1,0 +1,92 @@
+{
+  "title": {
+    "vi": "Cơ quan phát âm",
+    "en": "The speech organs"
+  },
+  "summary": {
+    "vi": "Từ phổi đến môi: âm thanh được tạo ra ở đâu",
+    "en": "From lungs to lips: where sounds are made"
+  },
+  "minutes": 9,
+  "module": "m1",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Khi nói /s/ rồi /z/ và đặt tay lên cổ, âm nào làm cổ rung?",
+        "en": "Say /s/ then /z/ with your hand on your throat. Which one makes it vibrate?"
+      },
+      "options": [
+        {
+          "vi": "/s/",
+          "en": "/s/"
+        },
+        {
+          "vi": "/z/",
+          "en": "/z/"
+        },
+        {
+          "vi": "Cả hai",
+          "en": "Both"
+        }
+      ],
+      "answer": 1,
+      "explain": {
+        "vi": "/z/ là âm hữu thanh: dây thanh rung. /s/ là âm vô thanh: dây thanh không rung.",
+        "en": "/z/ is voiced: the vocal folds vibrate. /s/ is voiceless: they do not."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Khi nói /m/, vòm mềm (velum) ở vị trí nào?",
+        "en": "When you say /m/, where is the soft palate (velum)?"
+      },
+      "options": [
+        {
+          "vi": "Hạ xuống, cho hơi đi qua mũi",
+          "en": "Lowered, letting air go through the nose"
+        },
+        {
+          "vi": "Nâng lên, chặn đường lên mũi",
+          "en": "Raised, blocking the way to the nose"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Âm mũi như /m/ /n/ /ŋ/ cần vòm mềm hạ xuống để hơi thoát ra qua mũi.",
+        "en": "Nasal sounds like /m/ /n/ /ŋ/ need the velum lowered so air escapes through the nose."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Với âm /t/, bộ phận cố định mà đầu lưỡi chạm vào là gì?",
+        "en": "For /t/, what is the fixed part that the tongue tip touches?"
+      },
+      "options": [
+        {
+          "vi": "Lợi (alveolar ridge)",
+          "en": "The alveolar ridge"
+        },
+        {
+          "vi": "Vòm cứng (hard palate)",
+          "en": "The hard palate"
+        },
+        {
+          "vi": "Môi trên",
+          "en": "The upper lip"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Đầu lưỡi (bộ phận cử động) chạm lợi (bộ phận cố định). Vì thế /t/ là âm lợi (alveolar).",
+        "en": "The tongue tip (the moving part) touches the alveolar ridge (the fixed part). That is why /t/ is alveolar."
+      }
+    }
+  ]
+}

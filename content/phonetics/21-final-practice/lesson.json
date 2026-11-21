@@ -1,0 +1,162 @@
+{
+  "title": {
+    "vi": "Bài thực hành cuối",
+    "en": "Final review"
+  },
+  "summary": {
+    "vi": "Ôn lại toàn khoá bằng vài câu hỏi nhỏ và một việc để tự thử",
+    "en": "Review the whole course with a few small questions and one task to try yourself"
+  },
+  "minutes": 10,
+  "module": "m5",
+  "kind": "practice",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "text",
+      "q": {
+        "vi": "Viết phiên âm của từ \"think\".",
+        "en": "Write the transcription of \"think\"."
+      },
+      "answers": [
+        "θɪŋk"
+      ],
+      "explain": {
+        "vi": "/θ/ vô thanh, /ɪ/ ngắn, /ŋk/.",
+        "en": "Voiceless /θ/, short /ɪ/, then /ŋk/."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "text",
+      "q": {
+        "vi": "Viết phiên âm của từ \"worked\" (cách đọc đuôi -ed).",
+        "en": "Write the transcription of \"worked\" (how the -ed is read)."
+      },
+      "answers": [
+        "wɜːkt",
+        "wɝkt",
+        "wɜːrkt"
+      ],
+      "explain": {
+        "vi": "work kết thúc bằng /k/ vô thanh nên -ed đọc /t/.",
+        "en": "work ends in voiceless /k/, so -ed is read /t/."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Âm /z/ khác /s/ ở điểm nào?",
+        "en": "How does /z/ differ from /s/?"
+      },
+      "options": [
+        {
+          "vi": "Hữu thanh (dây thanh rung)",
+          "en": "It is voiced (vocal folds vibrate)"
+        },
+        {
+          "vi": "Vị trí cấu âm khác hẳn",
+          "en": "A completely different place of articulation"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Cùng vị trí và phương thức, chỉ khác độ rung dây thanh.",
+        "en": "Same place and manner; only the vibration differs."
+      }
+    },
+    {
+      "id": "q4",
+      "type": "choice",
+      "q": {
+        "vi": "Trong \"photography\", âm tiết nào mang trọng âm chính?",
+        "en": "In \"photography\", which syllable has the main stress?"
+      },
+      "options": [
+        {
+          "vi": "pho-TO-gra-phy (âm 2)",
+          "en": "pho-TO-gra-phy (2nd)"
+        },
+        {
+          "vi": "PHO-to-gra-phy (âm 1)",
+          "en": "PHO-to-gra-phy (1st)"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "/fəˈtɒɡrəfi/.",
+        "en": "/fəˈtɒɡrəfi/."
+      }
+    },
+    {
+      "id": "q5",
+      "type": "choice",
+      "q": {
+        "vi": "Hiện tượng \"did you\" thành \"dijoo\" gọi là gì?",
+        "en": "What is it called when \"did you\" becomes \"dijoo\"?"
+      },
+      "options": [
+        {
+          "vi": "Hoà âm (coalescence)",
+          "en": "Coalescence"
+        },
+        {
+          "vi": "Bật hơi (aspiration)",
+          "en": "Aspiration"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "/d/ + /j/ hoà thành /dʒ/.",
+        "en": "/d/ + /j/ merge into /dʒ/."
+      }
+    },
+    {
+      "id": "q6",
+      "type": "choice",
+      "q": {
+        "vi": "[pʰ] và [p] là gì của âm vị /p/?",
+        "en": "What are [pʰ] and [p] in relation to the phoneme /p/?"
+      },
+      "options": [
+        {
+          "vi": "Các biến thể (allophone)",
+          "en": "Allophones"
+        },
+        {
+          "vi": "Hai âm vị khác nhau",
+          "en": "Two different phonemes"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Chúng không phân biệt nghĩa từ trong tiếng Anh.",
+        "en": "They do not distinguish word meaning in English."
+      }
+    },
+    {
+      "id": "q7",
+      "type": "choice",
+      "q": {
+        "vi": "Theo tải chức năng, nên ưu tiên cặp nào hơn khi dạy?",
+        "en": "By functional load, which pair should be prioritised in teaching?"
+      },
+      "options": [
+        {
+          "vi": "/l/ và /r/",
+          "en": "/l/ and /r/"
+        },
+        {
+          "vi": "/θ/ và /ð/",
+          "en": "/θ/ and /ð/"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "/l/-/r/ phân biệt nhiều cặp từ hơn.",
+        "en": "/l/-/r/ distinguishes many more word pairs."
+      }
+    }
+  ]
+}

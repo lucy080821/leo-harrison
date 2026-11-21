@@ -1,0 +1,84 @@
+{
+  "title": {
+    "vi": "So sánh tiếng Việt và tiếng Anh",
+    "en": "Comparing Vietnamese and English"
+  },
+  "summary": {
+    "vi": "Phân tích đối chiếu: dự đoán và giải thích lỗi của người Việt",
+    "en": "Contrastive analysis: predicting and explaining Vietnamese learners' errors"
+  },
+  "minutes": 12,
+  "module": "m5",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Theo giả thuyết phân tích đối chiếu, người học sẽ khó ở đâu nhất?",
+        "en": "According to the contrastive analysis hypothesis, where will learners struggle most?"
+      },
+      "options": [
+        {
+          "vi": "Ở những chỗ tiếng mẹ đẻ và tiếng đích khác nhau",
+          "en": "Where the first language and the target language differ"
+        },
+        {
+          "vi": "Ở những chỗ hai ngôn ngữ giống nhau",
+          "en": "Where the two languages are alike"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Đó là ý chính của giả thuyết này (Lado, 1957), dù thực tế không phải mọi dự đoán đều đúng.",
+        "en": "That is the main idea of this hypothesis (Lado, 1957), although not every prediction holds in practice."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Theo Jenkins (2000), mục nào thuộc \"lõi\" (Lingua Franca Core), quan trọng cho việc hiểu nhau?",
+        "en": "According to Jenkins (2000), which belongs to the \"core\" (Lingua Franca Core), important for mutual intelligibility?"
+      },
+      "options": [
+        {
+          "vi": "Phân biệt nguyên âm ngắn và dài",
+          "en": "The short and long vowel distinction"
+        },
+        {
+          "vi": "Dạng yếu của từ chức năng",
+          "en": "Weak forms of function words"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Độ dài nguyên âm nằm trong lõi; dạng yếu thì không bắt buộc cho việc hiểu nhau.",
+        "en": "Vowel length is in the core; weak forms are not essential for being understood."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Tiếng Việt khác tiếng Anh ở điểm nào về cấu trúc âm tiết?",
+        "en": "How does Vietnamese differ from English in syllable structure?"
+      },
+      "options": [
+        {
+          "vi": "Không có cụm phụ âm và chỉ có ít phụ âm cuối",
+          "en": "No consonant clusters and only a few final consonants"
+        },
+        {
+          "vi": "Có nhiều cụm phụ âm hơn tiếng Anh",
+          "en": "It has more consonant clusters than English"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Đây là nguồn gốc của việc người Việt hay bỏ hoặc thêm âm ở cuối và giữa từ tiếng Anh.",
+        "en": "This is the source of Vietnamese learners dropping or adding sounds at the end and in the middle of English words."
+      }
+    }
+  ]
+}

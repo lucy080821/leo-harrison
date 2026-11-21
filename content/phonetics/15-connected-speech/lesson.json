@@ -1,0 +1,84 @@
+{
+  "title": {
+    "vi": "Nói liền mạch",
+    "en": "Connected speech"
+  },
+  "summary": {
+    "vi": "Nối âm, lược âm, đồng hoá: vì sao câu nói nhanh nghe khác từng từ",
+    "en": "Linking, elision, assimilation: why fast speech sounds unlike separate words"
+  },
+  "minutes": 10,
+  "module": "m4",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "\"Pick it up\" nói nhanh thường nghe như thế nào?",
+        "en": "How does \"pick it up\" usually sound when said quickly?"
+      },
+      "options": [
+        {
+          "vi": "pi-ki-tup",
+          "en": "pi-ki-tup"
+        },
+        {
+          "vi": "pick - it - up (ba từ rời)",
+          "en": "pick - it - up (three separate words)"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Phụ âm cuối nối sang nguyên âm của từ sau: /pɪk ɪt ʌp/ nghe như /ˈpɪkɪtʌp/.",
+        "en": "The final consonants link to the next vowel: /pɪk ɪt ʌp/ sounds like /ˈpɪkɪtʌp/."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "\"Did you\" nói nhanh thường biến thành?",
+        "en": "\"Did you\" said quickly often turns into?"
+      },
+      "options": [
+        {
+          "vi": "/ˈdɪdʒə/ hoặc /ˈdɪdʒu/",
+          "en": "/ˈdɪdʒə/ or /ˈdɪdʒu/"
+        },
+        {
+          "vi": "/ˈdɪd ˈjuː/ rất rõ từng chữ",
+          "en": "/ˈdɪd ˈjuː/ very clearly, word by word"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "/d/ và /j/ hoà thành /dʒ/. Hiện tượng này gọi là coalescence.",
+        "en": "/d/ and /j/ merge into /dʒ/. This is called coalescence."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Ví dụ nào là hiện tượng lược âm (elision)?",
+        "en": "Which example is elision?"
+      },
+      "options": [
+        {
+          "vi": "\"next day\" đọc /neks deɪ/ (mất /t/)",
+          "en": "\"next day\" said as /neks deɪ/ (the /t/ is lost)"
+        },
+        {
+          "vi": "\"go on\" có thêm /w/ ở giữa",
+          "en": "\"go on\" with an extra /w/ in the middle"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Lược âm là bỏ một âm, thường là /t/ hoặc /d/ ở giữa cụm phụ âm.",
+        "en": "Elision is the loss of a sound, often /t/ or /d/ in the middle of a cluster."
+      }
+    }
+  ]
+}
