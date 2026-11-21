@@ -1,0 +1,111 @@
+{
+  "title": {
+    "vi": "Tự viết autograd nhỏ và dùng PyTorch/TensorFlow",
+    "en": "Build a tiny autograd and use PyTorch/TensorFlow"
+  },
+  "summary": {
+    "vi": "đồ thị tính toán, đạo hàm tự động, khung PyTorch và Keras",
+    "en": "computation graphs, automatic differentiation, PyTorch and Keras"
+  },
+  "minutes": 35,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "class Value:\n    def __init__(self, data, children=()):\n        self.data = data\n        self.grad = 0.0\n        self._backward = lambda: None\n        self._prev = set(children)\n\n    def __add__(self, other):\n        other = other if isinstance(other, Value) else Value(other)\n        out = Value(self.data + other.data, (self, other))\n        def _backward():\n            self.grad += out.grad\n            other.grad += out.grad\n        out._backward = _backward\n        return out\n\n    def __mul__(self, other):\n        other = other if isinstance(other, Value) else Value(other)\n        out = Value(self.data * other.data, (self, other))\n        def _backward():\n            self.grad += other.data * out.grad\n            other.grad += self.data * out.grad\n        out._backward = _backward\n        return out\n\n    def backward(self):\n        topo, seen = [], set()\n        def build(v):\n            if v not in seen:\n                seen.add(v)\n                for c in v._prev:\n                    build(c)\n                topo.append(v)\n        build(self)\n        self.grad = 1.0\n        for v in reversed(topo):\n            v._backward()\n\na = Value(2.0)\nb = Value(-3.0)\nc = Value(10.0)\nd = a * b + c           # d = a*b + c = 4\nd.backward()\nprint(d.data, a.grad, b.grad, c.grad)    # 4.0 -3.0 2.0 1.0\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Hoàn thiện class Value: định nghĩa _backward cho __add__ (self.grad += out.grad; other.grad += out.grad) và __mul__ (self.grad += other.data·out.grad; other.grad += self.data·out.grad). Với d = a*b + c (a=2, b=−3, c=10) phải được d.data = 4, a.grad = −3, b.grad = 2, c.grad = 1.",
+        "en": "Complete class Value: define _backward for __add__ (self.grad += out.grad; other.grad += out.grad) and __mul__ (self.grad += other.data·out.grad; other.grad += self.data·out.grad). With d = a*b + c (a=2, b=−3, c=10) you must get d.data = 4, a.grad = −3, b.grad = 2, c.grad = 1."
+      },
+      "hint": {
+        "vi": "Phép nhân: self.grad += other.data * out.grad; other.grad += self.data * out.grad",
+        "en": "Multiplication: self.grad += other.data * out.grad; other.grad += self.data * out.grad"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "class Value:\n    def __init__(self, data, children=()):\n        self.data = data\n        self.grad = 0.0\n        self._backward = lambda: None\n        self._prev = set(children)\n\n    def __add__(self, other):\n        other = other if isinstance(other, Value) else Value(other)\n        out = Value(self.data + other.data, (self, other))\n        # TODO: định nghĩa _backward cho phép cộng rồi gán out._backward\n        return out\n\n    def __mul__(self, other):\n        other = other if isinstance(other, Value) else Value(other)\n        out = Value(self.data * other.data, (self, other))\n        # TODO: định nghĩa _backward cho phép nhân rồi gán out._backward\n        return out\n\n    def backward(self):\n        topo, seen = [], set()\n        def build(v):\n            if v not in seen:\n                seen.add(v)\n                for c in v._prev:\n                    build(c)\n                topo.append(v)\n        build(self)\n        self.grad = 1.0\n        for v in reversed(topo):\n            v._backward()\n\na = Value(2.0)\nb = Value(-3.0)\nc = Value(10.0)\nd = a * b + c\nd.backward()\nprint(d.data, a.grad, b.grad, c.grad)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "class Value:\n    def __init__(self, data, children=()):\n        self.data = data\n        self.grad = 0.0\n        self._backward = lambda: None\n        self._prev = set(children)\n\n    def __add__(self, other):\n        other = other if isinstance(other, Value) else Value(other)\n        out = Value(self.data + other.data, (self, other))\n        def _backward():\n            self.grad += out.grad\n            other.grad += out.grad\n        out._backward = _backward\n        return out\n\n    def __mul__(self, other):\n        other = other if isinstance(other, Value) else Value(other)\n        out = Value(self.data * other.data, (self, other))\n        def _backward():\n            self.grad += other.data * out.grad\n            other.grad += self.data * out.grad\n        out._backward = _backward\n        return out\n\n    def backward(self):\n        topo, seen = [], set()\n        def build(v):\n            if v not in seen:\n                seen.add(v)\n                for c in v._prev:\n                    build(c)\n                topo.append(v)\n        build(self)\n        self.grad = 1.0\n        for v in reversed(topo):\n            v._backward()\n\na = Value(2.0)\nb = Value(-3.0)\nc = Value(10.0)\nd = a * b + c\nd.backward()\nprint(d.data, a.grad, b.grad, c.grad)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "d.data = 4",
+            "en": "d.data = 4"
+          },
+          "test": "d.data == 4.0"
+        },
+        {
+          "label": {
+            "vi": "a.grad = −3 và b.grad = 2",
+            "en": "a.grad = −3 and b.grad = 2"
+          },
+          "test": "a.grad == -3.0 and b.grad == 2.0"
+        },
+        {
+          "label": {
+            "vi": "c.grad = 1",
+            "en": "c.grad = 1"
+          },
+          "test": "c.grad == 1.0"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Thêm phép relu() cho Value: out = Value(max(0, data), (self,)) với _backward: self.grad += (out.data > 0) · out.grad. Rồi với y = (w*x + b).relu(), w=−1, x=2, b=4 phải được y = 2, w.grad = 2, x.grad = −1, b.grad = 1.",
+        "en": "Add a relu() operation to Value: out = Value(max(0, data), (self,)) with _backward: self.grad += (out.data > 0) · out.grad. Then for y = (w*x + b).relu(), w=−1, x=2, b=4 you must get y = 2, w.grad = 2, x.grad = −1, b.grad = 1."
+      },
+      "hint": {
+        "vi": "out = Value(max(0.0, self.data), (self,)); self.grad += (out.data > 0) * out.grad",
+        "en": "out = Value(max(0.0, self.data), (self,)); self.grad += (out.data > 0) * out.grad"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "class Value:\n    def __init__(self, data, children=()):\n        self.data = data\n        self.grad = 0.0\n        self._backward = lambda: None\n        self._prev = set(children)\n\n    def __add__(self, other):\n        other = other if isinstance(other, Value) else Value(other)\n        out = Value(self.data + other.data, (self, other))\n        def _backward():\n            self.grad += out.grad\n            other.grad += out.grad\n        out._backward = _backward\n        return out\n\n    def __mul__(self, other):\n        other = other if isinstance(other, Value) else Value(other)\n        out = Value(self.data * other.data, (self, other))\n        def _backward():\n            self.grad += other.data * out.grad\n            other.grad += self.data * out.grad\n        out._backward = _backward\n        return out\n\n    def relu(self):\n        # TODO: tạo out = Value(max(0, self.data), (self,)) và _backward tương ứng\n        raise NotImplementedError\n\n    def backward(self):\n        topo, seen = [], set()\n        def build(v):\n            if v not in seen:\n                seen.add(v)\n                for c in v._prev:\n                    build(c)\n                topo.append(v)\n        build(self)\n        self.grad = 1.0\n        for v in reversed(topo):\n            v._backward()\n\nw, x, b = Value(-1.0), Value(2.0), Value(4.0)\ny = (w * x + b).relu()\ny.backward()\nprint(y.data, w.grad, x.grad, b.grad)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "class Value:\n    def __init__(self, data, children=()):\n        self.data = data\n        self.grad = 0.0\n        self._backward = lambda: None\n        self._prev = set(children)\n\n    def __add__(self, other):\n        other = other if isinstance(other, Value) else Value(other)\n        out = Value(self.data + other.data, (self, other))\n        def _backward():\n            self.grad += out.grad\n            other.grad += out.grad\n        out._backward = _backward\n        return out\n\n    def __mul__(self, other):\n        other = other if isinstance(other, Value) else Value(other)\n        out = Value(self.data * other.data, (self, other))\n        def _backward():\n            self.grad += other.data * out.grad\n            other.grad += self.data * out.grad\n        out._backward = _backward\n        return out\n\n    def relu(self):\n        out = Value(max(0.0, self.data), (self,))\n        def _backward():\n            self.grad += (out.data > 0) * out.grad\n        out._backward = _backward\n        return out\n\n    def backward(self):\n        topo, seen = [], set()\n        def build(v):\n            if v not in seen:\n                seen.add(v)\n                for c in v._prev:\n                    build(c)\n                topo.append(v)\n        build(self)\n        self.grad = 1.0\n        for v in reversed(topo):\n            v._backward()\n\nw, x, b = Value(-1.0), Value(2.0), Value(4.0)\ny = (w * x + b).relu()\ny.backward()\nprint(y.data, w.grad, x.grad, b.grad)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "y.data = 2",
+            "en": "y.data = 2"
+          },
+          "test": "y.data == 2.0"
+        },
+        {
+          "label": {
+            "vi": "w.grad = 2, x.grad = −1, b.grad = 1",
+            "en": "w.grad = 2, x.grad = −1, b.grad = 1"
+          },
+          "test": "w.grad == 2.0 and x.grad == -1.0 and b.grad == 1.0"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

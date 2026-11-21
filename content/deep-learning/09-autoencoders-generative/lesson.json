@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Autoencoder và mô hình sinh (GAN, VAE, khuếch tán)",
+    "en": "Autoencoders and generative models (GAN, VAE, diffusion)"
+  },
+  "summary": {
+    "vi": "nén và tái dựng, autoencoder tuyến tính = PCA, mất mát GAN, tổng quan mô hình sinh",
+    "en": "compress and reconstruct, linear autoencoder = PCA, GAN losses, an overview of generative models"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\n# Autoencoder tuyến tính tối ưu chính là SVD / PCA\nrng = np.random.default_rng(0)\nZ = rng.normal(size=(100, 1))                  # 1 nhân tố ẩn\nX = Z @ np.array([[2.0, -1.0, 0.5, 3.0]])      # dữ liệu 4 chiều nhưng thực ra hạng 1\n\ndef reconstruct(X, k):\n    Xc = X - X.mean(axis=0)\n    U, s, Vt = np.linalg.svd(Xc, full_matrices=False)\n    code = Xc @ Vt[:k].T                       # BỘ MÃ HOÁ: 4 chiều -> k chiều\n    return code @ Vt[:k] + X.mean(axis=0)      # BỘ GIẢI MÃ: k chiều -> 4 chiều\n\nerror = np.mean((X - reconstruct(X, 1)) ** 2)\nprint(f\"{error:.1e}\")\n\n# Mất mát GAN (dạng không bão hoà)\nd_real, d_fake = 0.9, 0.2        # D(x thật), D(G(z))\nd_loss = -(np.log(d_real) + np.log(1 - d_fake))\ng_loss = -np.log(d_fake)\nprint(round(d_loss, 4), round(g_loss, 4))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Cài reconstruct(X, k): tâm hoá dữ liệu, SVD, mã hoá xuống k chiều bằng Vt[:k], rồi giải mã lại. Gán error = MSE tái dựng với k = 1 trên dữ liệu hạng 1 (phải rất nhỏ, < 1e-10).",
+        "en": "Implement reconstruct(X, k): center the data, take the SVD, encode down to k dimensions with Vt[:k], then decode back. Assign error = the reconstruction MSE with k = 1 on the rank-1 data (it must be tiny, < 1e-10)."
+      },
+      "hint": {
+        "vi": "code = Xc @ Vt[:k].T; return code @ Vt[:k] + X.mean(axis=0)",
+        "en": "code = Xc @ Vt[:k].T; return code @ Vt[:k] + X.mean(axis=0)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nrng = np.random.default_rng(0)\nZ = rng.normal(size=(100, 1))\nX = Z @ np.array([[2.0, -1.0, 0.5, 3.0]])\n\ndef reconstruct(X, k):\n    # viết ở đây\n    return X * 0\n\nerror = float(np.mean((X - reconstruct(X, 1)) ** 2))\nprint(error)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nrng = np.random.default_rng(0)\nZ = rng.normal(size=(100, 1))\nX = Z @ np.array([[2.0, -1.0, 0.5, 3.0]])\n\ndef reconstruct(X, k):\n    Xc = X - X.mean(axis=0)\n    U, s, Vt = np.linalg.svd(Xc, full_matrices=False)\n    code = Xc @ Vt[:k].T\n    return code @ Vt[:k] + X.mean(axis=0)\n\nerror = float(np.mean((X - reconstruct(X, 1)) ** 2))\nprint(error)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Lỗi tái dựng rất nhỏ",
+            "en": "The reconstruction error is tiny"
+          },
+          "test": "float(error) < 1e-10"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Tính mất mát GAN từ d_real = 0.9 và d_fake = 0.2: d_loss = −(ln d_real + ln(1 − d_fake)) và g_loss = −ln(d_fake). In d_loss rồi g_loss làm tròn 4 chữ số.",
+        "en": "Compute the GAN losses from d_real = 0.9 and d_fake = 0.2: d_loss = −(ln d_real + ln(1 − d_fake)) and g_loss = −ln(d_fake). Print d_loss then g_loss rounded to 4 decimals."
+      },
+      "hint": {
+        "vi": "-(np.log(d_real) + np.log(1 - d_fake)) và -np.log(d_fake)",
+        "en": "-(np.log(d_real) + np.log(1 - d_fake)) and -np.log(d_fake)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nd_real, d_fake = 0.9, 0.2\n# in d_loss rồi g_loss (4 chữ số)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nd_real, d_fake = 0.9, 0.2\nd_loss = -(np.log(d_real) + np.log(1 - d_fake))\ng_loss = -np.log(d_fake)\nprint(round(float(d_loss), 4))\nprint(round(float(g_loss), 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 0.3285 rồi 1.6094",
+            "en": "Prints 0.3285 then 1.6094"
+          },
+          "test": "_out == '0.3285\\n1.6094'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}
