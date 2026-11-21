@@ -1,0 +1,112 @@
+{
+  "title": {
+    "vi": "INSERT, UPDATE, DELETE",
+    "en": "INSERT, UPDATE, DELETE"
+  },
+  "summary": {
+    "vi": "thêm, sửa, xoá dữ liệu và an toàn khi ghi",
+    "en": "adding, changing, deleting data and write safety"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "INSERT INTO customers (id, name, email, city, joined_date)\nVALUES (9, 'Khanh Ly', 'khanh@example.com', 'Hue', '2024-08-01');\n\nSELECT * FROM customers WHERE id = 9;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Thêm khách hàng mới: id 9, name 'Khanh Ly', city 'Hue' (email và joined_date có thể để trống). Sau đó SELECT count(*) từ customers.",
+        "en": "Add a new customer: id 9, name 'Khanh Ly', city 'Hue' (email and joined_date may be left empty). Then SELECT count(*) from customers."
+      },
+      "hint": {
+        "vi": "INSERT INTO customers (id, name, city) VALUES (9, 'Khanh Ly', 'Hue');",
+        "en": "INSERT INTO customers (id, name, city) VALUES (9, 'Khanh Ly', 'Hue');"
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "-- INSERT ở đây\nSELECT COUNT(*) FROM customers;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "INSERT INTO customers (id, name, city) VALUES (9, 'Khanh Ly', 'Hue');\nSELECT COUNT(*) FROM customers;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Bảng có 9 khách",
+            "en": "The table has 9 customers"
+          },
+          "test": "q('SELECT COUNT(*) FROM customers')[0][0]===9"
+        },
+        {
+          "label": {
+            "vi": "Khanh Ly ở Hue",
+            "en": "Khanh Ly lives in Hue"
+          },
+          "test": "q(\"SELECT city FROM customers WHERE name='Khanh Ly'\").length===1&&q(\"SELECT city FROM customers WHERE name='Khanh Ly'\")[0][0]==='Hue'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Hai việc: (1) tăng giá 10% cho mọi sản phẩm nhóm 'Furniture'; (2) xoá các sản phẩm đã hết hàng (stock = 0).",
+        "en": "Two jobs: (1) raise prices by 10% for every 'Furniture' product; (2) delete products that are out of stock (stock = 0)."
+      },
+      "hint": {
+        "vi": "UPDATE products SET price = price * 1.1 WHERE category = 'Furniture'; DELETE FROM products WHERE stock = 0;",
+        "en": "UPDATE products SET price = price * 1.1 WHERE category = 'Furniture'; DELETE FROM products WHERE stock = 0;"
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "-- 1) UPDATE giá Furniture\n-- 2) DELETE sản phẩm hết hàng\nSELECT name, price, stock FROM products;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "UPDATE products SET price = price * 1.1 WHERE category = 'Furniture';\nDELETE FROM products WHERE stock = 0;\nSELECT name, price, stock FROM products;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Bàn (Desk) tăng lên 2750000",
+            "en": "Desk rises to 2750000"
+          },
+          "test": "Math.round(q(\"SELECT price FROM products WHERE name='Desk'\")[0][0])===2750000"
+        },
+        {
+          "label": {
+            "vi": "Laptop giữ nguyên giá",
+            "en": "Laptop keeps its price"
+          },
+          "test": "q(\"SELECT price FROM products WHERE name='Laptop'\")[0][0]===15000000"
+        },
+        {
+          "label": {
+            "vi": "Sản phẩm hết hàng đã bị xoá (còn 9 sản phẩm)",
+            "en": "Out-of-stock products are gone (9 left)"
+          },
+          "test": "q('SELECT COUNT(*) FROM products')[0][0]===9&&q('SELECT COUNT(*) FROM products WHERE stock=0')[0][0]===0"
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "all"
+}

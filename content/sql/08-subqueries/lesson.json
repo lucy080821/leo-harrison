@@ -1,0 +1,98 @@
+{
+  "title": {
+    "vi": "Truy vấn con (Subquery)",
+    "en": "Subqueries"
+  },
+  "summary": {
+    "vi": "subquery trong WHERE, IN, EXISTS, trong SELECT và FROM",
+    "en": "subqueries in WHERE, IN, EXISTS, in SELECT and FROM"
+  },
+  "minutes": 18,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "-- Sản phẩm có giá cao hơn giá trung bình\nSELECT name, price\nFROM products\nWHERE price > (SELECT AVG(price) FROM products)\nORDER BY price DESC;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Lấy tên và giá các sản phẩm có giá cao hơn giá trung bình (dùng truy vấn con).",
+        "en": "Get the name and price of products priced above the average (use a subquery)."
+      },
+      "hint": {
+        "vi": "WHERE price > (SELECT AVG(price) FROM products)",
+        "en": "WHERE price > (SELECT AVG(price) FROM products)"
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name, price FROM products;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name, price FROM products\nWHERE price > (SELECT AVG(price) FROM products);\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 3 sản phẩm: Laptop, Phone, Monitor",
+            "en": "3 products: Laptop, Phone, Monitor"
+          },
+          "test": "JSON.stringify(rows.map(function(r){return r[0]}).sort())==='[\"Laptop\",\"Monitor\",\"Phone\"]'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Lấy name của các khách hàng ĐÃ có ít nhất một đơn hàng (dùng IN với truy vấn con trên bảng orders).",
+        "en": "Get the name of customers who HAVE at least one order (use IN with a subquery on the orders table)."
+      },
+      "hint": {
+        "vi": "WHERE id IN (SELECT customer_id FROM orders)",
+        "en": "WHERE id IN (SELECT customer_id FROM orders)"
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name FROM customers;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name FROM customers\nWHERE id IN (SELECT customer_id FROM orders);\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đúng 6 khách có đơn hàng",
+            "en": "Exactly 6 customers have orders"
+          },
+          "test": "rows.length===6"
+        },
+        {
+          "label": {
+            "vi": "Không có Em Hoang và Hoa Bui",
+            "en": "Em Hoang and Hoa Bui are absent"
+          },
+          "test": "rows.every(function(r){return r[0]!=='Em Hoang'&&r[0]!=='Hoa Bui'})"
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "all"
+}

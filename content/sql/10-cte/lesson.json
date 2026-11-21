@@ -1,0 +1,105 @@
+{
+  "title": {
+    "vi": "CTE: truy vấn viết theo từng bước",
+    "en": "CTEs: writing queries step by step"
+  },
+  "summary": {
+    "vi": "WITH ... AS, nhiều CTE, đệ quy cơ bản",
+    "en": "WITH ... AS, multiple CTEs, basic recursion"
+  },
+  "minutes": 18,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "WITH order_totals AS (\n  SELECT oi.order_id, SUM(oi.quantity * p.price) AS total\n  FROM order_items oi\n  JOIN products p ON p.id = oi.product_id\n  GROUP BY oi.order_id\n)\nSELECT order_id, total\nFROM order_totals\nWHERE total > 5000000\nORDER BY total DESC;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Dùng CTE order_totals (tổng tiền mỗi đơn) rồi chọn các đơn có tổng lớn hơn 5000000. Trả về order_id và total.",
+        "en": "Use a CTE order_totals (the total of each order) then select the orders whose total is above 5000000. Return order_id and total."
+      },
+      "hint": {
+        "vi": "WITH order_totals AS (...) SELECT order_id, total FROM order_totals WHERE total > 5000000",
+        "en": "WITH order_totals AS (...) SELECT order_id, total FROM order_totals WHERE total > 5000000"
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "-- Gợi ý: tính tổng mỗi đơn từ order_items JOIN products\nSELECT 1;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "WITH order_totals AS (\n  SELECT oi.order_id, SUM(oi.quantity * p.price) AS total\n  FROM order_items oi\n  JOIN products p ON p.id = oi.product_id\n  GROUP BY oi.order_id\n)\nSELECT order_id, total\nFROM order_totals\nWHERE total > 5000000;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 6 đơn lớn hơn 5 triệu",
+            "en": "6 orders above 5 million"
+          },
+          "test": "rows.length===6"
+        },
+        {
+          "label": {
+            "vi": "Đơn số 13 có tổng 23000000",
+            "en": "Order 13 totals 23000000"
+          },
+          "test": "rows.some(function(r){return r[0]===13&&r[1]===23000000})"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Tìm KHÁCH HÀNG chi tiêu nhiều nhất (mọi đơn): trả về một dòng gồm tên khách và tổng chi tiêu. Gợi ý: CTE tính tổng mỗi đơn, rồi gộp theo khách.",
+        "en": "Find the TOP-SPENDING customer (all orders): return a single row with the customer's name and total spend. Hint: a CTE for each order's total, then group by customer."
+      },
+      "hint": {
+        "vi": "JOIN customers với orders và CTE; GROUP BY c.name ORDER BY SUM(total) DESC LIMIT 1",
+        "en": "JOIN customers with orders and the CTE; GROUP BY c.name ORDER BY SUM(total) DESC LIMIT 1"
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "WITH order_totals AS (\n  SELECT oi.order_id, SUM(oi.quantity * p.price) AS total\n  FROM order_items oi\n  JOIN products p ON p.id = oi.product_id\n  GROUP BY oi.order_id\n)\n-- viết phần SELECT ở đây\nSELECT 1;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "WITH order_totals AS (\n  SELECT oi.order_id, SUM(oi.quantity * p.price) AS total\n  FROM order_items oi\n  JOIN products p ON p.id = oi.product_id\n  GROUP BY oi.order_id\n)\nSELECT c.name, SUM(t.total) AS spent\nFROM customers c\nJOIN orders o ON o.customer_id = c.id\nJOIN order_totals t ON t.order_id = o.id\nGROUP BY c.name\nORDER BY spent DESC\nLIMIT 1;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Một dòng",
+            "en": "A single row"
+          },
+          "test": "rows.length===1"
+        },
+        {
+          "label": {
+            "vi": "Là Binh Tran với 33400000",
+            "en": "It's Binh Tran with 33400000"
+          },
+          "test": "rows[0][0]==='Binh Tran'&&rows[0][1]===33400000"
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "all"
+}

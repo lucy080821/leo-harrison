@@ -1,0 +1,112 @@
+{
+  "title": {
+    "vi": "Tạo bảng, ràng buộc, chỉ mục và view",
+    "en": "Creating tables, constraints, indexes and views"
+  },
+  "summary": {
+    "vi": "CREATE TABLE, kiểu dữ liệu, PRIMARY KEY, FOREIGN KEY, CHECK, INDEX, VIEW",
+    "en": "CREATE TABLE, data types, PRIMARY KEY, FOREIGN KEY, CHECK, INDEX, VIEW"
+  },
+  "minutes": 20,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "CREATE TABLE reviews (\n  id         INTEGER PRIMARY KEY,\n  product_id INTEGER NOT NULL REFERENCES products(id),\n  rating     INTEGER NOT NULL CHECK (rating BETWEEN 1 AND 5),\n  comment    TEXT\n);\n\nINSERT INTO reviews (product_id, rating, comment) VALUES (1, 5, 'Great!');\nSELECT * FROM reviews;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tạo bảng reviews gồm: id (khoá chính), product_id (NOT NULL), rating (chỉ nhận 1 đến 5, dùng CHECK) và comment. Cột phải có đúng các tên đó.",
+        "en": "Create a table reviews with: id (primary key), product_id (NOT NULL), rating (only 1 to 5, use CHECK) and comment. The columns must have exactly those names."
+      },
+      "hint": {
+        "vi": "CREATE TABLE reviews (id INTEGER PRIMARY KEY, product_id INTEGER NOT NULL, rating INTEGER CHECK (rating BETWEEN 1 AND 5), comment TEXT);",
+        "en": "CREATE TABLE reviews (id INTEGER PRIMARY KEY, product_id INTEGER NOT NULL, rating INTEGER CHECK (rating BETWEEN 1 AND 5), comment TEXT);"
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "-- CREATE TABLE reviews ... ở đây\nSELECT 1;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "CREATE TABLE reviews (\n  id INTEGER PRIMARY KEY,\n  product_id INTEGER NOT NULL,\n  rating INTEGER CHECK (rating BETWEEN 1 AND 5),\n  comment TEXT\n);\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Bảng reviews có đủ 4 cột",
+            "en": "The reviews table has all 4 columns"
+          },
+          "test": "(function(){var c=q(\"SELECT name FROM pragma_table_info('reviews')\").map(function(r){return r[0]});return ['id','product_id','rating','comment'].every(function(n){return c.indexOf(n)>=0})})()"
+        },
+        {
+          "label": {
+            "vi": "Thêm đánh giá hợp lệ (rating 5) thành công",
+            "en": "A valid review (rating 5) can be inserted"
+          },
+          "test": "(function(){try{q(\"INSERT INTO reviews (product_id, rating, comment) VALUES (1, 5, 'ok')\");return q('SELECT COUNT(*) FROM reviews')[0][0]===1}catch(e){return false}})()"
+        },
+        {
+          "label": {
+            "vi": "Rating 9 bị từ chối bởi CHECK",
+            "en": "Rating 9 is rejected by CHECK"
+          },
+          "test": "(function(){try{q('INSERT INTO reviews (product_id, rating) VALUES (1, 9)');return false}catch(e){return true}})()"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Tạo chỉ mục tên idx_orders_customer trên orders(customer_id), và một VIEW tên completed_orders chứa các đơn có status = 'completed'.",
+        "en": "Create an index named idx_orders_customer on orders(customer_id), and a VIEW named completed_orders holding the orders with status = 'completed'."
+      },
+      "hint": {
+        "vi": "CREATE INDEX idx_orders_customer ON orders(customer_id); CREATE VIEW completed_orders AS SELECT * FROM orders WHERE status = 'completed';",
+        "en": "CREATE INDEX idx_orders_customer ON orders(customer_id); CREATE VIEW completed_orders AS SELECT * FROM orders WHERE status = 'completed';"
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "-- tạo index và view ở đây\nSELECT 1;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "CREATE INDEX idx_orders_customer ON orders(customer_id);\n\nCREATE VIEW completed_orders AS\nSELECT * FROM orders WHERE status = 'completed';\n\nSELECT COUNT(*) FROM completed_orders;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có index idx_orders_customer",
+            "en": "The index idx_orders_customer exists"
+          },
+          "test": "q(\"SELECT name FROM sqlite_master WHERE type='index' AND name='idx_orders_customer'\").length===1"
+        },
+        {
+          "label": {
+            "vi": "View completed_orders trả về 11 đơn",
+            "en": "The view completed_orders returns 11 orders"
+          },
+          "test": "q('SELECT COUNT(*) FROM completed_orders')[0][0]===11"
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "all"
+}

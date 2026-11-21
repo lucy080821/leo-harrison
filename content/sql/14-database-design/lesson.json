@@ -1,0 +1,119 @@
+{
+  "title": {
+    "vi": "Thiết kế cơ sở dữ liệu",
+    "en": "Database design"
+  },
+  "summary": {
+    "vi": "quan hệ 1-n và n-n, bảng nối, chuẩn hoá",
+    "en": "1-to-many and many-to-many relations, junction tables, normalization"
+  },
+  "minutes": 22,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "CREATE TABLE authors (\n  id   INTEGER PRIMARY KEY,\n  name TEXT NOT NULL\n);\n\nCREATE TABLE books (\n  id        INTEGER PRIMARY KEY,\n  title     TEXT NOT NULL,\n  author_id INTEGER NOT NULL REFERENCES authors(id)\n);\n\nINSERT INTO authors VALUES (1, 'Nam Cao'), (2, 'To Hoai');\nINSERT INTO books VALUES (1, 'Chi Pheo', 1), (2, 'Lao Hac', 1), (3, 'De Men Phieu Luu Ky', 2);\n\nSELECT a.name, b.title\nFROM books b JOIN authors a ON a.id = b.author_id;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Quan hệ 1-nhiều: tạo bảng authors(id PK, name) và books(id PK, title, author_id tham chiếu authors), chèn 2 tác giả và 3 sách, mỗi sách thuộc một tác giả.",
+        "en": "One-to-many: create authors(id PK, name) and books(id PK, title, author_id referencing authors), insert 2 authors and 3 books, each book belonging to an author."
+      },
+      "hint": {
+        "vi": "books.author_id INTEGER REFERENCES authors(id) rồi INSERT dữ liệu",
+        "en": "books.author_id INTEGER REFERENCES authors(id) then INSERT the data"
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "-- tạo authors và books, rồi chèn dữ liệu\nSELECT 1;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "CREATE TABLE authors (id INTEGER PRIMARY KEY, name TEXT NOT NULL);\nCREATE TABLE books (\n  id INTEGER PRIMARY KEY,\n  title TEXT NOT NULL,\n  author_id INTEGER NOT NULL REFERENCES authors(id)\n);\nINSERT INTO authors VALUES (1, 'Nam Cao'), (2, 'To Hoai');\nINSERT INTO books VALUES (1, 'Chi Pheo', 1), (2, 'Lao Hac', 1), (3, 'De Men', 2);\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 2 tác giả",
+            "en": "There are 2 authors"
+          },
+          "test": "q('SELECT COUNT(*) FROM authors')[0][0]===2"
+        },
+        {
+          "label": {
+            "vi": "Có 3 sách",
+            "en": "There are 3 books"
+          },
+          "test": "q('SELECT COUNT(*) FROM books')[0][0]===3"
+        },
+        {
+          "label": {
+            "vi": "JOIN ra đủ 3 dòng (mọi sách đều có tác giả hợp lệ)",
+            "en": "A JOIN returns all 3 rows (every book has a valid author)"
+          },
+          "test": "q('SELECT COUNT(*) FROM books b JOIN authors a ON a.id = b.author_id')[0][0]===3"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Quan hệ nhiều-nhiều: bảng students và courses đã có sẵn. Tạo BẢNG NỐI enrollments chỉ có hai cột student_id, course_id với khoá chính ghép (student_id, course_id), rồi ghi danh 4 cặp khác nhau.",
+        "en": "Many-to-many: the students and courses tables already exist. Create the JUNCTION TABLE enrollments with exactly two columns student_id, course_id and a composite primary key (student_id, course_id), then enroll 4 different pairs."
+      },
+      "hint": {
+        "vi": "CREATE TABLE enrollments (student_id INTEGER, course_id INTEGER, PRIMARY KEY (student_id, course_id));",
+        "en": "CREATE TABLE enrollments (student_id INTEGER, course_id INTEGER, PRIMARY KEY (student_id, course_id));"
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "CREATE TABLE students (id INTEGER PRIMARY KEY, name TEXT);\nCREATE TABLE courses  (id INTEGER PRIMARY KEY, title TEXT);\nINSERT INTO students VALUES (1, 'An'), (2, 'Binh'), (3, 'Chi');\nINSERT INTO courses  VALUES (10, 'SQL'), (20, 'Python');\n\n-- tạo bảng nối enrollments và ghi danh 4 cặp\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "CREATE TABLE students (id INTEGER PRIMARY KEY, name TEXT);\nCREATE TABLE courses  (id INTEGER PRIMARY KEY, title TEXT);\nINSERT INTO students VALUES (1, 'An'), (2, 'Binh'), (3, 'Chi');\nINSERT INTO courses  VALUES (10, 'SQL'), (20, 'Python');\n\nCREATE TABLE enrollments (\n  student_id INTEGER NOT NULL REFERENCES students(id),\n  course_id  INTEGER NOT NULL REFERENCES courses(id),\n  PRIMARY KEY (student_id, course_id)\n);\nINSERT INTO enrollments VALUES (1, 10), (1, 20), (2, 10), (3, 20);\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Bảng enrollments có đúng 2 cột",
+            "en": "enrollments has exactly 2 columns"
+          },
+          "test": "q(\"SELECT name FROM pragma_table_info('enrollments')\").map(function(r){return r[0]}).sort().join(',')==='course_id,student_id'"
+        },
+        {
+          "label": {
+            "vi": "Có 4 lượt ghi danh khác nhau",
+            "en": "There are 4 distinct enrollments"
+          },
+          "test": "q('SELECT COUNT(*) FROM enrollments')[0][0]===4"
+        },
+        {
+          "label": {
+            "vi": "Ghi danh trùng cặp bị chặn bởi khoá chính ghép",
+            "en": "A duplicate pair is blocked by the composite key"
+          },
+          "test": "(function(){var r=q('SELECT student_id, course_id FROM enrollments LIMIT 1')[0];try{q('INSERT INTO enrollments VALUES ('+r[0]+','+r[1]+')');return false}catch(e){return true}})()"
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "all"
+}

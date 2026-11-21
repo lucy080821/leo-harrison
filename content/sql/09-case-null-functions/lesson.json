@@ -1,0 +1,105 @@
+{
+  "title": {
+    "vi": "CASE, NULL và hàm tiện ích",
+    "en": "CASE, NULL and handy functions"
+  },
+  "summary": {
+    "vi": "CASE WHEN, COALESCE, hàm chuỗi, số và ngày giờ",
+    "en": "CASE WHEN, COALESCE, string, number and date functions"
+  },
+  "minutes": 18,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "SELECT\n  name,\n  price,\n  CASE\n    WHEN price >= 5000000 THEN 'premium'\n    WHEN price >= 1000000 THEN 'standard'\n    ELSE 'budget'\n  END AS tier\nFROM products\nORDER BY price DESC;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Thêm cột tier cho products bằng CASE: price >= 5000000 → 'premium', >= 1000000 → 'standard', còn lại 'budget'. Trả về hai cột name và tier.",
+        "en": "Add a tier column to products using CASE: price >= 5000000 → 'premium', >= 1000000 → 'standard', otherwise 'budget'. Return two columns name and tier."
+      },
+      "hint": {
+        "vi": "CASE WHEN price >= 5000000 THEN 'premium' WHEN price >= 1000000 THEN 'standard' ELSE 'budget' END AS tier",
+        "en": "CASE WHEN price >= 5000000 THEN 'premium' WHEN price >= 1000000 THEN 'standard' ELSE 'budget' END AS tier"
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name, price FROM products;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name,\n  CASE\n    WHEN price >= 5000000 THEN 'premium'\n    WHEN price >= 1000000 THEN 'standard'\n    ELSE 'budget'\n  END AS tier\nFROM products;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Hai cột: name, tier",
+            "en": "Two columns: name, tier"
+          },
+          "test": "columns.join(',')==='name,tier'"
+        },
+        {
+          "label": {
+            "vi": "Laptop là premium, Desk là standard, Pen là budget",
+            "en": "Laptop is premium, Desk standard, Pen budget"
+          },
+          "test": "(function(){var m={};rows.forEach(function(r){m[r[0]]=r[1]});return m.Laptop==='premium'&&m.Desk==='standard'&&m.Pen==='budget'})()"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Hiển thị name và email của khách hàng, thay email NULL bằng chữ 'no email' (dùng COALESCE).",
+        "en": "Show customers' name and email, replacing a NULL email with the text 'no email' (use COALESCE)."
+      },
+      "hint": {
+        "vi": "SELECT name, COALESCE(email, 'no email') AS email FROM customers;",
+        "en": "SELECT name, COALESCE(email, 'no email') AS email FROM customers;"
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name, email FROM customers;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name, COALESCE(email, 'no email') AS email FROM customers;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Em Hoang hiện 'no email'",
+            "en": "Em Hoang shows 'no email'"
+          },
+          "test": "rows.some(function(r){return r[0]==='Em Hoang'&&r[1]==='no email'})"
+        },
+        {
+          "label": {
+            "vi": "Không còn NULL nào",
+            "en": "No NULLs remain"
+          },
+          "test": "rows.every(function(r){return r[1]!==null})"
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "all"
+}

@@ -1,0 +1,105 @@
+{
+  "title": {
+    "vi": "LEFT JOIN và self-join",
+    "en": "LEFT JOIN and self-joins"
+  },
+  "summary": {
+    "vi": "LEFT JOIN, tìm dòng không khớp, self-join, UNION",
+    "en": "LEFT JOIN, finding unmatched rows, self-joins, UNION"
+  },
+  "minutes": 20,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "-- Mọi khách hàng, kể cả người chưa đặt hàng\nSELECT c.name, o.id AS order_id\nFROM customers c\nLEFT JOIN orders o ON o.customer_id = c.id\nORDER BY c.name;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tìm các khách hàng CHƯA có đơn hàng nào (dùng LEFT JOIN và IS NULL). Chỉ trả về cột name.",
+        "en": "Find customers who have NO orders (use LEFT JOIN and IS NULL). Return only the name column."
+      },
+      "hint": {
+        "vi": "LEFT JOIN orders o ON o.customer_id = c.id WHERE o.id IS NULL",
+        "en": "LEFT JOIN orders o ON o.customer_id = c.id WHERE o.id IS NULL"
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name FROM customers;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT c.name\nFROM customers c\nLEFT JOIN orders o ON o.customer_id = c.id\nWHERE o.id IS NULL;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đúng 2 khách: Em Hoang và Hoa Bui",
+            "en": "Exactly 2 customers: Em Hoang and Hoa Bui"
+          },
+          "test": "JSON.stringify(rows.map(function(r){return r[0]}).sort())==='[\"Em Hoang\",\"Hoa Bui\"]'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Self-join bảng employees: mỗi nhân viên kèm tên quản lý (manager). Hai cột: tên nhân viên, tên quản lý. Người không có quản lý vẫn phải có mặt.",
+        "en": "Self-join the employees table: each employee with their manager's name. Two columns: employee name, manager name. People without a manager must still appear."
+      },
+      "hint": {
+        "vi": "FROM employees e LEFT JOIN employees m ON m.id = e.manager_id",
+        "en": "FROM employees e LEFT JOIN employees m ON m.id = e.manager_id"
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name, manager_id FROM employees;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT e.name, m.name AS manager\nFROM employees e\nLEFT JOIN employees m ON m.id = e.manager_id;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đủ 10 nhân viên",
+            "en": "All 10 employees"
+          },
+          "test": "rows.length===10"
+        },
+        {
+          "label": {
+            "vi": "Minh có quản lý là Lan",
+            "en": "Minh's manager is Lan"
+          },
+          "test": "rows.some(function(r){return r[0]==='Minh'&&r[1]==='Lan'})"
+        },
+        {
+          "label": {
+            "vi": "Lan không có quản lý (NULL)",
+            "en": "Lan has no manager (NULL)"
+          },
+          "test": "rows.some(function(r){return r[0]==='Lan'&&r[1]===null})"
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "all"
+}

@@ -1,0 +1,112 @@
+{
+  "title": {
+    "vi": "Window function",
+    "en": "Window functions"
+  },
+  "summary": {
+    "vi": "OVER, PARTITION BY, ROW_NUMBER, RANK, SUM() OVER, LAG",
+    "en": "OVER, PARTITION BY, ROW_NUMBER, RANK, SUM() OVER, LAG"
+  },
+  "minutes": 20,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "SELECT\n  name,\n  salary,\n  RANK() OVER (ORDER BY salary DESC) AS salary_rank\nFROM employees\nORDER BY salary_rank;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Xếp hạng nhân viên theo lương giảm dần bằng RANK(): trả về name, salary và cột thứ ba là hạng. (Son và Quynh cùng lương 2300 nên cùng hạng 6.)",
+        "en": "Rank employees by salary descending with RANK(): return name, salary and a third column holding the rank. (Son and Quynh share a 2300 salary so they share rank 6.)"
+      },
+      "hint": {
+        "vi": "RANK() OVER (ORDER BY salary DESC) AS salary_rank",
+        "en": "RANK() OVER (ORDER BY salary DESC) AS salary_rank"
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name, salary FROM employees ORDER BY salary DESC;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name, salary,\n  RANK() OVER (ORDER BY salary DESC) AS salary_rank\nFROM employees;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Lan hạng 1",
+            "en": "Lan is rank 1"
+          },
+          "test": "rows.some(function(r){return r[0]==='Lan'&&r[2]===1})"
+        },
+        {
+          "label": {
+            "vi": "Son hạng 6 (đồng hạng) và Thao hạng 8",
+            "en": "Son is rank 6 (tie) and Thao rank 8"
+          },
+          "test": "rows.some(function(r){return r[0]==='Son'&&r[2]===6})&&rows.some(function(r){return r[0]==='Thao'&&r[2]===8})"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Xếp hạng lương TRONG TỪNG phòng ban: trả về name, department_id và hạng (dùng PARTITION BY department_id). Bỏ qua nhân viên không có phòng ban.",
+        "en": "Rank salaries WITHIN each department: return name, department_id and the rank (use PARTITION BY department_id). Skip employees without a department."
+      },
+      "hint": {
+        "vi": "RANK() OVER (PARTITION BY department_id ORDER BY salary DESC) ... WHERE department_id IS NOT NULL",
+        "en": "RANK() OVER (PARTITION BY department_id ORDER BY salary DESC) ... WHERE department_id IS NOT NULL"
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name, department_id FROM employees WHERE department_id IS NOT NULL;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name, department_id,\n  RANK() OVER (PARTITION BY department_id ORDER BY salary DESC) AS dept_rank\nFROM employees\nWHERE department_id IS NOT NULL;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "9 nhân viên có phòng ban",
+            "en": "9 employees with a department"
+          },
+          "test": "rows.length===9"
+        },
+        {
+          "label": {
+            "vi": "Minh hạng 2 ở Engineering, Phong hạng 1 ở Sales",
+            "en": "Minh is 2nd in Engineering, Phong 1st in Sales"
+          },
+          "test": "rows.some(function(r){return r[0]==='Minh'&&r[2]===2})&&rows.some(function(r){return r[0]==='Phong'&&r[2]===1})"
+        },
+        {
+          "label": {
+            "vi": "Quynh và Son đồng hạng 2 ở Sales",
+            "en": "Quynh and Son tie for 2nd in Sales"
+          },
+          "test": "rows.filter(function(r){return (r[0]==='Quynh'||r[0]==='Son')&&r[2]===2}).length===2"
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "all"
+}

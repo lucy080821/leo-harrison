@@ -1,0 +1,112 @@
+{
+  "title": {
+    "vi": "Dự án: Phân tích doanh số",
+    "en": "Project: sales analysis"
+  },
+  "summary": {
+    "vi": "kết hợp JOIN, GROUP BY, CTE và window để trả lời câu hỏi kinh doanh",
+    "en": "combine JOIN, GROUP BY, CTEs and windows to answer business questions"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "-- Câu hỏi mẫu: doanh thu từng nhóm sản phẩm (mọi đơn)\nSELECT p.category, SUM(oi.quantity * p.price) AS revenue\nFROM order_items oi\nJOIN products p ON p.id = oi.product_id\nGROUP BY p.category\nORDER BY revenue DESC;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Báo cáo DOANH THU THEO THÁNG chỉ tính đơn status = 'completed': hai cột (tháng dạng 'YYYY-MM', doanh thu), sắp theo tháng tăng dần. Doanh thu = quantity × price.",
+        "en": "A MONTHLY REVENUE report counting only status = 'completed' orders: two columns (month as 'YYYY-MM', revenue), sorted by month ascending. Revenue = quantity × price."
+      },
+      "hint": {
+        "vi": "strftime('%Y-%m', o.order_date) ... WHERE o.status = 'completed' GROUP BY month ORDER BY month",
+        "en": "strftime('%Y-%m', o.order_date) ... WHERE o.status = 'completed' GROUP BY month ORDER BY month"
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "-- JOIN orders, order_items, products rồi GROUP BY tháng\nSELECT 1;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT strftime('%Y-%m', o.order_date) AS month,\n       SUM(oi.quantity * p.price) AS revenue\nFROM orders o\nJOIN order_items oi ON oi.order_id = o.id\nJOIN products p ON p.id = oi.product_id\nWHERE o.status = 'completed'\nGROUP BY month\nORDER BY month;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "3 tháng 2024-08, 2024-09, 2024-10",
+            "en": "3 months 2024-08, 2024-09, 2024-10"
+          },
+          "test": "rows.map(function(r){return r[0]}).join(',')==='2024-08,2024-09,2024-10'"
+        },
+        {
+          "label": {
+            "vi": "Doanh thu tháng 8 là 25385000",
+            "en": "August revenue is 25385000"
+          },
+          "test": "rows[0][1]===25385000"
+        },
+        {
+          "label": {
+            "vi": "Doanh thu tháng 10 là 31650000",
+            "en": "October revenue is 31650000"
+          },
+          "test": "rows[2][1]===31650000"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "TOP 3 SẢN PHẨM BÁN CHẠY theo tổng số lượng (mọi đơn): hai cột (tên sản phẩm, tổng số lượng), giảm dần.",
+        "en": "TOP 3 BEST-SELLING PRODUCTS by total quantity (all orders): two columns (product name, total quantity), descending."
+      },
+      "hint": {
+        "vi": "SUM(oi.quantity) ... GROUP BY p.name ORDER BY SUM(oi.quantity) DESC LIMIT 3",
+        "en": "SUM(oi.quantity) ... GROUP BY p.name ORDER BY SUM(oi.quantity) DESC LIMIT 3"
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "-- JOIN order_items và products, GROUP BY tên sản phẩm\nSELECT 1;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT p.name, SUM(oi.quantity) AS total_qty\nFROM order_items oi\nJOIN products p ON p.id = oi.product_id\nGROUP BY p.name\nORDER BY total_qty DESC\nLIMIT 3;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Là Pen, Notebook, Headphones theo thứ tự",
+            "en": "Pen, Notebook, Headphones in order"
+          },
+          "test": "rows.map(function(r){return r[0]}).join(',')==='Pen,Notebook,Headphones'"
+        },
+        {
+          "label": {
+            "vi": "Pen bán 30 cái",
+            "en": "Pen sold 30"
+          },
+          "test": "rows[0][1]===30"
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "all"
+}

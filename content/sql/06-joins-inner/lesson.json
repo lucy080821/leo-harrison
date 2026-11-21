@@ -1,0 +1,112 @@
+{
+  "title": {
+    "vi": "JOIN: kết hợp nhiều bảng",
+    "en": "JOIN: combining tables"
+  },
+  "summary": {
+    "vi": "INNER JOIN, điều kiện ON, bí danh bảng, nối 3 bảng",
+    "en": "INNER JOIN, the ON condition, table aliases, joining 3 tables"
+  },
+  "minutes": 20,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "SELECT o.id AS order_id, c.name AS customer, o.order_date\nFROM orders AS o\nJOIN customers AS c ON c.id = o.customer_id\nORDER BY o.id;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Liệt kê mỗi đơn hàng cùng tên khách hàng: ba cột id đơn, tên khách (name), ngày đặt. Phải đủ 14 đơn.",
+        "en": "List every order with its customer's name: order id, customer name, order date. All 14 orders."
+      },
+      "hint": {
+        "vi": "FROM orders o JOIN customers c ON c.id = o.customer_id",
+        "en": "FROM orders o JOIN customers c ON c.id = o.customer_id"
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT * FROM orders;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT o.id, c.name, o.order_date\nFROM orders o\nJOIN customers c ON c.id = o.customer_id;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 3 cột",
+            "en": "Three columns"
+          },
+          "test": "columns.length===3"
+        },
+        {
+          "label": {
+            "vi": "Đủ 14 đơn hàng",
+            "en": "All 14 orders"
+          },
+          "test": "rows.length===14"
+        },
+        {
+          "label": {
+            "vi": "Đơn của 'An Nguyen' có mặt",
+            "en": "'An Nguyen' orders are present"
+          },
+          "test": "rows.some(function(r){return r.indexOf('An Nguyen')>=0})"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Nối 3 bảng order_items, orders và products: hiển thị id đơn, tên sản phẩm, số lượng cho MỌI dòng chi tiết đơn hàng.",
+        "en": "Join the 3 tables order_items, orders and products: show the order id, product name and quantity for EVERY order line."
+      },
+      "hint": {
+        "vi": "FROM order_items oi JOIN products p ON p.id = oi.product_id",
+        "en": "FROM order_items oi JOIN products p ON p.id = oi.product_id"
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT order_id, product_id, quantity FROM order_items;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT oi.order_id, p.name, oi.quantity\nFROM order_items oi\nJOIN products p ON p.id = oi.product_id\nJOIN orders o ON o.id = oi.order_id;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Số dòng bằng số dòng order_items",
+            "en": "Row count equals order_items"
+          },
+          "test": "rows.length===q('SELECT COUNT(*) FROM order_items')[0][0]"
+        },
+        {
+          "label": {
+            "vi": "Có tên sản phẩm (ví dụ Laptop) chứ không chỉ id",
+            "en": "Has product names (e.g. Laptop), not just ids"
+          },
+          "test": "rows.some(function(r){return r.indexOf('Laptop')>=0})"
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "all"
+}
