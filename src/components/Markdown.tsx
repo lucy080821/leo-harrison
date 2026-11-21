@@ -9,7 +9,7 @@ export function Markdown({ source }: { source: string }) {
     <div className="prose-lesson">
       <ReactMarkdown
         remarkPlugins={[remarkGfm, remarkMath]}
-        rehypePlugins={[rehypeKatex, [rehypeHighlight, { detect: false }]]}
+        rehypePlugins={[[rehypeKatex, { strict: false, throwOnError: false }], [rehypeHighlight, { detect: false }]]}
       >
         {source}
       </ReactMarkdown>

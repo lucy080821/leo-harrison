@@ -33,7 +33,7 @@ Build production (để deploy VPS): `npm run build && npm start`.
 - [x] Giai đoạn 1: khung app, dark mode, EN/VI, bài tập, tiến độ (lưu trên trình duyệt)
 - [x] Giai đoạn 2: HTML (13 bài), CSS (16 bài), JavaScript (22 bài) — song ngữ, 102 bài tập tự chấm
 - [x] Giai đoạn 3: Python cơ bản (16 bài), Python Data Analyst (14 bài), SQL (15 bài) — chạy bằng Pyodide và SQLite WASM
-- [ ] Giai đoạn 4: Toán cho ML, Machine Learning, Deep Learning, AI hiện đại
+- [x] Giai đoạn 4: Toán cho ML (7 bài), Machine Learning (13), Deep Learning (10), AI hiện đại (8) — scikit-learn chạy trong trình duyệt, mạng nơ-ron tự cài bằng NumPy
 - [ ] Giai đoạn 5: React, Next.js, React Native, Node.js (WebContainers)
 
 ## Engine chạy code
@@ -56,8 +56,10 @@ node scripts/verify.mjs          # tất cả khoá
 node scripts/verify.mjs css      # một khoá
 
 # Python cần một môi trường có numpy, pandas, matplotlib:
-python3 -m venv .venv && .venv/bin/pip install numpy pandas matplotlib scipy
-PYTHON_VERIFY=.venv/bin/python node scripts/verify.mjs python-data
+python3 -m venv .venv && .venv/bin/pip install numpy pandas matplotlib scipy scikit-learn
+PYTHON_VERIFY=.venv/bin/python node scripts/verify.mjs python-data   # hoặc machine-learning, deep-learning...
+
+# Lưu ý: venv thường có scikit-learn mới hơn Pyodide (1.7), nên bài tập ML chấm bằng NGƯỠNG hợp lý thay vì so khớp số lẻ.
 ```
 
 Script mở từng bài tập trong Chromium (Playwright) và xác nhận: **đáp án đạt mọi check**, **đề khởi đầu chưa đạt hết**, và mỗi bài có đủ `vi.md`/`en.md`. Hãy chạy nó sau mỗi lần thêm hoặc sửa bài.
