@@ -1,0 +1,103 @@
+{
+  "title": {
+    "vi": "Thuộc tính, id/class và block/inline",
+    "en": "Attributes, id/class and block vs inline"
+  },
+  "summary": {
+    "vi": "Thuộc tính toàn cục, div và span, data-*",
+    "en": "Global attributes, div and span, data-*"
+  },
+  "minutes": 12,
+  "preview": "web",
+  "files": [
+    {
+      "name": "index.html",
+      "lang": "html",
+      "code": "<div id=\"intro\" class=\"box highlight\" title=\"Phần giới thiệu\">\n  <h2>Giới thiệu</h2>\n  <p>Tôi thích <span class=\"tag\">HTML</span> và <span class=\"tag\">CSS</span>.</p>\n</div>\n<button data-action=\"save\" data-id=\"42\">Lưu</button>\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Cho <div> id là \"profile\" và hai class: \"card\" và \"dark\". Bên trong có một <h2>.",
+        "en": "Give the <div> the id \"profile\" and two classes: \"card\" and \"dark\". It contains an <h2>."
+      },
+      "hint": {
+        "vi": "<div id=\"profile\" class=\"card dark\"> — nhiều class cách nhau bằng dấu cách.",
+        "en": "<div id=\"profile\" class=\"card dark\"> — separate multiple classes with spaces."
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<div>\n  <h2>Hồ sơ</h2>\n</div>\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<div id=\"profile\" class=\"card dark\">\n  <h2>Hồ sơ</h2>\n</div>\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có phần tử với id=\"profile\"",
+            "en": "There is an element with id=\"profile\""
+          },
+          "test": "!!document.getElementById('profile')"
+        },
+        {
+          "label": {
+            "vi": "Phần tử đó có cả hai class card và dark",
+            "en": "It has both classes card and dark"
+          },
+          "test": "(function(){var e=document.getElementById('profile');return !!e&&e.classList.contains('card')&&e.classList.contains('dark')})()"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Trong đoạn văn, bọc từ \"quan trọng\" trong một <span> có class=\"hot\". Thêm cho <button> thuộc tính data-action=\"buy\".",
+        "en": "In the paragraph, wrap the word \"important\" in a <span class=\"hot\">. Add data-action=\"buy\" to the <button>."
+      },
+      "hint": {
+        "vi": "<span class=\"hot\">quan trọng</span> và <button data-action=\"buy\">.",
+        "en": "<span class=\"hot\">important</span> and <button data-action=\"buy\">."
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<p>Đây là một từ quan trọng trong câu.</p>\n<button>Mua</button>\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<p>Đây là một từ <span class=\"hot\">quan trọng</span> trong câu.</p>\n<button data-action=\"buy\">Mua</button>\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có <span class=\"hot\"> bên trong <p>",
+            "en": "There is a <span class=\"hot\"> inside <p>"
+          },
+          "test": "!!document.querySelector('p span.hot')"
+        },
+        {
+          "label": {
+            "vi": "<button> có data-action=\"buy\"",
+            "en": "<button> has data-action=\"buy\""
+          },
+          "test": "(document.querySelector('button')||{dataset:{}}).dataset.action==='buy'"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "title": {
+    "vi": "Phần tử tương tác có sẵn",
+    "en": "Built-in interactive elements"
+  },
+  "summary": {
+    "vi": "details/summary, dialog, progress, meter",
+    "en": "details/summary, dialog, progress, meter"
+  },
+  "minutes": 10,
+  "preview": "web",
+  "files": [
+    {
+      "name": "index.html",
+      "lang": "html",
+      "code": "<details open>\n  <summary>HTML là gì?</summary>\n  <p>Ngôn ngữ đánh dấu mô tả cấu trúc trang web.</p>\n</details>\n\n<label>Tải lên: <progress value=\"40\" max=\"100\">40%</progress></label>\n<label>Pin: <meter min=\"0\" max=\"100\" value=\"75\">75%</meter></label>\n\n<dialog open>\n  <p>Đây là hộp thoại.</p>\n</dialog>\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tạo hai khối <details> (FAQ), mỗi khối có <summary> và một đoạn <p>.",
+        "en": "Create two <details> blocks (an FAQ), each with a <summary> and a <p>."
+      },
+      "hint": {
+        "vi": "<details><summary>Câu hỏi</summary><p>Trả lời</p></details>",
+        "en": "<details><summary>Question</summary><p>Answer</p></details>"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<h2>FAQ</h2>\n<!-- viết ở đây -->\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<h2>FAQ</h2>\n<details>\n  <summary>HTML là gì?</summary>\n  <p>Ngôn ngữ đánh dấu.</p>\n</details>\n<details>\n  <summary>CSS là gì?</summary>\n  <p>Ngôn ngữ tạo kiểu.</p>\n</details>\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có ít nhất 2 <details>",
+            "en": "There are at least 2 <details>"
+          },
+          "test": "document.querySelectorAll('details').length>=2"
+        },
+        {
+          "label": {
+            "vi": "Mỗi <details> có <summary> và <p>",
+            "en": "Each <details> has a <summary> and a <p>"
+          },
+          "test": "Array.from(document.querySelectorAll('details')).length>0 && Array.from(document.querySelectorAll('details')).every(function(d){return d.querySelector('summary')&&d.querySelector('p')})"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Thêm <progress> với value=\"70\" max=\"100\" và <meter> với min, max, value (value nằm trong khoảng).",
+        "en": "Add a <progress> with value=\"70\" max=\"100\" and a <meter> with min, max and value (value within range)."
+      },
+      "hint": {
+        "vi": "<progress value=\"70\" max=\"100\"></progress> <meter min=\"0\" max=\"10\" value=\"6\"></meter>",
+        "en": "<progress value=\"70\" max=\"100\"></progress> <meter min=\"0\" max=\"10\" value=\"6\"></meter>"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<!-- viết ở đây -->\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<progress value=\"70\" max=\"100\"></progress>\n<meter min=\"0\" max=\"10\" value=\"6\"></meter>\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "<progress> có value=70 và max=100",
+            "en": "<progress> has value=70 and max=100"
+          },
+          "test": "(function(){var p=document.querySelector('progress');return !!p&&p.value===70&&p.max===100})()"
+        },
+        {
+          "label": {
+            "vi": "<meter> có value nằm giữa min và max",
+            "en": "<meter> has a value between min and max"
+          },
+          "test": "(function(){var m=document.querySelector('meter');return !!m&&m.hasAttribute('min')&&m.hasAttribute('max')&&m.value>=m.min&&m.value<=m.max})()"
+        }
+      ]
+    }
+  ]
+}

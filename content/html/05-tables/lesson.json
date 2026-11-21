@@ -1,0 +1,110 @@
+{
+  "title": {
+    "vi": "Bảng (table)",
+    "en": "Tables"
+  },
+  "summary": {
+    "vi": "table, thead, tbody, tr, th, td, colspan",
+    "en": "table, thead, tbody, tr, th, td, colspan"
+  },
+  "minutes": 12,
+  "preview": "web",
+  "files": [
+    {
+      "name": "index.html",
+      "lang": "html",
+      "code": "<table border=\"1\" cellpadding=\"6\">\n  <caption>Điểm số</caption>\n  <thead>\n    <tr><th>Tên</th><th>Toán</th><th>Văn</th></tr>\n  </thead>\n  <tbody>\n    <tr><td>An</td><td>9</td><td>8</td></tr>\n    <tr><td>Bình</td><td>7</td><td>9</td></tr>\n  </tbody>\n</table>\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tạo bảng có <thead> với 3 ô tiêu đề <th> (Sản phẩm, Giá, Số lượng) và <tbody> với ít nhất 2 hàng dữ liệu.",
+        "en": "Create a table with a <thead> of 3 <th> header cells (Product, Price, Qty) and a <tbody> with at least 2 data rows."
+      },
+      "hint": {
+        "vi": "<tr><th>..</th><th>..</th><th>..</th></tr> trong <thead>; mỗi hàng dữ liệu là <tr> với 3 <td>.",
+        "en": "<tr><th>..</th><th>..</th><th>..</th></tr> in <thead>; each data row is a <tr> with 3 <td>."
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<table border=\"1\">\n  <!-- viết bảng ở đây -->\n</table>\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<table border=\"1\">\n  <thead>\n    <tr><th>Sản phẩm</th><th>Giá</th><th>Số lượng</th></tr>\n  </thead>\n  <tbody>\n    <tr><td>Bút</td><td>5000</td><td>10</td></tr>\n    <tr><td>Vở</td><td>12000</td><td>4</td></tr>\n  </tbody>\n</table>\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "<thead> có đúng 3 ô <th>",
+            "en": "<thead> has exactly 3 <th> cells"
+          },
+          "test": "document.querySelectorAll('thead th').length===3"
+        },
+        {
+          "label": {
+            "vi": "<tbody> có ít nhất 2 hàng",
+            "en": "<tbody> has at least 2 rows"
+          },
+          "test": "document.querySelectorAll('tbody tr').length>=2"
+        },
+        {
+          "label": {
+            "vi": "Mỗi hàng dữ liệu có 3 ô <td>",
+            "en": "Each data row has 3 <td> cells"
+          },
+          "test": "Array.from(document.querySelectorAll('tbody tr')).length>0 && Array.from(document.querySelectorAll('tbody tr')).every(function(r){return r.querySelectorAll('td').length===3})"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Thêm <caption> cho bảng và một ô dòng cuối dùng colspan=\"2\" để gộp 2 cột.",
+        "en": "Add a <caption> to the table and a last-row cell that uses colspan=\"2\" to span 2 columns."
+      },
+      "hint": {
+        "vi": "<td colspan=\"2\">Tổng</td> gộp hai cột; <caption> nằm ngay sau <table>.",
+        "en": "<td colspan=\"2\">Total</td> spans two columns; <caption> goes right after <table>."
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<table border=\"1\">\n  <tr><th>Món</th><th>Giá</th></tr>\n  <tr><td>Phở</td><td>50</td></tr>\n  <tr><td>Bún</td><td>40</td></tr>\n</table>\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<table border=\"1\">\n  <caption>Thực đơn</caption>\n  <tr><th>Món</th><th>Giá</th></tr>\n  <tr><td>Phở</td><td>50</td></tr>\n  <tr><td>Bún</td><td>40</td></tr>\n  <tr><td colspan=\"2\">Tổng: 90</td></tr>\n</table>\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Bảng có <caption> không rỗng",
+            "en": "The table has a non-empty <caption>"
+          },
+          "test": "(document.querySelector('table caption')||{textContent:''}).textContent.trim().length>0"
+        },
+        {
+          "label": {
+            "vi": "Có ô <td> với colspan=\"2\"",
+            "en": "There is a <td> with colspan=\"2\""
+          },
+          "test": "!!document.querySelector('td[colspan=\"2\"]')"
+        }
+      ]
+    }
+  ]
+}

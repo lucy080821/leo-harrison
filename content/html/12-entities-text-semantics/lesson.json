@@ -1,0 +1,110 @@
+{
+  "title": {
+    "vi": "Ký tự đặc biệt và thẻ văn bản ngữ nghĩa",
+    "en": "Special characters and text semantics"
+  },
+  "summary": {
+    "vi": "&lt; &amp; &copy;, pre, code, blockquote, time, mark, abbr",
+    "en": "&lt; &amp; &copy;, pre, code, blockquote, time, mark, abbr"
+  },
+  "minutes": 10,
+  "preview": "web",
+  "files": [
+    {
+      "name": "index.html",
+      "lang": "html",
+      "code": "<p>Để viết thẻ đoạn văn, gõ &lt;p&gt; (&amp; ký hiệu &copy; 2026).</p>\n<blockquote cite=\"https://example.com\">\n  <p>Học, học nữa, học mãi.</p>\n  <footer>— Lenin, <cite>trích dẫn</cite></footer>\n</blockquote>\n<p>Hôm nay là <time datetime=\"2026-11-21\">21/11/2026</time>. Hãy <mark>ghi nhớ</mark>:\n<abbr title=\"HyperText Markup Language\">HTML</abbr> không phải ngôn ngữ lập trình.</p>\n<pre><code>function hi() {\n  return \"xin chào\";\n}</code></pre>\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Hiển thị đúng chữ <h1> như văn bản (không phải thẻ thật) trong một đoạn <p> bằng ký tự đặc biệt &lt; và &gt;. Thêm ký hiệu bản quyền &copy;.",
+        "en": "Show the literal text <h1> (not a real tag) inside a <p> using the entities &lt; and &gt;. Also add the copyright sign &copy;."
+      },
+      "hint": {
+        "vi": "&lt;h1&gt; hiển thị thành <h1>; &copy; thành ©.",
+        "en": "&lt;h1&gt; renders as <h1>; &copy; renders as ©."
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<p>Thẻ tiêu đề lớn nhất là</p>\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<p>Thẻ tiêu đề lớn nhất là &lt;h1&gt; &copy; 2026</p>\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Trang hiển thị chữ \"<h1>\" như văn bản",
+            "en": "The page shows the text \"<h1>\" as plain text"
+          },
+          "test": "document.body.textContent.indexOf('<h1>')>=0 && !document.querySelector('h1')"
+        },
+        {
+          "label": {
+            "vi": "Có ký hiệu ©",
+            "en": "The © sign is present"
+          },
+          "test": "document.body.textContent.indexOf('\\u00a9')>=0"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Dùng <blockquote> có <p> chứa trích dẫn, và <time> có thuộc tính datetime, và <code> bao một đoạn mã ngắn.",
+        "en": "Use a <blockquote> containing a quote in a <p>, a <time> with a datetime attribute, and <code> wrapping a short code snippet."
+      },
+      "hint": {
+        "vi": "<time datetime=\"2026-11-21\">21/11/2026</time>, <code>console.log()</code>.",
+        "en": "<time datetime=\"2026-11-21\">Nov 21, 2026</time>, <code>console.log()</code>."
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<!-- viết ở đây -->\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<blockquote><p>Đơn giản là đỉnh cao của tinh tế.</p></blockquote>\n<p>Ngày <time datetime=\"2026-11-21\">21/11/2026</time>, dùng lệnh <code>console.log()</code>.</p>\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có <blockquote> chứa <p>",
+            "en": "There is a <blockquote> containing a <p>"
+          },
+          "test": "!!document.querySelector('blockquote p')"
+        },
+        {
+          "label": {
+            "vi": "<time> có datetime",
+            "en": "<time> has datetime"
+          },
+          "test": "(function(){var t=document.querySelector('time');return !!t&&t.hasAttribute('datetime')})()"
+        },
+        {
+          "label": {
+            "vi": "Có <code> không rỗng",
+            "en": "There is a non-empty <code>"
+          },
+          "test": "(document.querySelector('code')||{textContent:''}).textContent.trim().length>0"
+        }
+      ]
+    }
+  ]
+}

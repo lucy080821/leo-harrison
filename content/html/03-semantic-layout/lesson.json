@@ -1,0 +1,117 @@
+{
+  "title": {
+    "vi": "Bố cục ngữ nghĩa",
+    "en": "Semantic page layout"
+  },
+  "summary": {
+    "vi": "header, nav, main, section, article, aside, footer",
+    "en": "header, nav, main, section, article, aside, footer"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "index.html",
+      "lang": "html",
+      "code": "<header>\n  <h1>Blog của Lexi</h1>\n  <nav>\n    <a href=\"#\">Trang chủ</a>\n    <a href=\"#\">Bài viết</a>\n    <a href=\"#\">Liên hệ</a>\n  </nav>\n</header>\n<main>\n  <article>\n    <h2>Bài viết đầu tiên</h2>\n    <p>Nội dung bài viết...</p>\n  </article>\n  <aside>\n    <h3>Về tác giả</h3>\n    <p>Một người đang học lập trình.</p>\n  </aside>\n</main>\n<footer>\n  <p>&copy; 2026 Lexi Learn</p>\n</footer>\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Thay các thẻ <div> bên dưới bằng thẻ ngữ nghĩa: header, nav, main, footer (giữ nguyên nội dung bên trong).",
+        "en": "Replace the <div> tags below with semantic ones: header, nav, main, footer (keep the content inside)."
+      },
+      "hint": {
+        "vi": "Thẻ mở và thẻ đóng phải đổi cùng lúc, ví dụ <div class=\"top\"> ... </div> thành <header> ... </header>.",
+        "en": "Change both the opening and closing tag, e.g. <div class=\"top\"> ... </div> becomes <header> ... </header>."
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<div class=\"top\">\n  <h1>Trang của tôi</h1>\n  <div class=\"menu\"><a href=\"#\">Home</a> <a href=\"#\">About</a></div>\n</div>\n<div class=\"content\">\n  <p>Nội dung chính.</p>\n</div>\n<div class=\"bottom\">\n  <p>Bản quyền thuộc về tôi.</p>\n</div>\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<header>\n  <h1>Trang của tôi</h1>\n  <nav><a href=\"#\">Home</a> <a href=\"#\">About</a></nav>\n</header>\n<main>\n  <p>Nội dung chính.</p>\n</main>\n<footer>\n  <p>Bản quyền thuộc về tôi.</p>\n</footer>\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có <header> chứa <h1>",
+            "en": "There is a <header> containing <h1>"
+          },
+          "test": "!!document.querySelector('header h1')"
+        },
+        {
+          "label": {
+            "vi": "Có <nav> chứa ít nhất 2 liên kết",
+            "en": "There is a <nav> with at least 2 links"
+          },
+          "test": "document.querySelectorAll('nav a').length>=2"
+        },
+        {
+          "label": {
+            "vi": "Có đúng một <main> và một <footer>",
+            "en": "There is exactly one <main> and one <footer>"
+          },
+          "test": "document.querySelectorAll('main').length===1 && document.querySelectorAll('footer').length===1"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Bên trong <main>, tạo một <section> có tiêu đề <h2> và hai <article>, mỗi <article> có <h3> và <p>.",
+        "en": "Inside <main>, create a <section> with an <h2> heading and two <article> elements, each with an <h3> and a <p>."
+      },
+      "hint": {
+        "vi": "<main><section><h2>..</h2><article>..</article><article>..</article></section></main>",
+        "en": "<main><section><h2>..</h2><article>..</article><article>..</article></section></main>"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<main>\n  <!-- viết ở đây -->\n</main>\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<main>\n  <section>\n    <h2>Tin mới</h2>\n    <article><h3>Tin 1</h3><p>Nội dung tin 1.</p></article>\n    <article><h3>Tin 2</h3><p>Nội dung tin 2.</p></article>\n  </section>\n</main>\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "<main> có <section> với <h2>",
+            "en": "<main> has a <section> with an <h2>"
+          },
+          "test": "!!document.querySelector('main section h2')"
+        },
+        {
+          "label": {
+            "vi": "<section> có ít nhất 2 <article>",
+            "en": "The <section> has at least 2 <article>"
+          },
+          "test": "document.querySelectorAll('main section article').length>=2"
+        },
+        {
+          "label": {
+            "vi": "Mỗi <article> có <h3> và <p>",
+            "en": "Each <article> has an <h3> and a <p>"
+          },
+          "test": "Array.from(document.querySelectorAll('article')).length>0 && Array.from(document.querySelectorAll('article')).every(function(a){return a.querySelector('h3')&&a.querySelector('p')})"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "title": {
+    "vi": "Truy cập (Accessibility) cơ bản",
+    "en": "Accessibility basics"
+  },
+  "summary": {
+    "vi": "alt, label, thứ tự heading, aria-label, nút bấm đúng thẻ",
+    "en": "alt, labels, heading order, aria-label, proper buttons"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "index.html",
+      "lang": "html",
+      "code": "<a href=\"#main\" class=\"skip\">Bỏ qua đến nội dung chính</a>\n<nav aria-label=\"Menu chính\">\n  <a href=\"#\">Trang chủ</a>\n</nav>\n<main id=\"main\">\n  <h1>Tiêu đề chính</h1>\n  <img src=\"x.png\" alt=\"Biểu đồ doanh thu tăng 20%\" />\n  <button type=\"button\" aria-label=\"Đóng\">×</button>\n</main>\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Sửa lỗi truy cập: thêm alt mô tả cho <img>, và gắn <label> với ô nhập (dùng for/id).",
+        "en": "Fix the accessibility issues: add a descriptive alt to the <img>, and link a <label> to the input (use for/id)."
+      },
+      "hint": {
+        "vi": "<img ... alt=\"Mô tả\"> và <label for=\"q\">Tìm kiếm</label> với <input id=\"q\">.",
+        "en": "<img ... alt=\"Description\"> and <label for=\"q\">Search</label> with <input id=\"q\">."
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<img src=\"https://placehold.co/120x60\" />\n<input type=\"search\" id=\"q\" name=\"q\" />\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<img src=\"https://placehold.co/120x60\" alt=\"Logo công ty\" />\n<label for=\"q\">Tìm kiếm</label>\n<input type=\"search\" id=\"q\" name=\"q\" />\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "<img> có alt không rỗng",
+            "en": "<img> has a non-empty alt"
+          },
+          "test": "(function(){var i=document.querySelector('img');return !!i&&(i.getAttribute('alt')||'').trim().length>0})()"
+        },
+        {
+          "label": {
+            "vi": "Ô nhập có <label for> trỏ đúng",
+            "en": "The input has a matching <label for>"
+          },
+          "test": "(function(){var i=document.querySelector('input#q');return !!i&&!!document.querySelector('label[for=q]')})()"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Nút chỉ có biểu tượng cần tên: thêm aria-label cho <button>, và thêm aria-label cho <nav>. Dùng đúng thẻ <button>, không dùng <div>.",
+        "en": "An icon-only button needs a name: add aria-label to the <button>, and aria-label to the <nav>. Use a real <button>, not a <div>."
+      },
+      "hint": {
+        "vi": "<button type=\"button\" aria-label=\"Đóng\">×</button> và <nav aria-label=\"Menu chính\">",
+        "en": "<button type=\"button\" aria-label=\"Close\">×</button> and <nav aria-label=\"Main menu\">"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<nav>\n  <a href=\"#\">Trang chủ</a>\n</nav>\n<div class=\"btn\">×</div>\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<nav aria-label=\"Menu chính\">\n  <a href=\"#\">Trang chủ</a>\n</nav>\n<button type=\"button\" aria-label=\"Đóng\">×</button>\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "<nav> có aria-label không rỗng",
+            "en": "<nav> has a non-empty aria-label"
+          },
+          "test": "(function(){var n=document.querySelector('nav');return !!n&&(n.getAttribute('aria-label')||'').trim().length>0})()"
+        },
+        {
+          "label": {
+            "vi": "Có <button> có aria-label không rỗng",
+            "en": "There is a <button> with a non-empty aria-label"
+          },
+          "test": "(function(){var b=document.querySelector('button');return !!b&&(b.getAttribute('aria-label')||'').trim().length>0})()"
+        }
+      ]
+    }
+  ]
+}

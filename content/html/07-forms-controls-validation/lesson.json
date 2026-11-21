@@ -1,0 +1,110 @@
+{
+  "title": {
+    "vi": "Biểu mẫu (2): lựa chọn và kiểm tra dữ liệu",
+    "en": "Forms (2): choices and validation"
+  },
+  "summary": {
+    "vi": "select, textarea, checkbox, radio, required, pattern",
+    "en": "select, textarea, checkbox, radio, required, pattern"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "index.html",
+      "lang": "html",
+      "code": "<form>\n  <label for=\"city\">Thành phố</label>\n  <select id=\"city\" name=\"city\">\n    <option value=\"\">-- Chọn --</option>\n    <option value=\"hn\">Hà Nội</option>\n    <option value=\"sg\">TP.HCM</option>\n  </select>\n\n  <fieldset>\n    <legend>Giới tính</legend>\n    <label><input type=\"radio\" name=\"gender\" value=\"f\" /> Nữ</label>\n    <label><input type=\"radio\" name=\"gender\" value=\"m\" /> Nam</label>\n  </fieldset>\n\n  <label><input type=\"checkbox\" name=\"agree\" required /> Tôi đồng ý điều khoản</label>\n\n  <label for=\"msg\">Lời nhắn</label>\n  <textarea id=\"msg\" name=\"msg\" rows=\"3\"></textarea>\n</form>\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tạo nhóm radio tên \"level\" gồm ít nhất 3 lựa chọn, và một checkbox tên \"newsletter\".",
+        "en": "Create a radio group named \"level\" with at least 3 options, and a checkbox named \"newsletter\"."
+      },
+      "hint": {
+        "vi": "Các radio cùng nhóm phải có **cùng name** nhưng khác value.",
+        "en": "Radios in the same group must share the **same name** but have different values."
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<form>\n  <!-- viết ở đây -->\n</form>\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<form>\n  <label><input type=\"radio\" name=\"level\" value=\"easy\" /> Dễ</label>\n  <label><input type=\"radio\" name=\"level\" value=\"mid\" /> Vừa</label>\n  <label><input type=\"radio\" name=\"level\" value=\"hard\" /> Khó</label>\n  <label><input type=\"checkbox\" name=\"newsletter\" /> Nhận bản tin</label>\n</form>\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có ít nhất 3 radio cùng name=\"level\"",
+            "en": "At least 3 radios share name=\"level\""
+          },
+          "test": "document.querySelectorAll('input[type=radio][name=level]').length>=3"
+        },
+        {
+          "label": {
+            "vi": "Các radio có value khác nhau",
+            "en": "The radios have distinct values"
+          },
+          "test": "(function(){var v=Array.from(document.querySelectorAll('input[type=radio][name=level]')).map(function(r){return r.value});return v.length>0&&new Set(v).size===v.length&&v.every(Boolean)})()"
+        },
+        {
+          "label": {
+            "vi": "Có checkbox name=\"newsletter\"",
+            "en": "There is a checkbox name=\"newsletter\""
+          },
+          "test": "!!document.querySelector('input[type=checkbox][name=newsletter]')"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Tạo <select name=\"city\"> có ít nhất 3 <option>, và một <textarea name=\"msg\"> bắt buộc nhập (required).",
+        "en": "Create a <select name=\"city\"> with at least 3 <option>s, and a required <textarea name=\"msg\">."
+      },
+      "hint": {
+        "vi": "<textarea name=\"msg\" required></textarea> — thuộc tính required không cần giá trị.",
+        "en": "<textarea name=\"msg\" required></textarea> — the required attribute needs no value."
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<form>\n  <!-- viết ở đây -->\n</form>\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<form>\n  <select name=\"city\">\n    <option value=\"hn\">Hà Nội</option>\n    <option value=\"dn\">Đà Nẵng</option>\n    <option value=\"sg\">TP.HCM</option>\n  </select>\n  <textarea name=\"msg\" required></textarea>\n</form>\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "<select name=\"city\"> có ≥ 3 option",
+            "en": "<select name=\"city\"> has ≥ 3 options"
+          },
+          "test": "document.querySelectorAll('select[name=city] option').length>=3"
+        },
+        {
+          "label": {
+            "vi": "<textarea name=\"msg\"> có required",
+            "en": "<textarea name=\"msg\"> is required"
+          },
+          "test": "(function(){var t=document.querySelector('textarea[name=msg]');return !!t&&t.required})()"
+        }
+      ]
+    }
+  ]
+}

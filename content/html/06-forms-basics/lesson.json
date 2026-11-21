@@ -1,0 +1,103 @@
+{
+  "title": {
+    "vi": "Biểu mẫu (1): form, input, label",
+    "en": "Forms (1): form, input, label"
+  },
+  "summary": {
+    "vi": "form, label, input, các kiểu type, button",
+    "en": "form, label, input, type values, button"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "index.html",
+      "lang": "html",
+      "code": "<form action=\"#\" method=\"post\">\n  <label for=\"name\">Họ tên</label>\n  <input type=\"text\" id=\"name\" name=\"name\" placeholder=\"Nguyễn Văn A\" />\n\n  <label for=\"email\">Email</label>\n  <input type=\"email\" id=\"email\" name=\"email\" />\n\n  <button type=\"submit\">Gửi</button>\n</form>\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tạo form có một <label for=\"email\"> gắn với <input type=\"email\" id=\"email\" name=\"email\">.",
+        "en": "Create a form with a <label for=\"email\"> linked to <input type=\"email\" id=\"email\" name=\"email\">."
+      },
+      "hint": {
+        "vi": "for của label phải trùng với id của input.",
+        "en": "The label's for must equal the input's id."
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<form>\n  <!-- viết ở đây -->\n</form>\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<form>\n  <label for=\"email\">Email</label>\n  <input type=\"email\" id=\"email\" name=\"email\" />\n</form>\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có <input type=\"email\"> với id và name",
+            "en": "There is an <input type=\"email\"> with id and name"
+          },
+          "test": "(function(){var i=document.querySelector('form input[type=email]');return !!i&&i.id!==''&&i.name!==''})()"
+        },
+        {
+          "label": {
+            "vi": "<label> trỏ đúng vào input đó bằng for",
+            "en": "A <label> points to that input via for"
+          },
+          "test": "(function(){var i=document.querySelector('form input[type=email]');return !!i&&!!document.querySelector('label[for=\"'+i.id+'\"]')})()"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Hoàn thiện form đăng nhập: thêm ô mật khẩu (type=\"password\", có name) và nút gửi <button type=\"submit\">.",
+        "en": "Complete the login form: add a password field (type=\"password\" with a name) and a submit button <button type=\"submit\">."
+      },
+      "hint": {
+        "vi": "<input type=\"password\" name=\"password\" /> và <button type=\"submit\">Đăng nhập</button>.",
+        "en": "<input type=\"password\" name=\"password\" /> and <button type=\"submit\">Log in</button>."
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<form>\n  <label>Tên đăng nhập <input type=\"text\" name=\"user\" /></label>\n</form>\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<form>\n  <label>Tên đăng nhập <input type=\"text\" name=\"user\" /></label>\n  <label>Mật khẩu <input type=\"password\" name=\"password\" /></label>\n  <button type=\"submit\">Đăng nhập</button>\n</form>\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có ô mật khẩu có thuộc tính name",
+            "en": "There is a password field with a name"
+          },
+          "test": "(function(){var i=document.querySelector('form input[type=password]');return !!i&&i.name!==''})()"
+        },
+        {
+          "label": {
+            "vi": "Có nút submit trong form",
+            "en": "There is a submit button inside the form"
+          },
+          "test": "!!document.querySelector('form button[type=submit]')"
+        }
+      ]
+    }
+  ]
+}

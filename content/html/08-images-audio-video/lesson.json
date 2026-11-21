@@ -1,0 +1,110 @@
+{
+  "title": {
+    "vi": "Hình ảnh, âm thanh và video",
+    "en": "Images, audio and video"
+  },
+  "summary": {
+    "vi": "img, figure, picture, audio, video, source",
+    "en": "img, figure, picture, audio, video, source"
+  },
+  "minutes": 12,
+  "preview": "web",
+  "files": [
+    {
+      "name": "index.html",
+      "lang": "html",
+      "code": "<figure>\n  <img src=\"https://placehold.co/300x160\" alt=\"Ảnh minh hoạ\" width=\"300\" height=\"160\" />\n  <figcaption>Hình 1: Ảnh minh hoạ</figcaption>\n</figure>\n\n<video controls width=\"320\">\n  <source src=\"phim.mp4\" type=\"video/mp4\" />\n  Trình duyệt của bạn không hỗ trợ video.\n</video>\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tạo <figure> chứa <img> (có alt và width) và <figcaption> mô tả.",
+        "en": "Create a <figure> holding an <img> (with alt and width) and a descriptive <figcaption>."
+      },
+      "hint": {
+        "vi": "<figure><img src=\"...\" alt=\"...\" width=\"200\" /><figcaption>...</figcaption></figure>",
+        "en": "<figure><img src=\"...\" alt=\"...\" width=\"200\" /><figcaption>...</figcaption></figure>"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<!-- viết ở đây -->\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<figure>\n  <img src=\"https://placehold.co/200x100\" alt=\"Ảnh mẫu\" width=\"200\" />\n  <figcaption>Hình 1: Ảnh mẫu</figcaption>\n</figure>\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "<figure> có <img> với alt không rỗng",
+            "en": "<figure> has an <img> with a non-empty alt"
+          },
+          "test": "(function(){var i=document.querySelector('figure img');return !!i&&(i.getAttribute('alt')||'').trim().length>0})()"
+        },
+        {
+          "label": {
+            "vi": "<img> có thuộc tính width",
+            "en": "<img> has a width attribute"
+          },
+          "test": "(function(){var i=document.querySelector('figure img');return !!i&&i.hasAttribute('width')})()"
+        },
+        {
+          "label": {
+            "vi": "<figure> có <figcaption> không rỗng",
+            "en": "<figure> has a non-empty <figcaption>"
+          },
+          "test": "(document.querySelector('figure figcaption')||{textContent:''}).textContent.trim().length>0"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Thêm một <audio controls> có <source> bên trong (src và type), kèm dòng chữ dự phòng.",
+        "en": "Add an <audio controls> with a <source> inside (src and type), plus fallback text."
+      },
+      "hint": {
+        "vi": "<audio controls><source src=\"nhac.mp3\" type=\"audio/mpeg\" />Dòng dự phòng</audio>",
+        "en": "<audio controls><source src=\"music.mp3\" type=\"audio/mpeg\" />Fallback text</audio>"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<h2>Nghe thử</h2>\n<!-- thêm audio ở đây -->\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<h2>Nghe thử</h2>\n<audio controls>\n  <source src=\"nhac.mp3\" type=\"audio/mpeg\" />\n  Trình duyệt không hỗ trợ audio.\n</audio>\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có <audio> với thuộc tính controls",
+            "en": "There is an <audio> with controls"
+          },
+          "test": "(function(){var a=document.querySelector('audio');return !!a&&a.hasAttribute('controls')})()"
+        },
+        {
+          "label": {
+            "vi": "<audio> có <source> với src và type",
+            "en": "<audio> has a <source> with src and type"
+          },
+          "test": "(function(){var s=document.querySelector('audio source');return !!s&&s.hasAttribute('src')&&s.hasAttribute('type')})()"
+        }
+      ]
+    }
+  ]
+}

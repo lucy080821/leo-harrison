@@ -1,0 +1,131 @@
+{
+  "title": {
+    "vi": "Dự án: Trang giới thiệu bản thân",
+    "en": "Project: a personal profile page"
+  },
+  "summary": {
+    "vi": "Kết hợp mọi thứ đã học thành một trang hoàn chỉnh",
+    "en": "Combine everything you've learned into one complete page"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "index.html",
+      "lang": "html",
+      "code": "<!DOCTYPE html>\n<html lang=\"vi\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n    <title>Hồ sơ của Lexi</title>\n  </head>\n  <body>\n    <header>\n      <h1>Lexi</h1>\n      <nav aria-label=\"Menu chính\">\n        <a href=\"#about\">Giới thiệu</a>\n        <a href=\"#skills\">Kỹ năng</a>\n        <a href=\"#contact\">Liên hệ</a>\n      </nav>\n    </header>\n    <main>\n      <section id=\"about\"><h2>Giới thiệu</h2><p>Mình đang học lập trình web.</p></section>\n      <section id=\"skills\"><h2>Kỹ năng</h2>\n        <ul><li>HTML</li><li>CSS</li></ul></section>\n      <section id=\"contact\"><h2>Liên hệ</h2><p>lexi@example.com</p></section>\n    </main>\n    <footer><p>&copy; 2026 Lexi</p></footer>\n  </body>\n</html>\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Dựng khung trang: <header> có <h1> và <nav> với 3 liên kết neo (#...) tới 3 <section> có id tương ứng trong <main>; thêm <footer>.",
+        "en": "Build the page frame: a <header> with an <h1> and a <nav> with 3 anchor links (#...) to 3 <section>s with matching ids inside <main>; add a <footer>."
+      },
+      "hint": {
+        "vi": "Liên kết <a href=\"#about\"> sẽ cuộn tới phần tử có id=\"about\". Nhớ mỗi href phải khớp đúng một id.",
+        "en": "A link <a href=\"#about\"> scrolls to the element with id=\"about\". Every href must match exactly one id."
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<!-- Dựng trang của bạn ở đây -->\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<header>\n  <h1>Tên của tôi</h1>\n  <nav>\n    <a href=\"#about\">Giới thiệu</a>\n    <a href=\"#skills\">Kỹ năng</a>\n    <a href=\"#contact\">Liên hệ</a>\n  </nav>\n</header>\n<main>\n  <section id=\"about\"><h2>Giới thiệu</h2><p>Xin chào!</p></section>\n  <section id=\"skills\"><h2>Kỹ năng</h2><p>HTML, CSS</p></section>\n  <section id=\"contact\"><h2>Liên hệ</h2><p>me@example.com</p></section>\n</main>\n<footer><p>&copy; 2026</p></footer>\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "<header> có <h1> và <nav> có ≥ 3 liên kết",
+            "en": "<header> has an <h1> and <nav> has ≥ 3 links"
+          },
+          "test": "!!document.querySelector('header h1') && document.querySelectorAll('header nav a, nav a').length>=3"
+        },
+        {
+          "label": {
+            "vi": "Có ≥ 3 <section> có id trong <main>",
+            "en": "≥ 3 <section>s with ids inside <main>"
+          },
+          "test": "document.querySelectorAll('main section[id]').length>=3"
+        },
+        {
+          "label": {
+            "vi": "Mọi liên kết # trong nav đều trỏ tới một id có thật",
+            "en": "Every # link in nav points to a real id"
+          },
+          "test": "(function(){var l=Array.from(document.querySelectorAll('nav a[href^=\"#\"]'));return l.length>=3&&l.every(function(a){return !!document.getElementById(a.getAttribute('href').slice(1))})})()"
+        },
+        {
+          "label": {
+            "vi": "Có <footer>",
+            "en": "There is a <footer>"
+          },
+          "test": "!!document.querySelector('footer')"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Thêm form liên hệ vào section #contact: ô tên (text), ô email (email, required), lời nhắn (textarea), mỗi ô có <label>, và nút submit.",
+        "en": "Add a contact form to #contact: name (text), email (email, required), message (textarea), each with a <label>, plus a submit button."
+      },
+      "hint": {
+        "vi": "Mỗi ô cần id và <label for=\"...\">; email thêm required.",
+        "en": "Every field needs an id and a <label for=\"...\">; add required to email."
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<main>\n  <section id=\"contact\">\n    <h2>Liên hệ</h2>\n    <!-- thêm form ở đây -->\n  </section>\n</main>\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<main>\n  <section id=\"contact\">\n    <h2>Liên hệ</h2>\n    <form action=\"#\" method=\"post\">\n      <label for=\"n\">Tên</label>\n      <input type=\"text\" id=\"n\" name=\"name\" />\n      <label for=\"e\">Email</label>\n      <input type=\"email\" id=\"e\" name=\"email\" required />\n      <label for=\"m\">Lời nhắn</label>\n      <textarea id=\"m\" name=\"message\"></textarea>\n      <button type=\"submit\">Gửi</button>\n    </form>\n  </section>\n</main>\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Form nằm trong #contact",
+            "en": "The form is inside #contact"
+          },
+          "test": "!!document.querySelector('#contact form')"
+        },
+        {
+          "label": {
+            "vi": "Có input text, input email (required) và textarea",
+            "en": "Text input, email input (required) and textarea present"
+          },
+          "test": "!!document.querySelector('#contact input[type=text]') && !!document.querySelector('#contact input[type=email][required]') && !!document.querySelector('#contact textarea')"
+        },
+        {
+          "label": {
+            "vi": "Mỗi ô đều có <label for> khớp id",
+            "en": "Every field has a matching <label for>"
+          },
+          "test": "(function(){var f=Array.from(document.querySelectorAll('#contact input:not([type=submit]), #contact textarea'));return f.length>=3&&f.every(function(x){return x.id&&document.querySelector('label[for=\"'+x.id+'\"]')})})()"
+        },
+        {
+          "label": {
+            "vi": "Có nút submit",
+            "en": "There is a submit button"
+          },
+          "test": "!!document.querySelector('#contact button[type=submit]')"
+        }
+      ]
+    }
+  ]
+}

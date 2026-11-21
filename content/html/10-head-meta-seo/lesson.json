@@ -1,0 +1,110 @@
+{
+  "title": {
+    "vi": "Thẻ <head>, meta và SEO",
+    "en": "The <head>, meta tags and SEO"
+  },
+  "summary": {
+    "vi": "title, meta description, viewport, Open Graph, favicon",
+    "en": "title, meta description, viewport, Open Graph, favicon"
+  },
+  "minutes": 12,
+  "preview": "web",
+  "files": [
+    {
+      "name": "index.html",
+      "lang": "html",
+      "code": "<!DOCTYPE html>\n<html lang=\"vi\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n    <title>Lexi Learn - Học lập trình</title>\n    <meta name=\"description\" content=\"Học lập trình từ A đến Z.\" />\n  </head>\n  <body>\n    <h1>Xem thẻ trong head ở file bên trái</h1>\n  </body>\n</html>\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Thêm vào <head>: meta viewport (width=device-width, initial-scale=1) và meta description có nội dung.",
+        "en": "Add to <head>: a viewport meta (width=device-width, initial-scale=1) and a meta description with content."
+      },
+      "hint": {
+        "vi": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" /> và <meta name=\"description\" content=\"...\" />",
+        "en": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" /> and <meta name=\"description\" content=\"...\" />"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<!DOCTYPE html>\n<html lang=\"vi\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <title>Trang của tôi</title>\n  </head>\n  <body><h1>Hello</h1></body>\n</html>\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<!DOCTYPE html>\n<html lang=\"vi\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n    <meta name=\"description\" content=\"Trang cá nhân của tôi.\" />\n    <title>Trang của tôi</title>\n  </head>\n  <body><h1>Hello</h1></body>\n</html>\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có meta viewport với width=device-width",
+            "en": "There is a viewport meta with width=device-width"
+          },
+          "test": "(function(){var m=document.head.querySelector('meta[name=viewport]');return !!m&&m.content.indexOf('width=device-width')>=0})()"
+        },
+        {
+          "label": {
+            "vi": "Có meta description không rỗng",
+            "en": "There is a non-empty meta description"
+          },
+          "test": "(function(){var m=document.head.querySelector('meta[name=description]');return !!m&&m.content.trim().length>0})()"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Thêm Open Graph: <meta property=\"og:title\"> và <meta property=\"og:image\"> (có content), cùng <link rel=\"icon\"> trỏ tới một biểu tượng.",
+        "en": "Add Open Graph: <meta property=\"og:title\"> and <meta property=\"og:image\"> (with content), plus a <link rel=\"icon\"> pointing to an icon."
+      },
+      "hint": {
+        "vi": "<meta property=\"og:title\" content=\"...\" /> và <link rel=\"icon\" href=\"favicon.ico\" />",
+        "en": "<meta property=\"og:title\" content=\"...\" /> and <link rel=\"icon\" href=\"favicon.ico\" />"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<!DOCTYPE html>\n<html lang=\"vi\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <title>Trang chia sẻ</title>\n  </head>\n  <body><h1>Chia sẻ</h1></body>\n</html>\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<!DOCTYPE html>\n<html lang=\"vi\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <title>Trang chia sẻ</title>\n    <meta property=\"og:title\" content=\"Trang chia sẻ\" />\n    <meta property=\"og:image\" content=\"https://placehold.co/1200x630\" />\n    <link rel=\"icon\" href=\"favicon.ico\" />\n  </head>\n  <body><h1>Chia sẻ</h1></body>\n</html>\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có og:title với content",
+            "en": "There is og:title with content"
+          },
+          "test": "(function(){var m=document.head.querySelector('meta[property=\"og:title\"]');return !!m&&m.content.trim().length>0})()"
+        },
+        {
+          "label": {
+            "vi": "Có og:image với content",
+            "en": "There is og:image with content"
+          },
+          "test": "(function(){var m=document.head.querySelector('meta[property=\"og:image\"]');return !!m&&m.content.trim().length>0})()"
+        },
+        {
+          "label": {
+            "vi": "Có <link rel=\"icon\"> với href",
+            "en": "There is a <link rel=\"icon\"> with href"
+          },
+          "test": "!!document.head.querySelector('link[rel~=icon][href]')"
+        }
+      ]
+    }
+  ]
+}
