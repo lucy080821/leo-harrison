@@ -58,6 +58,9 @@ export function LessonWorkspace(p: Props) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const pendingCheck = useRef<string | null>(null);
   const loadToken = useRef(0);
+  const [checking, setChecking] = useState(false);
+  const [timedOut, setTimedOut] = useState(false);
+  const checkTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // ----- Engine Python / SQL (chạy trong Web Worker) -----
   const isEngine = p.engine !== "web";
@@ -156,6 +159,9 @@ export function LessonWorkspace(p: Props) {
       } else if (d.type === "checked" && d.results) {
         const exId = pendingCheck.current;
         pendingCheck.current = null;
+        if (checkTimer.current) clearTimeout(checkTimer.current);
+        setChecking(false);
+        setTimedOut(false);
         if (!exId) return;
         setResults((r) => ({ ...r, [exId]: d.results! }));
         if (d.results.length > 0 && d.results.every(Boolean)) {
@@ -216,6 +222,16 @@ export function LessonWorkspace(p: Props) {
     }
     // Luôn nạp lại trang sạch trước khi chấm để trạng thái cũ (biến đếm, timer...) không làm sai kết quả.
     pendingCheck.current = exercise.id;
+    setChecking(true);
+    setTimedOut(false);
+    setResults((r) => ({ ...r, [exercise.id]: [] }));
+    if (checkTimer.current) clearTimeout(checkTimer.current);
+    checkTimer.current = setTimeout(() => {
+      if (!pendingCheck.current) return;
+      pendingCheck.current = null;
+      setChecking(false);
+      setTimedOut(true);
+    }, 40000);
     setLogs([]);
     setSrcDoc(buildSrcDoc(files, p.runtime) + `<!-- run ${Date.now()} -->`);
   }
@@ -304,6 +320,16 @@ export function LessonWorkspace(p: Props) {
                               <p className="rounded-lg bg-surface px-3 py-2 text-sm text-muted">💡 {ex.hint[lang]}</p>
                             )}
 
+                            {active && checking && (
+                              <p role="status" className="text-sm font-semibold text-muted">
+                                ⏳ {t.checking}
+                              </p>
+                            )}
+                            {active && timedOut && !checking && (
+                              <p role="status" className="text-sm font-semibold text-bad">
+                                {t.checkTimeout}
+                              </p>
+                            )}
                             {(allPassed || failed) && (
                               <p
                                 role="status"

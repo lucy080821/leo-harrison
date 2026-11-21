@@ -131,7 +131,8 @@ export function buildSrcDoc(files: SandboxFile[], runtime?: Runtime): string {
   if (isReact) {
     const [src, name] = takeDefaultExport(jsxFile ? jsxFile.code : jsFiles.map((f) => f.code).join("\n"));
     const payload = JSON.stringify({ src, name }).replace(/</g, "\\u003c");
-    body = `<script type="importmap">${JSON.stringify(IMPORT_MAP)}</script>
+    body = `<div id="__lexi_status" style="font:14px system-ui,sans-serif;color:#64748b;padding:12px">Đang tải React… / Loading React…</div>
+<script type="importmap">${JSON.stringify(IMPORT_MAP)}</script>
 <script src="${BABEL_URL}"></script>
 <script>
 (async function(){
@@ -143,8 +144,11 @@ export function buildSrcDoc(files: SandboxFile[], runtime?: Runtime): string {
     }
     var url = URL.createObjectURL(new Blob([out], { type: "text/javascript" }));
     await import(url);
+    var st = document.getElementById("__lexi_status"); if (st) st.remove();
   } catch (e) {
     console.error(String(e && e.message || e));
+    var st2 = document.getElementById("__lexi_status");
+    if (st2) { st2.style.color = "#dc2626"; st2.style.whiteSpace = "pre-wrap"; st2.style.fontFamily = "ui-monospace,monospace"; st2.textContent = String(e && e.message || e); }
   }
   setTimeout(function(){ window.__resolveReady(); }, 500);
 })();

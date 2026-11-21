@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Script from "next/script";
 import "../globals.css";
 import { Header } from "@/components/Header";
+import { ThemeScript } from "@/components/ThemeScript";
 import { dict, isLocale, locales } from "@/lib/i18n";
 
 
@@ -16,9 +16,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return { title: { default: "Lexi Learn", template: "%s · Lexi Learn" }, description: dict[lang].tagline };
 }
 
-// Đặt class dark trước khi trang hiển thị để không bị nháy màu.
-const themeScript = `(function(){try{var s=localStorage.getItem('lexi:theme');var d=s?s==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.classList.toggle('dark',d)}catch(e){}})()`;
-
 export default async function LangLayout({
   children,
   params,
@@ -31,8 +28,10 @@ export default async function LangLayout({
 
   return (
     <html lang={lang} suppressHydrationWarning className="antialiased">
+      <head>
+        <ThemeScript />
+      </head>
       <body suppressHydrationWarning className="min-h-screen bg-bg font-sans text-fg">
-        <Script id="lexi-theme" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: themeScript }} />
         <Header lang={lang} />
         <main>{children}</main>
       </body>
