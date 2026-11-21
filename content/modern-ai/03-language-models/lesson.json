@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Mô hình ngôn ngữ: từ n-gram đến token hoá BPE",
+    "en": "Language models: from n-grams to BPE tokenization"
+  },
+  "summary": {
+    "vi": "xác suất chuỗi, bigram, perplexity, BPE",
+    "en": "sequence probability, bigrams, perplexity, BPE"
+  },
+  "minutes": 22,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "from collections import Counter\n\ncorpus = \"the cat sat the cat ran the dog sat\".split()\n\nbigrams = Counter(zip(corpus[:-1], corpus[1:]))      # đếm cặp từ liền kề\nunigrams = Counter(corpus[:-1])\n\ndef prob(word, prev):\n    # P(word | prev) = count(prev, word) / count(prev)\n    return bigrams[(prev, word)] / unigrams[prev]\n\nprint(round(prob(\"cat\", \"the\"), 4))       # 2/3\nprint(round(prob(\"sat\", \"cat\"), 4))       # 1/2\n\n# Một bước của BPE: gộp cặp ký tự xuất hiện nhiều nhất\ntokens = list(\"lowlower\")\npairs = Counter(zip(tokens[:-1], tokens[1:]))\nprint(pairs.most_common(1))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Từ corpus, tính P(cat | the) và P(sat | cat) theo bigram: count(prev, word) / count(prev). In hai xác suất làm tròn 4 chữ số (mỗi số một dòng).",
+        "en": "From the corpus compute P(cat | the) and P(sat | cat) with bigrams: count(prev, word) / count(prev). Print both probabilities rounded to 4 decimals (one per line)."
+      },
+      "hint": {
+        "vi": "bigrams[(prev, word)] / unigrams[prev]",
+        "en": "bigrams[(prev, word)] / unigrams[prev]"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from collections import Counter\n\ncorpus = \"the cat sat the cat ran the dog sat\".split()\nbigrams = Counter(zip(corpus[:-1], corpus[1:]))\nunigrams = Counter(corpus[:-1])\n\ndef prob(word, prev):\n    # viết ở đây\n    pass\n\nprint(round(prob(\"cat\", \"the\"), 4))\nprint(round(prob(\"sat\", \"cat\"), 4))\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from collections import Counter\n\ncorpus = \"the cat sat the cat ran the dog sat\".split()\nbigrams = Counter(zip(corpus[:-1], corpus[1:]))\nunigrams = Counter(corpus[:-1])\n\ndef prob(word, prev):\n    return bigrams[(prev, word)] / unigrams[prev]\n\nprint(round(prob(\"cat\", \"the\"), 4))\nprint(round(prob(\"sat\", \"cat\"), 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 0.6667 rồi 0.5",
+            "en": "Prints 0.6667 then 0.5"
+          },
+          "test": "_out == '0.6667\\n0.5'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Một bước BPE: viết best_pair(tokens) trả về cặp ký tự liền kề xuất hiện NHIỀU nhất trong danh sách tokens (dùng Counter trên zip). Với tokens của 'lowlower' in cặp đó.",
+        "en": "One BPE step: write best_pair(tokens) returning the adjacent pair that occurs MOST often in the tokens list (use a Counter over zip). For the tokens of 'lowlower' print that pair."
+      },
+      "hint": {
+        "vi": "Counter(zip(tokens[:-1], tokens[1:])).most_common(1)[0][0]",
+        "en": "Counter(zip(tokens[:-1], tokens[1:])).most_common(1)[0][0]"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from collections import Counter\n\ndef best_pair(tokens):\n    # viết ở đây\n    pass\n\nprint(best_pair(list(\"lowlower\")))\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from collections import Counter\n\ndef best_pair(tokens):\n    return Counter(zip(tokens[:-1], tokens[1:])).most_common(1)[0][0]\n\nprint(best_pair(list(\"lowlower\")))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In ('l', 'o')",
+            "en": "Prints ('l', 'o')"
+          },
+          "test": "_out == \"('l', 'o')\""
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

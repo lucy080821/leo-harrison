@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "AI có trách nhiệm: công bằng, đánh giá và triển khai",
+    "en": "Responsible AI: fairness, evaluation and deployment"
+  },
+  "summary": {
+    "vi": "thiên lệch, chỉ số công bằng, giám sát mô hình, an toàn",
+    "en": "bias, fairness metrics, model monitoring, safety"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\ngroups = np.array([\"A\"] * 5 + [\"B\"] * 5)\ny_true = np.array([1, 1, 1, 0, 0,  1, 1, 1, 0, 0])\ny_pred = np.array([1, 1, 0, 0, 1,  1, 0, 0, 0, 0])\n\ndef positive_rate(mask):\n    return y_pred[mask].mean()                      # tỉ lệ được dự đoán dương\n\ndef tpr(mask):\n    pos = mask & (y_true == 1)\n    return y_pred[pos].mean()                       # độ nhạy trong nhóm\n\na, b = groups == \"A\", groups == \"B\"\nprint(\"tỉ lệ dương:\", positive_rate(a), positive_rate(b))\nprint(\"TPR:\", round(tpr(a), 4), round(tpr(b), 4))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Chênh lệch ngang bằng nhân khẩu học (demographic parity): hiệu số tuyệt đối giữa tỉ lệ được dự đoán dương của nhóm A và nhóm B. Gán dp_diff và in làm tròn 2 chữ số.",
+        "en": "Demographic parity difference: the absolute gap between the positive-prediction rate of group A and group B. Assign dp_diff and print it rounded to 2 decimals."
+      },
+      "hint": {
+        "vi": "abs(y_pred[a].mean() - y_pred[b].mean())",
+        "en": "abs(y_pred[a].mean() - y_pred[b].mean())"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\ngroups = np.array([\"A\"] * 5 + [\"B\"] * 5)\ny_true = np.array([1, 1, 1, 0, 0,  1, 1, 1, 0, 0])\ny_pred = np.array([1, 1, 0, 0, 1,  1, 0, 0, 0, 0])\na, b = groups == \"A\", groups == \"B\"\n# gán dp_diff và in\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\ngroups = np.array([\"A\"] * 5 + [\"B\"] * 5)\ny_true = np.array([1, 1, 1, 0, 0,  1, 1, 1, 0, 0])\ny_pred = np.array([1, 1, 0, 0, 1,  1, 0, 0, 0, 0])\na, b = groups == \"A\", groups == \"B\"\ndp_diff = abs(y_pred[a].mean() - y_pred[b].mean())\nprint(round(float(dp_diff), 2))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "dp_diff = 0.4 (60% so với 20%)",
+            "en": "dp_diff = 0.4 (60% vs 20%)"
+          },
+          "test": "abs(float(dp_diff) - 0.4) < 1e-9"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Chênh lệch cơ hội bằng nhau (equal opportunity): hiệu số tuyệt đối giữa độ nhạy TPR của hai nhóm, với TPR = tỉ lệ dự đoán dương trong số người THẬT SỰ dương. Gán eo_diff và in làm tròn 4 chữ số.",
+        "en": "Equal opportunity difference: the absolute gap between the two groups' TPR (sensitivity), where TPR = the positive-prediction rate among those who are TRULY positive. Assign eo_diff and print it rounded to 4 decimals."
+      },
+      "hint": {
+        "vi": "tpr = y_pred[mask & (y_true == 1)].mean()",
+        "en": "tpr = y_pred[mask & (y_true == 1)].mean()"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\ngroups = np.array([\"A\"] * 5 + [\"B\"] * 5)\ny_true = np.array([1, 1, 1, 0, 0,  1, 1, 1, 0, 0])\ny_pred = np.array([1, 1, 0, 0, 1,  1, 0, 0, 0, 0])\na, b = groups == \"A\", groups == \"B\"\n# gán eo_diff và in\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\ngroups = np.array([\"A\"] * 5 + [\"B\"] * 5)\ny_true = np.array([1, 1, 1, 0, 0,  1, 1, 1, 0, 0])\ny_pred = np.array([1, 1, 0, 0, 1,  1, 0, 0, 0, 0])\na, b = groups == \"A\", groups == \"B\"\n\ndef tpr(mask):\n    return y_pred[mask & (y_true == 1)].mean()\n\neo_diff = abs(tpr(a) - tpr(b))\nprint(round(float(eo_diff), 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "eo_diff = 0.3333",
+            "en": "eo_diff = 0.3333"
+          },
+          "test": "abs(float(eo_diff) - (2/3 - 1/3)) < 1e-9"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

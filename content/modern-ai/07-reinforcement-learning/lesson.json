@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Học tăng cường: Q-learning",
+    "en": "Reinforcement learning: Q-learning"
+  },
+  "summary": {
+    "vi": "MDP, phần thưởng chiết khấu, Q-learning, khám phá và khai thác",
+    "en": "MDPs, discounted reward, Q-learning, exploration vs exploitation"
+  },
+  "minutes": 28,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\nN = 5                      # trạng thái 0..4; trạng thái 4 là đích\nACTIONS = [\"L\", \"R\"]       # 0 = trái, 1 = phải\n\ndef step(s, a):\n    s2 = max(0, s - 1) if a == 0 else min(N - 1, s + 1)\n    reward = 1.0 if s2 == N - 1 else 0.0\n    return s2, reward, s2 == N - 1\n\nrng = np.random.default_rng(0)\nQ = np.zeros((N, 2))\nalpha, gamma, epsilon = 0.5, 0.9, 0.3\n\nfor episode in range(300):\n    s = 0\n    done = False\n    while not done:\n        if rng.random() < epsilon:\n            a = int(rng.integers(2))                  # khám phá: hành động ngẫu nhiên\n        else:\n            a = int(Q[s].argmax())                    # khai thác: hành động tốt nhất hiện biết\n        s2, r, done = step(s, a)\n        Q[s, a] += alpha * (r + gamma * Q[s2].max() - Q[s, a])    # cập nhật Q-learning\n        s = s2\n\npolicy = [\"LR\"[int(Q[s].argmax())] for s in range(N - 1)]\nprint(policy)\nprint(Q.round(2))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tính LỢI TỨC chiết khấu G = r₀ + γ·r₁ + γ²·r₂ + … cho rewards = [1, 1, 1] và γ = 0.9. In G làm tròn 2 chữ số.",
+        "en": "Compute the discounted RETURN G = r₀ + γ·r₁ + γ²·r₂ + … for rewards = [1, 1, 1] and γ = 0.9. Print G rounded to 2 decimals."
+      },
+      "hint": {
+        "vi": "G = sum(gamma ** t * r for t, r in enumerate(rewards))",
+        "en": "G = sum(gamma ** t * r for t, r in enumerate(rewards))"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "rewards = [1, 1, 1]\ngamma = 0.9\n# in G (2 chữ số)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "rewards = [1, 1, 1]\ngamma = 0.9\nG = sum(gamma ** t * r for t, r in enumerate(rewards))\nprint(round(G, 2))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 2.71",
+            "en": "Prints 2.71"
+          },
+          "test": "_out == '2.71'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Hoàn thiện cập nhật Q-learning trong vòng lặp: Q[s, a] += alpha · (r + gamma · max(Q[s2]) − Q[s, a]). Sau huấn luyện, chính sách tham lam ở các trạng thái 0..3 phải toàn là 'R' (đi sang phải tới đích).",
+        "en": "Complete the Q-learning update in the loop: Q[s, a] += alpha · (r + gamma · max(Q[s2]) − Q[s, a]). After training, the greedy policy in states 0..3 must be all 'R' (go right toward the goal)."
+      },
+      "hint": {
+        "vi": "Q[s, a] += alpha * (r + gamma * Q[s2].max() - Q[s, a])",
+        "en": "Q[s, a] += alpha * (r + gamma * Q[s2].max() - Q[s, a])"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nN = 5                      # trạng thái 0..4; trạng thái 4 là đích\nACTIONS = [\"L\", \"R\"]       # 0 = trái, 1 = phải\n\ndef step(s, a):\n    s2 = max(0, s - 1) if a == 0 else min(N - 1, s + 1)\n    reward = 1.0 if s2 == N - 1 else 0.0\n    return s2, reward, s2 == N - 1\n\nrng = np.random.default_rng(0)\nQ = np.zeros((N, 2))\nalpha, gamma, epsilon = 0.5, 0.9, 0.3\n\nfor episode in range(300):\n    s = 0\n    done = False\n    while not done:\n        if rng.random() < epsilon:\n            a = int(rng.integers(2))\n        else:\n            a = int(Q[s].argmax())\n        s2, r, done = step(s, a)\n        # TODO: cập nhật Q[s, a] bằng công thức Q-learning\n        s = s2\n\npolicy = [\"LR\"[int(Q[s].argmax())] for s in range(N - 1)]\nprint(policy)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nN = 5                      # trạng thái 0..4; trạng thái 4 là đích\nACTIONS = [\"L\", \"R\"]       # 0 = trái, 1 = phải\n\ndef step(s, a):\n    s2 = max(0, s - 1) if a == 0 else min(N - 1, s + 1)\n    reward = 1.0 if s2 == N - 1 else 0.0\n    return s2, reward, s2 == N - 1\n\nrng = np.random.default_rng(0)\nQ = np.zeros((N, 2))\nalpha, gamma, epsilon = 0.5, 0.9, 0.3\n\nfor episode in range(300):\n    s = 0\n    done = False\n    while not done:\n        if rng.random() < epsilon:\n            a = int(rng.integers(2))\n        else:\n            a = int(Q[s].argmax())\n        s2, r, done = step(s, a)\n        Q[s, a] += alpha * (r + gamma * Q[s2].max() - Q[s, a])\n        s = s2\n\npolicy = [\"LR\"[int(Q[s].argmax())] for s in range(N - 1)]\nprint(policy)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Chính sách là ['R', 'R', 'R', 'R']",
+            "en": "The policy is ['R', 'R', 'R', 'R']"
+          },
+          "test": "policy == ['R', 'R', 'R', 'R']"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

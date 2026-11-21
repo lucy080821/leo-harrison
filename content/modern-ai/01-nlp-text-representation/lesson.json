@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "NLP: biểu diễn văn bản (token, túi từ, TF-IDF)",
+    "en": "NLP: representing text (tokens, bag of words, TF-IDF)"
+  },
+  "summary": {
+    "vi": "tách từ, bag-of-words, TF-IDF, hạn chế của biểu diễn thưa",
+    "en": "tokenization, bag-of-words, TF-IDF, limits of sparse representations"
+  },
+  "minutes": 22,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import re\nfrom collections import Counter\nfrom sklearn.feature_extraction.text import TfidfVectorizer\n\ndef tokenize(text):\n    return re.findall(r\"[a-z']+\", text.lower())\n\ntokens = tokenize(\"The cat sat on the mat. The end!\")\nprint(tokens)\nprint(Counter(tokens).most_common(2))        # túi từ: đếm tần suất\n\ndocs = [\"the cat sat on the mat\",\n        \"the dog barked and the dog ran at the cat\",\n        \"quantum computers use qubits\"]\nvec = TfidfVectorizer(stop_words=\"english\")\nM = vec.fit_transform(docs)                    # ma trận thưa: tài liệu x từ\nprint(M.shape, vec.get_feature_names_out()[:5])\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết tokenize(text) (chữ thường, chỉ giữ các từ gồm chữ cái và dấu nháy đơn bằng re.findall) rồi in 2 từ phổ biến nhất của \"the cat sat on the mat the end\" bằng Counter.most_common(2).",
+        "en": "Write tokenize(text) (lowercase, keeping only words of letters and apostrophes via re.findall) then print the 2 most common words of \"the cat sat on the mat the end\" with Counter.most_common(2)."
+      },
+      "hint": {
+        "vi": "re.findall(r\"[a-z']+\", text.lower())",
+        "en": "re.findall(r\"[a-z']+\", text.lower())"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import re\nfrom collections import Counter\n\ndef tokenize(text):\n    # viết ở đây\n    pass\n\ntokens = tokenize(\"the cat sat on the mat the end\")\nprint(Counter(tokens).most_common(2))\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import re\nfrom collections import Counter\n\ndef tokenize(text):\n    return re.findall(r\"[a-z']+\", text.lower())\n\ntokens = tokenize(\"the cat sat on the mat the end\")\nprint(Counter(tokens).most_common(2))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In [('the', 3), ('cat', 1)]",
+            "en": "Prints [('the', 3), ('cat', 1)]"
+          },
+          "test": "_out == \"[('the', 3), ('cat', 1)]\""
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Dùng TfidfVectorizer(stop_words='english') trên docs. Gán top_word là từ có trọng số TF-IDF cao nhất trong tài liệu thứ hai (docs[1]). Gợi ý: M[1].toarray().ravel().argmax() và get_feature_names_out().",
+        "en": "Use TfidfVectorizer(stop_words='english') on docs. Assign top_word as the word with the highest TF-IDF weight in the second document (docs[1]). Hint: M[1].toarray().ravel().argmax() and get_feature_names_out()."
+      },
+      "hint": {
+        "vi": "vec.get_feature_names_out()[M[1].toarray().ravel().argmax()]",
+        "en": "vec.get_feature_names_out()[M[1].toarray().ravel().argmax()]"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.feature_extraction.text import TfidfVectorizer\n\ndocs = [\"the cat sat on the mat\",\n        \"the dog barked and the dog ran at the cat\",\n        \"quantum computers use qubits\"]\n# gán top_word\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.feature_extraction.text import TfidfVectorizer\n\ndocs = [\"the cat sat on the mat\",\n        \"the dog barked and the dog ran at the cat\",\n        \"quantum computers use qubits\"]\nvec = TfidfVectorizer(stop_words=\"english\")\nM = vec.fit_transform(docs)\ntop_word = vec.get_feature_names_out()[M[1].toarray().ravel().argmax()]\nprint(top_word)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "top_word là 'dog'",
+            "en": "top_word is 'dog'"
+          },
+          "test": "str(top_word) == 'dog'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

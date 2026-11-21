@@ -1,0 +1,97 @@
+{
+  "title": {
+    "vi": "Agent AI và gọi công cụ (tool use)",
+    "en": "AI agents and tool use"
+  },
+  "summary": {
+    "vi": "vòng lặp agent, function calling, JSON, quan sát và hành động",
+    "en": "the agent loop, function calling, JSON, observing and acting"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import json\n\ndef add(a, b):\n    return a + b\n\ndef multiply(a, b):\n    return a * b\n\nTOOLS = {\"add\": add, \"multiply\": multiply}\n\ndef run_tool(call_json):\n    call = json.loads(call_json)                 # LLM trả về một lời gọi dạng JSON\n    return TOOLS[call[\"tool\"]](**call[\"args\"])   # chạy công cụ tương ứng\n\nprint(run_tool('{\"tool\": \"add\", \"args\": {\"a\": 2, \"b\": 3}}'))\nprint(run_tool('{\"tool\": \"multiply\", \"args\": {\"a\": 3, \"b\": 4}}'))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết run_tool(call_json): parse chuỗi JSON dạng {\"tool\": ..., \"args\": {...}}, tìm hàm trong TOOLS và gọi với **args, trả về kết quả. Hai lệnh in bên dưới phải ra 5 rồi 12.",
+        "en": "Write run_tool(call_json): parse the JSON string of the form {\"tool\": ..., \"args\": {...}}, look the function up in TOOLS and call it with **args, returning the result. The two prints below must give 5 then 12."
+      },
+      "hint": {
+        "vi": "call = json.loads(call_json); return TOOLS[call[\"tool\"]](**call[\"args\"])",
+        "en": "call = json.loads(call_json); return TOOLS[call[\"tool\"]](**call[\"args\"])"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import json\n\ndef add(a, b):\n    return a + b\n\ndef multiply(a, b):\n    return a * b\n\nTOOLS = {\"add\": add, \"multiply\": multiply}\n\ndef run_tool(call_json):\n    # viết ở đây\n    pass\n\nprint(run_tool('{\"tool\": \"add\", \"args\": {\"a\": 2, \"b\": 3}}'))\nprint(run_tool('{\"tool\": \"multiply\", \"args\": {\"a\": 3, \"b\": 4}}'))\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import json\n\ndef add(a, b):\n    return a + b\n\ndef multiply(a, b):\n    return a * b\n\nTOOLS = {\"add\": add, \"multiply\": multiply}\n\ndef run_tool(call_json):\n    call = json.loads(call_json)\n    return TOOLS[call[\"tool\"]](**call[\"args\"])\n\nprint(run_tool('{\"tool\": \"add\", \"args\": {\"a\": 2, \"b\": 3}}'))\nprint(run_tool('{\"tool\": \"multiply\", \"args\": {\"a\": 3, \"b\": 4}}'))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 5 rồi 12",
+            "en": "Prints 5 then 12"
+          },
+          "test": "_out == '5\\n12'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Cài vòng lặp agent: mỗi lượt gọi fake_llm(history); nếu hành động là 'final' thì in câu trả lời và dừng; ngược lại chạy công cụ bằng run_tool, thêm kết quả vào history. Đếm số lượt gọi LLM vào steps (phải bằng 3) và in đáp án cuối.",
+        "en": "Implement the agent loop: each turn call fake_llm(history); if the action is 'final' print the answer and stop; otherwise run the tool with run_tool and append the result to history. Count the LLM calls into steps (it must equal 3) and print the final answer."
+      },
+      "hint": {
+        "vi": "while True: action = fake_llm(history); steps += 1; if action['type'] == 'final': ...",
+        "en": "while True: action = fake_llm(history); steps += 1; if action['type'] == 'final': ..."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import json\n\ndef add(a, b):\n    return a + b\n\ndef multiply(a, b):\n    return a * b\n\nTOOLS = {\"add\": add, \"multiply\": multiply}\n\ndef run_tool(call_json):\n    call = json.loads(call_json)\n    return TOOLS[call[\"tool\"]](**call[\"args\"])\n\ndef fake_llm(history):\n    # \"LLM\" giả lập theo kịch bản: nhân, cộng, rồi trả lời\n    if len(history) == 0:\n        return {\"type\": \"tool\", \"call\": json.dumps({\"tool\": \"multiply\", \"args\": {\"a\": 3, \"b\": 4}})}\n    if len(history) == 1:\n        return {\"type\": \"tool\", \"call\": json.dumps({\"tool\": \"add\", \"args\": {\"a\": history[-1], \"b\": 2}})}\n    return {\"type\": \"final\", \"answer\": f\"The total is {history[-1]}\"}\n\nhistory = []\nsteps = 0\n# viết vòng lặp agent ở đây\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import json\n\ndef add(a, b):\n    return a + b\n\ndef multiply(a, b):\n    return a * b\n\nTOOLS = {\"add\": add, \"multiply\": multiply}\n\ndef run_tool(call_json):\n    call = json.loads(call_json)\n    return TOOLS[call[\"tool\"]](**call[\"args\"])\n\ndef fake_llm(history):\n    if len(history) == 0:\n        return {\"type\": \"tool\", \"call\": json.dumps({\"tool\": \"multiply\", \"args\": {\"a\": 3, \"b\": 4}})}\n    if len(history) == 1:\n        return {\"type\": \"tool\", \"call\": json.dumps({\"tool\": \"add\", \"args\": {\"a\": history[-1], \"b\": 2}})}\n    return {\"type\": \"final\", \"answer\": f\"The total is {history[-1]}\"}\n\nhistory = []\nsteps = 0\nwhile True:\n    action = fake_llm(history)\n    steps += 1\n    if action[\"type\"] == \"final\":\n        print(action[\"answer\"])\n        break\n    history.append(run_tool(action[\"call\"]))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 'The total is 14'",
+            "en": "Prints 'The total is 14'"
+          },
+          "test": "_out == 'The total is 14'"
+        },
+        {
+          "label": {
+            "vi": "Agent dùng đúng 3 lượt gọi LLM",
+            "en": "The agent used exactly 3 LLM calls"
+          },
+          "test": "steps == 3"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

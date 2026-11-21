@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Embedding và tìm kiếm theo ngữ nghĩa",
+    "en": "Embeddings and semantic search"
+  },
+  "summary": {
+    "vi": "vector từ/câu, cosine, phép toán trên embedding, tìm láng giềng gần nhất",
+    "en": "word/sentence vectors, cosine, embedding arithmetic, nearest-neighbor search"
+  },
+  "minutes": 22,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\n# Embedding đồ chơi 3 chiều: [hoàng gia, nam, nữ]\nvocab = {\n    \"king\":  np.array([1.0, 1.0, 0.0]),\n    \"queen\": np.array([1.0, 0.0, 1.0]),\n    \"man\":   np.array([0.0, 1.0, 0.0]),\n    \"woman\": np.array([0.0, 0.0, 1.0]),\n    \"apple\": np.array([0.1, 0.1, 0.1]),\n}\n\ndef cosine(a, b):\n    return float(a @ b / (np.linalg.norm(a) * np.linalg.norm(b)))\n\ndef nearest(vec, exclude=()):\n    scores = {w: cosine(vec, v) for w, v in vocab.items() if w not in exclude}\n    return max(scores, key=scores.get)\n\nanalogy = vocab[\"king\"] - vocab[\"man\"] + vocab[\"woman\"]\nprint(nearest(analogy, exclude={\"king\", \"man\", \"woman\"}))     # queen\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết cosine(a, b) = a·b / (‖a‖‖b‖) rồi nearest(vec, exclude) trả về từ trong vocab có cosine lớn nhất với vec (bỏ qua các từ trong exclude). Gán answer = nearest(king − man + woman, loại 3 từ đó). Kết quả phải là 'queen'.",
+        "en": "Write cosine(a, b) = a·b / (‖a‖‖b‖) then nearest(vec, exclude) returning the word in vocab with the largest cosine to vec (skipping words in exclude). Assign answer = nearest(king − man + woman, excluding those 3 words). The result must be 'queen'."
+      },
+      "hint": {
+        "vi": "max(scores, key=scores.get) với scores = {w: cosine(vec, v) ...}",
+        "en": "max(scores, key=scores.get) with scores = {w: cosine(vec, v) ...}"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nvocab = {\n    \"king\": np.array([1.0, 1.0, 0.0]), \"queen\": np.array([1.0, 0.0, 1.0]),\n    \"man\": np.array([0.0, 1.0, 0.0]), \"woman\": np.array([0.0, 0.0, 1.0]),\n    \"apple\": np.array([0.1, 0.1, 0.1]),\n}\n\ndef cosine(a, b):\n    pass\n\ndef nearest(vec, exclude=()):\n    pass\n\nanswer = None\nprint(answer)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nvocab = {\n    \"king\": np.array([1.0, 1.0, 0.0]), \"queen\": np.array([1.0, 0.0, 1.0]),\n    \"man\": np.array([0.0, 1.0, 0.0]), \"woman\": np.array([0.0, 0.0, 1.0]),\n    \"apple\": np.array([0.1, 0.1, 0.1]),\n}\n\ndef cosine(a, b):\n    return float(a @ b / (np.linalg.norm(a) * np.linalg.norm(b)))\n\ndef nearest(vec, exclude=()):\n    scores = {w: cosine(vec, v) for w, v in vocab.items() if w not in exclude}\n    return max(scores, key=scores.get)\n\nanswer = nearest(vocab[\"king\"] - vocab[\"man\"] + vocab[\"woman\"], exclude={\"king\", \"man\", \"woman\"})\nprint(answer)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "answer là 'queen'",
+            "en": "answer is 'queen'"
+          },
+          "test": "answer == 'queen'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Viết top_k(query, matrix, k) trả về CHỈ SỐ của k hàng trong matrix có cosine lớn nhất với query (giảm dần). In top_k cho query = [1, 0] với k = 2.",
+        "en": "Write top_k(query, matrix, k) returning the INDEXES of the k rows of matrix with the largest cosine to query (descending). Print top_k for query = [1, 0] with k = 2."
+      },
+      "hint": {
+        "vi": "sims = (matrix @ query) / (norm(matrix, axis=1) * norm(query)); np.argsort(-sims)[:k]",
+        "en": "sims = (matrix @ query) / (norm(matrix, axis=1) * norm(query)); np.argsort(-sims)[:k]"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nmatrix = np.array([[0.0, 1.0], [1.0, 0.1], [1.0, 1.0], [-1.0, 0.0]])\n\ndef top_k(query, matrix, k):\n    # trả về list chỉ số\n    pass\n\nprint(list(top_k(np.array([1.0, 0.0]), matrix, 2)))\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nmatrix = np.array([[0.0, 1.0], [1.0, 0.1], [1.0, 1.0], [-1.0, 0.0]])\n\ndef top_k(query, matrix, k):\n    sims = (matrix @ query) / (np.linalg.norm(matrix, axis=1) * np.linalg.norm(query))\n    return np.argsort(-sims)[:k]\n\nprint([int(i) for i in top_k(np.array([1.0, 0.0]), matrix, 2)])\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In [1, 2]",
+            "en": "Prints [1, 2]"
+          },
+          "test": "_out == '[1, 2]'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

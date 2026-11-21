@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Mô hình ngôn ngữ lớn (LLM): huấn luyện và sinh văn bản",
+    "en": "Large language models (LLMs): training and generation"
+  },
+  "summary": {
+    "vi": "tiền huấn luyện, tinh chỉnh, RLHF, nhiệt độ, top-k, top-p",
+    "en": "pretraining, fine-tuning, RLHF, temperature, top-k, top-p"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\ndef softmax_t(logits, T=1.0):\n    z = np.array(logits, dtype=float) / T         # chia cho nhiệt độ\n    z -= z.max()\n    e = np.exp(z)\n    return e / e.sum()\n\nlogits = [2.0, 1.0, 0.0]\nprint(softmax_t(logits, 1.0).round(3))            # [0.665 0.245 0.09 ]\nprint(softmax_t(logits, 0.5).round(3))            # nhiệt độ thấp: nhọn hơn, chắc chắn hơn\nprint(softmax_t(logits, 2.0).round(3))            # nhiệt độ cao: phẳng hơn, ngẫu nhiên hơn\n\ndef top_p_indexes(probs, p):\n    order = np.argsort(-np.array(probs))\n    cum = np.cumsum(np.array(probs)[order])\n    cutoff = int(np.searchsorted(cum, p)) + 1      # giữ đến khi tổng tích luỹ >= p\n    return sorted(order[:cutoff].tolist())\nprint(top_p_indexes([0.5, 0.3, 0.1, 0.06, 0.04], 0.85))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết softmax_t(logits, T): softmax của logits/T (trừ max cho ổn định). In kết quả cho logits = [2, 1, 0] với T = 1 rồi T = 0.5, làm tròn 3 chữ số dưới dạng list (mỗi list một dòng).",
+        "en": "Write softmax_t(logits, T): the softmax of logits/T (subtract the max for stability). Print the result for logits = [2, 1, 0] with T = 1 then T = 0.5, rounded to 3 decimals as lists (one list per line)."
+      },
+      "hint": {
+        "vi": "z = np.array(logits) / T; e = np.exp(z - z.max()); return e / e.sum()",
+        "en": "z = np.array(logits) / T; e = np.exp(z - z.max()); return e / e.sum()"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\ndef softmax_t(logits, T=1.0):\n    # viết ở đây\n    pass\n\nlogits = [2.0, 1.0, 0.0]\nprint(softmax_t(logits, 1.0).round(3).tolist())\nprint(softmax_t(logits, 0.5).round(3).tolist())\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\ndef softmax_t(logits, T=1.0):\n    z = np.array(logits, dtype=float) / T\n    e = np.exp(z - z.max())\n    return e / e.sum()\n\nlogits = [2.0, 1.0, 0.0]\nprint(softmax_t(logits, 1.0).round(3).tolist())\nprint(softmax_t(logits, 0.5).round(3).tolist())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In đúng hai phân phối",
+            "en": "Prints the two right distributions"
+          },
+          "test": "_out == '[0.665, 0.245, 0.09]\\n[0.867, 0.117, 0.016]'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Viết top_p_indexes(probs, p): sắp giảm dần, cộng dồn, giữ các token cho đến khi tổng tích luỹ ≥ p, trả về list chỉ số (đã sắp tăng). Với probs = [0.5, 0.3, 0.1, 0.06, 0.04], p = 0.85 in kết quả.",
+        "en": "Write top_p_indexes(probs, p): sort descending, accumulate, keep tokens until the cumulative sum ≥ p, returning the list of indexes (sorted ascending). For probs = [0.5, 0.3, 0.1, 0.06, 0.04], p = 0.85 print the result."
+      },
+      "hint": {
+        "vi": "cum = np.cumsum(sorted_probs); cutoff = np.searchsorted(cum, p) + 1",
+        "en": "cum = np.cumsum(sorted_probs); cutoff = np.searchsorted(cum, p) + 1"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\ndef top_p_indexes(probs, p):\n    # viết ở đây\n    pass\n\nprint(top_p_indexes([0.5, 0.3, 0.1, 0.06, 0.04], 0.85))\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\ndef top_p_indexes(probs, p):\n    order = np.argsort(-np.array(probs))\n    cum = np.cumsum(np.array(probs)[order])\n    cutoff = int(np.searchsorted(cum, p)) + 1\n    return sorted(order[:cutoff].tolist())\n\nprint(top_p_indexes([0.5, 0.3, 0.1, 0.06, 0.04], 0.85))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In [0, 1, 2]",
+            "en": "Prints [0, 1, 2]"
+          },
+          "test": "_out == '[0, 1, 2]'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

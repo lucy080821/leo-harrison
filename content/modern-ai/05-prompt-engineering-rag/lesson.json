@@ -1,0 +1,104 @@
+{
+  "title": {
+    "vi": "Prompt engineering và RAG",
+    "en": "Prompt engineering and RAG"
+  },
+  "summary": {
+    "vi": "viết prompt hiệu quả, few-shot, chia đoạn, truy xuất rồi sinh (RAG)",
+    "en": "writing effective prompts, few-shot, chunking, retrieve-then-generate (RAG)"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "from sklearn.feature_extraction.text import TfidfVectorizer\nfrom sklearn.metrics.pairwise import cosine_similarity\n\ndef build_prompt(examples, query):\n    # prompt few-shot: ví dụ mẫu rồi câu hỏi mới\n    parts = [f\"Q: {q}\\nA: {a}\" for q, a in examples]\n    return \"\\n\\n\".join(parts) + f\"\\n\\nQ: {query}\\nA:\"\n\nprint(build_prompt([(\"2+2\", \"4\")], \"3+5\"))\n\nchunks = [\"The Eiffel Tower is in Paris.\",\n          \"It was built in 1889 by Gustave Eiffel.\",\n          \"The Colosseum is in Rome and was completed in 80 AD.\"]\n\ndef retrieve(query, chunks):\n    vec = TfidfVectorizer(stop_words=\"english\").fit(chunks + [query])\n    sims = cosine_similarity(vec.transform([query]), vec.transform(chunks))[0]\n    return int(sims.argmax())\n\nidx = retrieve(\"when was the Colosseum completed\", chunks)\nprint(idx, chunks[idx])\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết build_prompt(examples, query) tạo prompt few-shot: mỗi ví dụ là 'Q: ...\\nA: ...' (cách nhau một dòng trống), rồi cuối cùng 'Q: <query>\\nA:'. Với [('2+2','4')] và '3+5' phải ra đúng 'Q: 2+2\\nA: 4\\n\\nQ: 3+5\\nA:'.",
+        "en": "Write build_prompt(examples, query) creating a few-shot prompt: each example is 'Q: ...\\nA: ...' (separated by a blank line), then finally 'Q: <query>\\nA:'. For [('2+2','4')] and '3+5' it must give exactly 'Q: 2+2\\nA: 4\\n\\nQ: 3+5\\nA:'."
+      },
+      "hint": {
+        "vi": "\"\\n\\n\".join(f\"Q: {q}\\nA: {a}\" for q, a in examples) + f\"\\n\\nQ: {query}\\nA:\"",
+        "en": "\"\\n\\n\".join(f\"Q: {q}\\nA: {a}\" for q, a in examples) + f\"\\n\\nQ: {query}\\nA:\""
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def build_prompt(examples, query):\n    # viết ở đây\n    pass\n\nprint(build_prompt([(\"2+2\", \"4\")], \"3+5\"))\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def build_prompt(examples, query):\n    parts = [f\"Q: {q}\\nA: {a}\" for q, a in examples]\n    return \"\\n\\n\".join(parts) + f\"\\n\\nQ: {query}\\nA:\"\n\nprint(build_prompt([(\"2+2\", \"4\")], \"3+5\"))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Prompt đúng một ví dụ",
+            "en": "Right prompt for one example"
+          },
+          "test": "build_prompt([('2+2','4')], '3+5') == \"Q: 2+2\\nA: 4\\n\\nQ: 3+5\\nA:\""
+        },
+        {
+          "label": {
+            "vi": "Prompt đúng hai ví dụ",
+            "en": "Right prompt for two examples"
+          },
+          "test": "build_prompt([('a','1'),('b','2')], 'c') == \"Q: a\\nA: 1\\n\\nQ: b\\nA: 2\\n\\nQ: c\\nA:\""
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Cài retrieve(query, chunks): vector hoá bằng TfidfVectorizer(stop_words='english') fit trên chunks + [query], rồi trả về CHỈ SỐ đoạn có cosine cao nhất với truy vấn. Gán best_idx cho truy vấn 'when was the Colosseum completed'.",
+        "en": "Implement retrieve(query, chunks): vectorize with TfidfVectorizer(stop_words='english') fit on chunks + [query], then return the INDEX of the chunk with the highest cosine to the query. Assign best_idx for the query 'when was the Colosseum completed'."
+      },
+      "hint": {
+        "vi": "sims = cosine_similarity(vec.transform([query]), vec.transform(chunks))[0]; return int(sims.argmax())",
+        "en": "sims = cosine_similarity(vec.transform([query]), vec.transform(chunks))[0]; return int(sims.argmax())"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.feature_extraction.text import TfidfVectorizer\nfrom sklearn.metrics.pairwise import cosine_similarity\n\nchunks = [\"The Eiffel Tower is in Paris.\",\n          \"It was built in 1889 by Gustave Eiffel.\",\n          \"The Colosseum is in Rome and was completed in 80 AD.\"]\n\ndef retrieve(query, chunks):\n    # viết ở đây\n    pass\n\nbest_idx = retrieve(\"when was the Colosseum completed\", chunks)\nprint(best_idx)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.feature_extraction.text import TfidfVectorizer\nfrom sklearn.metrics.pairwise import cosine_similarity\n\nchunks = [\"The Eiffel Tower is in Paris.\",\n          \"It was built in 1889 by Gustave Eiffel.\",\n          \"The Colosseum is in Rome and was completed in 80 AD.\"]\n\ndef retrieve(query, chunks):\n    vec = TfidfVectorizer(stop_words=\"english\").fit(chunks + [query])\n    sims = cosine_similarity(vec.transform([query]), vec.transform(chunks))[0]\n    return int(sims.argmax())\n\nbest_idx = retrieve(\"when was the Colosseum completed\", chunks)\nprint(best_idx)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "best_idx là 2 (đoạn về Colosseum)",
+            "en": "best_idx is 2 (the Colosseum chunk)"
+          },
+          "test": "best_idx == 2"
+        },
+        {
+          "label": {
+            "vi": "Truy vấn về năm xây tháp trỏ tới đoạn 1",
+            "en": "A query about the tower's build year points to chunk 1"
+          },
+          "test": "retrieve('who built the tower in 1889', chunks) == 1"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}
