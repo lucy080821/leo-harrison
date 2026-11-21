@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Tổng quan Machine Learning và quy trình",
+    "en": "Machine Learning overview and workflow"
+  },
+  "summary": {
+    "vi": "các loại ML, train/test split, API fit/predict của scikit-learn",
+    "en": "types of ML, train/test split, scikit-learn's fit/predict API"
+  },
+  "minutes": 22,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "from sklearn.datasets import load_iris\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.neighbors import KNeighborsClassifier\n\nX, y = load_iris(return_X_y=True)         # 150 hoa, 4 đặc trưng, 3 loài\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y, test_size=0.2, random_state=42)\nprint(X_train.shape, X_test.shape)\n\nmodel = KNeighborsClassifier(n_neighbors=3)\nmodel.fit(X_train, y_train)               # HỌC từ dữ liệu huấn luyện\npred = model.predict(X_test)              # DỰ ĐOÁN trên dữ liệu chưa thấy\nprint(pred[:5], y_test[:5])\nprint(\"accuracy:\", model.score(X_test, y_test))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Chia bộ iris thành train/test với test_size=0.2, random_state=42. In X_train.shape rồi X_test.shape.",
+        "en": "Split the iris dataset into train/test with test_size=0.2, random_state=42. Print X_train.shape then X_test.shape."
+      },
+      "hint": {
+        "vi": "train_test_split(X, y, test_size=0.2, random_state=42)",
+        "en": "train_test_split(X, y, test_size=0.2, random_state=42)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_iris\nfrom sklearn.model_selection import train_test_split\n\nX, y = load_iris(return_X_y=True)\n# chia train/test rồi in hai shape\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_iris\nfrom sklearn.model_selection import train_test_split\n\nX, y = load_iris(return_X_y=True)\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nprint(X_train.shape)\nprint(X_test.shape)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In (120, 4) rồi (30, 4)",
+            "en": "Prints (120, 4) then (30, 4)"
+          },
+          "test": "_out == '(120, 4)\\n(30, 4)'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Huấn luyện KNeighborsClassifier(n_neighbors=3) trên tập train, tính độ chính xác trên tập test vào biến acc (model.score). Phải đạt trên 0.9.",
+        "en": "Train KNeighborsClassifier(n_neighbors=3) on the train set and compute the test-set accuracy into a variable acc (model.score). It must exceed 0.9."
+      },
+      "hint": {
+        "vi": "model = KNeighborsClassifier(n_neighbors=3).fit(X_train, y_train); acc = model.score(X_test, y_test)",
+        "en": "model = KNeighborsClassifier(n_neighbors=3).fit(X_train, y_train); acc = model.score(X_test, y_test)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_iris\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.neighbors import KNeighborsClassifier\n\nX, y = load_iris(return_X_y=True)\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n# huấn luyện và tính acc\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_iris\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.neighbors import KNeighborsClassifier\n\nX, y = load_iris(return_X_y=True)\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\nmodel = KNeighborsClassifier(n_neighbors=3)\nmodel.fit(X_train, y_train)\nacc = model.score(X_test, y_test)\nprint(acc)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "acc là một số trên 0.9",
+            "en": "acc is a number above 0.9"
+          },
+          "test": "float(acc) > 0.9"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

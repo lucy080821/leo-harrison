@@ -1,0 +1,97 @@
+{
+  "title": {
+    "vi": "K láng giềng gần nhất và Naive Bayes",
+    "en": "K-nearest neighbors and Naive Bayes"
+  },
+  "summary": {
+    "vi": "KNN, khoảng cách, chuẩn hoá, Naive Bayes cho văn bản",
+    "en": "KNN, distance, scaling, Naive Bayes for text"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "from sklearn.datasets import load_wine\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.neighbors import KNeighborsClassifier\nfrom sklearn.preprocessing import StandardScaler\n\nX, y = load_wine(return_X_y=True)\nXtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.3, random_state=0, stratify=y)\n\nraw = KNeighborsClassifier(5).fit(Xtr, ytr).score(Xte, yte)\nsc = StandardScaler().fit(Xtr)\nscaled = KNeighborsClassifier(5).fit(sc.transform(Xtr), ytr).score(sc.transform(Xte), yte)\nprint(\"không chuẩn hoá:\", round(raw, 3), \"| chuẩn hoá:\", round(scaled, 3))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Trên bộ wine: tính acc_raw (KNN k=5 trên dữ liệu gốc) và acc_scaled (KNN k=5 sau StandardScaler học từ train). Chuẩn hoá phải cho kết quả tốt hơn.",
+        "en": "On the wine dataset: compute acc_raw (KNN k=5 on raw data) and acc_scaled (KNN k=5 after a StandardScaler fit on train). Scaling must give a better result."
+      },
+      "hint": {
+        "vi": "sc = StandardScaler().fit(Xtr); KNeighborsClassifier(5).fit(sc.transform(Xtr), ytr).score(sc.transform(Xte), yte)",
+        "en": "sc = StandardScaler().fit(Xtr); KNeighborsClassifier(5).fit(sc.transform(Xtr), ytr).score(sc.transform(Xte), yte)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_wine\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.neighbors import KNeighborsClassifier\nfrom sklearn.preprocessing import StandardScaler\n\nX, y = load_wine(return_X_y=True)\nXtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.3, random_state=0, stratify=y)\n# tính acc_raw và acc_scaled\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_wine\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.neighbors import KNeighborsClassifier\nfrom sklearn.preprocessing import StandardScaler\n\nX, y = load_wine(return_X_y=True)\nXtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.3, random_state=0, stratify=y)\nacc_raw = KNeighborsClassifier(5).fit(Xtr, ytr).score(Xte, yte)\nsc = StandardScaler().fit(Xtr)\nacc_scaled = KNeighborsClassifier(5).fit(sc.transform(Xtr), ytr).score(sc.transform(Xte), yte)\nprint(round(acc_raw, 3), round(acc_scaled, 3))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Chuẩn hoá cho accuracy cao hơn",
+            "en": "Scaling gives a higher accuracy"
+          },
+          "test": "float(acc_scaled) > float(acc_raw)"
+        },
+        {
+          "label": {
+            "vi": "acc_scaled trên 0.9",
+            "en": "acc_scaled above 0.9"
+          },
+          "test": "float(acc_scaled) > 0.9"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Dùng CountVectorizer + MultinomialNB huấn luyện trên texts/labels (spam/ham). Dự đoán hai tin mới trong new_msgs vào biến pred (list nhãn).",
+        "en": "Train CountVectorizer + MultinomialNB on texts/labels (spam/ham). Predict the two new messages in new_msgs into a variable pred (a list of labels)."
+      },
+      "hint": {
+        "vi": "vec = CountVectorizer(); nb = MultinomialNB().fit(vec.fit_transform(texts), labels)",
+        "en": "vec = CountVectorizer(); nb = MultinomialNB().fit(vec.fit_transform(texts), labels)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.feature_extraction.text import CountVectorizer\nfrom sklearn.naive_bayes import MultinomialNB\n\ntexts = [\"win free money now\", \"free prize claim now\", \"cheap pills free offer\",\n         \"meeting at noon tomorrow\", \"project report due friday\", \"lunch with the team today\"]\nlabels = [\"spam\", \"spam\", \"spam\", \"ham\", \"ham\", \"ham\"]\nnew_msgs = [\"free money prize\", \"team meeting tomorrow\"]\n# huấn luyện và gán pred\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.feature_extraction.text import CountVectorizer\nfrom sklearn.naive_bayes import MultinomialNB\n\ntexts = [\"win free money now\", \"free prize claim now\", \"cheap pills free offer\",\n         \"meeting at noon tomorrow\", \"project report due friday\", \"lunch with the team today\"]\nlabels = [\"spam\", \"spam\", \"spam\", \"ham\", \"ham\", \"ham\"]\nnew_msgs = [\"free money prize\", \"team meeting tomorrow\"]\nvec = CountVectorizer()\nnb = MultinomialNB().fit(vec.fit_transform(texts), labels)\npred = list(nb.predict(vec.transform(new_msgs)))\nprint(pred)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Dự đoán ['spam', 'ham']",
+            "en": "Predicts ['spam', 'ham']"
+          },
+          "test": "list(pred)==['spam','ham']"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

@@ -1,0 +1,104 @@
+{
+  "title": {
+    "vi": "Ensemble: Random Forest và Gradient Boosting",
+    "en": "Ensembles: Random Forest and Gradient Boosting"
+  },
+  "summary": {
+    "vi": "bagging, Random Forest, boosting, độ quan trọng đặc trưng",
+    "en": "bagging, Random Forest, boosting, feature importance"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "from sklearn.datasets import load_breast_cancer\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.tree import DecisionTreeClassifier\nfrom sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier\n\nX, y = load_breast_cancer(return_X_y=True)\nXtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.25, random_state=0, stratify=y)\n\ntree = DecisionTreeClassifier(random_state=0).fit(Xtr, ytr)\nrf = RandomForestClassifier(n_estimators=100, random_state=0).fit(Xtr, ytr)\ngb = GradientBoostingClassifier(random_state=0).fit(Xtr, ytr)\n\nfor name, m in [(\"tree\", tree), (\"forest\", rf), (\"boosting\", gb)]:\n    print(name, round(m.score(Xte, yte), 3))\nprint(rf.feature_importances_.sum())\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Huấn luyện RandomForestClassifier(n_estimators=100, random_state=0) trên tập train breast cancer. Gán rf và rf_acc (độ chính xác test, phải trên 0.93).",
+        "en": "Train RandomForestClassifier(n_estimators=100, random_state=0) on the breast-cancer train set. Assign rf and rf_acc (test accuracy, above 0.93)."
+      },
+      "hint": {
+        "vi": "rf = RandomForestClassifier(n_estimators=100, random_state=0).fit(Xtr, ytr)",
+        "en": "rf = RandomForestClassifier(n_estimators=100, random_state=0).fit(Xtr, ytr)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_breast_cancer\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.ensemble import RandomForestClassifier\n\nX, y = load_breast_cancer(return_X_y=True)\nXtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.25, random_state=0, stratify=y)\n# tạo rf và rf_acc\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_breast_cancer\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.ensemble import RandomForestClassifier\n\nX, y = load_breast_cancer(return_X_y=True)\nXtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.25, random_state=0, stratify=y)\nrf = RandomForestClassifier(n_estimators=100, random_state=0).fit(Xtr, ytr)\nrf_acc = rf.score(Xte, yte)\nprint(round(rf_acc, 3))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "rf có 100 cây",
+            "en": "rf has 100 trees"
+          },
+          "test": "len(rf.estimators_)==100"
+        },
+        {
+          "label": {
+            "vi": "rf_acc trên 0.93",
+            "en": "rf_acc above 0.93"
+          },
+          "test": "float(rf_acc) > 0.93"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Huấn luyện GradientBoostingClassifier(random_state=0) trên cùng dữ liệu. Gán gb_acc (phải trên 0.93) và importances = gb.feature_importances_ (tổng bằng 1).",
+        "en": "Train GradientBoostingClassifier(random_state=0) on the same data. Assign gb_acc (above 0.93) and importances = gb.feature_importances_ (summing to 1)."
+      },
+      "hint": {
+        "vi": "gb = GradientBoostingClassifier(random_state=0).fit(Xtr, ytr)",
+        "en": "gb = GradientBoostingClassifier(random_state=0).fit(Xtr, ytr)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_breast_cancer\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.ensemble import GradientBoostingClassifier\n\nX, y = load_breast_cancer(return_X_y=True)\nXtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.25, random_state=0, stratify=y)\n# tạo gb, gb_acc và importances\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_breast_cancer\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.ensemble import GradientBoostingClassifier\n\nX, y = load_breast_cancer(return_X_y=True)\nXtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.25, random_state=0, stratify=y)\ngb = GradientBoostingClassifier(random_state=0).fit(Xtr, ytr)\ngb_acc = gb.score(Xte, yte)\nimportances = gb.feature_importances_\nprint(round(gb_acc, 3), importances.sum())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "gb_acc trên 0.93",
+            "en": "gb_acc above 0.93"
+          },
+          "test": "float(gb_acc) > 0.93"
+        },
+        {
+          "label": {
+            "vi": "Độ quan trọng cộng lại bằng 1",
+            "en": "Importances sum to 1"
+          },
+          "test": "abs(float(importances.sum()) - 1.0) < 1e-6"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

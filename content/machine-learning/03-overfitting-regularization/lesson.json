@@ -1,0 +1,97 @@
+{
+  "title": {
+    "vi": "Quá khớp, đa thức và regularization",
+    "en": "Overfitting, polynomials and regularization"
+  },
+  "summary": {
+    "vi": "bias-variance, PolynomialFeatures, Ridge, Lasso",
+    "en": "bias-variance, PolynomialFeatures, Ridge, Lasso"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\nfrom sklearn.preprocessing import PolynomialFeatures, StandardScaler\nfrom sklearn.linear_model import LinearRegression, Ridge\nfrom sklearn.pipeline import make_pipeline\nfrom sklearn.metrics import mean_squared_error\n\nrng = np.random.default_rng(0)\nx = np.sort(rng.uniform(-3, 3, 40))\ny = np.sin(x) + rng.normal(0, 0.3, 40)\nidx = rng.permutation(40)\ntr, te = idx[:20], idx[20:]                 # 20 mẫu học, 20 mẫu kiểm tra\nXtr, Xte, ytr, yte = x[tr].reshape(-1, 1), x[te].reshape(-1, 1), y[tr], y[te]\n\ndef fit_poly(degree, model=None):\n    reg = model or LinearRegression()\n    pipe = make_pipeline(PolynomialFeatures(degree), StandardScaler(), reg)\n    pipe.fit(Xtr, ytr)\n    return (mean_squared_error(ytr, pipe.predict(Xtr)),\n            mean_squared_error(yte, pipe.predict(Xte)))\n\nfor d in [1, 3, 15]:\n    tr_mse, te_mse = fit_poly(d)\n    print(d, round(tr_mse, 3), round(te_mse, 3))     # bậc cao: train thấp, test CAO\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết hàm fit_poly(degree) trả về (train_mse, test_mse) của pipeline PolynomialFeatures → StandardScaler → LinearRegression. Gán train_mse_15, test_mse_15 (bậc 15) và test_mse_3 (bậc 3).",
+        "en": "Write fit_poly(degree) returning (train_mse, test_mse) of the pipeline PolynomialFeatures → StandardScaler → LinearRegression. Assign train_mse_15 and test_mse_15 (degree 15) and test_mse_3 (degree 3)."
+      },
+      "hint": {
+        "vi": "make_pipeline(PolynomialFeatures(degree), StandardScaler(), LinearRegression()).fit(Xtr, ytr)",
+        "en": "make_pipeline(PolynomialFeatures(degree), StandardScaler(), LinearRegression()).fit(Xtr, ytr)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nfrom sklearn.preprocessing import PolynomialFeatures, StandardScaler\nfrom sklearn.linear_model import LinearRegression, Ridge\nfrom sklearn.pipeline import make_pipeline\nfrom sklearn.metrics import mean_squared_error\n\nrng = np.random.default_rng(0)\nx = np.sort(rng.uniform(-3, 3, 40))\ny = np.sin(x) + rng.normal(0, 0.3, 40)\nidx = rng.permutation(40)\ntr, te = idx[:20], idx[20:]                 # 20 mẫu học, 20 mẫu kiểm tra\nXtr, Xte, ytr, yte = x[tr].reshape(-1, 1), x[te].reshape(-1, 1), y[tr], y[te]\n\ndef fit_poly(degree):\n    # trả về (train_mse, test_mse)\n    pass\n\n# gán train_mse_15, test_mse_15 và test_mse_3\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nfrom sklearn.preprocessing import PolynomialFeatures, StandardScaler\nfrom sklearn.linear_model import LinearRegression, Ridge\nfrom sklearn.pipeline import make_pipeline\nfrom sklearn.metrics import mean_squared_error\n\nrng = np.random.default_rng(0)\nx = np.sort(rng.uniform(-3, 3, 40))\ny = np.sin(x) + rng.normal(0, 0.3, 40)\nidx = rng.permutation(40)\ntr, te = idx[:20], idx[20:]                 # 20 mẫu học, 20 mẫu kiểm tra\nXtr, Xte, ytr, yte = x[tr].reshape(-1, 1), x[te].reshape(-1, 1), y[tr], y[te]\n\ndef fit_poly(degree):\n    pipe = make_pipeline(PolynomialFeatures(degree), StandardScaler(), LinearRegression())\n    pipe.fit(Xtr, ytr)\n    return (mean_squared_error(ytr, pipe.predict(Xtr)),\n            mean_squared_error(yte, pipe.predict(Xte)))\n\ntrain_mse_15, test_mse_15 = fit_poly(15)\n_, test_mse_3 = fit_poly(3)\nprint(round(train_mse_15, 3), round(test_mse_15, 3), round(test_mse_3, 3))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Bậc 15 khớp train rất sát (train MSE < 0.05)",
+            "en": "Degree 15 fits train very closely (train MSE < 0.05)"
+          },
+          "test": "float(train_mse_15) < 0.05"
+        },
+        {
+          "label": {
+            "vi": "Nhưng test MSE bậc 15 tệ hơn bậc 3 (quá khớp)",
+            "en": "But degree-15 test MSE is worse than degree 3 (overfitting)"
+          },
+          "test": "float(test_mse_15) > float(test_mse_3)"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Dùng cùng pipeline bậc 15 nhưng thay LinearRegression bằng Ridge(alpha=10). Gán mse_plain (LinearRegression bậc 15, test MSE) và mse_ridge (Ridge). Regularization phải làm test MSE nhỏ hơn.",
+        "en": "Use the same degree-15 pipeline but replace LinearRegression with Ridge(alpha=10). Assign mse_plain (degree-15 LinearRegression test MSE) and mse_ridge (Ridge). Regularization must lower the test MSE."
+      },
+      "hint": {
+        "vi": "make_pipeline(PolynomialFeatures(15), StandardScaler(), Ridge(alpha=10))",
+        "en": "make_pipeline(PolynomialFeatures(15), StandardScaler(), Ridge(alpha=10))"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nfrom sklearn.preprocessing import PolynomialFeatures, StandardScaler\nfrom sklearn.linear_model import LinearRegression, Ridge\nfrom sklearn.pipeline import make_pipeline\nfrom sklearn.metrics import mean_squared_error\n\nrng = np.random.default_rng(0)\nx = np.sort(rng.uniform(-3, 3, 40))\ny = np.sin(x) + rng.normal(0, 0.3, 40)\nidx = rng.permutation(40)\ntr, te = idx[:20], idx[20:]                 # 20 mẫu học, 20 mẫu kiểm tra\nXtr, Xte, ytr, yte = x[tr].reshape(-1, 1), x[te].reshape(-1, 1), y[tr], y[te]\n\n# gán mse_plain và mse_ridge (test MSE, bậc 15)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nfrom sklearn.preprocessing import PolynomialFeatures, StandardScaler\nfrom sklearn.linear_model import LinearRegression, Ridge\nfrom sklearn.pipeline import make_pipeline\nfrom sklearn.metrics import mean_squared_error\n\nrng = np.random.default_rng(0)\nx = np.sort(rng.uniform(-3, 3, 40))\ny = np.sin(x) + rng.normal(0, 0.3, 40)\nidx = rng.permutation(40)\ntr, te = idx[:20], idx[20:]                 # 20 mẫu học, 20 mẫu kiểm tra\nXtr, Xte, ytr, yte = x[tr].reshape(-1, 1), x[te].reshape(-1, 1), y[tr], y[te]\n\ndef test_mse(reg):\n    pipe = make_pipeline(PolynomialFeatures(15), StandardScaler(), reg).fit(Xtr, ytr)\n    return mean_squared_error(yte, pipe.predict(Xte))\n\nmse_plain = test_mse(LinearRegression())\nmse_ridge = test_mse(Ridge(alpha=10))\nprint(round(mse_plain, 3), round(mse_ridge, 3))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Ridge cho test MSE nhỏ hơn",
+            "en": "Ridge gives a lower test MSE"
+          },
+          "test": "float(mse_ridge) < float(mse_plain)"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

@@ -1,0 +1,107 @@
+{
+  "title": {
+    "vi": "Hồi quy tuyến tính",
+    "en": "Linear regression"
+  },
+  "summary": {
+    "vi": "OLS, phương trình chuẩn, hệ số, R², hồi quy nhiều biến",
+    "en": "OLS, the normal equation, coefficients, R², multiple regression"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\nimport pandas as pd\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.metrics import r2_score, mean_squared_error\n\ndf = pd.read_csv(\"housing.csv\")           # area_m2, rooms, age_years, distance_km, price\nX = df[[\"area_m2\"]]\ny = df[\"price\"]\n\nmodel = LinearRegression().fit(X, y)\nprint(model.coef_, model.intercept_)       # độ dốc và hệ số chặn\nprint(\"R2:\", round(model.score(X, y), 3))\n\n# Nhiều đặc trưng\nX4 = df[[\"area_m2\", \"rooms\", \"age_years\", \"distance_km\"]]\nm4 = LinearRegression().fit(X4, y)\nprint(dict(zip(X4.columns, m4.coef_.round(1))))\nprint(\"R2:\", round(r2_score(y, m4.predict(X4)), 3))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Huấn luyện hồi quy tuyến tính dự đoán price từ MỘT đặc trưng area_m2 trên housing.csv. Gán mô hình vào biến model.",
+        "en": "Train a linear regression predicting price from ONE feature, area_m2, on housing.csv. Assign the model to the variable model."
+      },
+      "hint": {
+        "vi": "LinearRegression().fit(df[[\"area_m2\"]], df[\"price\"])",
+        "en": "LinearRegression().fit(df[[\"area_m2\"]], df[\"price\"])"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nfrom sklearn.linear_model import LinearRegression\n\ndf = pd.read_csv(\"housing.csv\")\n# huấn luyện model từ area_m2\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nfrom sklearn.linear_model import LinearRegression\n\ndf = pd.read_csv(\"housing.csv\")\nmodel = LinearRegression().fit(df[[\"area_m2\"]], df[\"price\"])\nprint(model.coef_, model.intercept_)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "model có đúng 1 hệ số",
+            "en": "model has exactly 1 coefficient"
+          },
+          "test": "len(model.coef_)==1"
+        },
+        {
+          "label": {
+            "vi": "Hệ số khớp lời giải bình phương tối thiểu",
+            "en": "The coefficient matches the least-squares solution"
+          },
+          "test": "abs(float(model.coef_[0]) - float(__import__('numpy').polyfit(__import__('pandas').read_csv('housing.csv').area_m2, __import__('pandas').read_csv('housing.csv').price, 1)[0])) < 1e-6"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Giải bằng PHƯƠNG TRÌNH CHUẨN: tạo Xb (thêm cột 1 cho hệ số chặn vào 4 đặc trưng) rồi theta = solve(XbᵀXb, Xbᵀy). Biến theta phải có 5 phần tử khớp lời giải bình phương tối thiểu.",
+        "en": "Solve with the NORMAL EQUATION: build Xb (add a column of 1s for the intercept to the 4 features) then theta = solve(XbᵀXb, Xbᵀy). The variable theta must have 5 entries matching the least-squares solution."
+      },
+      "hint": {
+        "vi": "theta = np.linalg.solve(Xb.T @ Xb, Xb.T @ y)",
+        "en": "theta = np.linalg.solve(Xb.T @ Xb, Xb.T @ y)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nimport pandas as pd\n\ndf = pd.read_csv(\"housing.csv\")\nX = df[[\"area_m2\", \"rooms\", \"age_years\", \"distance_km\"]].to_numpy()\ny = df[\"price\"].to_numpy()\n# tạo Xb (có cột 1) và theta\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nimport pandas as pd\n\ndf = pd.read_csv(\"housing.csv\")\nX = df[[\"area_m2\", \"rooms\", \"age_years\", \"distance_km\"]].to_numpy()\ny = df[\"price\"].to_numpy()\nXb = np.column_stack([np.ones(len(X)), X])\ntheta = np.linalg.solve(Xb.T @ Xb, Xb.T @ y)\nprint(theta.round(2))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "theta có 5 phần tử",
+            "en": "theta has 5 entries"
+          },
+          "test": "len(theta)==5"
+        },
+        {
+          "label": {
+            "vi": "theta khớp lstsq",
+            "en": "theta matches lstsq"
+          },
+          "test": "__import__('numpy').allclose(theta, __import__('numpy').linalg.lstsq(Xb, y, rcond=None)[0], rtol=1e-6, atol=1e-6)"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "data": [
+    "housing.csv"
+  ]
+}

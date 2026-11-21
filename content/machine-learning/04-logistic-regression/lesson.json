@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Hồi quy logistic",
+    "en": "Logistic regression"
+  },
+  "summary": {
+    "vi": "sigmoid, xác suất, log loss, ngưỡng quyết định, chuẩn hoá",
+    "en": "sigmoid, probabilities, log loss, decision threshold, scaling"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\nfrom sklearn.datasets import load_breast_cancer\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LogisticRegression\n\nX, y = load_breast_cancer(return_X_y=True)        # u lành tính (1) hay ác tính (0)\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y, test_size=0.25, random_state=0, stratify=y)\n\nscaler = StandardScaler().fit(X_train)             # chỉ học thang đo từ TRAIN\nXs_train, Xs_test = scaler.transform(X_train), scaler.transform(X_test)\n\nclf = LogisticRegression(max_iter=1000).fit(Xs_train, y_train)\nprint(\"accuracy:\", round(clf.score(Xs_test, y_test), 3))\n\nproba = clf.predict_proba(Xs_test)[:, 1]            # xác suất lớp 1\nprint(proba[:3].round(3), clf.predict(Xs_test)[:3])\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tự tính xác suất từ hệ số: proba_manual = sigmoid(Xs_test @ w + b) với w = clf.coef_[0], b = clf.intercept_[0]. Kết quả phải trùng clf.predict_proba(Xs_test)[:, 1].",
+        "en": "Compute the probabilities by hand from the coefficients: proba_manual = sigmoid(Xs_test @ w + b) with w = clf.coef_[0], b = clf.intercept_[0]. The result must match clf.predict_proba(Xs_test)[:, 1]."
+      },
+      "hint": {
+        "vi": "proba_manual = 1 / (1 + np.exp(-(Xs_test @ w + b)))",
+        "en": "proba_manual = 1 / (1 + np.exp(-(Xs_test @ w + b)))"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nfrom sklearn.datasets import load_breast_cancer\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LogisticRegression\n\nX, y = load_breast_cancer(return_X_y=True)\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=0, stratify=y)\nscaler = StandardScaler().fit(X_train)\nXs_train, Xs_test = scaler.transform(X_train), scaler.transform(X_test)\nclf = LogisticRegression(max_iter=1000).fit(Xs_train, y_train)\n\ndef sigmoid(z):\n    return 1 / (1 + np.exp(-z))\n\n# tính proba_manual từ clf.coef_ và clf.intercept_\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nfrom sklearn.datasets import load_breast_cancer\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LogisticRegression\n\nX, y = load_breast_cancer(return_X_y=True)\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=0, stratify=y)\nscaler = StandardScaler().fit(X_train)\nXs_train, Xs_test = scaler.transform(X_train), scaler.transform(X_test)\nclf = LogisticRegression(max_iter=1000).fit(Xs_train, y_train)\n\ndef sigmoid(z):\n    return 1 / (1 + np.exp(-z))\n\nw, b = clf.coef_[0], clf.intercept_[0]\nproba_manual = sigmoid(Xs_test @ w + b)\nprint(np.allclose(proba_manual, clf.predict_proba(Xs_test)[:, 1]))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "proba_manual trùng predict_proba",
+            "en": "proba_manual matches predict_proba"
+          },
+          "test": "__import__('numpy').allclose(proba_manual, clf.predict_proba(Xs_test)[:, 1], atol=1e-8)"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Xây pipeline make_pipeline(StandardScaler(), LogisticRegression(max_iter=1000)) huấn luyện trên X_train, đánh giá trên X_test vào biến acc. Phải đạt trên 0.95.",
+        "en": "Build a pipeline make_pipeline(StandardScaler(), LogisticRegression(max_iter=1000)) trained on X_train and evaluated on X_test into a variable acc. It must exceed 0.95."
+      },
+      "hint": {
+        "vi": "pipe = make_pipeline(StandardScaler(), LogisticRegression(max_iter=1000)).fit(X_train, y_train)",
+        "en": "pipe = make_pipeline(StandardScaler(), LogisticRegression(max_iter=1000)).fit(X_train, y_train)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_breast_cancer\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.pipeline import make_pipeline\n\nX, y = load_breast_cancer(return_X_y=True)\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=0, stratify=y)\n# tạo pipeline, huấn luyện, gán acc\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_breast_cancer\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.pipeline import make_pipeline\n\nX, y = load_breast_cancer(return_X_y=True)\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=0, stratify=y)\npipe = make_pipeline(StandardScaler(), LogisticRegression(max_iter=1000))\npipe.fit(X_train, y_train)\nacc = pipe.score(X_test, y_test)\nprint(round(acc, 3))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "acc trên 0.95",
+            "en": "acc above 0.95"
+          },
+          "test": "float(acc) > 0.95"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

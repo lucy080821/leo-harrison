@@ -1,0 +1,97 @@
+{
+  "title": {
+    "vi": "Cây quyết định",
+    "en": "Decision trees"
+  },
+  "summary": {
+    "vi": "Gini, entropy, information gain, độ sâu, độ quan trọng đặc trưng",
+    "en": "Gini, entropy, information gain, depth, feature importance"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\nfrom sklearn.datasets import load_iris\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.tree import DecisionTreeClassifier, export_text\n\ndef gini(labels):\n    # độ \"lẫn tạp\": 1 - tổng bình phương tỉ lệ các lớp\n    _, counts = np.unique(labels, return_counts=True)\n    p = counts / counts.sum()\n    return 1 - np.sum(p ** 2)\n\nprint(gini([0, 0, 1, 1]), gini([1, 1, 1, 1]))\n\nX, y = load_iris(return_X_y=True)\nXtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.2, random_state=42)\ntree = DecisionTreeClassifier(max_depth=3, random_state=0).fit(Xtr, ytr)\nprint(tree.score(Xte, yte))\nprint(export_text(tree, feature_names=[\"sl\", \"sw\", \"pl\", \"pw\"]))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết gini(labels) = 1 − Σ pᵢ² với pᵢ là tỉ lệ từng lớp. In gini([0, 0, 1, 1]) rồi gini([1, 1, 1, 1]).",
+        "en": "Write gini(labels) = 1 − Σ pᵢ² where pᵢ is each class's proportion. Print gini([0, 0, 1, 1]) then gini([1, 1, 1, 1])."
+      },
+      "hint": {
+        "vi": "_, counts = np.unique(labels, return_counts=True); p = counts / counts.sum(); return 1 - np.sum(p ** 2)",
+        "en": "_, counts = np.unique(labels, return_counts=True); p = counts / counts.sum(); return 1 - np.sum(p ** 2)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\ndef gini(labels):\n    # viết ở đây\n    pass\n\nprint(float(gini([0, 0, 1, 1])))\nprint(float(gini([1, 1, 1, 1])))\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\ndef gini(labels):\n    _, counts = np.unique(labels, return_counts=True)\n    p = counts / counts.sum()\n    return 1 - np.sum(p ** 2)\n\nprint(float(gini([0, 0, 1, 1])))\nprint(float(gini([1, 1, 1, 1])))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 0.5 rồi 0.0",
+            "en": "Prints 0.5 then 0.0"
+          },
+          "test": "_out == '0.5\\n0.0'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Huấn luyện DecisionTreeClassifier(max_depth=3, random_state=0) trên iris (train/test 80/20, random_state=42). Gán tree và acc (độ chính xác test, phải trên 0.9). Độ sâu cây phải ≤ 3.",
+        "en": "Train DecisionTreeClassifier(max_depth=3, random_state=0) on iris (80/20 split, random_state=42). Assign tree and acc (test accuracy, above 0.9). The tree depth must be ≤ 3."
+      },
+      "hint": {
+        "vi": "tree = DecisionTreeClassifier(max_depth=3, random_state=0).fit(Xtr, ytr)",
+        "en": "tree = DecisionTreeClassifier(max_depth=3, random_state=0).fit(Xtr, ytr)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_iris\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.tree import DecisionTreeClassifier\n\nX, y = load_iris(return_X_y=True)\nXtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.2, random_state=42)\n# tạo tree và acc\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_iris\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.tree import DecisionTreeClassifier\n\nX, y = load_iris(return_X_y=True)\nXtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.2, random_state=42)\ntree = DecisionTreeClassifier(max_depth=3, random_state=0).fit(Xtr, ytr)\nacc = tree.score(Xte, yte)\nprint(acc, tree.get_depth())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Độ sâu cây ≤ 3",
+            "en": "Tree depth ≤ 3"
+          },
+          "test": "tree.get_depth() <= 3"
+        },
+        {
+          "label": {
+            "vi": "acc trên 0.9",
+            "en": "acc above 0.9"
+          },
+          "test": "float(acc) > 0.9"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

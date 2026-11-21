@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Support Vector Machine",
+    "en": "Support vector machines"
+  },
+  "summary": {
+    "vi": "lề cực đại, hỗ trợ vector, kernel RBF, C và gamma",
+    "en": "maximum margin, support vectors, the RBF kernel, C and gamma"
+  },
+  "minutes": 22,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "from sklearn.datasets import make_moons\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.svm import SVC\n\nX, y = make_moons(n_samples=300, noise=0.25, random_state=0)   # hai nửa vầng trăng\nXtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.3, random_state=0)\n\nlinear = SVC(kernel=\"linear\").fit(Xtr, ytr)\nrbf = SVC(kernel=\"rbf\", C=1, gamma=\"scale\").fit(Xtr, ytr)\nprint(\"linear:\", round(linear.score(Xte, yte), 3))\nprint(\"rbf   :\", round(rbf.score(Xte, yte), 3))\nprint(\"số support vector:\", rbf.n_support_)\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Huấn luyện SVC(kernel='rbf') trên tập train của make_moons (noise=0.25, random_state=0; chia 70/30 random_state=0). Gán acc_rbf (phải trên 0.9).",
+        "en": "Train SVC(kernel='rbf') on the train set of make_moons (noise=0.25, random_state=0; a 70/30 split with random_state=0). Assign acc_rbf (above 0.9)."
+      },
+      "hint": {
+        "vi": "SVC(kernel=\"rbf\").fit(Xtr, ytr).score(Xte, yte)",
+        "en": "SVC(kernel=\"rbf\").fit(Xtr, ytr).score(Xte, yte)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import make_moons\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.svm import SVC\n\nX, y = make_moons(n_samples=300, noise=0.25, random_state=0)\nXtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.3, random_state=0)\n# gán acc_rbf\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import make_moons\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.svm import SVC\n\nX, y = make_moons(n_samples=300, noise=0.25, random_state=0)\nXtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.3, random_state=0)\nacc_rbf = SVC(kernel=\"rbf\").fit(Xtr, ytr).score(Xte, yte)\nprint(round(acc_rbf, 3))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "acc_rbf trên 0.9",
+            "en": "acc_rbf above 0.9"
+          },
+          "test": "float(acc_rbf) > 0.9"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "So sánh kernel tuyến tính: gán acc_linear (SVC(kernel='linear')) và acc_rbf. Dữ liệu 'vầng trăng' không tách tuyến tính được nên RBF phải tốt hơn.",
+        "en": "Compare with the linear kernel: assign acc_linear (SVC(kernel='linear')) and acc_rbf. The 'moons' data isn't linearly separable so RBF must do better."
+      },
+      "hint": {
+        "vi": "SVC(kernel=\"linear\") so với SVC(kernel=\"rbf\")",
+        "en": "SVC(kernel=\"linear\") versus SVC(kernel=\"rbf\")"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import make_moons\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.svm import SVC\n\nX, y = make_moons(n_samples=300, noise=0.25, random_state=0)\nXtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.3, random_state=0)\n# gán acc_linear và acc_rbf\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import make_moons\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.svm import SVC\n\nX, y = make_moons(n_samples=300, noise=0.25, random_state=0)\nXtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.3, random_state=0)\nacc_linear = SVC(kernel=\"linear\").fit(Xtr, ytr).score(Xte, yte)\nacc_rbf = SVC(kernel=\"rbf\").fit(Xtr, ytr).score(Xte, yte)\nprint(round(acc_linear, 3), round(acc_rbf, 3))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "RBF cao hơn linear",
+            "en": "RBF beats linear"
+          },
+          "test": "float(acc_rbf) > float(acc_linear)"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}
