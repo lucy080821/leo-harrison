@@ -1,0 +1,93 @@
+{
+  "title": {
+    "vi": "Biến đổi cột: ngày tháng, apply, cut",
+    "en": "Transforming columns: dates, apply, cut"
+  },
+  "summary": {
+    "vi": "to_datetime, dt, apply/map, pd.cut, np.select",
+    "en": "to_datetime, dt, apply/map, pd.cut, np.select"
+  },
+  "minutes": 20,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import pandas as pd\nimport numpy as np\n\ndf = pd.read_csv(\"sales.csv\")\ndf[\"revenue\"] = df[\"units\"] * df[\"unit_price\"]\n\ndf[\"date\"] = pd.to_datetime(df[\"date\"])\ndf[\"month\"] = df[\"date\"].dt.month                 # tháng 1..6\ndf[\"weekday\"] = df[\"date\"].dt.day_name()\nprint(df[\"month\"].value_counts().sort_index().to_dict())\n\ndf[\"size\"] = pd.cut(df[\"revenue\"], bins=[0, 200, 1000, np.inf],\n                    labels=[\"small\", \"medium\", \"large\"])\nprint(df[\"size\"].value_counts().to_dict())\n\ndf[\"region_code\"] = df[\"region\"].map({\"North\": \"N\", \"South\": \"S\", \"East\": \"E\", \"West\": \"W\"})\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Chuyển cột date sang kiểu ngày giờ, tạo cột month (số tháng) và in số đơn mỗi tháng dưới dạng từ điển (value_counts().sort_index().to_dict()).",
+        "en": "Convert the date column to datetime, create a month column (month number) and print the orders per month as a dictionary (value_counts().sort_index().to_dict())."
+      },
+      "hint": {
+        "vi": "df[\"month\"] = pd.to_datetime(df[\"date\"]).dt.month",
+        "en": "df[\"month\"] = pd.to_datetime(df[\"date\"]).dt.month"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\ndf = pd.read_csv(\"sales.csv\")\n# tạo cột month rồi in số đơn mỗi tháng\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\ndf = pd.read_csv(\"sales.csv\")\ndf[\"date\"] = pd.to_datetime(df[\"date\"])\ndf[\"month\"] = df[\"date\"].dt.month\nprint(df[\"month\"].value_counts().sort_index().to_dict())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In đúng số đơn mỗi tháng",
+            "en": "Prints the right orders per month"
+          },
+          "test": "_out == str((lambda d: d.assign(m=__import__('pandas').to_datetime(d.date).dt.month).m.value_counts().sort_index().to_dict())(__import__('pandas').read_csv('sales.csv')))"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Thêm cột revenue = units * unit_price, rồi cột size theo doanh thu: dưới 200 là \"small\", từ 200 đến dưới 1000 là \"medium\", từ 1000 trở lên là \"large\" (dùng pd.cut hoặc np.select).",
+        "en": "Add a revenue = units * unit_price column, then a size column by revenue: under 200 is \"small\", 200 up to under 1000 is \"medium\", 1000 and above is \"large\" (use pd.cut or np.select)."
+      },
+      "hint": {
+        "vi": "pd.cut(df[\"revenue\"], bins=[0, 200, 1000, np.inf], labels=[...], right=False)",
+        "en": "pd.cut(df[\"revenue\"], bins=[0, 200, 1000, np.inf], labels=[...], right=False)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nimport numpy as np\n\ndf = pd.read_csv(\"sales.csv\")\n# thêm cột revenue và size (small/medium/large)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nimport numpy as np\n\ndf = pd.read_csv(\"sales.csv\")\ndf[\"revenue\"] = df[\"units\"] * df[\"unit_price\"]\ndf[\"size\"] = np.select(\n    [df[\"revenue\"] < 200, df[\"revenue\"] < 1000],\n    [\"small\", \"medium\"],\n    default=\"large\",\n)\nprint(df[\"size\"].value_counts().to_dict())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Cột size đúng số lượng từng loại",
+            "en": "The size column has the right counts"
+          },
+          "test": "df['size'].astype(str).value_counts().to_dict()==(lambda d: __import__('pandas').Series(__import__('numpy').select([(d.units*d.unit_price)<200,(d.units*d.unit_price)<1000],['small','medium'],default='large')).value_counts().to_dict())(__import__('pandas').read_csv('sales.csv'))"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "data": [
+    "sales.csv"
+  ]
+}

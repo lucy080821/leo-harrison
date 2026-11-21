@@ -32,15 +32,32 @@ Build production (để deploy VPS): `npm run build && npm start`.
 
 - [x] Giai đoạn 1: khung app, dark mode, EN/VI, bài tập, tiến độ (lưu trên trình duyệt)
 - [x] Giai đoạn 2: HTML (13 bài), CSS (16 bài), JavaScript (22 bài) — song ngữ, 102 bài tập tự chấm
-- [ ] Giai đoạn 3: Python cơ bản, Python Data Analyst (Pyodide), SQL (SQLite WASM)
+- [x] Giai đoạn 3: Python cơ bản (16 bài), Python Data Analyst (14 bài), SQL (15 bài) — chạy bằng Pyodide và SQLite WASM
 - [ ] Giai đoạn 4: Toán cho ML, Machine Learning, Deep Learning, AI hiện đại
 - [ ] Giai đoạn 5: React, Next.js, React Native, Node.js (WebContainers)
+
+## Engine chạy code
+
+| Engine | Dùng cho | Cách chạy |
+|---|---|---|
+| `web` (mặc định) | HTML, CSS, JavaScript | iframe sandbox (`src/lib/sandbox.ts`) |
+| `python` | Python, NumPy, pandas, matplotlib | Pyodide trong Web Worker (`public/workers/python-worker.js`) |
+| `sql` | SQL | SQLite WASM (sql.js) trong Web Worker (`public/workers/sql-worker.js`) |
+
+- **Python cần Internet** ở lần đầu: Pyodide và các thư viện (numpy, pandas...) được tải từ CDN jsDelivr rồi trình duyệt cache lại. SQLite WASM nằm sẵn trong `public/vendor/sqljs/` nên SQL chạy offline được.
+- Mỗi lần chạy dùng **môi trường sạch** (namespace Python mới / CSDL SQL nạp lại từ đầu).
+- Dữ liệu mẫu: `content/_data/files/*.csv` (Python), `content/_data/sql/*.sql` (SQL). Khai báo trong `lesson.json` bằng `"data": [...]` hoặc `"dataset": "all"`.
+- Với Python, `test` của bài tập là **biểu thức Python** chạy sau khi code của người học chạy xong (có biến `_out` chứa toàn bộ chữ đã in). Với SQL, `test` là **biểu thức JS** có `columns`, `rows`, `tables` và hàm `q(sql)`.
 
 ## Kiểm tra nội dung tự động
 
 ```bash
 node scripts/verify.mjs          # tất cả khoá
 node scripts/verify.mjs css      # một khoá
+
+# Python cần một môi trường có numpy, pandas, matplotlib:
+python3 -m venv .venv && .venv/bin/pip install numpy pandas matplotlib scipy
+PYTHON_VERIFY=.venv/bin/python node scripts/verify.mjs python-data
 ```
 
 Script mở từng bài tập trong Chromium (Playwright) và xác nhận: **đáp án đạt mọi check**, **đề khởi đầu chưa đạt hết**, và mỗi bài có đủ `vi.md`/`en.md`. Hãy chạy nó sau mỗi lần thêm hoặc sửa bài.

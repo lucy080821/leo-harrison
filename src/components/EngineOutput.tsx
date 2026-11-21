@@ -42,7 +42,7 @@ export function EngineOutput({ state, t, engine }: { state: EngineState; t: Dict
 
           {out.images.map((src, i) => (
             // eslint-disable-next-line @next/next/no-img-element
-            <img key={i} src={src} alt={`plot ${i + 1}`} className="my-2 max-w-full rounded border border-line bg-white" />
+            <img key={i} src={src} alt={`plot ${i + 1}`} className="my-2 max-h-[340px] max-w-full rounded border border-line bg-white object-contain" />
           ))}
 
           {out.tables.map((tb, i) => (

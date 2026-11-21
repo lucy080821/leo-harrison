@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "pandas (1): Series và DataFrame",
+    "en": "pandas (1): Series and DataFrame"
+  },
+  "summary": {
+    "vi": "tạo DataFrame, cột, thêm cột tính toán, head, describe",
+    "en": "creating a DataFrame, columns, computed columns, head, describe"
+  },
+  "minutes": 18,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import pandas as pd\n\ndf = pd.DataFrame({\n    \"name\": [\"An\", \"Binh\", \"Chi\"],\n    \"age\": [20, 30, 40],\n    \"city\": [\"Hanoi\", \"Hue\", \"Hanoi\"],\n})\nprint(df)\nprint(df.shape, list(df.columns))\nprint(df[\"age\"].mean())         # truy cập một cột = Series\nprint(df.dtypes)\n\ndf[\"age_next_year\"] = df[\"age\"] + 1     # thêm cột mới từ cột cũ\nprint(df.describe())\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tạo DataFrame df từ từ điển có 3 cột (name, age, city) và 3 dòng với age = 20, 30, 40. In df.shape rồi tuổi trung bình.",
+        "en": "Create a DataFrame df from a dictionary with 3 columns (name, age, city) and 3 rows with age = 20, 30, 40. Print df.shape then the average age."
+      },
+      "hint": {
+        "vi": "pd.DataFrame({\"name\": [...], \"age\": [20, 30, 40], \"city\": [...]})",
+        "en": "pd.DataFrame({\"name\": [...], \"age\": [20, 30, 40], \"city\": [...]})"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\n# tạo df rồi in shape và tuổi trung bình\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\ndf = pd.DataFrame({\n    \"name\": [\"An\", \"Binh\", \"Chi\"],\n    \"age\": [20, 30, 40],\n    \"city\": [\"Hanoi\", \"Hue\", \"Hanoi\"],\n})\nprint(df.shape)\nprint(df[\"age\"].mean())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In (3, 3) rồi 30.0",
+            "en": "Prints (3, 3) then 30.0"
+          },
+          "test": "_out == '(3, 3)\\n30.0'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Thêm cột total = price * qty vào df, rồi in list cột total và tổng của nó.",
+        "en": "Add a column total = price * qty to df, then print the total column as a list and its sum."
+      },
+      "hint": {
+        "vi": "df[\"total\"] = df[\"price\"] * df[\"qty\"]",
+        "en": "df[\"total\"] = df[\"price\"] * df[\"qty\"]"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\ndf = pd.DataFrame({\"price\": [10, 20, 30], \"qty\": [3, 2, 1]})\n# thêm cột total, in list total và tổng\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\ndf = pd.DataFrame({\"price\": [10, 20, 30], \"qty\": [3, 2, 1]})\ndf[\"total\"] = df[\"price\"] * df[\"qty\"]\nprint(df[\"total\"].tolist())\nprint(df[\"total\"].sum())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In [30, 40, 30] rồi 100",
+            "en": "Prints [30, 40, 30] then 100"
+          },
+          "test": "_out == '[30, 40, 30]\\n100'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

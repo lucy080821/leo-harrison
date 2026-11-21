@@ -1,0 +1,114 @@
+{
+  "title": {
+    "vi": "Khám phá dữ liệu bằng biểu đồ (EDA)",
+    "en": "Exploring data with charts (EDA)"
+  },
+  "summary": {
+    "vi": "df.plot, histogram, boxplot, scatter, subplots",
+    "en": "df.plot, histogram, boxplot, scatter, subplots"
+  },
+  "minutes": 22,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import pandas as pd\nimport matplotlib.pyplot as plt\n\ndf = pd.read_csv(\"students.csv\")\n\nfig, axes = plt.subplots(1, 3, figsize=(13, 4))\n\naxes[0].hist(df[\"math\"], bins=8, edgecolor=\"white\")\naxes[0].set_title(\"Phân bố điểm Toán\")\n\naxes[1].scatter(df[\"math\"], df[\"physics\"], alpha=0.7)\naxes[1].set_title(\"Toán và Lý\")\naxes[1].set_xlabel(\"math\"); axes[1].set_ylabel(\"physics\")\n\ndf.boxplot(column=\"math\", by=\"class\", ax=axes[2])\naxes[2].set_title(\"Toán theo lớp\")\n\nplt.suptitle(\"\")\nplt.tight_layout()\nplt.show()\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Vẽ histogram điểm math của học sinh với đúng 8 khoảng (bins=8) và đặt tiêu đề không rỗng.",
+        "en": "Draw a histogram of the students' math scores with exactly 8 bins (bins=8) and set a non-empty title."
+      },
+      "hint": {
+        "vi": "plt.hist(df[\"math\"], bins=8); plt.title(...)",
+        "en": "plt.hist(df[\"math\"], bins=8); plt.title(...)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nimport matplotlib.pyplot as plt\n\ndf = pd.read_csv(\"students.csv\")\n# vẽ histogram cột math với 8 bins và title\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nimport matplotlib.pyplot as plt\n\ndf = pd.read_csv(\"students.csv\")\nplt.hist(df[\"math\"], bins=8, edgecolor=\"white\")\nplt.title(\"Phân bố điểm Toán\")\nplt.xlabel(\"Điểm\")\nplt.ylabel(\"Số học sinh\")\nplt.show()\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Histogram có đúng 8 cột",
+            "en": "The histogram has exactly 8 bars"
+          },
+          "test": "len(__import__('matplotlib.pyplot', fromlist=['gca']).gca().patches)==8"
+        },
+        {
+          "label": {
+            "vi": "Có tiêu đề không rỗng",
+            "en": "A non-empty title"
+          },
+          "test": "__import__('matplotlib.pyplot', fromlist=['gca']).gca().get_title().strip()!=''"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Tạo figure có 2 biểu đồ cạnh nhau (plt.subplots(1, 2)): bên trái là biểu đồ phân tán math (x) và physics (y); bên phải là histogram của literature.",
+        "en": "Create a figure with 2 charts side by side (plt.subplots(1, 2)): the left is a scatter plot of math (x) vs physics (y); the right is a histogram of literature."
+      },
+      "hint": {
+        "vi": "fig, axes = plt.subplots(1, 2); axes[0].scatter(...); axes[1].hist(...)",
+        "en": "fig, axes = plt.subplots(1, 2); axes[0].scatter(...); axes[1].hist(...)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nimport matplotlib.pyplot as plt\n\ndf = pd.read_csv(\"students.csv\")\n# tạo fig, axes = plt.subplots(1, 2) rồi vẽ\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nimport matplotlib.pyplot as plt\n\ndf = pd.read_csv(\"students.csv\")\nfig, axes = plt.subplots(1, 2, figsize=(10, 4))\naxes[0].scatter(df[\"math\"], df[\"physics\"])\naxes[0].set_title(\"Toán và Lý\")\naxes[1].hist(df[\"literature\"], bins=8)\naxes[1].set_title(\"Văn\")\nplt.tight_layout()\nplt.show()\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Figure có đúng 2 trục",
+            "en": "The figure has exactly 2 axes"
+          },
+          "test": "len(__import__('matplotlib.pyplot', fromlist=['gcf']).gcf().axes)==2"
+        },
+        {
+          "label": {
+            "vi": "Biểu đồ trái là scatter (có collections)",
+            "en": "The left chart is a scatter (has collections)"
+          },
+          "test": "len(__import__('matplotlib.pyplot', fromlist=['gcf']).gcf().axes[0].collections)>=1"
+        },
+        {
+          "label": {
+            "vi": "Biểu đồ phải là histogram (có cột)",
+            "en": "The right chart is a histogram (has bars)"
+          },
+          "test": "len(__import__('matplotlib.pyplot', fromlist=['gcf']).gcf().axes[1].patches)>=3"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "data": [
+    "students.csv"
+  ]
+}

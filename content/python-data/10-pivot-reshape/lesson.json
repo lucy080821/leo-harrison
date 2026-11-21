@@ -1,0 +1,107 @@
+{
+  "title": {
+    "vi": "Pivot, melt và crosstab",
+    "en": "Pivot, melt and crosstab"
+  },
+  "summary": {
+    "vi": "pivot_table, melt, crosstab, unstack",
+    "en": "pivot_table, melt, crosstab, unstack"
+  },
+  "minutes": 18,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import pandas as pd\n\ndf = pd.read_csv(\"sales.csv\")\ndf[\"revenue\"] = df[\"units\"] * df[\"unit_price\"]\n\npivot = df.pivot_table(\n    index=\"region\", columns=\"category\", values=\"revenue\",\n    aggfunc=\"sum\", fill_value=0,\n)\nprint(pivot.round(0))\n\n# Bảng tần suất\nprint(pd.crosstab(df[\"region\"], df[\"category\"]))\n\n# melt: từ dạng \"rộng\" sang \"dài\"\nwide = pd.DataFrame({\"name\": [\"An\", \"Binh\"], \"math\": [8, 6], \"physics\": [9, 7]})\nlong = wide.melt(id_vars=\"name\", var_name=\"subject\", value_name=\"score\")\nprint(long)\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tạo bảng pivot tên pivot: dòng là region, cột là category, giá trị là TỔNG revenue (pivot_table, aggfunc=\"sum\", fill_value=0).",
+        "en": "Build a pivot table named pivot: rows are region, columns are category, values are the SUM of revenue (pivot_table, aggfunc=\"sum\", fill_value=0)."
+      },
+      "hint": {
+        "vi": "df.pivot_table(index=\"region\", columns=\"category\", values=\"revenue\", aggfunc=\"sum\", fill_value=0)",
+        "en": "df.pivot_table(index=\"region\", columns=\"category\", values=\"revenue\", aggfunc=\"sum\", fill_value=0)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\ndf = pd.read_csv(\"sales.csv\")\ndf[\"revenue\"] = df[\"units\"] * df[\"unit_price\"]\n# tạo biến pivot\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\ndf = pd.read_csv(\"sales.csv\")\ndf[\"revenue\"] = df[\"units\"] * df[\"unit_price\"]\npivot = df.pivot_table(\n    index=\"region\", columns=\"category\", values=\"revenue\",\n    aggfunc=\"sum\", fill_value=0,\n)\nprint(pivot)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "pivot có 4 vùng × 4 nhóm",
+            "en": "pivot has 4 regions × 4 categories"
+          },
+          "test": "pivot.shape==(4,4)"
+        },
+        {
+          "label": {
+            "vi": "Tổng của bảng bằng tổng doanh thu",
+            "en": "The table's total equals the total revenue"
+          },
+          "test": "abs(float(pivot.to_numpy().sum()) - float((df.units*df.unit_price).sum())) < 1e-6"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Chuyển bảng wide (name, math, physics) sang dạng DÀI tên long với 3 cột name, subject, score bằng melt.",
+        "en": "Convert the wide table (name, math, physics) to LONG format named long with 3 columns name, subject, score using melt."
+      },
+      "hint": {
+        "vi": "wide.melt(id_vars=\"name\", var_name=\"subject\", value_name=\"score\")",
+        "en": "wide.melt(id_vars=\"name\", var_name=\"subject\", value_name=\"score\")"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\nwide = pd.DataFrame({\n    \"name\": [\"An\", \"Binh\", \"Chi\"],\n    \"math\": [8, 6, 10],\n    \"physics\": [9, 7, 9],\n})\n# tạo biến long bằng melt\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\nwide = pd.DataFrame({\n    \"name\": [\"An\", \"Binh\", \"Chi\"],\n    \"math\": [8, 6, 10],\n    \"physics\": [9, 7, 9],\n})\nlong = wide.melt(id_vars=\"name\", var_name=\"subject\", value_name=\"score\")\nprint(long)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "long có 6 dòng và các cột name, subject, score",
+            "en": "long has 6 rows and the columns name, subject, score"
+          },
+          "test": "long.shape==(6,3) and list(long.columns)==['name','subject','score']"
+        },
+        {
+          "label": {
+            "vi": "Điểm toán của Chi là 10",
+            "en": "Chi's math score is 10"
+          },
+          "test": "int(long[(long['name']=='Chi')&(long['subject']=='math')]['score'].iloc[0])==10"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "data": [
+    "sales.csv"
+  ]
+}

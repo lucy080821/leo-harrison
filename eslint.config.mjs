@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Mã bên thứ ba đã đóng gói (sql.js) và worker dạng script cổ điển
+    "public/vendor/**",
+    "public/workers/**",
   ]),
 ]);
 

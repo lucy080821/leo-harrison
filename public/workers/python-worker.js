@@ -59,11 +59,10 @@ async function execute(py, code, data) {
   const ns = py.globals.get("dict")();
   ns.set("__name__", "__main__");
   let error;
-  let images = [];
   try {
     try {
       status("loading-packages");
-      await py.loadPackagesFromImports(code);
+      await py.loadPackagesFromImports(code, { messageCallback: () => {}, errorCallback: () => {} });
     } catch (e) {
       /* gói không tồn tại: để Python báo ImportError */
     }
@@ -72,14 +71,7 @@ async function execute(py, code, data) {
   } catch (e) {
     error = cleanError(e);
   }
-  try {
-    const proxy = await py.runPythonAsync(IMAGES, { globals: py.toPy({}) });
-    images = proxy.toJs();
-    proxy.destroy && proxy.destroy();
-  } catch (e) {
-    /* không có matplotlib */
-  }
-  return { ns, lines, outText, error, images };
+  return { ns, lines, outText, error };
 }
 
 onmessage = async (event) => {
@@ -101,9 +93,18 @@ onmessage = async (event) => {
         }
       }
     }
+    // Chụp biểu đồ matplotlib SAU khi đã chấm bài (để test còn xem được figure/axes).
+    let images = [];
+    try {
+      const proxy = await py.runPythonAsync(IMAGES, { globals: py.toPy({}) });
+      images = proxy.toJs();
+      proxy.destroy && proxy.destroy();
+    } catch (e) {
+      /* không có matplotlib */
+    }
     r.ns.destroy();
     postMessage({
-      id, type: "done", lines: r.lines, images: r.images, error: r.error,
+      id, type: "done", lines: r.lines, images, error: r.error,
       results, ms: Math.round(performance.now() - t0),
     });
   } catch (e) {

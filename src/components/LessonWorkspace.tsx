@@ -63,6 +63,8 @@ export function LessonWorkspace(p: Props) {
   const [es, setEs] = useState<EngineState>({ status: "idle" });
   const [slow, setSlow] = useState(false);
   const runSeq = useRef(0);
+  const checkSeq = useRef(0);
+  const autoTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const files = useMemo(() => filesByMode[mode] ?? [], [filesByMode, mode]);
   const visible = files.map((f, i) => ({ f, i })).filter(({ f }) => !f.hidden);
@@ -106,6 +108,7 @@ export function LessonWorkspace(p: Props) {
   useEffect(() => {
     if (!isEngine) return;
     const id = setTimeout(() => void runEngine(files), 700);
+    autoTimer.current = id;
     return () => clearTimeout(id);
   }, [files, isEngine, runEngine]);
 
@@ -186,13 +189,16 @@ export function LessonWorkspace(p: Props) {
 
   async function runCheckEngine() {
     if (!exercise) return;
-    const seq = ++runSeq.current;
+    // Huỷ lượt tự chạy đang chờ và bỏ qua kết quả tự chạy cũ: lượt chấm bài được ưu tiên.
+    if (autoTimer.current) clearTimeout(autoTimer.current);
+    runSeq.current++;
+    const seq = ++checkSeq.current;
     setEs((st) => ({ ...st, status: "running", note: "running" }));
     const out = await getEngine(engineName).check(
       engineInput(files),
       exercise.checks.map((c) => c.test),
     );
-    if (seq !== runSeq.current) return;
+    if (seq !== checkSeq.current) return;
     setEs({ status: "done", output: out });
     const res = out.results ?? exercise.checks.map(() => false);
     setResults((r) => ({ ...r, [exercise.id]: res }));

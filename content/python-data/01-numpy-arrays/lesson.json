@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "NumPy (1): mảng ndarray",
+    "en": "NumPy (1): ndarray arrays"
+  },
+  "summary": {
+    "vi": "tạo mảng, shape, dtype, chỉ số, cắt lát, reshape",
+    "en": "creating arrays, shape, dtype, indexing, slicing, reshape"
+  },
+  "minutes": 18,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\na = np.array([1, 2, 3, 4, 5])\nprint(a, a.shape, a.dtype)\n\nb = np.arange(1, 13).reshape(3, 4)     # 12 số xếp thành 3 hàng x 4 cột\nprint(b)\nprint(b[1, 2])          # phần tử hàng 1, cột 2\nprint(b[:, 0])          # cột đầu tiên\nprint(b[0:2, 1:3])      # khối con\n\nprint(np.zeros((2, 3)))\nprint(np.linspace(0, 1, 5))   # 5 điểm cách đều từ 0 đến 1\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tạo arr = np.arange(1, 11) và in danh sách (dùng tolist()) chỉ gồm các phần tử CHẴN, bằng chỉ số boolean (mask).",
+        "en": "Create arr = np.arange(1, 11) and print a list (use tolist()) of only the EVEN elements, using a boolean mask."
+      },
+      "hint": {
+        "vi": "arr[arr % 2 == 0].tolist()",
+        "en": "arr[arr % 2 == 0].tolist()"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\narr = np.arange(1, 11)\n# in các phần tử chẵn dưới dạng list\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\narr = np.arange(1, 11)\nprint(arr[arr % 2 == 0].tolist())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In [2, 4, 6, 8, 10]",
+            "en": "Prints [2, 4, 6, 8, 10]"
+          },
+          "test": "_out == '[2, 4, 6, 8, 10]'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Biến np.arange(1, 13) thành ma trận 3 hàng × 4 cột m, in m.shape, rồi in tổng từng CỘT dưới dạng list (m.sum(axis=0))",
+        "en": "Turn np.arange(1, 13) into a 3-row × 4-column matrix m, print m.shape, then print the sum of each COLUMN as a list (m.sum(axis=0))"
+      },
+      "hint": {
+        "vi": "m = np.arange(1, 13).reshape(3, 4); m.sum(axis=0).tolist()",
+        "en": "m = np.arange(1, 13).reshape(3, 4); m.sum(axis=0).tolist()"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\n# tạo m, in shape rồi tổng từng cột\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nm = np.arange(1, 13).reshape(3, 4)\nprint(m.shape)\nprint(m.sum(axis=0).tolist())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In (3, 4) rồi [15, 18, 21, 24]",
+            "en": "Prints (3, 4) then [15, 18, 21, 24]"
+          },
+          "test": "_out == '(3, 4)\\n[15, 18, 21, 24]'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

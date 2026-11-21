@@ -1,0 +1,100 @@
+{
+  "title": {
+    "vi": "Thống kê mô tả và tương quan",
+    "en": "Descriptive statistics and correlation"
+  },
+  "summary": {
+    "vi": "trung bình, trung vị, độ lệch chuẩn, phân vị, IQR, ngoại lệ, corr",
+    "en": "mean, median, standard deviation, quantiles, IQR, outliers, corr"
+  },
+  "minutes": 22,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import pandas as pd\n\ndf = pd.read_csv(\"students.csv\")\n\nprint(df[\"math\"].mean().round(2), df[\"math\"].median(), df[\"math\"].std().round(2))\nprint(df[[\"math\", \"physics\", \"literature\"]].describe().round(2))\n\n# Tương quan Pearson giữa hai cột\nprint(round(df[\"math\"].corr(df[\"physics\"]), 3))\nprint(df[[\"math\", \"physics\", \"literature\"]].corr().round(2))\n\n# Phát hiện ngoại lệ bằng quy tắc IQR\nq1, q3 = df[\"math\"].quantile([0.25, 0.75])\niqr = q3 - q1\noutliers = df[(df[\"math\"] < q1 - 1.5 * iqr) | (df[\"math\"] > q3 + 1.5 * iqr)]\nprint(outliers[\"name\"].tolist())\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "In điểm math TRUNG BÌNH làm tròn 2 chữ số, rồi hệ số TƯƠNG QUAN giữa math và physics làm tròn 3 chữ số.",
+        "en": "Print the AVERAGE math score rounded to 2 decimals, then the CORRELATION coefficient between math and physics rounded to 3 decimals."
+      },
+      "hint": {
+        "vi": "round(df[\"math\"].mean(), 2) và round(df[\"math\"].corr(df[\"physics\"]), 3)",
+        "en": "round(df[\"math\"].mean(), 2) and round(df[\"math\"].corr(df[\"physics\"]), 3)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\ndf = pd.read_csv(\"students.csv\")\n# in math trung bình (2 số lẻ) rồi corr math-physics (3 số lẻ)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\ndf = pd.read_csv(\"students.csv\")\nprint(round(df[\"math\"].mean(), 2))\nprint(round(df[\"math\"].corr(df[\"physics\"]), 3))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In đúng hai giá trị",
+            "en": "Prints the two right values"
+          },
+          "test": "_out == str(round((lambda d: d.math.mean())(__import__('pandas').read_csv('students.csv')), 2)) + '\\n' + str(round((lambda d: d.math.corr(d.physics))(__import__('pandas').read_csv('students.csv')), 3))"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Tìm NGOẠI LỆ về điểm math bằng quy tắc IQR (ngoài [Q1 − 1.5·IQR, Q3 + 1.5·IQR]) và in danh sách TÊN học sinh đó.",
+        "en": "Find the math-score OUTLIERS using the IQR rule (outside [Q1 − 1.5·IQR, Q3 + 1.5·IQR]) and print the list of those students' NAMES."
+      },
+      "hint": {
+        "vi": "q1, q3 = df[\"math\"].quantile([0.25, 0.75]); iqr = q3 - q1",
+        "en": "q1, q3 = df[\"math\"].quantile([0.25, 0.75]); iqr = q3 - q1"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\ndf = pd.read_csv(\"students.csv\")\n# tìm ngoại lệ của math theo IQR và in danh sách tên\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\ndf = pd.read_csv(\"students.csv\")\nq1, q3 = df[\"math\"].quantile([0.25, 0.75])\niqr = q3 - q1\noutliers = df[(df[\"math\"] < q1 - 1.5 * iqr) | (df[\"math\"] > q3 + 1.5 * iqr)]\nprint(outliers[\"name\"].tolist())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In đúng danh sách tên ngoại lệ",
+            "en": "Prints the right list of outlier names"
+          },
+          "test": "_out == str((lambda d: (lambda q1,q3: d[(d.math<q1-1.5*(q3-q1))|(d.math>q3+1.5*(q3-q1))].name.tolist())(d.math.quantile(0.25), d.math.quantile(0.75)))(__import__('pandas').read_csv('students.csv')))"
+        },
+        {
+          "label": {
+            "vi": "Có ít nhất một ngoại lệ",
+            "en": "There is at least one outlier"
+          },
+          "test": "len(eval(_out))>=1"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "data": [
+    "students.csv"
+  ]
+}

@@ -1,0 +1,111 @@
+{
+  "title": {
+    "vi": "Vẽ biểu đồ với matplotlib",
+    "en": "Plotting with matplotlib"
+  },
+  "summary": {
+    "vi": "plot, bar, hist, scatter, tiêu đề, nhãn trục, chú giải",
+    "en": "plot, bar, hist, scatter, titles, axis labels, legends"
+  },
+  "minutes": 22,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import matplotlib.pyplot as plt\n\nmonths = [\"Jan\", \"Feb\", \"Mar\", \"Apr\"]\nrevenue = [120, 150, 90, 200]\n\nplt.plot(months, revenue, marker=\"o\")\nplt.title(\"Doanh thu theo tháng\")\nplt.xlabel(\"Tháng\")\nplt.ylabel(\"Doanh thu (triệu)\")\nplt.grid(True)\nplt.show()\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Vẽ biểu đồ ĐƯỜNG (plt.plot) cho x = [1, 2, 3, 4] và y = [10, 20, 15, 30], có tiêu đề (title), nhãn trục x (xlabel) và nhãn trục y (ylabel) đều không rỗng.",
+        "en": "Draw a LINE chart (plt.plot) for x = [1, 2, 3, 4] and y = [10, 20, 15, 30], with a non-empty title, x-axis label (xlabel) and y-axis label (ylabel)."
+      },
+      "hint": {
+        "vi": "plt.plot(x, y); plt.title(...); plt.xlabel(...); plt.ylabel(...)",
+        "en": "plt.plot(x, y); plt.title(...); plt.xlabel(...); plt.ylabel(...)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import matplotlib.pyplot as plt\n\nx = [1, 2, 3, 4]\ny = [10, 20, 15, 30]\n# vẽ đường, thêm title, xlabel, ylabel\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import matplotlib.pyplot as plt\n\nx = [1, 2, 3, 4]\ny = [10, 20, 15, 30]\nplt.plot(x, y, marker=\"o\")\nplt.title(\"Doanh thu\")\nplt.xlabel(\"Quý\")\nplt.ylabel(\"Triệu đồng\")\nplt.show()\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có đúng một đường",
+            "en": "There is exactly one line"
+          },
+          "test": "len(__import__('matplotlib.pyplot', fromlist=['gca']).gca().lines)==1"
+        },
+        {
+          "label": {
+            "vi": "Có tiêu đề không rỗng",
+            "en": "A non-empty title"
+          },
+          "test": "__import__('matplotlib.pyplot', fromlist=['gca']).gca().get_title().strip()!=''"
+        },
+        {
+          "label": {
+            "vi": "Có nhãn trục x và y",
+            "en": "Both x and y labels"
+          },
+          "test": "__import__('matplotlib.pyplot', fromlist=['gca']).gca().get_xlabel().strip()!='' and __import__('matplotlib.pyplot', fromlist=['gca']).gca().get_ylabel().strip()!=''"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Vẽ biểu đồ CỘT (plt.bar) doanh thu 3 sản phẩm Laptop, Phone, Pen với giá trị 900, 600, 30 và đặt tiêu đề không rỗng.",
+        "en": "Draw a BAR chart (plt.bar) of the revenue of 3 products Laptop, Phone, Pen with values 900, 600, 30 and set a non-empty title."
+      },
+      "hint": {
+        "vi": "plt.bar(names, values); plt.title(...)",
+        "en": "plt.bar(names, values); plt.title(...)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import matplotlib.pyplot as plt\n\nnames = [\"Laptop\", \"Phone\", \"Pen\"]\nvalues = [900, 600, 30]\n# vẽ biểu đồ cột và đặt tiêu đề\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import matplotlib.pyplot as plt\n\nnames = [\"Laptop\", \"Phone\", \"Pen\"]\nvalues = [900, 600, 30]\nplt.bar(names, values, color=\"#0b6fd6\")\nplt.title(\"Doanh thu theo sản phẩm\")\nplt.show()\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Biểu đồ có đúng 3 cột",
+            "en": "The chart has exactly 3 bars"
+          },
+          "test": "len(__import__('matplotlib.pyplot', fromlist=['gca']).gca().patches)==3"
+        },
+        {
+          "label": {
+            "vi": "Có tiêu đề không rỗng",
+            "en": "A non-empty title"
+          },
+          "test": "__import__('matplotlib.pyplot', fromlist=['gca']).gca().get_title().strip()!=''"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

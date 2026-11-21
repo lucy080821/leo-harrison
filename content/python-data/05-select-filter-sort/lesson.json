@@ -1,0 +1,93 @@
+{
+  "title": {
+    "vi": "Chọn, lọc và sắp xếp dữ liệu",
+    "en": "Selecting, filtering and sorting data"
+  },
+  "summary": {
+    "vi": "loc/iloc, lọc theo điều kiện, query, sort_values, nlargest",
+    "en": "loc/iloc, boolean filtering, query, sort_values, nlargest"
+  },
+  "minutes": 20,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import pandas as pd\n\ndf = pd.read_csv(\"sales.csv\")\ndf[\"revenue\"] = df[\"units\"] * df[\"unit_price\"]\n\nprint(df.loc[0, \"product\"])               # theo NHÃN: dòng 0, cột product\nprint(df.iloc[0:3, 0:3])                  # theo VỊ TRÍ\n\nbig = df[df[\"units\"] > 5]                 # lọc theo điều kiện\nprint(len(big))\n\nnorth_big = df[(df[\"region\"] == \"North\") & (df[\"units\"] > 3)]\nprint(len(north_big))\nprint(df.query(\"region == 'North' and units > 3\").shape)\n\nprint(df.sort_values(\"revenue\", ascending=False).head(3))\nprint(df.nlargest(3, \"revenue\")[\"order_id\"].tolist())\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Đếm số đơn hàng của vùng \"North\" có units > 3 (kết hợp hai điều kiện) và in con số đó.",
+        "en": "Count the orders from the \"North\" region with units > 3 (combine two conditions) and print that number."
+      },
+      "hint": {
+        "vi": "len(df[(df[\"region\"] == \"North\") & (df[\"units\"] > 3)])",
+        "en": "len(df[(df[\"region\"] == \"North\") & (df[\"units\"] > 3)])"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\ndf = pd.read_csv(\"sales.csv\")\n# in số đơn của North có units > 3\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\ndf = pd.read_csv(\"sales.csv\")\nprint(len(df[(df[\"region\"] == \"North\") & (df[\"units\"] > 3)]))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In đúng số đơn",
+            "en": "Prints the right count"
+          },
+          "test": "_out == str(len(__import__('pandas').read_csv('sales.csv').query(\"region == 'North' and units > 3\")))"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Tính doanh thu mỗi đơn (units * unit_price) rồi in danh sách order_id của 3 đơn có doanh thu LỚN NHẤT (lớn nhất đứng đầu).",
+        "en": "Compute each order's revenue (units * unit_price) then print the list of order_id of the 3 orders with the HIGHEST revenue (largest first)."
+      },
+      "hint": {
+        "vi": "df.nlargest(3, \"revenue\")[\"order_id\"].tolist()",
+        "en": "df.nlargest(3, \"revenue\")[\"order_id\"].tolist()"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\ndf = pd.read_csv(\"sales.csv\")\ndf[\"revenue\"] = df[\"units\"] * df[\"unit_price\"]\n# in order_id của 3 đơn doanh thu lớn nhất\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\ndf = pd.read_csv(\"sales.csv\")\ndf[\"revenue\"] = df[\"units\"] * df[\"unit_price\"]\nprint(df.nlargest(3, \"revenue\")[\"order_id\"].tolist())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In đúng 3 mã đơn",
+            "en": "Prints the right 3 order ids"
+          },
+          "test": "_out == str((lambda d: d.assign(r=d.units*d.unit_price).nlargest(3,'r').order_id.tolist())(__import__('pandas').read_csv('sales.csv')))"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "data": [
+    "sales.csv"
+  ]
+}

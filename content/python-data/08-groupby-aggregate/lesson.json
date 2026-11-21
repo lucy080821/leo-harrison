@@ -1,0 +1,100 @@
+{
+  "title": {
+    "vi": "Nhóm và tổng hợp với groupby",
+    "en": "Grouping and aggregating with groupby"
+  },
+  "summary": {
+    "vi": "groupby, agg, named aggregation, reset_index, sắp xếp kết quả",
+    "en": "groupby, agg, named aggregation, reset_index, sorting results"
+  },
+  "minutes": 22,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import pandas as pd\n\ndf = pd.read_csv(\"sales.csv\")\ndf[\"revenue\"] = df[\"units\"] * df[\"unit_price\"]\n\nby_region = df.groupby(\"region\")[\"revenue\"].sum()\nprint(by_region.round(1).to_dict())\n\n# Nhiều thống kê cùng lúc, đặt tên cột kết quả\nsummary = df.groupby(\"category\").agg(\n    orders=(\"order_id\", \"count\"),\n    total_units=(\"units\", \"sum\"),\n    avg_price=(\"unit_price\", \"mean\"),\n)\nprint(summary.round(2))\n\n# Nhóm theo nhiều cột, đưa chỉ mục về cột thường\npivot = df.groupby([\"region\", \"category\"], as_index=False)[\"revenue\"].sum()\nprint(pivot.head())\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tính TỔNG doanh thu theo từng vùng (region) và in từ điển đã làm tròn 1 chữ số (groupby + sum + round(1) + to_dict).",
+        "en": "Compute the TOTAL revenue per region and print the dictionary rounded to 1 decimal (groupby + sum + round(1) + to_dict)."
+      },
+      "hint": {
+        "vi": "df.groupby(\"region\")[\"revenue\"].sum().round(1).to_dict()",
+        "en": "df.groupby(\"region\")[\"revenue\"].sum().round(1).to_dict()"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\ndf = pd.read_csv(\"sales.csv\")\ndf[\"revenue\"] = df[\"units\"] * df[\"unit_price\"]\n# in tổng doanh thu theo vùng\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\ndf = pd.read_csv(\"sales.csv\")\ndf[\"revenue\"] = df[\"units\"] * df[\"unit_price\"]\nprint(df.groupby(\"region\")[\"revenue\"].sum().round(1).to_dict())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In đúng tổng doanh thu theo vùng",
+            "en": "Prints the right revenue per region"
+          },
+          "test": "_out == str((lambda d: d.assign(r=d.units*d.unit_price).groupby('region').r.sum().round(1).to_dict())(__import__('pandas').read_csv('sales.csv')))"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Tạo bảng summary theo category với 3 cột: orders (số đơn, count của order_id), total_units (tổng units) và avg_price (trung bình unit_price). Dùng agg có đặt tên.",
+        "en": "Build a summary table by category with 3 columns: orders (order count, count of order_id), total_units (sum of units) and avg_price (mean of unit_price). Use named aggregation."
+      },
+      "hint": {
+        "vi": "df.groupby(\"category\").agg(orders=(\"order_id\", \"count\"), total_units=(\"units\", \"sum\"), avg_price=(\"unit_price\", \"mean\"))",
+        "en": "df.groupby(\"category\").agg(orders=(\"order_id\", \"count\"), total_units=(\"units\", \"sum\"), avg_price=(\"unit_price\", \"mean\"))"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\ndf = pd.read_csv(\"sales.csv\")\ndf[\"revenue\"] = df[\"units\"] * df[\"unit_price\"]\n# tạo biến summary\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\ndf = pd.read_csv(\"sales.csv\")\ndf[\"revenue\"] = df[\"units\"] * df[\"unit_price\"]\nsummary = df.groupby(\"category\").agg(\n    orders=(\"order_id\", \"count\"),\n    total_units=(\"units\", \"sum\"),\n    avg_price=(\"unit_price\", \"mean\"),\n)\nprint(summary)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "summary có đúng 3 cột theo thứ tự",
+            "en": "summary has exactly the 3 columns in order"
+          },
+          "test": "list(summary.columns)==['orders','total_units','avg_price']"
+        },
+        {
+          "label": {
+            "vi": "Có 4 nhóm category, tổng số đơn là 60",
+            "en": "4 category groups, total orders 60"
+          },
+          "test": "len(summary)==4 and int(summary['orders'].sum())==60"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "data": [
+    "sales.csv"
+  ]
+}

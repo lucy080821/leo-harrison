@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "NumPy (2): phép toán, broadcasting và thống kê",
+    "en": "NumPy (2): operations, broadcasting and statistics"
+  },
+  "summary": {
+    "vi": "vector hoá, broadcasting, where, mean/std, sắp xếp",
+    "en": "vectorization, broadcasting, where, mean/std, sorting"
+  },
+  "minutes": 18,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\nx = np.array([2, 4, 4, 4, 5, 5, 7, 9])\nprint(x * 2, x + 10)             # phép toán áp lên TỪNG phần tử\nprint(x.mean(), x.std(), np.median(x))\n\nz = (x - x.mean()) / x.std()     # chuẩn hoá z-score\nprint(z.round(2))\n\nprices = np.array([[10, 20, 30], [40, 50, 60]])\nprint(prices * np.array([1, 2, 3]))      # broadcasting: nhân từng cột với hệ số riêng\nprint(np.where(x > 4, \"cao\", \"thấp\"))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Chuẩn hoá x = [2, 4, 4, 4, 5, 5, 7, 9] bằng z-score (x − trung bình) / độ lệch chuẩn và in kết quả dưới dạng list (tolist()).",
+        "en": "Standardize x = [2, 4, 4, 4, 5, 5, 7, 9] with the z-score (x − mean) / standard deviation and print the result as a list (tolist())."
+      },
+      "hint": {
+        "vi": "z = (x - x.mean()) / x.std(); print(z.tolist())",
+        "en": "z = (x - x.mean()) / x.std(); print(z.tolist())"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nx = np.array([2, 4, 4, 4, 5, 5, 7, 9])\n# tính z-score và in list\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nx = np.array([2, 4, 4, 4, 5, 5, 7, 9])\nz = (x - x.mean()) / x.std()\nprint(z.tolist())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đúng danh sách z-score",
+            "en": "The right z-score list"
+          },
+          "test": "_out == '[-1.5, -0.5, -0.5, -0.5, 0.0, 0.0, 1.0, 2.0]'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Với temps: in SỐ ngày có nhiệt độ > 32 (dùng mask và sum), rồi in list nhãn \"hot\" (> 32) hoặc \"ok\" bằng np.where.",
+        "en": "With temps: print the NUMBER of days with temperature > 32 (use a mask and sum), then print the list of labels \"hot\" (> 32) or \"ok\" using np.where."
+      },
+      "hint": {
+        "vi": "(temps > 32).sum() và np.where(temps > 32, \"hot\", \"ok\").tolist()",
+        "en": "(temps > 32).sum() and np.where(temps > 32, \"hot\", \"ok\").tolist()"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\ntemps = np.array([28, 31, 35, 29, 33, 36, 30])\n# 1) in số ngày > 32\n# 2) in list nhãn hot/ok\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\ntemps = np.array([28, 31, 35, 29, 33, 36, 30])\nprint((temps > 32).sum())\nprint(np.where(temps > 32, \"hot\", \"ok\").tolist())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 3 rồi danh sách nhãn",
+            "en": "Prints 3 then the label list"
+          },
+          "test": "_out == \"3\\n['ok', 'ok', 'hot', 'ok', 'hot', 'hot', 'ok']\""
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

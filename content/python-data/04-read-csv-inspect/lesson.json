@@ -1,0 +1,93 @@
+{
+  "title": {
+    "vi": "Đọc CSV và khám phá dữ liệu",
+    "en": "Reading CSV and exploring data"
+  },
+  "summary": {
+    "vi": "read_csv, info, value_counts, unique, nunique",
+    "en": "read_csv, info, value_counts, unique, nunique"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import pandas as pd\n\ndf = pd.read_csv(\"sales.csv\")\nprint(df.shape)\nprint(df.head())\ndf.info()\n\nprint(df[\"region\"].value_counts())     # đếm theo từng vùng\nprint(df[\"product\"].nunique(), \"sản phẩm khác nhau\")\nprint(df[\"units\"].describe())\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Đọc sales.csv. In df.shape rồi danh sách tên cột (list(df.columns)).",
+        "en": "Read sales.csv. Print df.shape then the list of column names (list(df.columns))."
+      },
+      "hint": {
+        "vi": "df = pd.read_csv(\"sales.csv\")",
+        "en": "df = pd.read_csv(\"sales.csv\")"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\n# đọc sales.csv, in shape rồi tên cột\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\ndf = pd.read_csv(\"sales.csv\")\nprint(df.shape)\nprint(list(df.columns))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In đúng shape và danh sách cột",
+            "en": "Prints the right shape and column list"
+          },
+          "test": "_out == '(60, 7)\\n' + str(list(__import__('pandas').read_csv('sales.csv').columns))"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "In tên vùng (region) có nhiều đơn hàng nhất (value_counts().idxmax()), rồi số sản phẩm khác nhau (nunique).",
+        "en": "Print the region with the most orders (value_counts().idxmax()), then the number of distinct products (nunique)."
+      },
+      "hint": {
+        "vi": "df[\"region\"].value_counts().idxmax() và df[\"product\"].nunique()",
+        "en": "df[\"region\"].value_counts().idxmax() and df[\"product\"].nunique()"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\ndf = pd.read_csv(\"sales.csv\")\n# 1) vùng nhiều đơn nhất\n# 2) số sản phẩm khác nhau\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\ndf = pd.read_csv(\"sales.csv\")\nprint(df[\"region\"].value_counts().idxmax())\nprint(df[\"product\"].nunique())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In South rồi 8",
+            "en": "Prints South then 8"
+          },
+          "test": "_out == 'South\\n8'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "data": [
+    "sales.csv"
+  ]
+}

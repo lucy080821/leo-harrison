@@ -1,0 +1,114 @@
+{
+  "title": {
+    "vi": "Dự án: Báo cáo doanh số",
+    "en": "Project: a sales report"
+  },
+  "summary": {
+    "vi": "kết hợp đọc, làm sạch, tổng hợp và trực quan hoá để kể một câu chuyện dữ liệu",
+    "en": "combine loading, cleaning, aggregating and visualizing to tell a data story"
+  },
+  "minutes": 35,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import pandas as pd\nimport matplotlib.pyplot as plt\n\ndf = pd.read_csv(\"sales.csv\", parse_dates=[\"date\"])\ndf[\"revenue\"] = df[\"units\"] * df[\"unit_price\"]\ndf[\"month\"] = df[\"date\"].dt.to_period(\"M\").astype(str)\n\nmonthly = df.groupby(\"month\")[\"revenue\"].sum()\ntop_products = (df.groupby(\"product\")[\"revenue\"].sum()\n                  .sort_values(ascending=False).head(3))\n\nprint(\"TỔNG DOANH THU:\", round(df[\"revenue\"].sum(), 1))\nprint(monthly.round(1).to_dict())\nprint(top_products.round(1).to_dict())\n\nfig, axes = plt.subplots(1, 2, figsize=(12, 4))\nmonthly.plot(kind=\"bar\", ax=axes[0], title=\"Doanh thu theo tháng\")\ntop_products.plot(kind=\"barh\", ax=axes[1], title=\"Top 3 sản phẩm\")\nplt.tight_layout()\nplt.show()\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tính DOANH THU THEO THÁNG: tạo biến monthly (Series) với chỉ mục là tháng dạng 'YYYY-MM' (6 tháng) và giá trị là tổng revenue. In từ điển monthly đã làm tròn 1 chữ số.",
+        "en": "Compute MONTHLY REVENUE: create a variable monthly (a Series) indexed by month as 'YYYY-MM' (6 months) with the sum of revenue as values. Print monthly as a dictionary rounded to 1 decimal."
+      },
+      "hint": {
+        "vi": "df[\"month\"] = pd.to_datetime(df[\"date\"]).dt.strftime(\"%Y-%m\"); monthly = df.groupby(\"month\")[\"revenue\"].sum()",
+        "en": "df[\"month\"] = pd.to_datetime(df[\"date\"]).dt.strftime(\"%Y-%m\"); monthly = df.groupby(\"month\")[\"revenue\"].sum()"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\ndf = pd.read_csv(\"sales.csv\")\ndf[\"revenue\"] = df[\"units\"] * df[\"unit_price\"]\n# tạo cột month 'YYYY-MM', biến monthly, và in dict làm tròn 1 chữ số\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\ndf = pd.read_csv(\"sales.csv\")\ndf[\"revenue\"] = df[\"units\"] * df[\"unit_price\"]\ndf[\"month\"] = pd.to_datetime(df[\"date\"]).dt.strftime(\"%Y-%m\")\nmonthly = df.groupby(\"month\")[\"revenue\"].sum()\nprint(monthly.round(1).to_dict())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "monthly có đúng 6 tháng đầu năm 2024",
+            "en": "monthly covers exactly the first 6 months of 2024"
+          },
+          "test": "list(monthly.index)==['2024-01','2024-02','2024-03','2024-04','2024-05','2024-06']"
+        },
+        {
+          "label": {
+            "vi": "In đúng doanh thu từng tháng",
+            "en": "Prints the right revenue for each month"
+          },
+          "test": "_out == str((lambda d: d.assign(m=__import__('pandas').to_datetime(d.date).dt.strftime('%Y-%m'), r=d.units*d.unit_price).groupby('m').r.sum().round(1).to_dict())(__import__('pandas').read_csv('sales.csv')))"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Tìm TOP 3 sản phẩm theo tổng doanh thu: tạo biến top (Series đã sắp giảm dần, 3 phần tử) và vẽ biểu đồ cột ngang (barh) có tiêu đề.",
+        "en": "Find the TOP 3 products by total revenue: create a variable top (a Series sorted descending, 3 items) and draw a horizontal bar chart (barh) with a title."
+      },
+      "hint": {
+        "vi": "top = df.groupby(\"product\")[\"revenue\"].sum().sort_values(ascending=False).head(3); top.plot(kind=\"barh\", title=...)",
+        "en": "top = df.groupby(\"product\")[\"revenue\"].sum().sort_values(ascending=False).head(3); top.plot(kind=\"barh\", title=...)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nimport matplotlib.pyplot as plt\n\ndf = pd.read_csv(\"sales.csv\")\ndf[\"revenue\"] = df[\"units\"] * df[\"unit_price\"]\n# tạo biến top (3 sản phẩm) rồi vẽ barh có tiêu đề\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nimport matplotlib.pyplot as plt\n\ndf = pd.read_csv(\"sales.csv\")\ndf[\"revenue\"] = df[\"units\"] * df[\"unit_price\"]\ntop = df.groupby(\"product\")[\"revenue\"].sum().sort_values(ascending=False).head(3)\ntop.plot(kind=\"barh\", title=\"Top 3 sản phẩm theo doanh thu\")\nplt.tight_layout()\nplt.show()\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "top có 3 phần tử, sắp giảm dần và đúng sản phẩm",
+            "en": "top has 3 items, sorted descending, the right products"
+          },
+          "test": "top.index.tolist()==(lambda d: d.assign(r=d.units*d.unit_price).groupby('product').r.sum().sort_values(ascending=False).head(3).index.tolist())(__import__('pandas').read_csv('sales.csv'))"
+        },
+        {
+          "label": {
+            "vi": "Biểu đồ có 3 thanh ngang",
+            "en": "The chart has 3 horizontal bars"
+          },
+          "test": "len(__import__('matplotlib.pyplot', fromlist=['gca']).gca().patches)==3"
+        },
+        {
+          "label": {
+            "vi": "Biểu đồ có tiêu đề",
+            "en": "The chart has a title"
+          },
+          "test": "__import__('matplotlib.pyplot', fromlist=['gca']).gca().get_title().strip()!=''"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "data": [
+    "sales.csv"
+  ]
+}

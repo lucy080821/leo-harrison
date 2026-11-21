@@ -1,0 +1,101 @@
+{
+  "title": {
+    "vi": "Làm sạch dữ liệu",
+    "en": "Cleaning data"
+  },
+  "summary": {
+    "vi": "isna, fillna, dropna, drop_duplicates, str.strip, astype",
+    "en": "isna, fillna, dropna, drop_duplicates, str.strip, astype"
+  },
+  "minutes": 22,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import pandas as pd\n\ndf = pd.read_csv(\"sales_dirty.csv\")\nprint(df.shape)\nprint(df.isna().sum())             # thiếu bao nhiêu mỗi cột\nprint(df.duplicated().sum(), \"dòng trùng\")\nprint(df[\"region\"].unique())       # phát hiện: \"south\", \" East \"...\n\nclean = df.drop_duplicates().copy()\nclean[\"region\"] = clean[\"region\"].str.strip().str.title()      # chuẩn hoá chữ\nclean[\"units\"] = clean[\"units\"].fillna(clean[\"units\"].median())\nclean = clean.dropna(subset=[\"category\"])\nprint(clean.shape, clean.isna().sum().sum())\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Đọc sales_dirty.csv. In số giá trị THIẾU của cột units, rồi số dòng bị TRÙNG (df.duplicated().sum()).",
+        "en": "Read sales_dirty.csv. Print the number of MISSING values in the units column, then the number of DUPLICATED rows (df.duplicated().sum())."
+      },
+      "hint": {
+        "vi": "df[\"units\"].isna().sum() và df.duplicated().sum()",
+        "en": "df[\"units\"].isna().sum() and df.duplicated().sum()"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\ndf = pd.read_csv(\"sales_dirty.csv\")\n# in số thiếu của units rồi số dòng trùng\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\ndf = pd.read_csv(\"sales_dirty.csv\")\nprint(df[\"units\"].isna().sum())\nprint(df.duplicated().sum())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 5 rồi 3",
+            "en": "Prints 5 then 3"
+          },
+          "test": "_out == '5\\n3'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Tạo DataFrame sạch tên clean: bỏ dòng trùng, chuẩn hoá region (strip + title), điền units thiếu bằng trung vị, và bỏ các dòng thiếu category.",
+        "en": "Build a clean DataFrame named clean: drop duplicate rows, normalize region (strip + title), fill missing units with the median, and drop rows missing category."
+      },
+      "hint": {
+        "vi": "drop_duplicates → str.strip().str.title() → fillna(median) → dropna(subset=[\"category\"])",
+        "en": "drop_duplicates → str.strip().str.title() → fillna(median) → dropna(subset=[\"category\"])"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\ndf = pd.read_csv(\"sales_dirty.csv\")\n# tạo biến clean theo 4 bước\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\ndf = pd.read_csv(\"sales_dirty.csv\")\nclean = df.drop_duplicates().copy()\nclean[\"region\"] = clean[\"region\"].str.strip().str.title()\nclean[\"units\"] = clean[\"units\"].fillna(clean[\"units\"].median())\nclean = clean.dropna(subset=[\"category\"])\nprint(clean.shape)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Còn 58 dòng và không còn ô trống",
+            "en": "58 rows remain and no blank cells"
+          },
+          "test": "len(clean)==58 and int(clean.isna().sum().sum())==0"
+        },
+        {
+          "label": {
+            "vi": "region chỉ còn đúng 4 vùng chuẩn",
+            "en": "region has exactly the 4 standard regions"
+          },
+          "test": "sorted(clean['region'].unique().tolist())==['East','North','South','West']"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "data": [
+    "sales.csv",
+    "sales_dirty.csv"
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "title": {
+    "vi": "Ghép bảng: merge và concat",
+    "en": "Combining tables: merge and concat"
+  },
+  "summary": {
+    "vi": "merge (inner/left), nối theo khoá, concat",
+    "en": "merge (inner/left), joining on keys, concat"
+  },
+  "minutes": 20,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import pandas as pd\n\ncustomers = pd.DataFrame({\"id\": [1, 2, 3, 4], \"name\": [\"An\", \"Binh\", \"Chi\", \"Dung\"]})\norders = pd.DataFrame({\n    \"order_id\": [101, 102, 103, 104, 105],\n    \"customer_id\": [1, 1, 2, 3, 9],\n    \"amount\": [50, 70, 20, 90, 10],\n})\n\n# inner: chỉ giữ các dòng khớp ở CẢ hai bảng\ninner = customers.merge(orders, left_on=\"id\", right_on=\"customer_id\", how=\"inner\")\nprint(inner)\n\n# left: giữ MỌI khách hàng, đơn không có thì NaN\nleft = customers.merge(orders, left_on=\"id\", right_on=\"customer_id\", how=\"left\")\nprint(left)\n\n# concat: xếp chồng hai bảng cùng cột\nprint(pd.concat([customers, customers]).shape)\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Dùng merge kiểu INNER giữa customers (cột id) và orders (cột customer_id) thành biến merged. Chỉ giữ các cặp khớp.",
+        "en": "Use an INNER merge between customers (column id) and orders (column customer_id) into a variable merged. Keep only matching pairs."
+      },
+      "hint": {
+        "vi": "customers.merge(orders, left_on=\"id\", right_on=\"customer_id\", how=\"inner\")",
+        "en": "customers.merge(orders, left_on=\"id\", right_on=\"customer_id\", how=\"inner\")"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\ncustomers = pd.DataFrame({\"id\": [1, 2, 3, 4], \"name\": [\"An\", \"Binh\", \"Chi\", \"Dung\"]})\norders = pd.DataFrame({\n    \"order_id\": [101, 102, 103, 104, 105],\n    \"customer_id\": [1, 1, 2, 3, 9],\n    \"amount\": [50, 70, 20, 90, 10],\n})\n# tạo biến merged (inner)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\ncustomers = pd.DataFrame({\"id\": [1, 2, 3, 4], \"name\": [\"An\", \"Binh\", \"Chi\", \"Dung\"]})\norders = pd.DataFrame({\n    \"order_id\": [101, 102, 103, 104, 105],\n    \"customer_id\": [1, 1, 2, 3, 9],\n    \"amount\": [50, 70, 20, 90, 10],\n})\nmerged = customers.merge(orders, left_on=\"id\", right_on=\"customer_id\", how=\"inner\")\nprint(merged)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "merged có 4 dòng (đơn của khách 9 bị loại)",
+            "en": "merged has 4 rows (customer 9's order dropped)"
+          },
+          "test": "len(merged)==4"
+        },
+        {
+          "label": {
+            "vi": "Không khách nào thiếu đơn: tổng amount là 230",
+            "en": "No customer lacks orders: total amount is 230"
+          },
+          "test": "int(merged['amount'].sum())==230"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Dùng merge kiểu LEFT để GIỮ MỌI khách hàng (kể cả người chưa có đơn). Gán vào biến left. Dung chưa có đơn nên amount là NaN.",
+        "en": "Use a LEFT merge to KEEP EVERY customer (even those without orders). Assign to a variable left. Dung has no orders so amount is NaN."
+      },
+      "hint": {
+        "vi": "customers.merge(orders, left_on=\"id\", right_on=\"customer_id\", how=\"left\")",
+        "en": "customers.merge(orders, left_on=\"id\", right_on=\"customer_id\", how=\"left\")"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\ncustomers = pd.DataFrame({\"id\": [1, 2, 3, 4], \"name\": [\"An\", \"Binh\", \"Chi\", \"Dung\"]})\norders = pd.DataFrame({\n    \"order_id\": [101, 102, 103, 104, 105],\n    \"customer_id\": [1, 1, 2, 3, 9],\n    \"amount\": [50, 70, 20, 90, 10],\n})\n# tạo biến left (left merge)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\n\ncustomers = pd.DataFrame({\"id\": [1, 2, 3, 4], \"name\": [\"An\", \"Binh\", \"Chi\", \"Dung\"]})\norders = pd.DataFrame({\n    \"order_id\": [101, 102, 103, 104, 105],\n    \"customer_id\": [1, 1, 2, 3, 9],\n    \"amount\": [50, 70, 20, 90, 10],\n})\nleft = customers.merge(orders, left_on=\"id\", right_on=\"customer_id\", how=\"left\")\nprint(left)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "left có 5 dòng",
+            "en": "left has 5 rows"
+          },
+          "test": "len(left)==5"
+        },
+        {
+          "label": {
+            "vi": "Đúng một dòng thiếu amount (Dung)",
+            "en": "Exactly one row lacks amount (Dung)"
+          },
+          "test": "int(left['amount'].isna().sum())==1 and left[left['amount'].isna()]['name'].tolist()==['Dung']"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}
