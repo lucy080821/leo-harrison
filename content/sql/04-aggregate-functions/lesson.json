@@ -1,0 +1,105 @@
+{
+  "title": {
+    "vi": "Hàm tổng hợp",
+    "en": "Aggregate functions"
+  },
+  "summary": {
+    "vi": "COUNT, SUM, AVG, MIN, MAX, COUNT(DISTINCT)",
+    "en": "COUNT, SUM, AVG, MIN, MAX, COUNT(DISTINCT)"
+  },
+  "minutes": 12,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "SELECT\n  COUNT(*)      AS num_products,\n  MIN(price)    AS cheapest,\n  MAX(price)    AS priciest,\n  AVG(price)    AS avg_price,\n  SUM(stock)    AS total_stock\nFROM products;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Đếm số đơn hàng có status = 'completed' (một dòng, một cột).",
+        "en": "Count the orders with status = 'completed' (one row, one column)."
+      },
+      "hint": {
+        "vi": "SELECT COUNT(*) FROM orders WHERE status = 'completed';",
+        "en": "SELECT COUNT(*) FROM orders WHERE status = 'completed';"
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT * FROM orders;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT COUNT(*) FROM orders WHERE status = 'completed';\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Kết quả là một dòng",
+            "en": "The result is a single row"
+          },
+          "test": "rows.length===1"
+        },
+        {
+          "label": {
+            "vi": "Giá trị là 11",
+            "en": "The value is 11"
+          },
+          "test": "rows[0][0]===11"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Tính tổng giá trị tồn kho: SUM(price * stock) của bảng products.",
+        "en": "Compute the total inventory value: SUM(price * stock) over the products table."
+      },
+      "hint": {
+        "vi": "SELECT SUM(price * stock) FROM products;",
+        "en": "SELECT SUM(price * stock) FROM products;"
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name, price, stock FROM products;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT SUM(price * stock) AS inventory_value FROM products;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Một dòng",
+            "en": "A single row"
+          },
+          "test": "rows.length===1"
+        },
+        {
+          "label": {
+            "vi": "Bằng đúng tổng price*stock",
+            "en": "Equals the exact sum of price*stock"
+          },
+          "test": "rows[0][0]===q('SELECT SUM(price*stock) FROM products')[0][0]"
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "all"
+}

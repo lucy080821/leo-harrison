@@ -1,6 +1,6 @@
 export type SandboxFile = {
   name: string;
-  lang: "html" | "css" | "javascript";
+  lang: "html" | "css" | "javascript" | "python" | "sql";
   code: string;
   hidden?: boolean;
 };

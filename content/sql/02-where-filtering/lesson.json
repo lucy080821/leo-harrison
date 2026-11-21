@@ -1,0 +1,98 @@
+{
+  "title": {
+    "vi": "Lọc dữ liệu với WHERE",
+    "en": "Filtering with WHERE"
+  },
+  "summary": {
+    "vi": "WHERE, AND/OR/NOT, IN, BETWEEN, LIKE, IS NULL",
+    "en": "WHERE, AND/OR/NOT, IN, BETWEEN, LIKE, IS NULL"
+  },
+  "minutes": 18,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "SELECT name, city\nFROM customers\nWHERE city = 'Hanoi';\n\n-- Thử các điều kiện khác:\n-- WHERE price BETWEEN 1000000 AND 5000000\n-- WHERE category IN ('Furniture', 'Stationery')\n-- WHERE name LIKE 'P%'\n-- WHERE email IS NULL\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Lấy name và city của các khách hàng ở Hanoi.",
+        "en": "Get the name and city of customers in Hanoi."
+      },
+      "hint": {
+        "vi": "SELECT name, city FROM customers WHERE city = 'Hanoi';",
+        "en": "SELECT name, city FROM customers WHERE city = 'Hanoi';"
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name, city FROM customers;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name, city FROM customers WHERE city = 'Hanoi';\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Chỉ còn 3 khách hàng",
+            "en": "Only 3 customers remain"
+          },
+          "test": "rows.length===3"
+        },
+        {
+          "label": {
+            "vi": "Tất cả đều ở Hanoi",
+            "en": "All of them are in Hanoi"
+          },
+          "test": "rows.length>0&&rows.every(function(r){return r.indexOf('Hanoi')>=0})"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Lấy name và price của các sản phẩm thuộc nhóm 'Electronics' có giá nhỏ hơn 5000000.",
+        "en": "Get the name and price of products in the 'Electronics' category priced under 5000000."
+      },
+      "hint": {
+        "vi": "WHERE category = 'Electronics' AND price < 5000000",
+        "en": "WHERE category = 'Electronics' AND price < 5000000"
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name, price FROM products;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name, price FROM products\nWHERE category = 'Electronics' AND price < 5000000;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Trả về đúng Headphones và Monitor",
+            "en": "Returns exactly Headphones and Monitor"
+          },
+          "test": "JSON.stringify(rows.map(function(r){return r[0]}).sort())==='[\"Headphones\",\"Monitor\"]'"
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "all"
+}

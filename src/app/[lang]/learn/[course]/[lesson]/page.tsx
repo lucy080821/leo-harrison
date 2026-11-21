@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { courses, getCourse } from "@/content/registry";
-import { getLessonBody, getLessons } from "@/lib/content";
+import { getEngineData, getLessonBody, getLessons } from "@/lib/content";
 import { LessonWorkspace } from "@/components/LessonWorkspace";
 import { Markdown } from "@/components/Markdown";
 import { dict, isLocale, locales } from "@/lib/i18n";
@@ -40,6 +40,8 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
       slug={l.slug}
       files={l.files}
       preview={l.preview}
+      engine={l.engine ?? "web"}
+      engineData={getEngineData(l)}
       exercises={l.exercises}
       prevHref={idx > 0 ? `${base}/${all[idx - 1].slug}` : base}
       nextHref={idx < all.length - 1 ? `${base}/${all[idx + 1].slug}` : undefined}

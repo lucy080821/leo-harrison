@@ -3,6 +3,9 @@
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { CodeEditor } from "@/components/CodeEditor";
+import { EngineOutput, type EngineState } from "@/components/EngineOutput";
+import { getEngine } from "@/lib/engines/client";
+import type { EngineInput } from "@/lib/engines/types";
 import { buildSrcDoc, type SandboxFile } from "@/lib/sandbox";
 import { useProgress } from "@/lib/progress";
 import type { Dict, L10n, Locale } from "@/lib/i18n";
@@ -24,6 +27,8 @@ type Props = {
   slug: string;
   files: SandboxFile[];
   preview: "web" | "console";
+  engine: "web" | "python" | "sql";
+  engineData: { data: Record<string, string>; dataset?: string };
   exercises: Exercise[];
   prevHref?: string;
   nextHref?: string;
@@ -52,6 +57,13 @@ export function LessonWorkspace(p: Props) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const pendingCheck = useRef<string | null>(null);
 
+  // ----- Engine Python / SQL (chạy trong Web Worker) -----
+  const isEngine = p.engine !== "web";
+  const engineName = p.engine === "python" ? "python" : "sql";
+  const [es, setEs] = useState<EngineState>({ status: "idle" });
+  const [slow, setSlow] = useState(false);
+  const runSeq = useRef(0);
+
   const files = useMemo(() => filesByMode[mode] ?? [], [filesByMode, mode]);
   const visible = files.map((f, i) => ({ f, i })).filter(({ f }) => !f.hidden);
   const current = files[activeFile] ?? files[0];
@@ -68,6 +80,53 @@ export function LessonWorkspace(p: Props) {
     }, 300);
     return () => clearTimeout(id);
   }, [files]);
+
+  const engineInput = useCallback(
+    (list: SandboxFile[]): EngineInput => ({
+      code: list.map((f) => f.code).join("\n"),
+      data: p.engineData.data,
+      dataset: p.engineData.dataset,
+    }),
+    [p.engineData],
+  );
+
+  const runEngine = useCallback(
+    async (list: SandboxFile[]) => {
+      const seq = ++runSeq.current;
+      const eng = getEngine(engineName);
+      eng.setStatusListener((note) => setEs((st) => (seq === runSeq.current ? { ...st, note } : st)));
+      setEs((st) => ({ ...st, status: "running", note: "running" }));
+      const out = await eng.run(engineInput(list));
+      if (seq === runSeq.current) setEs({ status: "done", output: out });
+    },
+    [engineName, engineInput],
+  );
+
+  // Realtime cho Python/SQL: gõ xong khoảng 0,7 giây thì tự chạy lại (mỗi lần chạy dùng môi trường sạch).
+  useEffect(() => {
+    if (!isEngine) return;
+    const id = setTimeout(() => void runEngine(files), 700);
+    return () => clearTimeout(id);
+  }, [files, isEngine, runEngine]);
+
+  // Nếu chạy quá lâu thì hiện nút Dừng.
+  useEffect(() => {
+    if (es.status !== "running") return;
+    const id = setTimeout(() => setSlow(true), 8000);
+    return () => {
+      clearTimeout(id);
+      setSlow(false);
+    };
+  }, [es.status]);
+
+  function stopEngine() {
+    runSeq.current++;
+    getEngine(engineName).stop(t.stopped);
+    setEs({
+      status: "done",
+      output: { lines: [], images: [], tables: [], error: t.stopped, ms: 0 },
+    });
+  }
 
   const sendCheck = useCallback(
     (exId: string) => {
@@ -125,8 +184,27 @@ export function LessonWorkspace(p: Props) {
     if (exercise) setResults((r) => ({ ...r, [exercise.id]: [] }));
   }
 
+  async function runCheckEngine() {
+    if (!exercise) return;
+    const seq = ++runSeq.current;
+    setEs((st) => ({ ...st, status: "running", note: "running" }));
+    const out = await getEngine(engineName).check(
+      engineInput(files),
+      exercise.checks.map((c) => c.test),
+    );
+    if (seq !== runSeq.current) return;
+    setEs({ status: "done", output: out });
+    const res = out.results ?? exercise.checks.map(() => false);
+    setResults((r) => ({ ...r, [exercise.id]: res }));
+    if (res.length > 0 && res.every(Boolean)) setExerciseDone(p.courseId, p.slug, exercise.id);
+  }
+
   function runCheck() {
     if (!exercise) return;
+    if (isEngine) {
+      void runCheckEngine();
+      return;
+    }
     // Luôn nạp lại trang sạch trước khi chấm để trạng thái cũ (biến đếm, timer...) không làm sai kết quả.
     pendingCheck.current = exercise.id;
     setLogs([]);
@@ -319,6 +397,36 @@ export function LessonWorkspace(p: Props) {
           {current && <CodeEditor key={`${mode}:${current.name}`} value={current.code} lang={current.lang} onChange={edit} />}
         </div>
 
+        {isEngine ? (
+          <>
+            <div className="flex items-center gap-2 border-y border-line bg-surface px-2 py-1.5 text-sm">
+              <button
+                type="button"
+                onClick={() => void runEngine(files)}
+                className="rounded-md bg-brand px-3 py-1 font-semibold text-white hover:opacity-90"
+              >
+                ▶ {t.run}
+              </button>
+              {slow && (
+                <button
+                  type="button"
+                  onClick={stopEngine}
+                  className="rounded-md border border-bad px-3 py-1 font-semibold text-bad hover:bg-surface2"
+                >
+                  ■ {t.stop}
+                </button>
+              )}
+              <span className="ml-1 font-semibold text-brand">{t.result}</span>
+              <span className="ml-auto hidden self-center pr-1 text-xs text-muted xl:inline">
+                {slow ? t.slowHint : t.autoRunNote}
+              </span>
+            </div>
+            <div className="relative h-[260px] min-h-0 flex-1 lg:h-auto lg:basis-1/2">
+              <EngineOutput state={es} t={t} engine={p.engine} />
+            </div>
+          </>
+        ) : (
+          <>
         <div className="flex gap-1 border-y border-line bg-surface px-2 py-1.5 text-sm">
           {(["preview", "console"] as const).map((tab) => (
             <button
@@ -364,6 +472,8 @@ export function LessonWorkspace(p: Props) {
             </div>
           )}
         </div>
+          </>
+        )}
       </section>
     </div>
   );

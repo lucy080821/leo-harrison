@@ -1,0 +1,105 @@
+{
+  "title": {
+    "vi": "SELECT cơ bản",
+    "en": "SELECT basics"
+  },
+  "summary": {
+    "vi": "SELECT, FROM, chọn cột, bí danh AS, biểu thức",
+    "en": "SELECT, FROM, choosing columns, AS aliases, expressions"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "-- Lấy mọi cột của mọi dòng\nSELECT * FROM customers;\n\n-- Chỉ lấy vài cột:\n-- SELECT name, city FROM customers;\n\n-- Biểu thức và bí danh:\n-- SELECT name, price / 1000 AS price_k FROM products;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Hiển thị CHỈ hai cột name và city của mọi khách hàng (theo đúng thứ tự đó).",
+        "en": "Show ONLY the name and city columns of every customer (in that order)."
+      },
+      "hint": {
+        "vi": "SELECT name, city FROM customers;",
+        "en": "SELECT name, city FROM customers;"
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT * FROM customers;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name, city FROM customers;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có đúng hai cột name, city",
+            "en": "Exactly the columns name, city"
+          },
+          "test": "columns.join(',')==='name,city'"
+        },
+        {
+          "label": {
+            "vi": "Trả về cả 8 khách hàng",
+            "en": "Returns all 8 customers"
+          },
+          "test": "rows.length===8"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Hiển thị tên sản phẩm và giá chia 1000 (đơn vị nghìn đồng) với bí danh price_k.",
+        "en": "Show the product name and the price divided by 1000 (in thousands) with the alias price_k."
+      },
+      "hint": {
+        "vi": "SELECT name, price / 1000 AS price_k FROM products;",
+        "en": "SELECT name, price / 1000 AS price_k FROM products;"
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name, price FROM products;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name, price / 1000 AS price_k FROM products;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Cột thứ hai tên price_k",
+            "en": "The second column is named price_k"
+          },
+          "test": "columns[1]==='price_k'"
+        },
+        {
+          "label": {
+            "vi": "Laptop có price_k = 15000",
+            "en": "Laptop has price_k = 15000"
+          },
+          "test": "rows.some(function(r){return r[0]==='Laptop'&&r[1]===15000})"
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "all"
+}

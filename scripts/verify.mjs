@@ -2,6 +2,7 @@
 // Chạy: node scripts_verify.mjs   (cần: npx playwright đã cài sẵn, dev server không cần)
 import fs from "node:fs";
 import path from "node:path";
+import { spawnSync } from "node:child_process";
 import { createRequire } from "node:module";
 const require = createRequire(import.meta.url);
 const ts = require("typescript");
@@ -14,6 +15,7 @@ new Function("module", "exports", js)(m, m.exports);
 const { buildSrcDoc } = m.exports;
 
 const only = process.argv[2];
+const PY = process.env.PYTHON_VERIFY || "python3";
 const root = "content";
 const browser = await chromium.launch();
 let bad = 0, total = 0;
@@ -49,21 +51,84 @@ async function run(files, tests) {
   return results;
 }
 
+let sqlJs = null;
+async function getSqlJs() {
+  if (!sqlJs) {
+    const initSqlJs = require("sql.js");
+    sqlJs = await initSqlJs();
+  }
+  return sqlJs;
+}
+
+function readData(meta) {
+  const data = {};
+  for (const n of meta.data || []) data[n] = fs.readFileSync(path.join(root, "_data", "files", n), "utf8");
+  const dataset = meta.dataset ? fs.readFileSync(path.join(root, "_data", "sql", meta.dataset + ".sql"), "utf8") : "";
+  return { data, dataset };
+}
+
+function runPython(files, tests, data) {
+  const r = spawnSync(PY, ["scripts/verify_python.py"], {
+    input: JSON.stringify({ code: files.map((f) => f.code).join("\n"), tests, data }),
+    encoding: "utf8",
+    timeout: 120000,
+  });
+  try {
+    return JSON.parse(r.stdout);
+  } catch {
+    return { error: (r.stderr || "no output").slice(-400), results: tests.map(() => false) };
+  }
+}
+
+async function runSql(files, tests, dataset) {
+  const SQL = await getSqlJs();
+  const db = new SQL.Database();
+  let tables = [];
+  let error;
+  try {
+    if (dataset) db.exec(dataset);
+    tables = db.exec(files.map((f) => f.code).join("\n")).map((r) => ({ columns: r.columns, rows: r.values }));
+  } catch (e) {
+    error = String(e.message || e);
+  }
+  const last = tables[tables.length - 1] || { columns: [], rows: [] };
+  const q = (sql) => { const r = db.exec(sql); return r.length ? r[r.length - 1].values : []; };
+  const results = tests.map((t) => {
+    if (error) return false;
+    try { return Boolean(new Function("columns", "rows", "tables", "q", "return (" + t + ")")(last.columns, last.rows, tables, q)); }
+    catch { return false; }
+  });
+  db.close();
+  return { error, results };
+}
+
 for (const course of fs.readdirSync(root)) {
   if (only && course !== only) continue;
+  if (course.startsWith("_")) continue;
   for (const slug of fs.readdirSync(path.join(root, course)).sort()) {
     const dir = path.join(root, course, slug);
     const meta = JSON.parse(fs.readFileSync(path.join(dir, "lesson.json"), "utf8"));
+    const engine = meta.engine || "web";
+    const { data, dataset } = readData(meta);
     for (const lang of ["vi", "en"]) {
       if (!fs.existsSync(path.join(dir, `${lang}.md`))) { console.log(`MISSING ${dir}/${lang}.md`); bad++; }
     }
     for (const ex of meta.exercises) {
       total++;
       const tests = ex.checks.map((c) => c.test);
-      const sol = await run(ex.solution, tests);
-      const st = await run(ex.starter, tests);
       const label = `${course}/${slug}/${ex.id}`;
-      if (!sol || !sol.every(Boolean)) { console.log(`SOLUTION FAILS  ${label}`, JSON.stringify(sol)); bad++; }
+      let sol, st, solErr;
+      if (engine === "python") {
+        const a = runPython(ex.solution, tests, data); sol = a.results; solErr = a.error;
+        st = runPython(ex.starter, tests, data).results;
+      } else if (engine === "sql") {
+        const a = await runSql(ex.solution, tests, dataset); sol = a.results; solErr = a.error;
+        st = (await runSql(ex.starter, tests, dataset)).results;
+      } else {
+        sol = await run(ex.solution, tests);
+        st = await run(ex.starter, tests);
+      }
+      if (!sol || !sol.every(Boolean)) { console.log(`SOLUTION FAILS  ${label}`, JSON.stringify(sol), solErr ? "\n  " + String(solErr).split("\n").slice(-3).join(" | ") : ""); bad++; }
       if (st && st.length && st.every(Boolean)) { console.log(`STARTER ALREADY PASSES  ${label}`); bad++; }
     }
   }

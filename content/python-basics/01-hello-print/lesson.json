@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Chương trình Python đầu tiên",
+    "en": "Your first Python program"
+  },
+  "summary": {
+    "vi": "print(), chú thích, lỗi cú pháp",
+    "en": "print(), comments, syntax errors"
+  },
+  "minutes": 10,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "# Đây là chú thích: Python bỏ qua dòng này\nprint(\"Hello, Lexi!\")\nprint(\"2 + 3 =\", 2 + 3)\nprint(\"Python\", \"is\", \"fun\", sep=\"-\")\nprint(\"Không xuống dòng\", end=\" ... \")\nprint(\"tiếp tục trên cùng dòng\")\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Dùng print() để in đúng dòng: Hello, Python!",
+        "en": "Use print() to output exactly the line: Hello, Python!"
+      },
+      "hint": {
+        "vi": "print(\"Hello, Python!\")",
+        "en": "print(\"Hello, Python!\")"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "# viết code của bạn ở đây\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "print(\"Hello, Python!\")\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng là Hello, Python!",
+            "en": "The output is exactly Hello, Python!"
+          },
+          "test": "_out == 'Hello, Python!'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "In ba từ Python, is, fun trong MỘT lệnh print sao cho kết quả là Python-is-fun (dùng đối số sep).",
+        "en": "Print the three words Python, is, fun in ONE print call so the output is Python-is-fun (use the sep argument)."
+      },
+      "hint": {
+        "vi": "print(\"Python\", \"is\", \"fun\", sep=\"-\")",
+        "en": "print(\"Python\", \"is\", \"fun\", sep=\"-\")"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "# dùng một lệnh print duy nhất\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "print(\"Python\", \"is\", \"fun\", sep=\"-\")\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra là Python-is-fun",
+            "en": "The output is Python-is-fun"
+          },
+          "test": "_out == 'Python-is-fun'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

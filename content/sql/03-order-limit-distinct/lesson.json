@@ -1,0 +1,98 @@
+{
+  "title": {
+    "vi": "Sắp xếp, giới hạn và loại trùng",
+    "en": "Sorting, limiting and DISTINCT"
+  },
+  "summary": {
+    "vi": "ORDER BY, ASC/DESC, LIMIT, OFFSET, DISTINCT",
+    "en": "ORDER BY, ASC/DESC, LIMIT, OFFSET, DISTINCT"
+  },
+  "minutes": 12,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "SELECT name, price\nFROM products\nORDER BY price DESC\nLIMIT 3;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Lấy tên 3 sản phẩm đắt nhất (giảm dần theo giá), chỉ cột name.",
+        "en": "Get the names of the 3 most expensive products (descending by price), only the name column."
+      },
+      "hint": {
+        "vi": "SELECT name FROM products ORDER BY price DESC LIMIT 3;",
+        "en": "SELECT name FROM products ORDER BY price DESC LIMIT 3;"
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name FROM products;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name FROM products ORDER BY price DESC LIMIT 3;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Laptop, Phone, Monitor theo thứ tự",
+            "en": "Laptop, Phone, Monitor in order"
+          },
+          "test": "rows.map(function(r){return r[0]}).join(',')==='Laptop,Phone,Monitor'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Liệt kê các thành phố khác nhau của khách hàng (không trùng), sắp xếp A → Z.",
+        "en": "List the distinct cities of customers (no duplicates), sorted A → Z."
+      },
+      "hint": {
+        "vi": "SELECT DISTINCT city FROM customers ORDER BY city;",
+        "en": "SELECT DISTINCT city FROM customers ORDER BY city;"
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT city FROM customers;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT DISTINCT city FROM customers ORDER BY city;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "5 thành phố khác nhau",
+            "en": "5 distinct cities"
+          },
+          "test": "rows.length===5"
+        },
+        {
+          "label": {
+            "vi": "Theo thứ tự A → Z",
+            "en": "In A → Z order"
+          },
+          "test": "rows.map(function(r){return r[0]}).join(',')==='Can Tho,Da Nang,Hanoi,Ho Chi Minh,Hue'"
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "all"
+}

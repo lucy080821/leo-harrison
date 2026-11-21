@@ -39,8 +39,8 @@ Build production (để deploy VPS): `npm run build && npm start`.
 ## Kiểm tra nội dung tự động
 
 ```bash
-node scripts_verify.mjs          # tất cả khoá
-node scripts_verify.mjs css      # một khoá
+node scripts/verify.mjs          # tất cả khoá
+node scripts/verify.mjs css      # một khoá
 ```
 
 Script mở từng bài tập trong Chromium (Playwright) và xác nhận: **đáp án đạt mọi check**, **đề khởi đầu chưa đạt hết**, và mỗi bài có đủ `vi.md`/`en.md`. Hãy chạy nó sau mỗi lần thêm hoặc sửa bài.
