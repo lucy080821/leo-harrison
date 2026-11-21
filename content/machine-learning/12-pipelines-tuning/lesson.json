@@ -1,0 +1,104 @@
+{
+  "title": {
+    "vi": "Pipeline, tinh chỉnh siêu tham số và rò rỉ dữ liệu",
+    "en": "Pipelines, hyperparameter tuning and data leakage"
+  },
+  "summary": {
+    "vi": "Pipeline, GridSearchCV, ColumnTransformer, data leakage",
+    "en": "Pipeline, GridSearchCV, ColumnTransformer, data leakage"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "from sklearn.datasets import load_breast_cancer\nfrom sklearn.model_selection import train_test_split\n\nX, y = load_breast_cancer(return_X_y=True)\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=0, stratify=y)\n\nfrom sklearn.pipeline import Pipeline\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.neighbors import KNeighborsClassifier\nfrom sklearn.model_selection import GridSearchCV, cross_val_score\n\npipe = Pipeline([(\"scale\", StandardScaler()), (\"knn\", KNeighborsClassifier())])\nprint(cross_val_score(pipe, X_train, y_train, cv=5).mean().round(3))\n\ngrid = GridSearchCV(pipe, {\"knn__n_neighbors\": [1, 3, 5, 7, 9, 11]}, cv=5)\ngrid.fit(X_train, y_train)\nprint(grid.best_params_, round(grid.best_score_, 3))\nprint(\"test:\", round(grid.score(X_test, y_test), 3))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tạo Pipeline gồm StandardScaler rồi LogisticRegression(max_iter=1000). Gán cv_mean = trung bình cross_val_score (cv=5) trên X_train, y_train (phải trên 0.95).",
+        "en": "Create a Pipeline of StandardScaler then LogisticRegression(max_iter=1000). Assign cv_mean = the mean cross_val_score (cv=5) on X_train, y_train (above 0.95)."
+      },
+      "hint": {
+        "vi": "Pipeline([(\"scale\", StandardScaler()), (\"clf\", LogisticRegression(max_iter=1000))])",
+        "en": "Pipeline([(\"scale\", StandardScaler()), (\"clf\", LogisticRegression(max_iter=1000))])"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_breast_cancer\nfrom sklearn.model_selection import train_test_split\n\nX, y = load_breast_cancer(return_X_y=True)\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=0, stratify=y)\nfrom sklearn.pipeline import Pipeline\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.model_selection import cross_val_score\n\n# tạo pipe và gán cv_mean\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_breast_cancer\nfrom sklearn.model_selection import train_test_split\n\nX, y = load_breast_cancer(return_X_y=True)\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=0, stratify=y)\nfrom sklearn.pipeline import Pipeline\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.model_selection import cross_val_score\n\npipe = Pipeline([(\"scale\", StandardScaler()), (\"clf\", LogisticRegression(max_iter=1000))])\ncv_mean = cross_val_score(pipe, X_train, y_train, cv=5).mean()\nprint(round(cv_mean, 3))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "cv_mean trên 0.95",
+            "en": "cv_mean above 0.95"
+          },
+          "test": "float(cv_mean) > 0.95"
+        },
+        {
+          "label": {
+            "vi": "pipe có 2 bước",
+            "en": "pipe has 2 steps"
+          },
+          "test": "len(pipe.steps)==2"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Dùng GridSearchCV (cv=5) tìm n_neighbors tốt nhất trong [1, 3, 5, 7, 9, 11] cho pipeline StandardScaler + KNN. Gán grid (đã fit trên X_train, y_train); best_score_ phải trên 0.95.",
+        "en": "Use GridSearchCV (cv=5) to find the best n_neighbors in [1, 3, 5, 7, 9, 11] for a StandardScaler + KNN pipeline. Assign grid (fit on X_train, y_train); best_score_ must exceed 0.95."
+      },
+      "hint": {
+        "vi": "GridSearchCV(pipe, {\"knn__n_neighbors\": [1, 3, 5, 7, 9, 11]}, cv=5)",
+        "en": "GridSearchCV(pipe, {\"knn__n_neighbors\": [1, 3, 5, 7, 9, 11]}, cv=5)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_breast_cancer\nfrom sklearn.model_selection import train_test_split\n\nX, y = load_breast_cancer(return_X_y=True)\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=0, stratify=y)\nfrom sklearn.pipeline import Pipeline\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.neighbors import KNeighborsClassifier\nfrom sklearn.model_selection import GridSearchCV\n\npipe = Pipeline([(\"scale\", StandardScaler()), (\"knn\", KNeighborsClassifier())])\n# tạo grid và fit\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_breast_cancer\nfrom sklearn.model_selection import train_test_split\n\nX, y = load_breast_cancer(return_X_y=True)\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=0, stratify=y)\nfrom sklearn.pipeline import Pipeline\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.neighbors import KNeighborsClassifier\nfrom sklearn.model_selection import GridSearchCV\n\npipe = Pipeline([(\"scale\", StandardScaler()), (\"knn\", KNeighborsClassifier())])\ngrid = GridSearchCV(pipe, {\"knn__n_neighbors\": [1, 3, 5, 7, 9, 11]}, cv=5)\ngrid.fit(X_train, y_train)\nprint(grid.best_params_, round(grid.best_score_, 3))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "best_score_ trên 0.95",
+            "en": "best_score_ above 0.95"
+          },
+          "test": "float(grid.best_score_) > 0.95"
+        },
+        {
+          "label": {
+            "vi": "best_params_ có khoá knn__n_neighbors",
+            "en": "best_params_ has the key knn__n_neighbors"
+          },
+          "test": "'knn__n_neighbors' in grid.best_params_"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

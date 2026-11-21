@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "PCA và giảm chiều dữ liệu",
+    "en": "PCA and dimensionality reduction"
+  },
+  "summary": {
+    "vi": "thành phần chính, phương sai giải thích, chọn số thành phần",
+    "en": "principal components, explained variance, choosing the number of components"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\nfrom sklearn.datasets import load_iris\nfrom sklearn.decomposition import PCA\nfrom sklearn.preprocessing import StandardScaler\n\nX, y = load_iris(return_X_y=True)\npca = PCA(n_components=2).fit(X)\nprint(pca.explained_variance_ratio_.round(3))       # phần trăm phương sai mỗi thành phần\nprint(round(pca.explained_variance_ratio_.sum(), 2))\nX2 = pca.transform(X)                                 # 150 x 2: dữ liệu giảm chiều\nprint(X2.shape)\n\npca_full = PCA().fit(StandardScaler().fit_transform(X))\nprint(np.cumsum(pca_full.explained_variance_ratio_).round(3))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Giảm iris xuống 2 chiều bằng PCA(n_components=2) và in tổng tỉ lệ phương sai được giải thích làm tròn 2 chữ số.",
+        "en": "Reduce iris to 2 dimensions with PCA(n_components=2) and print the total explained-variance ratio rounded to 2 decimals."
+      },
+      "hint": {
+        "vi": "round(pca.explained_variance_ratio_.sum(), 2)",
+        "en": "round(pca.explained_variance_ratio_.sum(), 2)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_iris\nfrom sklearn.decomposition import PCA\n\nX, y = load_iris(return_X_y=True)\n# PCA 2 thành phần, in tổng phương sai giải thích (2 chữ số)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_iris\nfrom sklearn.decomposition import PCA\n\nX, y = load_iris(return_X_y=True)\npca = PCA(n_components=2).fit(X)\nprint(round(float(pca.explained_variance_ratio_.sum()), 2))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 0.98",
+            "en": "Prints 0.98"
+          },
+          "test": "_out == '0.98'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Trên breast cancer (đã StandardScaler), tìm SỐ thành phần nhỏ nhất để giữ ít nhất 95% phương sai. Gán n_comp (dùng np.cumsum của explained_variance_ratio_).",
+        "en": "On breast cancer (after StandardScaler), find the SMALLEST number of components keeping at least 95% of the variance. Assign n_comp (use np.cumsum of explained_variance_ratio_)."
+      },
+      "hint": {
+        "vi": "n_comp = int(np.argmax(np.cumsum(ratio) >= 0.95)) + 1",
+        "en": "n_comp = int(np.argmax(np.cumsum(ratio) >= 0.95)) + 1"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nfrom sklearn.datasets import load_breast_cancer\nfrom sklearn.decomposition import PCA\nfrom sklearn.preprocessing import StandardScaler\n\nX, y = load_breast_cancer(return_X_y=True)\nXs = StandardScaler().fit_transform(X)\n# tính n_comp để giữ >= 95% phương sai\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nfrom sklearn.datasets import load_breast_cancer\nfrom sklearn.decomposition import PCA\nfrom sklearn.preprocessing import StandardScaler\n\nX, y = load_breast_cancer(return_X_y=True)\nXs = StandardScaler().fit_transform(X)\nratio = PCA().fit(Xs).explained_variance_ratio_\nn_comp = int(np.argmax(np.cumsum(ratio) >= 0.95)) + 1\nprint(n_comp)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "n_comp là 10",
+            "en": "n_comp is 10"
+          },
+          "test": "int(n_comp) == 10"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

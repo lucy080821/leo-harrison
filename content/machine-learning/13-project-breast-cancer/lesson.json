@@ -1,0 +1,104 @@
+{
+  "title": {
+    "vi": "Dự án: Dự đoán ung thư vú",
+    "en": "Project: breast cancer prediction"
+  },
+  "summary": {
+    "vi": "quy trình ML đầu-cuối: so sánh mô hình, tinh chỉnh, đánh giá",
+    "en": "an end-to-end ML workflow: comparing models, tuning, evaluating"
+  },
+  "minutes": 35,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "from sklearn.datasets import load_breast_cancer\nfrom sklearn.model_selection import train_test_split\n\nX, y = load_breast_cancer(return_X_y=True)\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=0, stratify=y)\n\nfrom sklearn.pipeline import make_pipeline\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.ensemble import RandomForestClassifier\nfrom sklearn.svm import SVC\nfrom sklearn.model_selection import cross_val_score\nfrom sklearn.metrics import recall_score, precision_score\n\nmodels = {\n    \"logistic\": make_pipeline(StandardScaler(), LogisticRegression(max_iter=2000)),\n    \"forest\": RandomForestClassifier(n_estimators=200, random_state=0),\n    \"svm\": make_pipeline(StandardScaler(), SVC()),\n}\nfor name, m in models.items():\n    cv = cross_val_score(m, X_train, y_train, cv=5, scoring=\"recall\")\n    print(name, \"CV recall:\", cv.mean().round(3))\n\nbest = models[\"logistic\"].fit(X_train, y_train)\npred = best.predict(X_test)\nprint(\"test recall:\", round(recall_score(y_test, pred), 3),\n      \"precision:\", round(precision_score(y_test, pred), 3))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "So sánh 3 mô hình (logistic, forest, svm) bằng cross_val_score(cv=5, scoring='recall') trên tập train. Gán results là từ điển {tên: recall_trung_bình} và best_name là tên mô hình tốt nhất.",
+        "en": "Compare 3 models (logistic, forest, svm) with cross_val_score(cv=5, scoring='recall') on the train set. Assign results as a dictionary {name: mean_recall} and best_name as the best model's name."
+      },
+      "hint": {
+        "vi": "results = {name: cross_val_score(m, X_train, y_train, cv=5, scoring=\"recall\").mean() for name, m in models.items()}",
+        "en": "results = {name: cross_val_score(m, X_train, y_train, cv=5, scoring=\"recall\").mean() for name, m in models.items()}"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_breast_cancer\nfrom sklearn.model_selection import train_test_split\n\nX, y = load_breast_cancer(return_X_y=True)\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=0, stratify=y)\nfrom sklearn.pipeline import make_pipeline\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.ensemble import RandomForestClassifier\nfrom sklearn.svm import SVC\nfrom sklearn.model_selection import cross_val_score\n\nmodels = {\n    \"logistic\": make_pipeline(StandardScaler(), LogisticRegression(max_iter=2000)),\n    \"forest\": RandomForestClassifier(n_estimators=100, random_state=0),\n    \"svm\": make_pipeline(StandardScaler(), SVC()),\n}\n# tính results và best_name\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_breast_cancer\nfrom sklearn.model_selection import train_test_split\n\nX, y = load_breast_cancer(return_X_y=True)\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=0, stratify=y)\nfrom sklearn.pipeline import make_pipeline\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.ensemble import RandomForestClassifier\nfrom sklearn.svm import SVC\nfrom sklearn.model_selection import cross_val_score\n\nmodels = {\n    \"logistic\": make_pipeline(StandardScaler(), LogisticRegression(max_iter=2000)),\n    \"forest\": RandomForestClassifier(n_estimators=100, random_state=0),\n    \"svm\": make_pipeline(StandardScaler(), SVC()),\n}\nresults = {name: cross_val_score(m, X_train, y_train, cv=5, scoring=\"recall\").mean() for name, m in models.items()}\nbest_name = max(results, key=results.get)\nprint({k: round(v, 3) for k, v in results.items()}, best_name)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "results có đủ 3 mô hình, recall đều trên 0.9",
+            "en": "results has all 3 models, each recall above 0.9"
+          },
+          "test": "set(results)=={'logistic','forest','svm'} and all(float(v)>0.9 for v in results.values())"
+        },
+        {
+          "label": {
+            "vi": "best_name là mô hình có recall cao nhất",
+            "en": "best_name is the model with the highest recall"
+          },
+          "test": "best_name == max(results, key=results.get)"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Huấn luyện mô hình tốt nhất (logistic pipeline) trên toàn bộ train, đánh giá trên test. Gán test_recall và test_precision (recall_score, precision_score). Cả hai phải trên 0.93.",
+        "en": "Train the best model (the logistic pipeline) on the whole train set and evaluate on test. Assign test_recall and test_precision (recall_score, precision_score). Both must exceed 0.93."
+      },
+      "hint": {
+        "vi": "pred = best.predict(X_test); recall_score(y_test, pred)",
+        "en": "pred = best.predict(X_test); recall_score(y_test, pred)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_breast_cancer\nfrom sklearn.model_selection import train_test_split\n\nX, y = load_breast_cancer(return_X_y=True)\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=0, stratify=y)\nfrom sklearn.pipeline import make_pipeline\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.metrics import recall_score, precision_score\n\nbest = make_pipeline(StandardScaler(), LogisticRegression(max_iter=2000))\n# huấn luyện, dự đoán test, gán test_recall và test_precision\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_breast_cancer\nfrom sklearn.model_selection import train_test_split\n\nX, y = load_breast_cancer(return_X_y=True)\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=0, stratify=y)\nfrom sklearn.pipeline import make_pipeline\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.metrics import recall_score, precision_score\n\nbest = make_pipeline(StandardScaler(), LogisticRegression(max_iter=2000))\nbest.fit(X_train, y_train)\npred = best.predict(X_test)\ntest_recall = recall_score(y_test, pred)\ntest_precision = precision_score(y_test, pred)\nprint(round(test_recall, 3), round(test_precision, 3))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "test_recall trên 0.93",
+            "en": "test_recall above 0.93"
+          },
+          "test": "float(test_recall) > 0.93"
+        },
+        {
+          "label": {
+            "vi": "test_precision trên 0.93",
+            "en": "test_precision above 0.93"
+          },
+          "test": "float(test_precision) > 0.93"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

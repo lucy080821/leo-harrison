@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Phân cụm: K-Means và hơn nữa",
+    "en": "Clustering: K-Means and beyond"
+  },
+  "summary": {
+    "vi": "K-Means, inertia, elbow, silhouette, DBSCAN",
+    "en": "K-Means, inertia, elbow, silhouette, DBSCAN"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\nfrom sklearn.datasets import make_blobs\nfrom sklearn.cluster import KMeans\nfrom sklearn.metrics import silhouette_score\n\nX, _ = make_blobs(n_samples=300, centers=3, cluster_std=0.6, random_state=42)\n\nkm = KMeans(n_clusters=3, n_init=10, random_state=0).fit(X)\nprint(sorted(np.bincount(km.labels_).tolist()))     # kích thước mỗi cụm\nprint(\"inertia:\", round(km.inertia_, 1))\nprint(\"silhouette:\", round(silhouette_score(X, km.labels_), 3))\n\nfor k in range(2, 7):                                # chọn k tốt nhất\n    labels = KMeans(k, n_init=10, random_state=0).fit_predict(X)\n    print(k, round(silhouette_score(X, labels), 3))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Chạy KMeans(n_clusters=3, n_init=10, random_state=0) trên dữ liệu blobs. Gán labels = km.labels_ và in kích thước từng cụm đã sắp tăng dần (sorted(np.bincount(labels).tolist())).",
+        "en": "Run KMeans(n_clusters=3, n_init=10, random_state=0) on the blobs data. Assign labels = km.labels_ and print the cluster sizes sorted ascending (sorted(np.bincount(labels).tolist()))."
+      },
+      "hint": {
+        "vi": "km = KMeans(n_clusters=3, n_init=10, random_state=0).fit(X)",
+        "en": "km = KMeans(n_clusters=3, n_init=10, random_state=0).fit(X)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nfrom sklearn.datasets import make_blobs\nfrom sklearn.cluster import KMeans\n\nX, _ = make_blobs(n_samples=300, centers=3, cluster_std=0.6, random_state=42)\n# chạy KMeans và in kích thước các cụm\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nfrom sklearn.datasets import make_blobs\nfrom sklearn.cluster import KMeans\n\nX, _ = make_blobs(n_samples=300, centers=3, cluster_std=0.6, random_state=42)\nkm = KMeans(n_clusters=3, n_init=10, random_state=0).fit(X)\nlabels = km.labels_\nprint(sorted(np.bincount(labels).tolist()))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In [100, 100, 100]",
+            "en": "Prints [100, 100, 100]"
+          },
+          "test": "_out == '[100, 100, 100]'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Chọn số cụm tốt nhất: thử k = 2..6 và tính silhouette_score cho mỗi k. Gán best_k là k có silhouette cao nhất (dữ liệu có 3 cụm thật).",
+        "en": "Pick the best number of clusters: try k = 2..6 and compute silhouette_score for each. Assign best_k to the k with the highest silhouette (the data has 3 true clusters)."
+      },
+      "hint": {
+        "vi": "scores = {k: silhouette_score(X, KMeans(k, n_init=10, random_state=0).fit_predict(X)) for k in range(2, 7)}",
+        "en": "scores = {k: silhouette_score(X, KMeans(k, n_init=10, random_state=0).fit_predict(X)) for k in range(2, 7)}"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import make_blobs\nfrom sklearn.cluster import KMeans\nfrom sklearn.metrics import silhouette_score\n\nX, _ = make_blobs(n_samples=300, centers=3, cluster_std=0.6, random_state=42)\n# tính silhouette cho k = 2..6 và gán best_k\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import make_blobs\nfrom sklearn.cluster import KMeans\nfrom sklearn.metrics import silhouette_score\n\nX, _ = make_blobs(n_samples=300, centers=3, cluster_std=0.6, random_state=42)\nscores = {}\nfor k in range(2, 7):\n    labels = KMeans(k, n_init=10, random_state=0).fit_predict(X)\n    scores[k] = silhouette_score(X, labels)\nbest_k = max(scores, key=scores.get)\nprint(best_k)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "best_k là 3",
+            "en": "best_k is 3"
+          },
+          "test": "best_k == 3"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}
