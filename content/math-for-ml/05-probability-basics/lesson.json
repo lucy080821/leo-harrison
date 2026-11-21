@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Xác suất cơ bản và định lý Bayes",
+    "en": "Probability basics and Bayes' theorem"
+  },
+  "summary": {
+    "vi": "xác suất có điều kiện, Bayes, kỳ vọng, phương sai",
+    "en": "conditional probability, Bayes, expectation, variance"
+  },
+  "minutes": 22,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\n# Bayes: xét nghiệm bệnh hiếm\np_disease = 0.01\nsens = 0.99          # P(dương tính | bệnh)\nfpr = 0.05           # P(dương tính | khỏe)\np_pos = sens * p_disease + fpr * (1 - p_disease)\nposterior = sens * p_disease / p_pos\nprint(round(posterior, 4))      # chỉ ~16.7%: nhiều người ngạc nhiên!\n\n# Kỳ vọng và phương sai của xúc xắc\nfaces = np.arange(1, 7)\np = np.full(6, 1 / 6)\nmean = np.sum(faces * p)\nvar = np.sum((faces - mean) ** 2 * p)\nprint(mean, round(var, 4))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Bệnh có tỉ lệ 1%. Xét nghiệm đúng 99% với người bệnh và dương tính giả 5% với người khỏe. Tính P(bệnh | dương tính) bằng định lý Bayes, in làm tròn 4 chữ số.",
+        "en": "A disease has a 1% rate. The test is 99% sensitive and has a 5% false-positive rate. Compute P(disease | positive) with Bayes' theorem and print it rounded to 4 decimals."
+      },
+      "hint": {
+        "vi": "sens * p_d / (sens * p_d + fpr * (1 - p_d))",
+        "en": "sens * p_d / (sens * p_d + fpr * (1 - p_d))"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "p_d = 0.01\nsens = 0.99\nfpr = 0.05\n# in P(bệnh | dương tính)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "p_d = 0.01\nsens = 0.99\nfpr = 0.05\nposterior = sens * p_d / (sens * p_d + fpr * (1 - p_d))\nprint(round(posterior, 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 0.1667",
+            "en": "Prints 0.1667"
+          },
+          "test": "_out == '0.1667'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Tính KỲ VỌNG và PHƯƠNG SAI của một xúc xắc công bằng (6 mặt, mỗi mặt xác suất 1/6). In kỳ vọng rồi phương sai làm tròn 4 chữ số.",
+        "en": "Compute the EXPECTED VALUE and VARIANCE of a fair die (6 faces, each with probability 1/6). Print the expected value then the variance rounded to 4 decimals."
+      },
+      "hint": {
+        "vi": "E[X] = sum(x*p); Var = sum((x - E)^2 * p)",
+        "en": "E[X] = sum(x*p); Var = sum((x - E)^2 * p)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nfaces = np.arange(1, 7)\np = np.full(6, 1 / 6)\n# in kỳ vọng rồi phương sai (4 chữ số)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nfaces = np.arange(1, 7)\np = np.full(6, 1 / 6)\nmean = np.sum(faces * p)\nvar = np.sum((faces - mean) ** 2 * p)\nprint(round(float(mean), 4))\nprint(round(float(var), 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 3.5 rồi 2.9167",
+            "en": "Prints 3.5 then 2.9167"
+          },
+          "test": "_out == '3.5\\n2.9167'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

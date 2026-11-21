@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Vector và ma trận",
+    "en": "Vectors and matrices"
+  },
+  "summary": {
+    "vi": "tích vô hướng, chuẩn, cosine, nhân ma trận",
+    "en": "dot product, norms, cosine similarity, matrix multiplication"
+  },
+  "minutes": 20,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\na = np.array([1, 2, 3])\nb = np.array([4, 5, 6])\n\nprint(a + b, 2 * a)                      # cộng vector, nhân với số\nprint(np.dot(a, b))                      # tích vô hướng: 1*4 + 2*5 + 3*6\nprint(np.linalg.norm(a))                 # độ dài (chuẩn L2)\n\ncos = a @ b / (np.linalg.norm(a) * np.linalg.norm(b))\nprint(round(cos, 4))                     # độ giống nhau về hướng\n\nA = np.array([[1, 2, 3], [4, 5, 6]])     # 2x3\nB = np.array([[7, 8], [9, 10], [11, 12]])  # 3x2\nprint(A @ B)                             # nhân ma trận -> 2x2\nprint(A.T)                               # chuyển vị\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Với a = [1, 2, 3] và b = [4, 5, 6]: in tích vô hướng, rồi độ tương đồng cosine làm tròn 4 chữ số.",
+        "en": "For a = [1, 2, 3] and b = [4, 5, 6]: print the dot product, then the cosine similarity rounded to 4 decimals."
+      },
+      "hint": {
+        "vi": "np.dot(a, b) và a @ b / (norm(a) * norm(b))",
+        "en": "np.dot(a, b) and a @ b / (norm(a) * norm(b))"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\na = np.array([1, 2, 3])\nb = np.array([4, 5, 6])\n# in tích vô hướng, rồi cosine (4 chữ số)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\na = np.array([1, 2, 3])\nb = np.array([4, 5, 6])\nprint(int(np.dot(a, b)))\nprint(round(float(a @ b / (np.linalg.norm(a) * np.linalg.norm(b))), 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 32 rồi 0.9746",
+            "en": "Prints 32 then 0.9746"
+          },
+          "test": "_out == '32\\n0.9746'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Nhân ma trận A (2×3) với B (3×2) và in kết quả dưới dạng list lồng nhau (tolist()).",
+        "en": "Multiply matrix A (2×3) by B (3×2) and print the result as a nested list (tolist())."
+      },
+      "hint": {
+        "vi": "(A @ B).tolist()",
+        "en": "(A @ B).tolist()"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nA = np.array([[1, 2, 3], [4, 5, 6]])\nB = np.array([[7, 8], [9, 10], [11, 12]])\n# in A @ B dưới dạng list\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nA = np.array([[1, 2, 3], [4, 5, 6]])\nB = np.array([[7, 8], [9, 10], [11, 12]])\nprint((A @ B).tolist())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In [[58, 64], [139, 154]]",
+            "en": "Prints [[58, 64], [139, 154]]"
+          },
+          "test": "_out == '[[58, 64], [139, 154]]'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

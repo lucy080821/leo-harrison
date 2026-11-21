@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Đại số tuyến tính cho ML",
+    "en": "Linear algebra for ML"
+  },
+  "summary": {
+    "vi": "hệ phương trình, nghịch đảo, định thức, trị riêng",
+    "en": "linear systems, inverse, determinant, eigenvalues"
+  },
+  "minutes": 22,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\nA = np.array([[2.0, 1.0], [1.0, 3.0]])\nb = np.array([3.0, 5.0])\n\nx = np.linalg.solve(A, b)          # giải A x = b\nprint(x)\nprint(np.linalg.inv(A) @ b)        # cách chậm hơn, cùng kết quả\nprint(np.linalg.det(A))            # định thức\n\nvals, vecs = np.linalg.eigh(A)     # trị riêng / vector riêng (ma trận đối xứng)\nprint(vals)\nprint(A @ vecs[:, 0], vals[0] * vecs[:, 0])   # A v = lambda v\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Giải hệ 2x + y = 3, x + 3y = 5 bằng np.linalg.solve và in nghiệm [x, y] làm tròn 2 chữ số (dạng list).",
+        "en": "Solve the system 2x + y = 3, x + 3y = 5 with np.linalg.solve and print the solution [x, y] rounded to 2 decimals (as a list)."
+      },
+      "hint": {
+        "vi": "np.linalg.solve(A, b).round(2).tolist()",
+        "en": "np.linalg.solve(A, b).round(2).tolist()"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nA = np.array([[2.0, 1.0], [1.0, 3.0]])\nb = np.array([3.0, 5.0])\n# in nghiệm\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nA = np.array([[2.0, 1.0], [1.0, 3.0]])\nb = np.array([3.0, 5.0])\nprint(np.linalg.solve(A, b).round(2).tolist())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In [0.8, 1.4]",
+            "en": "Prints [0.8, 1.4]"
+          },
+          "test": "_out == '[0.8, 1.4]'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Với S = [[2, 1], [1, 2]]: in danh sách trị riêng đã sắp (np.linalg.eigvalsh, làm tròn 2 chữ số), rồi định thức làm tròn 2 chữ số.",
+        "en": "For S = [[2, 1], [1, 2]]: print the sorted list of eigenvalues (np.linalg.eigvalsh, rounded to 2 decimals), then the determinant rounded to 2 decimals."
+      },
+      "hint": {
+        "vi": "sorted(np.linalg.eigvalsh(S).round(2).tolist()) và round(np.linalg.det(S), 2)",
+        "en": "sorted(np.linalg.eigvalsh(S).round(2).tolist()) and round(np.linalg.det(S), 2)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nS = np.array([[2.0, 1.0], [1.0, 2.0]])\n# in trị riêng đã sắp, rồi định thức\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nS = np.array([[2.0, 1.0], [1.0, 2.0]])\nprint(sorted(np.linalg.eigvalsh(S).round(2).tolist()))\nprint(round(float(np.linalg.det(S)), 2))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In [1.0, 3.0] rồi 3.0",
+            "en": "Prints [1.0, 3.0] then 3.0"
+          },
+          "test": "_out == '[1.0, 3.0]\\n3.0'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

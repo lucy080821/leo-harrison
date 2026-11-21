@@ -1,0 +1,97 @@
+{
+  "title": {
+    "vi": "Phân phối xác suất và định lý giới hạn trung tâm",
+    "en": "Probability distributions and the central limit theorem"
+  },
+  "summary": {
+    "vi": "phân phối chuẩn, nhị thức, CLT, ước lượng hợp lý cực đại",
+    "en": "normal and binomial distributions, the CLT, maximum likelihood"
+  },
+  "minutes": 22,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\nfrom scipy import stats\n\n# Phân phối chuẩn: quy tắc 68-95-99.7\nprint(round(stats.norm.cdf(1) - stats.norm.cdf(-1), 4))   # 0.6827\n\n# Nhị thức: 10 lần tung đồng xu, đúng 3 mặt ngửa\nprint(round(stats.binom.pmf(3, n=10, p=0.5), 4))          # 0.1172\n\n# Định lý giới hạn trung tâm: trung bình nhiều mẫu ~ chuẩn\nrng = np.random.default_rng(0)\nmeans = rng.exponential(1.0, size=(5000, 50)).mean(axis=1)\nprint(round(means.mean(), 2), round(means.std(), 3))      # ~1.0, ~1/sqrt(50)=0.141\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Dùng scipy.stats: in P(−1 < Z < 1) của phân phối chuẩn tắc (làm tròn 4 chữ số), rồi xác suất đúng 3 mặt ngửa trong 10 lần tung đồng xu công bằng (binom.pmf, 4 chữ số).",
+        "en": "Use scipy.stats: print P(−1 < Z < 1) for the standard normal (rounded to 4 decimals), then the probability of exactly 3 heads in 10 fair coin tosses (binom.pmf, 4 decimals)."
+      },
+      "hint": {
+        "vi": "norm.cdf(1) - norm.cdf(-1) và binom.pmf(3, 10, 0.5)",
+        "en": "norm.cdf(1) - norm.cdf(-1) and binom.pmf(3, 10, 0.5)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from scipy import stats\n\n# in hai xác suất\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from scipy import stats\n\nprint(round(float(stats.norm.cdf(1) - stats.norm.cdf(-1)), 4))\nprint(round(float(stats.binom.pmf(3, 10, 0.5)), 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 0.6827 rồi 0.1172",
+            "en": "Prints 0.6827 then 0.1172"
+          },
+          "test": "_out == '0.6827\\n0.1172'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Kiểm chứng CLT: lấy 5000 mẫu, mỗi mẫu 50 số theo phân phối mũ (rng.exponential(1.0, size=(5000, 50))), tính trung bình mỗi mẫu vào biến means. Độ lệch chuẩn của means phải xấp xỉ 1/√50 ≈ 0.141.",
+        "en": "Verify the CLT: draw 5000 samples of 50 numbers each from the exponential distribution (rng.exponential(1.0, size=(5000, 50))), computing each sample's mean into a variable means. The standard deviation of means should be about 1/√50 ≈ 0.141."
+      },
+      "hint": {
+        "vi": "means = rng.exponential(1.0, size=(5000, 50)).mean(axis=1)",
+        "en": "means = rng.exponential(1.0, size=(5000, 50)).mean(axis=1)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nrng = np.random.default_rng(0)\n# tạo biến means (5000 giá trị)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nrng = np.random.default_rng(0)\nmeans = rng.exponential(1.0, size=(5000, 50)).mean(axis=1)\nprint(round(float(means.std()), 3))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "means có 5000 giá trị",
+            "en": "means has 5000 values"
+          },
+          "test": "len(means)==5000"
+        },
+        {
+          "label": {
+            "vi": "Độ lệch chuẩn của means ≈ 0.141",
+            "en": "The std of means ≈ 0.141"
+          },
+          "test": "abs(float(means.std()) - 0.1414) < 0.01"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

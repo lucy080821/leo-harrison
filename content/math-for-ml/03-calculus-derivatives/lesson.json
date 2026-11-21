@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Giải tích: đạo hàm và gradient",
+    "en": "Calculus: derivatives and gradients"
+  },
+  "summary": {
+    "vi": "đạo hàm, quy tắc chuỗi, đạo hàm riêng, gradient",
+    "en": "derivatives, the chain rule, partial derivatives, gradients"
+  },
+  "minutes": 22,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\ndef derivative(f, x, h=1e-5):\n    # đạo hàm số học: độ dốc của f tại x (sai phân trung tâm)\n    return (f(x + h) - f(x - h)) / (2 * h)\n\nprint(derivative(lambda x: x ** 2, 3))        # ~6  (vì (x^2)' = 2x)\n\ndef sigmoid(x):\n    return 1 / (1 + np.exp(-x))\n\nprint(round(derivative(sigmoid, 0), 4))        # 0.25\n\n# gradient: véc-tơ các đạo hàm riêng\ndef f(x, y):\n    return x ** 2 + 3 * y ** 2\n\ndef grad(x, y):\n    return np.array([2 * x, 6 * y])           # df/dx, df/dy\n\nprint(grad(1, 2))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết derivative(f, x, h=1e-5) bằng sai phân trung tâm (f(x+h) − f(x−h)) / (2h). In đạo hàm của x³ tại x = 2 làm tròn 3 chữ số (đáp số 12.0).",
+        "en": "Write derivative(f, x, h=1e-5) with the central difference (f(x+h) − f(x−h)) / (2h). Print the derivative of x³ at x = 2 rounded to 3 decimals (the answer is 12.0)."
+      },
+      "hint": {
+        "vi": "return (f(x + h) - f(x - h)) / (2 * h)",
+        "en": "return (f(x + h) - f(x - h)) / (2 * h)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def derivative(f, x, h=1e-5):\n    # viết ở đây\n    pass\n\nprint(round(derivative(lambda x: x ** 3, 2), 3))\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def derivative(f, x, h=1e-5):\n    return (f(x + h) - f(x - h)) / (2 * h)\n\nprint(round(derivative(lambda x: x ** 3, 2), 3))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 12.0",
+            "en": "Prints 12.0"
+          },
+          "test": "_out == '12.0'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Đạo hàm của sigmoid: σ'(x) = σ(x)·(1 − σ(x)). Viết sigmoid_prime(x) và in giá trị tại x = 0 (làm tròn 2 chữ số) rồi tại x = 2 (làm tròn 4 chữ số).",
+        "en": "The derivative of the sigmoid: σ'(x) = σ(x)·(1 − σ(x)). Write sigmoid_prime(x) and print its value at x = 0 (rounded to 2 decimals) then at x = 2 (rounded to 4 decimals)."
+      },
+      "hint": {
+        "vi": "s = sigmoid(x); return s * (1 - s)",
+        "en": "s = sigmoid(x); return s * (1 - s)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\ndef sigmoid(x):\n    return 1 / (1 + np.exp(-x))\n\ndef sigmoid_prime(x):\n    # viết ở đây\n    pass\n\nprint(round(float(sigmoid_prime(0)), 2))\nprint(round(float(sigmoid_prime(2)), 4))\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\ndef sigmoid(x):\n    return 1 / (1 + np.exp(-x))\n\ndef sigmoid_prime(x):\n    s = sigmoid(x)\n    return s * (1 - s)\n\nprint(round(float(sigmoid_prime(0)), 2))\nprint(round(float(sigmoid_prime(2)), 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 0.25 rồi 0.105",
+            "en": "Prints 0.25 then 0.105"
+          },
+          "test": "_out == '0.25\\n0.105'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

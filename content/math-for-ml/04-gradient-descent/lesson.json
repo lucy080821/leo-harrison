@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Gradient descent",
+    "en": "Gradient descent"
+  },
+  "summary": {
+    "vi": "cập nhật tham số, tốc độ học, hồi quy tuyến tính bằng GD",
+    "en": "parameter updates, learning rate, linear regression by GD"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\n# Cực tiểu hoá f(x) = (x - 3)^2 bằng gradient descent\nx = 0.0\nlr = 0.1                       # learning rate: bước nhảy\nfor step in range(50):\n    grad = 2 * (x - 3)         # f'(x)\n    x = x - lr * grad          # đi NGƯỢC chiều gradient\nprint(round(x, 3))             # ~ 3.0\n\n# Hồi quy tuyến tính y = w*x + b bằng GD\nX = np.array([0, 1, 2, 3, 4], dtype=float)\ny = np.array([1, 3, 5, 7, 9], dtype=float)       # y = 2x + 1\nw, b = 0.0, 0.0\nfor _ in range(5000):\n    pred = w * X + b\n    dw = 2 * np.mean((pred - y) * X)\n    db = 2 * np.mean(pred - y)\n    w -= 0.05 * dw\n    b -= 0.05 * db\nprint(round(w, 2), round(b, 2))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Dùng gradient descent cực tiểu hoá f(x) = (x − 3)². Bắt đầu x = 0, learning rate 0.1, 50 bước. In x làm tròn 3 chữ số.",
+        "en": "Use gradient descent to minimize f(x) = (x − 3)². Start at x = 0, learning rate 0.1, 50 steps. Print x rounded to 3 decimals."
+      },
+      "hint": {
+        "vi": "x -= lr * 2 * (x - 3)",
+        "en": "x -= lr * 2 * (x - 3)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "x = 0.0\nlr = 0.1\n# lặp 50 bước cập nhật x rồi in round(x, 3)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "x = 0.0\nlr = 0.1\nfor _ in range(50):\n    x = x - lr * 2 * (x - 3)\nprint(round(x, 3))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 3.0",
+            "en": "Prints 3.0"
+          },
+          "test": "_out == '3.0'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Huấn luyện hồi quy tuyến tính y = w·x + b bằng GD trên dữ liệu y = 2x + 1 (learning rate 0.05, 5000 lần lặp). In w rồi b, làm tròn 2 chữ số, ngăn cách bằng dấu cách.",
+        "en": "Train linear regression y = w·x + b with GD on data y = 2x + 1 (learning rate 0.05, 5000 iterations). Print w then b rounded to 2 decimals, separated by a space."
+      },
+      "hint": {
+        "vi": "dw = 2 * mean((pred - y) * X); db = 2 * mean(pred - y)",
+        "en": "dw = 2 * mean((pred - y) * X); db = 2 * mean(pred - y)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nX = np.array([0, 1, 2, 3, 4], dtype=float)\ny = np.array([1, 3, 5, 7, 9], dtype=float)\nw, b = 0.0, 0.0\n# vòng lặp GD ở đây, rồi in w và b\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nX = np.array([0, 1, 2, 3, 4], dtype=float)\ny = np.array([1, 3, 5, 7, 9], dtype=float)\nw, b = 0.0, 0.0\nfor _ in range(5000):\n    pred = w * X + b\n    dw = 2 * np.mean((pred - y) * X)\n    db = 2 * np.mean(pred - y)\n    w -= 0.05 * dw\n    b -= 0.05 * db\nprint(round(w, 2), round(b, 2))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 2.0 1.0",
+            "en": "Prints 2.0 1.0"
+          },
+          "test": "_out == '2.0 1.0'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

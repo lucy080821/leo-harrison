@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Hàm mất mát và lý thuyết thông tin",
+    "en": "Loss functions and information theory"
+  },
+  "summary": {
+    "vi": "MSE, MAE, cross-entropy, entropy, KL divergence",
+    "en": "MSE, MAE, cross-entropy, entropy, KL divergence"
+  },
+  "minutes": 22,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\ny_true = np.array([3.0, 5.0, 2.0])\ny_pred = np.array([2.5, 5.5, 4.0])\nprint(np.mean((y_true - y_pred) ** 2))        # MSE\nprint(np.mean(np.abs(y_true - y_pred)))       # MAE\n\n# Entropy (bit) của một phân phối\ndef entropy(p):\n    p = np.array(p)\n    return -np.sum(p * np.log2(p))\nprint(entropy([0.5, 0.5]), round(entropy([0.9, 0.1]), 3))\n\n# Cross-entropy nhị phân\ny = np.array([1, 0, 1])\np = np.array([0.9, 0.2, 0.6])\nprint(round(-np.mean(y * np.log(p) + (1 - y) * np.log(1 - p)), 4))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết entropy(p) = −Σ p·log2(p). In entropy của [0.5, 0.5] rồi của [0.9, 0.1] (làm tròn 3 chữ số).",
+        "en": "Write entropy(p) = −Σ p·log2(p). Print the entropy of [0.5, 0.5] then of [0.9, 0.1] (rounded to 3 decimals)."
+      },
+      "hint": {
+        "vi": "-np.sum(p * np.log2(p))",
+        "en": "-np.sum(p * np.log2(p))"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\ndef entropy(p):\n    # viết ở đây\n    pass\n\nprint(round(float(entropy(np.array([0.5, 0.5]))), 3))\nprint(round(float(entropy(np.array([0.9, 0.1]))), 3))\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\ndef entropy(p):\n    return -np.sum(p * np.log2(p))\n\nprint(round(float(entropy(np.array([0.5, 0.5]))), 3))\nprint(round(float(entropy(np.array([0.9, 0.1]))), 3))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 1.0 rồi 0.469",
+            "en": "Prints 1.0 then 0.469"
+          },
+          "test": "_out == '1.0\\n0.469'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Tính cross-entropy nhị phân trung bình cho y = [1, 0, 1] và xác suất dự đoán p = [0.9, 0.2, 0.6]: −mean(y·ln p + (1−y)·ln(1−p)). In làm tròn 4 chữ số.",
+        "en": "Compute the mean binary cross-entropy for y = [1, 0, 1] and predicted probabilities p = [0.9, 0.2, 0.6]: −mean(y·ln p + (1−y)·ln(1−p)). Print it rounded to 4 decimals."
+      },
+      "hint": {
+        "vi": "-np.mean(y * np.log(p) + (1 - y) * np.log(1 - p))",
+        "en": "-np.mean(y * np.log(p) + (1 - y) * np.log(1 - p))"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\ny = np.array([1, 0, 1])\np = np.array([0.9, 0.2, 0.6])\n# in binary cross-entropy (4 chữ số)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\ny = np.array([1, 0, 1])\np = np.array([0.9, 0.2, 0.6])\nprint(round(float(-np.mean(y * np.log(p) + (1 - y) * np.log(1 - p))), 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 0.2798",
+            "en": "Prints 0.2798"
+          },
+          "test": "_out == '0.2798'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}
