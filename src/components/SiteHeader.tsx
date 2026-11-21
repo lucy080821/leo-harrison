@@ -20,7 +20,7 @@ export function SiteHeader({ lang }: { lang: Locale }) {
           {inLexi ? (
             <Logo href={`/${lang}/learning/programming`} />
           ) : (
-            <Link href={`/${lang}`} className="font-display text-2xl font-semibold tracking-tight" aria-label={`${owner.name} (${owner.nick})`}>
+            <Link href={`/${lang}`} className="h-display text-2xl" aria-label={`${owner.name} (${owner.nick})`}>
               {owner.nick}
             </Link>
           )}
@@ -31,7 +31,7 @@ export function SiteHeader({ lang }: { lang: Locale }) {
           )}
         </div>
 
-        <nav aria-label="Main" className="order-3 flex w-full gap-5 pb-1 text-[0.95rem] sm:order-none sm:w-auto sm:pb-0">
+        <nav aria-label="Main" className="order-3 flex w-full gap-2 pb-1 text-[0.9rem] sm:order-none sm:w-auto sm:pb-0">
           {nav.map((n) => {
             const href = `/${lang}/${n.href}`;
             const active = path === href || path.startsWith(`${href}/`);
@@ -40,7 +40,7 @@ export function SiteHeader({ lang }: { lang: Locale }) {
                 key={n.href}
                 href={href}
                 aria-current={active ? "page" : undefined}
-                className={`py-1 ${active ? "border-b-2 border-brand font-semibold text-fg" : "text-muted hover:text-fg"}`}
+                className={`rounded-full border px-4 py-1 ${active ? "border-transparent bg-hl font-semibold text-hlfg" : "border-line text-fg hover:border-hl"}`}
               >
                 {n.label[lang]}
               </Link>

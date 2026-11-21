@@ -26,6 +26,7 @@ export type Project = {
   url: string;
   host: string;
   logo: string;
+  shot: string;
   tagline: L10n;
   summary: L10n;
   points: L10n[];
@@ -38,6 +39,7 @@ export const projects: Project[] = [
     url: "https://lucytutor.online/",
     host: "lucytutor.online",
     logo: "/projects/lucytutor.jpg",
+    shot: "/projects/lucytutor-d.jpg",
     tagline: { vi: "Học và luyện thi tiếng Anh cùng AI", en: "Learn English and prepare for exams with AI" },
     summary: {
       vi: "Nền tảng cho cả học viên và giáo viên. Học viên làm bài kiểm tra trình độ, luyện bốn kỹ năng và được AI chấm Writing. Giáo viên quản lý lớp, điểm danh và học phí trong cùng một nơi.",
@@ -56,6 +58,7 @@ export const projects: Project[] = [
     url: "https://cerno.cloud/",
     host: "cerno.cloud",
     logo: "/projects/cerno.svg",
+    shot: "/projects/cerno-d.jpg",
     tagline: { vi: "Dashboard từ Google Sheets, đặt biểu đồ tự do", en: "Dashboards from Google Sheets, charts placed freely" },
     summary: {
       vi: "Chọn cột dữ liệu, kéo biểu đồ và chỉ số lên một khung vẽ tự do, rồi chia sẻ bằng liên kết hoặc nhúng vào trang khác. Không cần biết lập trình.",
@@ -70,8 +73,21 @@ export const projects: Project[] = [
   },
 ];
 
+export const stats: { n: string | null; label: L10n }[] = [
+  { n: "3", label: { vi: "sản phẩm", en: "products" } },
+  { n: null, label: { vi: "bài học có bài tập", en: "lessons with exercises" } },
+  { n: "2", label: { vi: "ngôn ngữ: Việt và Anh", en: "languages: Vietnamese and English" } },
+];
+
 export const t = {
-  hello: { vi: "Xin chào, tôi là", en: "Hello, I'm" } as L10n,
+  learningLabel: { vi: "Chia sẻ kiến thức", en: "Knowledge sharing" } as L10n,
+  portfolio: { vi: "Portfolio", en: "Portfolio" } as L10n,
+  ctaLead: { vi: "Hãy", en: "Let's" } as L10n,
+  ctaWord: { vi: "trò chuyện", en: "talk" } as L10n,
+  emailMe: { vi: "Gửi email", en: "Email" } as L10n,
+  openProduct: { vi: "Xem", en: "View" } as L10n,
+  alsoHere: { vi: "Cũng ở đây", en: "Also here" } as L10n,
+  hello: { vi: "Xin chào, tôi là", en: "Hi, I'm" } as L10n,
   heroSub: {
     vi: "Lucy Tutor giúp học tiếng Anh, Cerno biến Google Sheets thành dashboard, còn Lexi Learn là nơi học lập trình từ con số 0 với bài tập tự chấm.",
     en: "Lucy Tutor helps people learn English, Cerno turns Google Sheets into dashboards, and Lexi Learn is where you learn programming from zero with auto-checked exercises.",

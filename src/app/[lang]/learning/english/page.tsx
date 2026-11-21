@@ -21,7 +21,7 @@ export default async function EnglishPage({ params }: { params: Promise<{ lang: 
       <Link href={`/${lang}/learning`} className="text-sm text-muted hover:text-brand">
         ← {t.backToLearning[lang]}
       </Link>
-      <h1 className="font-display mt-4 text-5xl font-medium tracking-tight">{t.englishPageTitle[lang]}</h1>
+      <h1 className="h-display mt-4 text-5xl">{t.englishPageTitle[lang]}</h1>
       <p className="mt-2 text-sm font-semibold text-muted">{t.soon[lang]}</p>
       <p className="mt-6 text-lg leading-relaxed">{t.englishPageBody[lang]}</p>
       <p className="mt-6 text-muted">

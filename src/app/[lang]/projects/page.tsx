@@ -17,11 +17,11 @@ export default async function ProjectsPage({ params }: { params: Promise<{ lang:
   if (!isLocale(lang)) notFound();
   return (
     <div className="mx-auto max-w-5xl px-4 pt-14">
-      <h1 className="font-display text-5xl font-medium tracking-tight">{t.projectsTitle[lang]}</h1>
+      <h1 className="h-display text-5xl">{t.projectsTitle[lang]}</h1>
       <p className="mt-3 max-w-xl text-lg text-muted">{t.projectsIntro[lang]}</p>
-      <div className="mt-10">
+      <div className="mt-10 space-y-6">
         {projects.map((p, i) => (
-          <ProjectBlock key={p.id} p={p} lang={lang} flip={i % 2 === 1} full />
+          <ProjectBlock key={p.id} p={p} lang={lang} flip={i % 2 === 1} />
         ))}
       </div>
     </div>

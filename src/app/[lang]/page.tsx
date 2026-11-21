@@ -1,60 +1,115 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BilingualLine } from "@/components/BilingualLine";
-import { ProjectBlock } from "@/components/ProjectBlock";
 import { LearningRows } from "@/components/LearningRows";
-import { heroChunks, owner, projects, t } from "@/content/site";
+import { PhoneFrame } from "@/components/Mockups";
+import { ProjectBlock } from "@/components/ProjectBlock";
+import { SectionHead } from "@/components/SectionHead";
+import { Logo } from "@/components/Logo";
+import { categories, coursesOf } from "@/content/registry";
+import { getLessons } from "@/lib/content";
+import { heroChunks, owner, projects, stats, t } from "@/content/site";
 import { isLocale } from "@/lib/i18n";
 
+/* eslint-disable @next/next/no-img-element */
 export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
+  const lessonCount = categories.flatMap((c) => coursesOf(c.id)).reduce((n, co) => n + getLessons(co.id).length, 0);
+  const [lucy, cerno] = projects;
 
   return (
-    <div className="mx-auto max-w-5xl px-4">
-      <section className="pb-16 pt-14 sm:pt-20">
-        <p className="mb-6 text-muted">
-          {t.hello[lang]} <span className="font-semibold text-fg">{owner.name}</span> ({owner.nick})
-        </p>
-        <BilingualLine chunks={heroChunks} lang={lang} />
-        <p className="mt-10 max-w-xl text-lg leading-relaxed text-muted">{t.heroSub[lang]}</p>
-        <div className="mt-8 flex flex-wrap gap-3">
-          <Link href={`/${lang}/projects`} className="rounded-lg bg-brand px-5 py-2.5 font-semibold text-white hover:opacity-90">
-            {t.seeProjects[lang]}
-          </Link>
-          <Link href={`/${lang}/learning`} className="rounded-lg border border-line bg-surface px-5 py-2.5 font-semibold hover:bg-surface2">
-            {t.startLearning[lang]}
-          </Link>
+    <div className="mx-auto max-w-6xl px-4">
+      {/* Hero */}
+      <section className="grid items-center gap-12 pb-20 pt-12 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:pt-20">
+        <div>
+          <p className="mb-5 text-2xl font-bold tracking-tight sm:text-3xl">
+            {t.hello[lang]} <span className="hl">{owner.nick}</span>
+          </p>
+          <BilingualLine chunks={heroChunks} lang={lang} />
+          <p className="mt-9 max-w-xl text-lg leading-relaxed text-muted">{t.heroSub[lang]}</p>
+
+          <dl className="mt-8 flex flex-wrap gap-x-10 gap-y-4">
+            {stats.map((s, i) => (
+              <div key={i}>
+                <dt className="h-display text-3xl sm:text-4xl">{s.n ?? lessonCount}</dt>
+                <dd className="label mt-1 max-w-[11rem]">{s.label[lang]}</dd>
+              </div>
+            ))}
+          </dl>
+
+          <div className="mt-9 flex flex-wrap gap-3">
+            <Link href={`/${lang}/projects`} className="rounded-full bg-hl px-6 py-3 font-bold text-hlfg hover:opacity-90">
+              {t.seeProjects[lang]}
+            </Link>
+            <Link href={`/${lang}/learning`} className="rounded-full border border-line px-6 py-3 font-semibold hover:border-hl">
+              {t.startLearning[lang]}
+            </Link>
+          </div>
+        </div>
+
+        <div className="relative">
+          <PhoneFrame src="/projects/lucytutor-m.jpg" alt="Lucy Tutor" />
+          <div className="mt-6 flex justify-center gap-3 lg:absolute lg:-right-2 lg:top-1/2 lg:mt-0 lg:-translate-y-1/2 lg:flex-col">
+            <a href={lucy.url} target="_blank" rel="noopener noreferrer" aria-label={lucy.name} className="grid h-11 w-11 place-items-center overflow-hidden rounded-full border border-line bg-surface hover:border-hl">
+              <img src={lucy.logo} alt="" className="h-full w-full object-cover" />
+            </a>
+            <a href={cerno.url} target="_blank" rel="noopener noreferrer" aria-label={cerno.name} className="grid h-11 w-11 place-items-center overflow-hidden rounded-full border border-line bg-surface hover:border-hl">
+              <img src={cerno.logo} alt="" className="h-7 w-7" />
+            </a>
+            <a href={`mailto:${owner.email}`} aria-label="Email" className="grid h-11 w-11 place-items-center rounded-full border border-line bg-surface text-label hover:border-hl">
+              <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="14" rx="2" />
+                <path d="m3 7 9 6 9-6" />
+              </svg>
+            </a>
+          </div>
         </div>
       </section>
 
-      <section aria-labelledby="projects-h" className="pb-6">
-        <h2 id="projects-h" className="font-display text-3xl font-semibold tracking-tight">
-          {t.projectsTitle[lang]}
-        </h2>
-        <p className="mt-2 text-muted">{t.projectsIntro[lang]}</p>
-        <div className="mt-8">
+      {/* Projects */}
+      <section aria-labelledby="projects-h" className="py-10">
+        <SectionHead id="projects-h" label={t.portfolio[lang]} title={t.projectsTitle[lang]} intro={t.projectsIntro[lang]} />
+        <ul className="mt-8 flex flex-wrap items-center justify-center gap-3" aria-label={t.projectsTitle[lang]}>
+          {projects.map((p) => (
+            <li key={p.id}>
+              <a href={`#${p.id}`} className="flex items-center gap-2 rounded-full border border-line bg-surface py-1.5 pl-1.5 pr-4 text-sm font-semibold hover:border-hl">
+                <img src={p.logo} alt="" className="h-7 w-7 rounded-full object-cover" />
+                {p.name}
+              </a>
+            </li>
+          ))}
+          <li>
+            <div className="flex h-10 items-center rounded-full border border-line bg-surface px-4 hover:border-hl">
+              <Logo href={`/${lang}/learning/programming`} size="text-base" />
+            </div>
+          </li>
+        </ul>
+        <div className="mt-10 space-y-6">
           {projects.map((p, i) => (
             <ProjectBlock key={p.id} p={p} lang={lang} flip={i % 2 === 1} />
           ))}
         </div>
       </section>
 
-      <section aria-labelledby="learn-h" className="pt-10">
-        <h2 id="learn-h" className="font-display text-3xl font-semibold tracking-tight">
-          {t.learningTitle[lang]}
-        </h2>
-        <p className="mt-2 max-w-xl text-muted">{t.learningIntro[lang]}</p>
+      {/* Learning */}
+      <section aria-labelledby="learn-h" className="py-16">
+        <SectionHead id="learn-h" label={t.learningLabel[lang]} title={t.learningTitle[lang]} intro={t.learningIntro[lang]} />
         <LearningRows lang={lang} />
       </section>
 
-      <section aria-labelledby="contact-h" className="mt-20 border-t border-line pt-10">
-        <h2 id="contact-h" className="font-display text-3xl font-semibold tracking-tight">
-          {t.contactTitle[lang]}
+      {/* Contact */}
+      <section aria-labelledby="contact-h" className="py-16 text-center">
+        <p className="label">{t.contactTitle[lang]}</p>
+        <h2 id="contact-h" className="h-display mt-2 text-5xl sm:text-6xl">
+          {t.ctaLead[lang]} <span className="hl">{t.ctaWord[lang]}</span>
         </h2>
-        <p className="mt-2 max-w-xl text-muted">{t.contactBody[lang]}</p>
-        <a href={`mailto:${owner.email}`} className="font-display mt-5 inline-block break-all text-2xl text-brand underline decoration-brand2 underline-offset-4 sm:text-3xl">
-          {owner.email}
+        <p className="mx-auto mt-4 max-w-md text-muted">{t.contactBody[lang]}</p>
+        <a
+          href={`mailto:${owner.email}`}
+          className="mt-8 inline-block max-w-full break-all rounded-full bg-hl px-7 py-3.5 text-base font-bold text-hlfg hover:opacity-90"
+        >
+          {t.emailMe[lang]}: {owner.email}
         </a>
       </section>
     </div>

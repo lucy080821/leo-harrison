@@ -17,7 +17,7 @@ export default async function LearningPage({ params }: { params: Promise<{ lang:
   if (!isLocale(lang)) notFound();
   return (
     <div className="mx-auto max-w-5xl px-4 pt-14">
-      <h1 className="font-display text-5xl font-medium tracking-tight">{t.learningTitle[lang]}</h1>
+      <h1 className="h-display text-5xl">{t.learningTitle[lang]}</h1>
       <p className="mt-3 max-w-xl text-lg text-muted">{t.learningIntro[lang]}</p>
       <LearningRows lang={lang} />
     </div>
