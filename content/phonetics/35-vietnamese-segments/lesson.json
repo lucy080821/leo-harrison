@@ -1,0 +1,84 @@
+{
+  "title": {
+    "vi": "Ngữ âm tiếng Việt: phụ âm, nguyên âm và âm tiết",
+    "en": "Vietnamese phonetics: consonants, vowels and the syllable"
+  },
+  "summary": {
+    "vi": "Hệ thống âm của tiếng Việt (giọng Hà Nội) theo mô tả của Kirby (2011)",
+    "en": "The sound system of Vietnamese (Hanoi) following Kirby (2011)"
+  },
+  "minutes": 14,
+  "module": "m7",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Chữ \"th\" trong tiếng Việt (như \"thôi\") thường được phiên âm là gì?",
+        "en": "How is the Vietnamese \"th\" (as in \"thôi\") usually transcribed?"
+      },
+      "options": [
+        {
+          "vi": "/tʰ/ (âm tắc lợi bật hơi)",
+          "en": "/tʰ/ (an aspirated alveolar stop)"
+        },
+        {
+          "vi": "/θ/",
+          "en": "/θ/"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Tiếng Việt không có /θ/; \"th\" là /tʰ/.",
+        "en": "Vietnamese has no /θ/; \"th\" is /tʰ/."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Các phụ âm cuối của tiếng Việt gồm?",
+        "en": "Vietnamese final consonants include?"
+      },
+      "options": [
+        {
+          "vi": "/p t k m n ŋ/ và bán nguyên âm /j w/",
+          "en": "/p t k m n ŋ/ and the glides /j w/"
+        },
+        {
+          "vi": "Mọi phụ âm",
+          "en": "All consonants"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Không có cụm phụ âm và chỉ có một phụ âm cuối.",
+        "en": "There are no clusters and only one final consonant."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Trong giọng Hà Nội, các chữ \"d, gi, r\" đều là?",
+        "en": "In Hanoi Vietnamese the letters \"d, gi, r\" are all?"
+      },
+      "options": [
+        {
+          "vi": "/z/",
+          "en": "/z/"
+        },
+        {
+          "vi": "/r/",
+          "en": "/r/"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Các chữ này hợp nhất thành /z/ trong giọng Hà Nội.",
+        "en": "These letters merge into /z/ in Hanoi speech."
+      }
+    }
+  ]
+}

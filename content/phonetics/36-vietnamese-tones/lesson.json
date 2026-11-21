@@ -1,0 +1,84 @@
+{
+  "title": {
+    "vi": "Thanh điệu tiếng Việt về mặt ngữ âm học",
+    "en": "The phonetics of Vietnamese tones"
+  },
+  "summary": {
+    "vi": "Sáu thanh Hà Nội: đường F0, chất giọng và so với ngữ điệu tiếng Anh",
+    "en": "Six Hanoi tones: F0 contours, voice quality and comparison with English intonation"
+  },
+  "minutes": 13,
+  "module": "m7",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Thanh điệu tiếng Việt chủ yếu được phân biệt bởi?",
+        "en": "Vietnamese tones are mainly distinguished by?"
+      },
+      "options": [
+        {
+          "vi": "Đường cao độ F0 và chất giọng (phát thanh)",
+          "en": "F0 contour and voice quality (phonation)"
+        },
+        {
+          "vi": "Chỉ độ to",
+          "en": "Loudness only"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "F0 là dấu hiệu chính; chất giọng và độ dài hỗ trợ.",
+        "en": "F0 is the main cue; voice quality and duration support it."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Âm tiết kết thúc bằng /p t k/ chỉ đi với những thanh nào?",
+        "en": "Which tones can syllables ending in /p t k/ take?"
+      },
+      "options": [
+        {
+          "vi": "Sắc và nặng",
+          "en": "Sắc and nặng"
+        },
+        {
+          "vi": "Mọi thanh",
+          "en": "All tones"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Âm tắc cuối không nhả giới hạn các thanh.",
+        "en": "Unreleased final stops restrict the tones."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Khác biệt chính giữa thanh điệu và ngữ điệu là?",
+        "en": "What is the main difference between tone and intonation?"
+      },
+      "options": [
+        {
+          "vi": "Thanh điệu gắn với âm tiết và đổi nghĩa từ; ngữ điệu bổ sung ý nghĩa cho cả câu",
+          "en": "Tone belongs to a syllable and changes word meaning; intonation adds meaning to the whole utterance"
+        },
+        {
+          "vi": "Không có khác biệt",
+          "en": "There is no difference"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Tiếng Việt có cả hai, chồng lên nhau.",
+        "en": "Vietnamese has both, laid over each other."
+      }
+    }
+  ]
+}

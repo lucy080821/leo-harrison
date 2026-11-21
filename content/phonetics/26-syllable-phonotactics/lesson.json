@@ -1,0 +1,84 @@
+{
+  "title": {
+    "vi": "Âm tiết và phối hợp âm (phonotactics)",
+    "en": "The syllable and phonotactics"
+  },
+  "summary": {
+    "vi": "Cấu trúc âm tiết tiếng Anh, độ vang và các ràng buộc",
+    "en": "English syllable structure, sonority and constraints"
+  },
+  "minutes": 12,
+  "module": "m5",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Cấu trúc âm tiết tối đa của tiếng Anh thường được viết là?",
+        "en": "The maximum English syllable structure is usually written as?"
+      },
+      "options": [
+        {
+          "vi": "(C)(C)(C)V(C)(C)(C)(C)",
+          "en": "(C)(C)(C)V(C)(C)(C)(C)"
+        },
+        {
+          "vi": "CV",
+          "en": "CV"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Tối đa 3 phụ âm đầu và 4 phụ âm cuối quanh một nguyên âm.",
+        "en": "A maximum of 3 initial and 4 final consonants around a vowel."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Trong \"strengths\", mấy phụ âm đứng đầu âm tiết?",
+        "en": "In \"strengths\", how many consonants begin the syllable?"
+      },
+      "options": [
+        {
+          "vi": "3 (str)",
+          "en": "3 (str)"
+        },
+        {
+          "vi": "1",
+          "en": "1"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Onset /str/ là cụm ba phụ âm; coda /ŋθs/ (hoặc /ŋkθs/) có thể tới 3 đến 4.",
+        "en": "The onset /str/ is a three-consonant cluster; the coda /ŋθs/ (or /ŋkθs/) can have 3 to 4."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Nguyên tắc độ vang (sonority) nói gì về âm tiết?",
+        "en": "What does the sonority principle say about a syllable?"
+      },
+      "options": [
+        {
+          "vi": "Độ vang tăng dần tới hạt nhân rồi giảm dần",
+          "en": "Sonority rises to the nucleus and then falls"
+        },
+        {
+          "vi": "Độ vang luôn bằng nhau",
+          "en": "Sonority is always equal"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Hạt nhân là đỉnh độ vang của âm tiết.",
+        "en": "The nucleus is the sonority peak of the syllable."
+      }
+    }
+  ]
+}

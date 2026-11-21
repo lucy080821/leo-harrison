@@ -1,0 +1,88 @@
+{
+  "title": {
+    "vi": "Chuỗi lời nói và các nhánh của ngữ âm học",
+    "en": "The speech chain and the branches of phonetics"
+  },
+  "summary": {
+    "vi": "Ngữ âm học nghiên cứu gì, khác âm vị học ở đâu và dùng để làm gì",
+    "en": "What phonetics studies, how it differs from phonology, and what it is for"
+  },
+  "minutes": 12,
+  "module": "m1",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Nhánh nào nghiên cứu sóng âm của lời nói (tần số, cường độ, thời gian)?",
+        "en": "Which branch studies the sound waves of speech (frequency, intensity, time)?"
+      },
+      "options": [
+        {
+          "vi": "Cấu âm",
+          "en": "Articulatory phonetics"
+        },
+        {
+          "vi": "Âm học",
+          "en": "Acoustic phonetics"
+        },
+        {
+          "vi": "Thính học",
+          "en": "Auditory phonetics"
+        }
+      ],
+      "answer": 1,
+      "explain": {
+        "vi": "Âm học (acoustic phonetics) mô tả tín hiệu âm thanh; cấu âm nói về cách tạo âm; thính học nói về cách tai và não nhận biết.",
+        "en": "Acoustic phonetics describes the sound signal; articulatory phonetics is about production; auditory phonetics is about how the ear and brain perceive."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Điều nào mô tả đúng sự khác nhau giữa ngữ âm học và âm vị học?",
+        "en": "Which correctly describes the difference between phonetics and phonology?"
+      },
+      "options": [
+        {
+          "vi": "Ngữ âm học mô tả lời nói như hiện tượng vật lý và sinh lý; âm vị học nghiên cứu hệ thống âm trong ngôn ngữ",
+          "en": "Phonetics describes speech as a physical and physiological event; phonology studies the sound system of a language"
+        },
+        {
+          "vi": "Hai ngành hoàn toàn giống nhau",
+          "en": "The two fields are identical"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Hai ngành bổ sung cho nhau: ngữ âm học cung cấp dữ liệu, âm vị học tìm hệ thống đằng sau dữ liệu.",
+        "en": "They complement each other: phonetics supplies the data, phonology looks for the system behind it."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Trọng âm, nhịp điệu và ngữ điệu thuộc phạm trù nào?",
+        "en": "Which category do stress, rhythm and intonation belong to?"
+      },
+      "options": [
+        {
+          "vi": "Âm đoạn (segmental)",
+          "en": "Segmental"
+        },
+        {
+          "vi": "Siêu đoạn (suprasegmental)",
+          "en": "Suprasegmental"
+        }
+      ],
+      "answer": 1,
+      "explain": {
+        "vi": "Các hiện tượng trải dài trên nhiều âm đoạn gọi là siêu đoạn.",
+        "en": "Phenomena that extend over more than one segment are suprasegmental."
+      }
+    }
+  ]
+}

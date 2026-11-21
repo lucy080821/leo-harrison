@@ -1,0 +1,84 @@
+{
+  "title": {
+    "vi": "Âm vị, biến thể và phân tích âm vị",
+    "en": "Phonemes, allophones and phonemic analysis"
+  },
+  "summary": {
+    "vi": "Cặp tối thiểu, phân bố bổ sung, biến thể tự do và trung hoà",
+    "en": "Minimal pairs, complementary distribution, free variation and neutralisation"
+  },
+  "minutes": 14,
+  "module": "m6",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Hai âm là biến thể của cùng một âm vị khi chúng ở trong?",
+        "en": "Two sounds are allophones of one phoneme when they are in?"
+      },
+      "options": [
+        {
+          "vi": "Phân bố bổ sung (môi trường loại trừ nhau)",
+          "en": "Complementary distribution (mutually exclusive environments)"
+        },
+        {
+          "vi": "Cặp tối thiểu",
+          "en": "A minimal pair"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Nếu hai âm tạo cặp tối thiểu thì chúng là hai âm vị khác nhau.",
+        "en": "If two sounds form a minimal pair, they are different phonemes."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Trong tiếng Việt, \"tai\" [tai] và \"thai\" [tʰai] cho thấy điều gì?",
+        "en": "In Vietnamese, \"tai\" [tai] versus \"thai\" [tʰai] shows what?"
+      },
+      "options": [
+        {
+          "vi": "/t/ và /tʰ/ là hai âm vị khác nhau",
+          "en": "/t/ and /tʰ/ are different phonemes"
+        },
+        {
+          "vi": "Chúng là biến thể của một âm vị",
+          "en": "They are allophones of one phoneme"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Chúng tạo cặp tối thiểu trong tiếng Việt; trong tiếng Anh thì không.",
+        "en": "They form a minimal pair in Vietnamese; in English they do not."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Trung hoà (neutralisation) là gì?",
+        "en": "What is neutralisation?"
+      },
+      "options": [
+        {
+          "vi": "Sự mất đối lập giữa hai âm vị ở một vị trí nhất định",
+          "en": "The loss of contrast between two phonemes in a certain position"
+        },
+        {
+          "vi": "Làm mềm một âm",
+          "en": "Softening a sound"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Ví dụ tiếng Đức: ở cuối từ /d/ và /t/ đều thành [t] (Rad, Rat).",
+        "en": "For example in German: word-finally /d/ and /t/ both become [t] (Rad, Rat)."
+      }
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "title": {
+    "vi": "Ôn tập: Ngữ âm học tiếng Anh",
+    "en": "Review: English phonetics"
+  },
+  "summary": {
+    "vi": "Vài câu hỏi nhẹ nhàng để nhớ lại, không tính điểm",
+    "en": "A few gentle questions to recall, no score"
+  },
+  "minutes": 7,
+  "module": "m5",
+  "kind": "practice",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Từ khoá LOT trong GA có nguyên âm nào?",
+        "en": "Which vowel does LOT have in GA?"
+      },
+      "options": [
+        {
+          "vi": "/ɑ/",
+          "en": "/ɑ/"
+        },
+        {
+          "vi": "/ɒ/",
+          "en": "/ɒ/"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "GA gộp LOT và PALM thành /ɑ/.",
+        "en": "GA merges LOT and PALM into /ɑ/."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Âm vỗ [ɾ] xuất hiện ở đâu?",
+        "en": "Where does the flap [ɾ] appear?"
+      },
+      "options": [
+        {
+          "vi": "GA, /t d/ giữa nguyên âm trước âm tiết không nhấn",
+          "en": "GA, /t d/ between vowels before an unstressed syllable"
+        },
+        {
+          "vi": "RP, /p/ đầu từ",
+          "en": "RP, word-initial /p/"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "later [ˈɫeɪɾɚ].",
+        "en": "later [ˈɫeɪɾɚ]."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Cấu trúc âm tiết tối đa của tiếng Anh?",
+        "en": "Maximum English syllable structure?"
+      },
+      "options": [
+        {
+          "vi": "(C)³V(C)⁴",
+          "en": "(C)³V(C)⁴"
+        },
+        {
+          "vi": "CV",
+          "en": "CV"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Tối đa 3 phụ âm đầu, 4 phụ âm cuối.",
+        "en": "Up to 3 initial and 4 final consonants."
+      }
+    },
+    {
+      "id": "q4",
+      "type": "choice",
+      "q": {
+        "vi": "Dạng yếu của \"and\" là?",
+        "en": "The weak form of \"and\" is?"
+      },
+      "options": [
+        {
+          "vi": "/ən/ hoặc /n̩/",
+          "en": "/ən/ or /n̩/"
+        },
+        {
+          "vi": "/ænd/",
+          "en": "/ænd/"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Dạng mạnh là /ænd/.",
+        "en": "The strong form is /ænd/."
+      }
+    },
+    {
+      "id": "q5",
+      "type": "choice",
+      "q": {
+        "vi": "Nhãn ToBI nào gần với câu hỏi Yes/No lên giọng?",
+        "en": "Which ToBI sequence is typical of a rising Yes/No question?"
+      },
+      "options": [
+        {
+          "vi": "L* H-H%",
+          "en": "L* H-H%"
+        },
+        {
+          "vi": "H* L-L%",
+          "en": "H* L-L%"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "H* L-L% là câu trần thuật xuống giọng.",
+        "en": "H* L-L% is a falling statement."
+      }
+    }
+  ]
+}

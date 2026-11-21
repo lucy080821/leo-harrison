@@ -1,0 +1,130 @@
+{
+  "title": {
+    "vi": "Ôn tập: Thính học và tri nhận",
+    "en": "Review: Auditory phonetics and perception"
+  },
+  "summary": {
+    "vi": "Vài câu hỏi nhẹ nhàng để nhớ lại, không tính điểm",
+    "en": "A few gentle questions to recall, no score"
+  },
+  "minutes": 7,
+  "module": "m4",
+  "kind": "practice",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Màng nền ở đâu và làm gì?",
+        "en": "Where is the basilar membrane and what does it do?"
+      },
+      "options": [
+        {
+          "vi": "Trong ốc tai; rung ở vị trí khác nhau theo tần số",
+          "en": "In the cochlea; vibrates at different places by frequency"
+        },
+        {
+          "vi": "Ở tai ngoài; khuếch đại âm",
+          "en": "In the outer ear; amplifies sound"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Đó là sự phân tích tần số đầu tiên của tai.",
+        "en": "That is the ear's first frequency analysis."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Thang nào gần với cảm nhận cao độ hơn Hz?",
+        "en": "Which scale is closer to perceived pitch than Hz?"
+      },
+      "options": [
+        {
+          "vi": "Mel hoặc Bark",
+          "en": "Mel or Bark"
+        },
+        {
+          "vi": "Giây",
+          "en": "Seconds"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Hai thang này nén các tần số cao.",
+        "en": "Both compress high frequencies."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Đường cong nhận dạng trong thí nghiệm VOT có dạng gì?",
+        "en": "What shape is the identification curve in the VOT experiment?"
+      },
+      "options": [
+        {
+          "vi": "Chữ S rất dốc",
+          "en": "A steep S"
+        },
+        {
+          "vi": "Đường thẳng",
+          "en": "A straight line"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Chuyển đột ngột ở ranh giới phạm trù.",
+        "en": "An abrupt switch at the category boundary."
+      }
+    },
+    {
+      "id": "q4",
+      "type": "choice",
+      "q": {
+        "vi": "Thiếu tính bất biến nghĩa là?",
+        "en": "What does lack of invariance mean?"
+      },
+      "options": [
+        {
+          "vi": "Không có dấu hiệu âm học cố định cho mỗi âm",
+          "en": "There is no fixed acoustic cue for each sound"
+        },
+        {
+          "vi": "Âm luôn giống nhau",
+          "en": "Sounds are always the same"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Do đồng cấu âm và khác biệt giữa người nói.",
+        "en": "Due to coarticulation and differences between speakers."
+      }
+    },
+    {
+      "id": "q5",
+      "type": "choice",
+      "q": {
+        "vi": "Hiệu ứng McGurk cho thấy gì?",
+        "en": "What does the McGurk effect show?"
+      },
+      "options": [
+        {
+          "vi": "Thị giác ảnh hưởng đến âm nghe được",
+          "en": "Vision influences what is heard"
+        },
+        {
+          "vi": "Âm thanh không quan trọng",
+          "en": "Sound doesn't matter"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Tri nhận lời nói là đa giác quan.",
+        "en": "Speech perception is multisensory."
+      }
+    }
+  ]
+}

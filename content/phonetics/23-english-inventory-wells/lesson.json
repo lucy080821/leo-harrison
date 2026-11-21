@@ -1,0 +1,84 @@
+{
+  "title": {
+    "vi": "Hệ thống âm của RP và GA",
+    "en": "The sound systems of RP and GA"
+  },
+  "summary": {
+    "vi": "Danh sách âm vị tiếng Anh và bộ từ khoá Wells để so sánh các giọng",
+    "en": "The English phoneme inventory and Wells' lexical sets for comparing accents"
+  },
+  "minutes": 14,
+  "module": "m5",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Bộ từ khoá (lexical set) của Wells dùng để làm gì?",
+        "en": "What are Wells' lexical sets used for?"
+      },
+      "options": [
+        {
+          "vi": "Gọi tên các lớp từ có cùng nguyên âm để so sánh giữa các giọng",
+          "en": "To name classes of words sharing a vowel so that accents can be compared"
+        },
+        {
+          "vi": "Liệt kê từ hay nhất",
+          "en": "To list the best words"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Ví dụ TRAP, BATH, LOT là các \"từ khoá\" chỉ cả lớp từ.",
+        "en": "For example TRAP, BATH, LOT are \"keywords\" standing for whole classes."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Từ khoá BATH trong RP và GA lần lượt có nguyên âm nào?",
+        "en": "What are the vowels of BATH in RP and GA respectively?"
+      },
+      "options": [
+        {
+          "vi": "/ɑː/ và /æ/",
+          "en": "/ɑː/ and /æ/"
+        },
+        {
+          "vi": "/æ/ và /ɑː/",
+          "en": "/æ/ and /ɑː/"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "RP: bath /bɑːθ/; GA: bath /bæθ/.",
+        "en": "RP: bath /bɑːθ/; GA: bath /bæθ/."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "GA gộp LOT và PALM thành một nguyên âm. Đó là nguyên âm nào?",
+        "en": "GA merges LOT and PALM into one vowel. Which?"
+      },
+      "options": [
+        {
+          "vi": "/ɑ/",
+          "en": "/ɑ/"
+        },
+        {
+          "vi": "/ɒ/",
+          "en": "/ɒ/"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Trong GA, hot và palm đều có /ɑ/.",
+        "en": "In GA, hot and palm both have /ɑ/."
+      }
+    }
+  ]
+}

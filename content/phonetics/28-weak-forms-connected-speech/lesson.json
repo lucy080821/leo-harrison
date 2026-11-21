@@ -1,0 +1,84 @@
+{
+  "title": {
+    "vi": "Dạng yếu và lời nói liền mạch",
+    "en": "Weak forms and connected speech"
+  },
+  "summary": {
+    "vi": "Từ chức năng, nối âm, lược âm, đồng hoá và hoà âm",
+    "en": "Function words, linking, elision, assimilation and coalescence"
+  },
+  "minutes": 13,
+  "module": "m5",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Dạng yếu thông thường của \"to\" là?",
+        "en": "The usual weak form of \"to\" is?"
+      },
+      "options": [
+        {
+          "vi": "/tə/",
+          "en": "/tə/"
+        },
+        {
+          "vi": "/tuː/",
+          "en": "/tuː/"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Dạng mạnh /tuː/ dùng khi nhấn hoặc đứng cuối câu.",
+        "en": "The strong form /tuː/ is used when stressed or sentence-final."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "\"Did you\" nói nhanh thành /ˈdɪdʒu/ là hiện tượng nào?",
+        "en": "\"Did you\" said fast as /ˈdɪdʒu/ is which process?"
+      },
+      "options": [
+        {
+          "vi": "Hoà âm (coalescence)",
+          "en": "Coalescence"
+        },
+        {
+          "vi": "Lược âm (elision)",
+          "en": "Elision"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "/d/ + /j/ hoà thành /dʒ/.",
+        "en": "/d/ + /j/ merge into /dʒ/."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "\"Good boy\" → /ɡʊb bɔɪ/ là ví dụ của?",
+        "en": "\"Good boy\" → /ɡʊb bɔɪ/ is an example of?"
+      },
+      "options": [
+        {
+          "vi": "Đồng hoá về vị trí (assimilation)",
+          "en": "Place assimilation"
+        },
+        {
+          "vi": "Nối /r/",
+          "en": "Linking /r/"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "/d/ lợi trở thành /b/ hai môi theo /b/ kế sau.",
+        "en": "Alveolar /d/ becomes bilabial /b/ before following /b/."
+      }
+    }
+  ]
+}

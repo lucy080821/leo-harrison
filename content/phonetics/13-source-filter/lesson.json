@@ -1,0 +1,84 @@
+{
+  "title": {
+    "vi": "Mô hình nguồn - bộ lọc và formant",
+    "en": "The source-filter model and formants"
+  },
+  "summary": {
+    "vi": "Vì sao cùng một dây thanh lại tạo ra các nguyên âm khác nhau",
+    "en": "Why the same vocal folds produce different vowels"
+  },
+  "minutes": 14,
+  "module": "m3",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Trong mô hình nguồn-lọc, \"bộ lọc\" của nguyên âm là gì?",
+        "en": "In the source-filter model, what is the \"filter\" for a vowel?"
+      },
+      "options": [
+        {
+          "vi": "Đường dẫn âm trên thanh quản",
+          "en": "The supralaryngeal vocal tract"
+        },
+        {
+          "vi": "Dây thanh",
+          "en": "The vocal folds"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Dây thanh là nguồn; đường dẫn âm là bộ lọc cộng hưởng tạo formant.",
+        "en": "The vocal folds are the source; the vocal tract is the resonating filter producing formants."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Một ống dài 17,5 cm, đóng ở một đầu, có cộng hưởng thứ nhất ≈ ?",
+        "en": "A 17.5 cm tube closed at one end has a first resonance of about?"
+      },
+      "options": [
+        {
+          "vi": "500 Hz",
+          "en": "500 Hz"
+        },
+        {
+          "vi": "5000 Hz",
+          "en": "5000 Hz"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "F1 = c/(4L) = 35000/(4·17,5) = 500 Hz; các cộng hưởng sau là 1500, 2500 Hz.",
+        "en": "F1 = c/(4L) = 35000/(4·17.5) = 500 Hz; the next are 1500 and 2500 Hz."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Hai người nói cùng nguyên âm [a] ở cao độ khác nhau. Điều gì giữ nguyên?",
+        "en": "Two people say the same vowel [a] at different pitches. What stays the same?"
+      },
+      "options": [
+        {
+          "vi": "Vị trí các formant",
+          "en": "The positions of the formants"
+        },
+        {
+          "vi": "F0",
+          "en": "F0"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "F0 đến từ nguồn; formant đến từ hình dạng đường dẫn âm.",
+        "en": "F0 comes from the source; formants from the shape of the tract."
+      }
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "title": {
+    "vi": "Nguyên âm và nguyên âm chuẩn",
+    "en": "Vowels and the cardinal vowels"
+  },
+  "summary": {
+    "vi": "Mô tả nguyên âm theo độ cao, độ trước-sau và độ tròn môi; bảng nguyên âm IPA",
+    "en": "Describing vowels by height, backness and rounding; the IPA vowel chart"
+  },
+  "minutes": 13,
+  "module": "m2",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Nguyên âm chuẩn số 1 [i] có đặc điểm nào?",
+        "en": "What are the features of cardinal vowel 1 [i]?"
+      },
+      "options": [
+        {
+          "vi": "Khép, trước, môi dẹt",
+          "en": "Close, front, unrounded"
+        },
+        {
+          "vi": "Mở, sau, tròn môi",
+          "en": "Open, back, rounded"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "[i] có lưỡi cao nhất và ở phía trước nhất, môi dẹt.",
+        "en": "[i] has the tongue as high and as far forward as possible, with spread lips."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Nguyên âm chuẩn thứ cấp 9 đến 16 là gì so với 1 đến 8?",
+        "en": "What are secondary cardinal vowels 9 to 16 relative to 1 to 8?"
+      },
+      "options": [
+        {
+          "vi": "Cùng vị trí lưỡi nhưng đổi tròn môi thành dẹt và ngược lại",
+          "en": "The same tongue position with rounding reversed"
+        },
+        {
+          "vi": "Các nguyên âm của tiếng Anh",
+          "en": "The vowels of English"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Ví dụ [y] là phiên bản tròn môi của [i].",
+        "en": "For example [y] is the rounded counterpart of [i]."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Bốn tiêu chí nào đủ để mô tả một nguyên âm đơn?",
+        "en": "Which criteria suffice to describe a monophthong?"
+      },
+      "options": [
+        {
+          "vi": "Độ cao, độ trước-sau, tròn môi (và độ dài)",
+          "en": "Height, backness, rounding (and length)"
+        },
+        {
+          "vi": "Chỉ độ dài",
+          "en": "Length only"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Ba tiêu chí cấu âm cộng độ dài là đủ trong hầu hết trường hợp.",
+        "en": "The three articulatory criteria plus length are enough in most cases."
+      }
+    }
+  ]
+}

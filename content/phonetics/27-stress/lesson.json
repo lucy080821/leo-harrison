@@ -1,0 +1,84 @@
+{
+  "title": {
+    "vi": "Trọng âm từ tiếng Anh",
+    "en": "English word stress"
+  },
+  "summary": {
+    "vi": "Trọng âm chính và phụ, xu hướng đặt trọng âm, và giả thuyết nhịp theo trọng âm",
+    "en": "Primary and secondary stress, tendencies of placement, and the stress-timing hypothesis"
+  },
+  "minutes": 13,
+  "module": "m5",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Trọng âm chính của \"photography\" ở âm tiết nào?",
+        "en": "On which syllable is the primary stress of \"photography\"?"
+      },
+      "options": [
+        {
+          "vi": "Âm thứ hai: /fəˈtɒɡrəfi/",
+          "en": "The second: /fəˈtɒɡrəfi/"
+        },
+        {
+          "vi": "Âm đầu: /ˈfəʊtəɡrɑːf/",
+          "en": "The first: /ˈfəʊtəɡrɑːf/"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Khi thêm đuôi -y, trọng âm dịch chuyển: photograph /ˈfəʊtəɡrɑːf/ nhưng photography /fəˈtɒɡrəfi/.",
+        "en": "With the suffix -y, the stress shifts: photograph /ˈfəʊtəɡrɑːf/ but photography /fəˈtɒɡrəfi/."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Cặp danh từ-động từ như \"record\" khác nhau ở?",
+        "en": "Noun-verb pairs like \"record\" differ in?"
+      },
+      "options": [
+        {
+          "vi": "Vị trí trọng âm",
+          "en": "The position of stress"
+        },
+        {
+          "vi": "Chính tả",
+          "en": "Spelling"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Danh từ /ˈrekɔːd/, động từ /rɪˈkɔːd/.",
+        "en": "Noun /ˈrekɔːd/, verb /rɪˈkɔːd/."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Giả thuyết \"stress-timed\" cho rằng điều gì?",
+        "en": "What does the \"stress-timed\" hypothesis claim?"
+      },
+      "options": [
+        {
+          "vi": "Các âm tiết nhấn cách đều nhau về thời gian",
+          "en": "Stressed syllables occur at roughly equal time intervals"
+        },
+        {
+          "vi": "Mọi âm tiết có độ dài bằng nhau",
+          "en": "All syllables have equal length"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Đây là giả thuyết; đo đạc cho thấy sự đều đặn không tuyệt đối.",
+        "en": "It is a hypothesis; measurements show regularity is not absolute."
+      }
+    }
+  ]
+}

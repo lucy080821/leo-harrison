@@ -1,0 +1,84 @@
+{
+  "title": {
+    "vi": "Dấu phụ và cấu âm phụ",
+    "en": "Diacritics and secondary articulation"
+  },
+  "summary": {
+    "vi": "Cách ghi chi tiết bằng dấu phụ: bật hơi, môi hoá, ngạc hoá, ngạc mềm hoá, âm tiết tính",
+    "en": "Narrow transcription with diacritics: aspiration, labialisation, palatalisation, velarisation, syllabicity"
+  },
+  "minutes": 11,
+  "module": "m2",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Dấu ʰ trong [pʰ] cho biết điều gì?",
+        "en": "What does the mark ʰ in [pʰ] show?"
+      },
+      "options": [
+        {
+          "vi": "Âm bật hơi (aspirated)",
+          "en": "Aspiration"
+        },
+        {
+          "vi": "Âm môi hoá",
+          "en": "Labialisation"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "ʰ là chữ nhỏ \"h\" ghi sự bật hơi.",
+        "en": "ʰ is the small \"h\" for aspiration."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "\"l tối\" [ɫ] của tiếng Anh là ví dụ của cấu âm phụ nào?",
+        "en": "English \"dark l\" [ɫ] is an example of which secondary articulation?"
+      },
+      "options": [
+        {
+          "vi": "Ngạc mềm hoá / họng hoá (velarisation)",
+          "en": "Velarisation / pharyngealisation"
+        },
+        {
+          "vi": "Môi hoá",
+          "en": "Labialisation"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Gốc lưỡi lùi về phía vòm mềm hoặc họng, tạo màu âm \"tối\".",
+        "en": "The back of the tongue retracts towards the velum or pharynx, giving a \"dark\" colour."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "[n̩] (như trong button [ˈbʌʔn̩]) cho biết điều gì?",
+        "en": "What does [n̩] (as in button [ˈbʌʔn̩]) show?"
+      },
+      "options": [
+        {
+          "vi": "Phụ âm tự làm hạt nhân âm tiết (âm tiết tính)",
+          "en": "A consonant forming the syllable nucleus (syllabic)"
+        },
+        {
+          "vi": "Phụ âm dài",
+          "en": "A long consonant"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Dấu gạch dưới nhỏ chỉ phụ âm đóng vai trò nguyên âm của âm tiết.",
+        "en": "The small mark below shows a consonant acting as the syllable's vowel."
+      }
+    }
+  ]
+}

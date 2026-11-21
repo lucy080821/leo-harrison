@@ -1,0 +1,84 @@
+{
+  "title": {
+    "vi": "Âm học của phụ âm và VOT",
+    "en": "The acoustics of consonants and VOT"
+  },
+  "summary": {
+    "vi": "Âm tắc, âm xát, âm mũi, âm tiếp cận và thời gian bắt đầu thanh giọng",
+    "en": "Stops, fricatives, nasals, approximants and voice onset time"
+  },
+  "minutes": 14,
+  "module": "m3",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "VOT là gì?",
+        "en": "What is VOT?"
+      },
+      "options": [
+        {
+          "vi": "Khoảng thời gian từ lúc nhả âm tắc đến lúc dây thanh bắt đầu rung",
+          "en": "The time from the release of a stop to the onset of vocal fold vibration"
+        },
+        {
+          "vi": "Độ dài của nguyên âm",
+          "en": "The duration of a vowel"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "VOT dương nghĩa là thanh giọng bắt đầu sau lúc nhả; VOT âm nghĩa là bắt đầu trước.",
+        "en": "A positive VOT means voicing starts after the release; a negative VOT means before."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Trong tiếng Anh, /p t k/ đầu từ điển hình thuộc loại VOT nào?",
+        "en": "Which VOT category is typical for word-initial English /p t k/?"
+      },
+      "options": [
+        {
+          "vi": "Trễ dài (bật hơi)",
+          "en": "Long lag (aspirated)"
+        },
+        {
+          "vi": "Sớm thanh",
+          "en": "Voicing lead"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Đó là âm vô thanh bật hơi. /b d g/ thường có trễ ngắn, đôi khi sớm thanh.",
+        "en": "These are voiceless aspirated stops. /b d g/ usually have short lag, sometimes lead."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Âm xát /s/ khác /θ/ ở phổ ra sao?",
+        "en": "How does the spectrum of fricative /s/ differ from /θ/?"
+      },
+      "options": [
+        {
+          "vi": "/s/ (âm rít) có năng lượng mạnh ở tần số cao; /θ/ yếu và phẳng",
+          "en": "/s/ (a sibilant) has strong high-frequency energy; /θ/ is weak and flat"
+        },
+        {
+          "vi": "Giống hệt nhau",
+          "en": "They are identical"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Âm rít có tiếng xát mạnh; âm không rít yếu hơn nhiều.",
+        "en": "Sibilants have strong frication; non-sibilants are much weaker."
+      }
+    }
+  ]
+}

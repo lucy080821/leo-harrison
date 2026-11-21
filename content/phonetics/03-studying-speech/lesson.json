@@ -1,0 +1,84 @@
+{
+  "title": {
+    "vi": "Cách nghiên cứu lời nói",
+    "en": "How speech is studied"
+  },
+  "summary": {
+    "vi": "Nghe và phiên âm, đo đạc bằng thiết bị, thí nghiệm tri nhận và ngữ liệu",
+    "en": "Listening and transcribing, instrumental measurement, perception experiments and corpora"
+  },
+  "minutes": 10,
+  "module": "m1",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Phân tích bằng tai và phiên âm tay thường được gọi là gì?",
+        "en": "What is analysis by ear and hand transcription usually called?"
+      },
+      "options": [
+        {
+          "vi": "Phân tích ấn tượng (impressionistic)",
+          "en": "Impressionistic analysis"
+        },
+        {
+          "vi": "Phân tích thiết bị (instrumental)",
+          "en": "Instrumental analysis"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Phân tích ấn tượng dựa trên khả năng nghe của nhà ngữ âm; phân tích thiết bị dựa trên số đo.",
+        "en": "Impressionistic analysis relies on the phonetician's ear; instrumental analysis relies on measurements."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Điện cực quanh thanh quản để theo dõi dây thanh gọi là?",
+        "en": "What is the technique that uses electrodes on the neck to track vocal fold contact?"
+      },
+      "options": [
+        {
+          "vi": "Electroglottography (EGG)",
+          "en": "Electroglottography (EGG)"
+        },
+        {
+          "vi": "Siêu âm lưỡi",
+          "en": "Tongue ultrasound"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "EGG đo sự tiếp xúc của hai dây thanh qua điện trở ở cổ.",
+        "en": "EGG measures vocal fold contact through electrical impedance at the neck."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Điều nào là một nguyên tắc đạo đức cơ bản khi ghi âm người tham gia?",
+        "en": "Which is a basic ethical principle when recording participants?"
+      },
+      "options": [
+        {
+          "vi": "Xin phép (đồng ý có hiểu biết) và bảo vệ thông tin",
+          "en": "Informed consent and protecting their information"
+        },
+        {
+          "vi": "Chỉ cần ghi âm, không cần nói gì",
+          "en": "Just record, no need to say anything"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Người tham gia cần biết mục đích, quyền rút lui và cách dữ liệu được dùng.",
+        "en": "Participants need to know the purpose, the right to withdraw and how data will be used."
+      }
+    }
+  ]
+}

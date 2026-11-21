@@ -7,8 +7,8 @@ export const englishCourses: EnglishCourse[] = [
     id: "phonetics",
     name: { vi: "Ngữ âm học tiếng Anh", en: "English Phonetics" },
     desc: {
-      vi: "Hiểu âm thanh tiếng Anh được tạo ra thế nào, từ từng âm đến trọng âm và ngữ điệu. Dạy song song giọng Anh-Anh và Anh-Mỹ, nhẹ nhàng cho người mới và đủ sâu cho giáo viên.",
-      en: "Understand how English sounds are made, from single sounds to stress and intonation. British and American accents side by side, gentle for beginners and deep enough for teachers.",
+      vi: "Giáo trình ngữ âm học cho sinh viên ngành ngôn ngữ và giáo viên: cấu âm, âm học, thính học, ngữ âm tiếng Anh (Anh-Anh và Anh-Mỹ), âm vị học và đối chiếu với tiếng Việt. Có công cụ tương tác ngay trong trình duyệt.",
+      en: "A phonetics course for linguistics students and teachers: articulatory, acoustic and auditory phonetics, English phonetics (British and American), phonology and contrast with Vietnamese. With interactive tools right in the browser.",
     },
   },
 ];
@@ -17,31 +17,14 @@ export type Module = { id: string; title: L10n; desc: L10n };
 
 /** Các module của khoá ngữ âm. Bài thuộc module nào được khai báo trong lesson.json ("module"). */
 export const phoneticsModules: Module[] = [
-  {
-    id: "m1",
-    title: { vi: "Làm quen với âm thanh", en: "Getting to know sounds" },
-    desc: { vi: "Âm khác chữ thế nào, cơ quan phát âm và cách đọc IPA.", en: "How sounds differ from letters, the speech organs and reading IPA." },
-  },
-  {
-    id: "m2",
-    title: { vi: "Phụ âm", en: "Consonants" },
-    desc: { vi: "Bản đồ phụ âm, những âm khó với người Việt, âm cuối và cụm phụ âm.", en: "The consonant map, sounds that are hard for Vietnamese speakers, final consonants and clusters." },
-  },
-  {
-    id: "m3",
-    title: { vi: "Nguyên âm", en: "Vowels" },
-    desc: { vi: "Bảng nguyên âm, ngắn và dài, nguyên âm đôi, và Anh-Anh khác Anh-Mỹ ra sao.", en: "The vowel chart, short and long vowels, diphthongs, and how British and American differ." },
-  },
-  {
-    id: "m4",
-    title: { vi: "Từ và câu", en: "Words and sentences" },
-    desc: { vi: "Trọng âm, nhịp điệu, dạng yếu, nói liền mạch và ngữ điệu.", en: "Stress, rhythm, weak forms, connected speech and intonation." },
-  },
-  {
-    id: "m5",
-    title: { vi: "Nhìn sâu hơn (cho giáo viên)", en: "A closer look (for teachers)" },
-    desc: { vi: "Âm vị và biến thể, so sánh tiếng Việt với tiếng Anh, và cách dạy phát âm.", en: "Phonemes and allophones, comparing Vietnamese with English, and how to teach pronunciation." },
-  },
+  { id: "m1", title: { vi: "Nhập môn", en: "Foundations" }, desc: { vi: "Chuỗi lời nói, phiên âm, bảng IPA và cách nghiên cứu lời nói.", en: "The speech chain, transcription, the IPA chart and how speech is studied." } },
+  { id: "m2", title: { vi: "Cấu âm", en: "Articulatory phonetics" }, desc: { vi: "Cơ quan phát âm, luồng hơi, phát thanh, phụ âm, nguyên âm, dấu phụ và đồng cấu âm.", en: "Speech organs, airstreams, phonation, consonants, vowels, diacritics and coarticulation." } },
+  { id: "m3", title: { vi: "Âm học", en: "Acoustic phonetics" }, desc: { vi: "Sóng âm, nguồn và bộ lọc, phổ đồ, formant, VOT và thực hành với Praat.", en: "Sound waves, source and filter, spectrograms, formants, VOT and hands-on Praat." } },
+  { id: "m4", title: { vi: "Thính học và tri nhận", en: "Auditory phonetics and perception" }, desc: { vi: "Tai nghe thế nào, các dấu hiệu âm học, tri nhận phạm trù và các lý thuyết.", en: "How the ear works, acoustic cues, categorical perception and theories." } },
+  { id: "m5", title: { vi: "Ngữ âm học tiếng Anh", en: "English phonetics" }, desc: { vi: "Hệ thống âm RP và GA, biến thể, âm tiết, trọng âm, nói liền mạch và ngữ điệu.", en: "The RP and GA systems, allophones, syllables, stress, connected speech and intonation." } },
+  { id: "m6", title: { vi: "Âm vị học nhập môn", en: "Introduction to phonology" }, desc: { vi: "Âm vị, đặc trưng khu biệt, quy tắc âm vị và biến đổi âm.", en: "Phonemes, distinctive features, phonological rules and sound change." } },
+  { id: "m7", title: { vi: "Đối chiếu Việt - Anh", en: "Vietnamese and English contrasted" }, desc: { vi: "Ngữ âm tiếng Việt, thanh điệu, phân tích đối chiếu và khả năng hiểu nhau.", en: "Vietnamese phonetics, tones, contrastive analysis and intelligibility." } },
+  { id: "m8", title: { vi: "Ứng dụng và nghiên cứu", en: "Application and research" }, desc: { vi: "Dạy phát âm, thiết kế nghiên cứu nhỏ, bài cuối khoá và thuật ngữ.", en: "Teaching pronunciation, designing a small study, the capstone and the glossary." } },
 ];
 
 export const quizText = {

@@ -147,8 +147,8 @@ export const t = {
   } as L10n,
   english: { vi: "Tiếng Anh chuyên sâu", en: "Advanced English" } as L10n,
   englishDesc: {
-    vi: "Ngữ âm học tiếng Anh: từ cơ quan phát âm và IPA đến trọng âm, ngữ điệu. Giọng Anh-Anh và Anh-Mỹ song song, đọc nhẹ nhàng.",
-    en: "English phonetics: from the speech organs and IPA to stress and intonation. British and American side by side, in an easy read.",
+    vi: "Ngữ âm học tiếng Anh: cấu âm, âm học, thính học, âm vị học và đối chiếu Việt - Anh. Giọng Anh-Anh và Anh-Mỹ song song.",
+    en: "English phonetics: articulatory, acoustic and auditory phonetics, phonology and Vietnamese-English contrast. British and American side by side.",
   } as L10n,
   soon: { vi: "Sắp ra mắt", en: "Coming soon" } as L10n,
   lessons: { vi: "bài học", en: "lessons" } as L10n,
@@ -174,8 +174,8 @@ export const t = {
   ] as L10n[],
   englishPageTitle: { vi: "Tiếng Anh chuyên sâu", en: "Advanced English" } as L10n,
   englishPageBody: {
-    vi: "Các khoá học tiếng Anh đi sâu hơn giáo trình thông thường. Khoá đầu tiên là ngữ âm học, viết dạng bài đọc nhẹ nhàng, có bài ôn nhỏ và không tính điểm.",
-    en: "English courses that go deeper than a usual textbook. The first is phonetics, written as easy reads with small review questions and no scores.",
+    vi: "Các khoá học tiếng Anh đi sâu hơn giáo trình thông thường. Khoá đầu tiên là ngữ âm học: một giáo trình cho sinh viên ngành ngôn ngữ và giáo viên, có công cụ tương tác, bài tập nhẹ nhàng và không tính điểm.",
+    en: "English courses that go deeper than a usual textbook. The first is phonetics: a course for linguistics students and teachers, with interactive tools and gentle exercises with no scores.",
   } as L10n,
   englishPageNow: {
     vi: "Trong lúc chờ, bạn có thể luyện tiếng Anh ngay trên Lucy Tutor.",

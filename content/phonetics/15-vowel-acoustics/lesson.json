@@ -1,0 +1,84 @@
+{
+  "title": {
+    "vi": "Âm học của nguyên âm",
+    "en": "The acoustics of vowels"
+  },
+  "summary": {
+    "vi": "F1 theo độ mở, F2 theo độ trước-sau, và biểu đồ nguyên âm",
+    "en": "F1 with height, F2 with backness, and the vowel chart"
+  },
+  "minutes": 14,
+  "module": "m3",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Nguyên âm mở như [a] có F1 như thế nào so với [i]?",
+        "en": "How is F1 of an open vowel like [a] compared with [i]?"
+      },
+      "options": [
+        {
+          "vi": "Cao hơn",
+          "en": "Higher"
+        },
+        {
+          "vi": "Thấp hơn",
+          "en": "Lower"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "F1 tăng khi lưỡi hạ thấp (miệng mở): [a] khoảng 730 Hz, [i] khoảng 270 Hz.",
+        "en": "F1 rises as the tongue lowers (mouth opens): [a] about 730 Hz, [i] about 270 Hz."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Nguyên âm trước như [i] có F2 như thế nào so với nguyên âm sau như [u]?",
+        "en": "How is F2 of a front vowel like [i] compared with a back vowel like [u]?"
+      },
+      "options": [
+        {
+          "vi": "Cao hơn rất nhiều",
+          "en": "Much higher"
+        },
+        {
+          "vi": "Thấp hơn",
+          "en": "Lower"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "[i] khoảng 2290 Hz; [u] khoảng 870 Hz.",
+        "en": "[i] about 2290 Hz; [u] about 870 Hz."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Âm /ɝ/ (bird, giọng Mỹ) nổi bật bởi dấu hiệu nào?",
+        "en": "What is the striking sign of /ɝ/ (bird, American)?"
+      },
+      "options": [
+        {
+          "vi": "F3 rất thấp (khoảng 1690 Hz)",
+          "en": "A very low F3 (about 1690 Hz)"
+        },
+        {
+          "vi": "F1 rất cao",
+          "en": "A very high F1"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "F3 thấp là đặc trưng của các âm /r/.",
+        "en": "A low F3 is characteristic of /r/-coloured sounds."
+      }
+    }
+  ]
+}

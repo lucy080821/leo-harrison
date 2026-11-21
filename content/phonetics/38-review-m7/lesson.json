@@ -1,0 +1,130 @@
+{
+  "title": {
+    "vi": "Ôn tập: Đối chiếu Việt - Anh",
+    "en": "Review: Vietnamese and English contrasted"
+  },
+  "summary": {
+    "vi": "Vài câu hỏi nhẹ nhàng để nhớ lại, không tính điểm",
+    "en": "A few gentle questions to recall, no score"
+  },
+  "minutes": 7,
+  "module": "m7",
+  "kind": "practice",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Chữ \"th\" tiếng Việt thường là âm nào?",
+        "en": "Which sound is Vietnamese \"th\" usually?"
+      },
+      "options": [
+        {
+          "vi": "/tʰ/ bật hơi",
+          "en": "Aspirated /tʰ/"
+        },
+        {
+          "vi": "/θ/",
+          "en": "/θ/"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Không có /θ/ trong tiếng Việt.",
+        "en": "Vietnamese has no /θ/."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Cấu trúc âm tiết tiếng Việt?",
+        "en": "Vietnamese syllable structure?"
+      },
+      "options": [
+        {
+          "vi": "(C)(w)V(G|C)+thanh điệu",
+          "en": "(C)(w)V(G|C)+tone"
+        },
+        {
+          "vi": "(C)³V(C)⁴",
+          "en": "(C)³V(C)⁴"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Không có cụm phụ âm; chỉ một phụ âm cuối.",
+        "en": "No clusters; only one final consonant."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Thanh điệu tiếng Việt khác ngữ điệu tiếng Anh ở?",
+        "en": "Vietnamese tone differs from English intonation in?"
+      },
+      "options": [
+        {
+          "vi": "Gắn với âm tiết và đổi nghĩa từ",
+          "en": "It belongs to the syllable and changes word meaning"
+        },
+        {
+          "vi": "Gắn với cả câu",
+          "en": "It belongs to the whole utterance"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Ngữ điệu bổ sung ý nghĩa cho cả câu.",
+        "en": "Intonation adds meaning to the whole utterance."
+      }
+    },
+    {
+      "id": "q4",
+      "type": "choice",
+      "q": {
+        "vi": "Theo lõi Jenkins, mục nào ưu tiên cao?",
+        "en": "In Jenkins' core, which gets high priority?"
+      },
+      "options": [
+        {
+          "vi": "Độ dài nguyên âm",
+          "en": "Vowel length"
+        },
+        {
+          "vi": "/θ ð/",
+          "en": "/θ ð/"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "/θ ð/ nằm ngoài lõi.",
+        "en": "/θ ð/ lies outside the core."
+      }
+    },
+    {
+      "id": "q5",
+      "type": "choice",
+      "q": {
+        "vi": "Liên ngôn ngữ là?",
+        "en": "What is interlanguage?"
+      },
+      "options": [
+        {
+          "vi": "Hệ thống tạm thời của người học giữa hai ngôn ngữ",
+          "en": "The learner's temporary system between two languages"
+        },
+        {
+          "vi": "Một loại tiếng lóng",
+          "en": "A kind of slang"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Selinker (1972).",
+        "en": "Selinker (1972)."
+      }
+    }
+  ]
+}

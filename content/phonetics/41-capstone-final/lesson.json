@@ -1,0 +1,191 @@
+{
+  "title": {
+    "vi": "Ôn tập: Bài cuối khoá",
+    "en": "Review: Final review"
+  },
+  "summary": {
+    "vi": "Vài câu hỏi nhẹ nhàng để nhớ lại, không tính điểm",
+    "en": "A few gentle questions to recall, no score"
+  },
+  "minutes": 15,
+  "module": "m8",
+  "kind": "practice",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "text",
+      "q": {
+        "vi": "Viết phiên âm của từ \"think\".",
+        "en": "Write the transcription of \"think\"."
+      },
+      "answers": [
+        "θɪŋk"
+      ],
+      "explain": {
+        "vi": "/θ/ + /ɪ/ + /ŋk/.",
+        "en": "/θ/ + /ɪ/ + /ŋk/."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Nguyên âm /i/ có F1 và F2 ra sao?",
+        "en": "What are F1 and F2 of /i/?"
+      },
+      "options": [
+        {
+          "vi": "F1 thấp, F2 cao",
+          "en": "Low F1, high F2"
+        },
+        {
+          "vi": "F1 cao, F2 thấp",
+          "en": "High F1, low F2"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Khoảng 270 và 2290 Hz ở giọng nam.",
+        "en": "About 270 and 2290 Hz for male voices."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Cửa sổ ~5 ms cho phổ đồ nào?",
+        "en": "Which spectrogram does a ~5 ms window give?"
+      },
+      "options": [
+        {
+          "vi": "Phổ rộng (thấy formant)",
+          "en": "Wideband (shows formants)"
+        },
+        {
+          "vi": "Phổ hẹp (thấy họa âm)",
+          "en": "Narrowband (shows harmonics)"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "30 ms cho phổ hẹp.",
+        "en": "30 ms gives narrowband."
+      }
+    },
+    {
+      "id": "q4",
+      "type": "choice",
+      "q": {
+        "vi": "VOT dương lớn đặc trưng cho âm nào?",
+        "en": "Which sound is characterised by a large positive VOT?"
+      },
+      "options": [
+        {
+          "vi": "/p t k/ đầu từ tiếng Anh",
+          "en": "Word-initial English /p t k/"
+        },
+        {
+          "vi": "/b d g/ tiếng Pháp",
+          "en": "French /b d g/"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Âm bật hơi (trễ dài).",
+        "en": "Aspirated stops (long lag)."
+      }
+    },
+    {
+      "id": "q5",
+      "type": "choice",
+      "q": {
+        "vi": "Từ khoá BATH trong GA có nguyên âm?",
+        "en": "BATH in GA has the vowel?"
+      },
+      "options": [
+        {
+          "vi": "/æ/",
+          "en": "/æ/"
+        },
+        {
+          "vi": "/ɑː/",
+          "en": "/ɑː/"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "RP là /ɑː/.",
+        "en": "RP has /ɑː/."
+      }
+    },
+    {
+      "id": "q6",
+      "type": "choice",
+      "q": {
+        "vi": "[pʰ] và [p] trong tiếng Anh là?",
+        "en": "[pʰ] and [p] in English are?"
+      },
+      "options": [
+        {
+          "vi": "Biến thể của /p/",
+          "en": "Allophones of /p/"
+        },
+        {
+          "vi": "Hai âm vị",
+          "en": "Two phonemes"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Phân bố bổ sung.",
+        "en": "Complementary distribution."
+      }
+    },
+    {
+      "id": "q7",
+      "type": "choice",
+      "q": {
+        "vi": "\"th\" tiếng Việt (thôi) thường là?",
+        "en": "Vietnamese \"th\" (thôi) is usually?"
+      },
+      "options": [
+        {
+          "vi": "/tʰ/",
+          "en": "/tʰ/"
+        },
+        {
+          "vi": "/θ/",
+          "en": "/θ/"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Tiếng Việt không có /θ/.",
+        "en": "Vietnamese has no /θ/."
+      }
+    },
+    {
+      "id": "q8",
+      "type": "choice",
+      "q": {
+        "vi": "Theo lõi Jenkins, mục nào ưu tiên cao?",
+        "en": "In Jenkins' core, which has high priority?"
+      },
+      "options": [
+        {
+          "vi": "Độ dài nguyên âm",
+          "en": "Vowel length"
+        },
+        {
+          "vi": "/θ ð/",
+          "en": "/θ ð/"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "/θ ð/ nằm ngoài lõi.",
+        "en": "/θ ð/ is outside the core."
+      }
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "title": {
+    "vi": "Tri nhận lời nói và các lý thuyết",
+    "en": "Speech perception and its theories"
+  },
+  "summary": {
+    "vi": "Dấu hiệu âm học, tri nhận phạm trù, lý thuyết vận động, hiệu ứng McGurk",
+    "en": "Acoustic cues, categorical perception, the motor theory and the McGurk effect"
+  },
+  "minutes": 14,
+  "module": "m4",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Tri nhận phạm trù (categorical perception) có nghĩa là?",
+        "en": "What does categorical perception mean?"
+      },
+      "options": [
+        {
+          "vi": "Người nghe chia một dải liên tục thành các nhóm riêng và phân biệt tốt hơn giữa các nhóm so với trong một nhóm",
+          "en": "Listeners divide a continuum into categories and discriminate better across than within categories"
+        },
+        {
+          "vi": "Mọi âm đều nghe giống nhau",
+          "en": "All sounds are heard as identical"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Ví dụ trong thí nghiệm VOT từ /ba/ sang /pa/.",
+        "en": "For example in the VOT experiments from /ba/ to /pa/."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "\"Thiếu tính bất biến\" (lack of invariance) là vấn đề gì?",
+        "en": "What is the \"lack of invariance\" problem?"
+      },
+      "options": [
+        {
+          "vi": "Cùng một âm có thể có tín hiệu âm học khác nhau tuỳ ngữ cảnh và người nói",
+          "en": "The same sound can have different acoustic signals depending on context and speaker"
+        },
+        {
+          "vi": "Âm không bao giờ thay đổi",
+          "en": "Sounds never change"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Một dấu hiệu âm học cố định cho mỗi âm không tồn tại.",
+        "en": "A fixed acoustic marker for each sound does not exist."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Hiệu ứng McGurk cho thấy điều gì?",
+        "en": "What does the McGurk effect show?"
+      },
+      "options": [
+        {
+          "vi": "Hình ảnh miệng ảnh hưởng đến âm ta nghe thấy",
+          "en": "The visible mouth influences the sound we hear"
+        },
+        {
+          "vi": "Tai không có vai trò gì",
+          "en": "The ear plays no role"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Tri nhận lời nói là đa giác quan, không chỉ nghe.",
+        "en": "Speech perception is multisensory, not just hearing."
+      }
+    }
+  ]
+}

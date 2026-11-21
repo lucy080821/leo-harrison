@@ -1,0 +1,84 @@
+{
+  "title": {
+    "vi": "Hệ thống phát âm",
+    "en": "The speech production system"
+  },
+  "summary": {
+    "vi": "Ba hệ thống con: hô hấp, thanh quản và đường dẫn âm trên thanh quản",
+    "en": "Three subsystems: respiratory, laryngeal and supralaryngeal"
+  },
+  "minutes": 12,
+  "module": "m2",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Hệ thống con nào cung cấp luồng hơi cho lời nói?",
+        "en": "Which subsystem provides the airflow for speech?"
+      },
+      "options": [
+        {
+          "vi": "Hô hấp (phổi)",
+          "en": "Respiratory (lungs)"
+        },
+        {
+          "vi": "Khoang mũi",
+          "en": "The nasal cavity"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Phổi là bộ phận khởi động (initiator) cho hầu hết âm.",
+        "en": "The lungs are the initiator for most sounds."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Khe giữa hai dây thanh gọi là gì?",
+        "en": "What is the gap between the two vocal folds called?"
+      },
+      "options": [
+        {
+          "vi": "Thanh môn (glottis)",
+          "en": "The glottis"
+        },
+        {
+          "vi": "Vòm mềm (velum)",
+          "en": "The velum"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Thanh môn mở khi thở và âm vô thanh; khép lại và rung khi phát âm hữu thanh.",
+        "en": "The glottis is open for breathing and voiceless sounds; it closes and vibrates for voiced sounds."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Cổng thông giữa họng và khoang mũi (đóng mở bởi vòm mềm) gọi là?",
+        "en": "What is the passage between the pharynx and the nasal cavity (opened and closed by the velum)?"
+      },
+      "options": [
+        {
+          "vi": "Cổng họng-mũi (velopharyngeal port)",
+          "en": "The velopharyngeal port"
+        },
+        {
+          "vi": "Thanh môn",
+          "en": "The glottis"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Khi cổng mở, hơi thoát ra mũi và ta có âm mũi.",
+        "en": "When the port is open, air escapes through the nose and we get a nasal sound."
+      }
+    }
+  ]
+}

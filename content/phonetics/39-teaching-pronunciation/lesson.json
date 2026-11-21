@@ -1,0 +1,84 @@
+{
+  "title": {
+    "vi": "Dạy phát âm dựa trên ngữ âm học",
+    "en": "Teaching pronunciation with phonetics"
+  },
+  "summary": {
+    "vi": "Chẩn đoán, chọn ưu tiên, khung năm giai đoạn, phản hồi và dùng công cụ trực quan",
+    "en": "Diagnosis, priorities, the five-stage framework, feedback and visual tools"
+  },
+  "minutes": 15,
+  "module": "m8",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Cặp tương phản nào có tải chức năng cao hơn?",
+        "en": "Which contrast has the higher functional load?"
+      },
+      "options": [
+        {
+          "vi": "/p/ và /b/ (pin, bin)",
+          "en": "/p/ and /b/ (pin, bin)"
+        },
+        {
+          "vi": "/θ/ và /ð/ (thigh, thy)",
+          "en": "/θ/ and /ð/ (thigh, thy)"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "/p/-/b/ phân biệt rất nhiều cặp từ; /θ/-/ð/ gần như không.",
+        "en": "/p/-/b/ separates very many pairs; /θ/-/ð/ almost none."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Giai đoạn đầu trong khung năm giai đoạn của Celce-Murcia, Brinton và Goodwin (1996) là?",
+        "en": "What is the first stage in Celce-Murcia, Brinton and Goodwin's (1996) five stages?"
+      },
+      "options": [
+        {
+          "vi": "Mô tả và phân tích",
+          "en": "Description and analysis"
+        },
+        {
+          "vi": "Thực hành giao tiếp",
+          "en": "Communicative practice"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Thứ tự: mô tả và phân tích, nhận biết bằng tai, luyện có kiểm soát, luyện có hướng dẫn, luyện giao tiếp.",
+        "en": "The order: description and analysis, listening discrimination, controlled practice, guided practice, communicative practice."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Thử nghiệm bật hơi bằng tờ giấy trước miệng dùng để làm gì?",
+        "en": "What is the paper-in-front-of-the-mouth test for aspiration used for?"
+      },
+      "options": [
+        {
+          "vi": "Giúp học viên thấy và cảm nhận sự khác nhau giữa [pʰ] và [p]",
+          "en": "To help learners see and feel the difference between [pʰ] and [p]"
+        },
+        {
+          "vi": "Đo độ to",
+          "en": "To measure loudness"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Phản hồi trực quan giúp học viên nhận ra sự bật hơi.",
+        "en": "Visual feedback helps learners notice aspiration."
+      }
+    }
+  ]
+}

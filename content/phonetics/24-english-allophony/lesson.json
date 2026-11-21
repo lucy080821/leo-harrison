@@ -1,0 +1,84 @@
+{
+  "title": {
+    "vi": "Biến thể của phụ âm tiếng Anh",
+    "en": "Allophonic variation in English consonants"
+  },
+  "summary": {
+    "vi": "Bật hơi, âm vỗ, tắc thanh môn, l sáng và tối, các dạng của /ɹ/",
+    "en": "Aspiration, flapping, glottalisation, clear and dark l, realisations of /ɹ/"
+  },
+  "minutes": 13,
+  "module": "m5",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Trong GA, /t/ ở giữa hai nguyên âm khi âm sau không nhấn (như better) thường thành?",
+        "en": "In GA, /t/ between vowels before an unstressed vowel (as in better) usually becomes?"
+      },
+      "options": [
+        {
+          "vi": "Âm vỗ [ɾ]",
+          "en": "A flap [ɾ]"
+        },
+        {
+          "vi": "Âm bật hơi [tʰ]",
+          "en": "An aspirated [tʰ]"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Đó là hiện tượng âm vỗ (flapping): later [ˈɫeɪɾɚ].",
+        "en": "That is flapping: later [ˈɫeɪɾɚ]."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Âm /p/ trong \"spin\" khác \"pin\" thế nào?",
+        "en": "How does /p/ in \"spin\" differ from \"pin\"?"
+      },
+      "options": [
+        {
+          "vi": "Không bật hơi",
+          "en": "It is not aspirated"
+        },
+        {
+          "vi": "Hữu thanh",
+          "en": "It is voiced"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Sau /s/, /p t k/ không bật hơi.",
+        "en": "After /s/, /p t k/ are not aspirated."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Trong RP, \"l\" trong \"leaf\" là dạng nào?",
+        "en": "In RP, the \"l\" in \"leaf\" is which form?"
+      },
+      "options": [
+        {
+          "vi": "L sáng [l] (trước nguyên âm)",
+          "en": "Clear l [l] (before a vowel)"
+        },
+        {
+          "vi": "L tối [ɫ]",
+          "en": "Dark l [ɫ]"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "RP dùng l sáng trước nguyên âm, l tối trước phụ âm và cuối từ.",
+        "en": "RP uses clear l before a vowel, dark l before a consonant and word-finally."
+      }
+    }
+  ]
+}

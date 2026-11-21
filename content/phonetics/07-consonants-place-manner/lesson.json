@@ -1,0 +1,84 @@
+{
+  "title": {
+    "vi": "Phụ âm: vị trí, phương thức và hữu thanh",
+    "en": "Consonants: place, manner and voicing"
+  },
+  "summary": {
+    "vi": "Bảng phụ âm IPA đầy đủ và cách đọc một ký hiệu",
+    "en": "The full IPA consonant chart and how to read a symbol"
+  },
+  "minutes": 14,
+  "module": "m2",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Âm /ʃ/ (trong ship) được mô tả đúng là gì?",
+        "en": "How is /ʃ/ (in ship) correctly described?"
+      },
+      "options": [
+        {
+          "vi": "Xát vô thanh sau lợi",
+          "en": "Voiceless postalveolar fricative"
+        },
+        {
+          "vi": "Xát hữu thanh lợi",
+          "en": "Voiced alveolar fricative"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "/ʃ/: vô thanh, vị trí sau lợi, phương thức xát.",
+        "en": "/ʃ/: voiceless, postalveolar, fricative."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Âm /ɹ/ (r tiếng Anh) thuộc phương thức nào?",
+        "en": "Which manner does /ɹ/ (English r) belong to?"
+      },
+      "options": [
+        {
+          "vi": "Âm tiếp cận (approximant)",
+          "en": "Approximant"
+        },
+        {
+          "vi": "Âm rung (trill)",
+          "en": "Trill"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Tiếng Anh /ɹ/ là âm tiếp cận; âm rung /r/ như trong tiếng Tây Ban Nha *perro*.",
+        "en": "English /ɹ/ is an approximant; the trill /r/ is as in Spanish *perro*."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Âm /ŋ/ có vị trí cấu âm nào?",
+        "en": "What is the place of articulation of /ŋ/?"
+      },
+      "options": [
+        {
+          "vi": "Vòm mềm (velar)",
+          "en": "Velar"
+        },
+        {
+          "vi": "Hai môi (bilabial)",
+          "en": "Bilabial"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Thân lưỡi chạm vòm mềm; hơi qua mũi nên là âm mũi vòm mềm.",
+        "en": "The tongue body touches the velum; the air goes through the nose, so it is a velar nasal."
+      }
+    }
+  ]
+}

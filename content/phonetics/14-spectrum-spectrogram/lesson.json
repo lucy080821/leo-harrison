@@ -1,0 +1,84 @@
+{
+  "title": {
+    "vi": "Phổ và phổ đồ",
+    "en": "Spectrum and spectrogram"
+  },
+  "summary": {
+    "vi": "Cách đọc phổ đồ, vì sao có phổ rộng và phổ hẹp",
+    "en": "How to read a spectrogram, and why there are wideband and narrowband versions"
+  },
+  "minutes": 13,
+  "module": "m3",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Trên phổ đồ, trục ngang và trục dọc là gì?",
+        "en": "On a spectrogram, what are the horizontal and vertical axes?"
+      },
+      "options": [
+        {
+          "vi": "Thời gian và tần số",
+          "en": "Time and frequency"
+        },
+        {
+          "vi": "Biên độ và tần số",
+          "en": "Amplitude and frequency"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Độ tối (hoặc màu) biểu thị năng lượng.",
+        "en": "Darkness (or colour) shows energy."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Cửa sổ phân tích 5 ms cho loại phổ đồ nào?",
+        "en": "Which type of spectrogram does a 5 ms analysis window give?"
+      },
+      "options": [
+        {
+          "vi": "Phổ đồ rộng (wideband)",
+          "en": "Wideband"
+        },
+        {
+          "vi": "Phổ đồ hẹp (narrowband)",
+          "en": "Narrowband"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Cửa sổ ngắn: độ phân giải thời gian tốt, độ phân giải tần số kém (thấy formant, không thấy họa âm).",
+        "en": "A short window: good time resolution, poor frequency resolution (formants visible, harmonics not)."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Phổ đồ hẹp cho thấy điều gì rõ nhất?",
+        "en": "What does a narrowband spectrogram show best?"
+      },
+      "options": [
+        {
+          "vi": "Từng họa âm của F0",
+          "en": "The individual harmonics of F0"
+        },
+        {
+          "vi": "Từng xung thanh môn",
+          "en": "The individual glottal pulses"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Cửa sổ dài tách được các họa âm gần nhau.",
+        "en": "A long window separates closely spaced harmonics."
+      }
+    }
+  ]
+}

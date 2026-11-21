@@ -1,0 +1,84 @@
+{
+  "title": {
+    "vi": "Cơ chế luồng hơi và kiểu phát thanh",
+    "en": "Airstream mechanisms and phonation types"
+  },
+  "summary": {
+    "vi": "Hơi phổi, âm bật thanh môn, âm mút, âm lưỡi tặc; giọng thường, thì thầm, thở, két",
+    "en": "Pulmonic, ejective, implosive and click sounds; modal, whispery, breathy and creaky voice"
+  },
+  "minutes": 12,
+  "module": "m2",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Cơ chế luồng hơi nào được mọi ngôn ngữ trên thế giới sử dụng?",
+        "en": "Which airstream mechanism is used by every language in the world?"
+      },
+      "options": [
+        {
+          "vi": "Hơi phổi đi ra (pulmonic egressive)",
+          "en": "Pulmonic egressive"
+        },
+        {
+          "vi": "Âm lưỡi tặc (clicks)",
+          "en": "Clicks"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Âm lưỡi tặc và âm bật thanh môn chỉ có ở một số ngôn ngữ.",
+        "en": "Clicks and ejectives occur only in some languages."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Âm bật thanh môn (ejective) được tạo ra thế nào?",
+        "en": "How is an ejective produced?"
+      },
+      "options": [
+        {
+          "vi": "Thanh môn đóng và nâng lên, nén khối khí trong miệng",
+          "en": "The glottis closes and rises, compressing the air in the mouth"
+        },
+        {
+          "vi": "Lưỡi hạ xuống rút không khí vào",
+          "en": "The tongue lowers and draws air in"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Ejective dùng cơ chế thanh môn đi ra (glottalic egressive).",
+        "en": "Ejectives use the glottalic egressive airstream."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Kiểu phát thanh nào có dây thanh rung nhưng không tiếp xúc rõ, tạo giọng \"thở\"?",
+        "en": "Which phonation has vibrating folds without much contact, giving a \"breathy\" voice?"
+      },
+      "options": [
+        {
+          "vi": "Giọng thở (breathy voice)",
+          "en": "Breathy voice"
+        },
+        {
+          "vi": "Giọng két (creaky voice)",
+          "en": "Creaky voice"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Giọng thở: dây thanh rung nhưng không đóng kín.",
+        "en": "Breathy voice: the folds vibrate without closing tightly."
+      }
+    }
+  ]
+}

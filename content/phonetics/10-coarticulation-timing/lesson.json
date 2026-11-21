@@ -1,0 +1,84 @@
+{
+  "title": {
+    "vi": "Đồng cấu âm và thời gian trong cấu âm",
+    "en": "Coarticulation and timing"
+  },
+  "summary": {
+    "vi": "Vì sao âm không đứng riêng lẻ: ảnh hưởng qua lại, mục tiêu và đồng cấu âm",
+    "en": "Why sounds never stand alone: mutual influence, targets and coarticulation"
+  },
+  "minutes": 11,
+  "module": "m2",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Môi tròn trước khi nói nguyên âm tròn trong \"two\" là ví dụ của?",
+        "en": "Lip rounding that begins early for the rounded vowel in \"two\" is an example of?"
+      },
+      "options": [
+        {
+          "vi": "Đồng cấu âm báo trước (anticipatory)",
+          "en": "Anticipatory coarticulation"
+        },
+        {
+          "vi": "Đồng hoá hữu thanh",
+          "en": "Voicing assimilation"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Đặc trưng của âm sau xuất hiện sớm ở âm trước.",
+        "en": "A feature of a later sound appears early on an earlier one."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Mục tiêu cấu âm (target) trong lời nói nhanh thường bị?",
+        "en": "In fast speech, an articulatory target is often?"
+      },
+      "options": [
+        {
+          "vi": "Chạm không đủ (undershoot)",
+          "en": "Not fully reached (undershoot)"
+        },
+        {
+          "vi": "Đạt hoàn hảo",
+          "en": "Perfectly reached"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Khi nói nhanh bộ phận cấu âm không kịp tới mục tiêu.",
+        "en": "In fast speech the articulators don't have time to reach the target."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Vì sao không thể cắt lời nói thành các âm rời như các \"hạt\"?",
+        "en": "Why can't speech be cut into separate sounds like \"beads\"?"
+      },
+      "options": [
+        {
+          "vi": "Vì các cử động cấu âm chồng lấn lên nhau",
+          "en": "Because articulatory movements overlap"
+        },
+        {
+          "vi": "Vì tai không nghe rõ",
+          "en": "Because the ear can't hear well"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Các âm liền nhau chồng lấn trong thời gian.",
+        "en": "Neighbouring sounds overlap in time."
+      }
+    }
+  ]
+}

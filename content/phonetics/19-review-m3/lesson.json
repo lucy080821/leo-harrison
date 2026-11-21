@@ -1,0 +1,130 @@
+{
+  "title": {
+    "vi": "Ôn tập: Âm học",
+    "en": "Review: Acoustic phonetics"
+  },
+  "summary": {
+    "vi": "Vài câu hỏi nhẹ nhàng để nhớ lại, không tính điểm",
+    "en": "A few gentle questions to recall, no score"
+  },
+  "minutes": 7,
+  "module": "m3",
+  "kind": "practice",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Nguyên âm khép, trước như [i] có F1 và F2 ra sao?",
+        "en": "What are F1 and F2 of a close front vowel like [i]?"
+      },
+      "options": [
+        {
+          "vi": "F1 thấp, F2 cao",
+          "en": "Low F1, high F2"
+        },
+        {
+          "vi": "F1 cao, F2 thấp",
+          "en": "High F1, low F2"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "[i]: F1 khoảng 270, F2 khoảng 2290 Hz.",
+        "en": "[i]: F1 about 270, F2 about 2290 Hz."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Trong mô hình nguồn-lọc, F0 do bộ phận nào quyết định?",
+        "en": "In the source-filter model, what determines F0?"
+      },
+      "options": [
+        {
+          "vi": "Nguồn (dây thanh)",
+          "en": "The source (vocal folds)"
+        },
+        {
+          "vi": "Bộ lọc (khoang miệng)",
+          "en": "The filter (mouth cavity)"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Formant do bộ lọc quyết định.",
+        "en": "Formants are determined by the filter."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Phổ đồ hẹp dùng cửa sổ khoảng bao nhiêu?",
+        "en": "About what window does a narrowband spectrogram use?"
+      },
+      "options": [
+        {
+          "vi": "30 ms",
+          "en": "30 ms"
+        },
+        {
+          "vi": "5 ms",
+          "en": "5 ms"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "30 ms cho phổ hẹp (thấy họa âm); 5 ms cho phổ rộng (thấy formant).",
+        "en": "30 ms gives narrowband (harmonics); 5 ms gives wideband (formants)."
+      }
+    },
+    {
+      "id": "q4",
+      "type": "choice",
+      "q": {
+        "vi": "VOT của /p/ bật hơi trong tiếng Anh thường?",
+        "en": "The VOT of an aspirated English /p/ is typically?"
+      },
+      "options": [
+        {
+          "vi": "Dương lớn (trễ dài)",
+          "en": "Large positive (long lag)"
+        },
+        {
+          "vi": "Âm",
+          "en": "Negative"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Thanh giọng bắt đầu sau một khoảng bật hơi.",
+        "en": "Voicing begins after a stretch of aspiration."
+      }
+    },
+    {
+      "id": "q5",
+      "type": "choice",
+      "q": {
+        "vi": "Âm /ɹ/ tiếng Anh có đặc điểm nào về formant?",
+        "en": "What is distinctive about the formants of English /ɹ/?"
+      },
+      "options": [
+        {
+          "vi": "F3 rất thấp",
+          "en": "A very low F3"
+        },
+        {
+          "vi": "F1 rất cao",
+          "en": "A very high F1"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "F3 thấp là dấu hiệu của các âm /r/.",
+        "en": "A low F3 marks /r/-coloured sounds."
+      }
+    }
+  ]
+}

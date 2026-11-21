@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { ArticleLesson } from "@/components/ArticleLesson";
 import { JsonLd } from "@/components/JsonLd";
 import { Markdown } from "@/components/Markdown";
+import { Widget } from "@/components/phonetics/Widget";
 import { englishCourses, phoneticsModules } from "@/content/english";
 import { getArticleBody, getArticles } from "@/lib/articles";
 import { isLocale, locales } from "@/lib/i18n";
@@ -80,8 +81,12 @@ export default async function PhoneticsLesson({ params }: { params: Promise<Para
         title={l.title[lang]}
         minutes={l.minutes}
       >
-        {/* Tiêu đề đã có trong khung bài, nên bỏ dòng "# ..." đầu file Markdown để không lặp. */}
-        <Markdown source={getArticleBody("phonetics", l.slug, lang).replace(/^#\s.*\n+/, "")} />
+        {/* Tiêu đề đã có trong khung bài, nên bỏ dòng "# ..." đầu file Markdown để không lặp.
+            Dòng {{widget:ten}} trong Markdown được thay bằng công cụ tương tác. */}
+        {getArticleBody("phonetics", l.slug, lang)
+          .replace(/^#\s.*\n+/, "")
+          .split(/^\{\{widget:([a-z0-9-]+)\}\}\s*$/m)
+          .map((part, i) => (i % 2 === 1 ? <Widget key={i} name={part} /> : part.trim() ? <Markdown key={i} source={part} /> : null))}
       </ArticleLesson>
     </>
   );

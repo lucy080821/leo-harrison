@@ -1,0 +1,130 @@
+{
+  "title": {
+    "vi": "Ôn tập: Âm vị học nhập môn",
+    "en": "Review: Introduction to phonology"
+  },
+  "summary": {
+    "vi": "Vài câu hỏi nhẹ nhàng để nhớ lại, không tính điểm",
+    "en": "A few gentle questions to recall, no score"
+  },
+  "minutes": 7,
+  "module": "m6",
+  "kind": "practice",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Cặp tối thiểu dùng để làm gì?",
+        "en": "What is a minimal pair used for?"
+      },
+      "options": [
+        {
+          "vi": "Chứng minh hai âm là hai âm vị khác nhau",
+          "en": "To show two sounds are different phonemes"
+        },
+        {
+          "vi": "Đếm âm tiết",
+          "en": "To count syllables"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Hai từ chỉ khác một âm tạo đối lập.",
+        "en": "Two words differing in one sound show contrast."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "[pʰ] và [p] trong tiếng Anh là?",
+        "en": "[pʰ] and [p] in English are?"
+      },
+      "options": [
+        {
+          "vi": "Biến thể của /p/",
+          "en": "Allophones of /p/"
+        },
+        {
+          "vi": "Hai âm vị",
+          "en": "Two phonemes"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Phân bố bổ sung: pin và spin.",
+        "en": "Complementary distribution: pin and spin."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "[±voice] phân biệt cặp nào?",
+        "en": "Which pair does [±voice] distinguish?"
+      },
+      "options": [
+        {
+          "vi": "/s/ và /z/",
+          "en": "/s/ and /z/"
+        },
+        {
+          "vi": "/m/ và /n/",
+          "en": "/m/ and /n/"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Cùng vị trí và phương thức, chỉ khác hữu thanh.",
+        "en": "Same place and manner, differing only in voicing."
+      }
+    },
+    {
+      "id": "q4",
+      "type": "choice",
+      "q": {
+        "vi": "Trung hoà là gì?",
+        "en": "What is neutralisation?"
+      },
+      "options": [
+        {
+          "vi": "Mất đối lập ở một vị trí",
+          "en": "Loss of contrast in a position"
+        },
+        {
+          "vi": "Thêm một âm",
+          "en": "Adding a sound"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Ví dụ trung hoà /d/ - /t/ ở cuối từ tiếng Đức.",
+        "en": "For example /d/ - /t/ neutralisation word-finally in German."
+      }
+    },
+    {
+      "id": "q5",
+      "type": "choice",
+      "q": {
+        "vi": "Quy tắc A → B / C __ D, B là?",
+        "en": "In the rule A → B / C __ D, what is B?"
+      },
+      "options": [
+        {
+          "vi": "Dạng bề mặt",
+          "en": "The surface form"
+        },
+        {
+          "vi": "Môi trường",
+          "en": "The environment"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "A là dạng cơ sở, B là dạng bề mặt, C __ D là môi trường.",
+        "en": "A is underlying, B is surface, C __ D is the environment."
+      }
+    }
+  ]
+}

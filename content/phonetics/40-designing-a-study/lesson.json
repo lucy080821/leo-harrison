@@ -1,0 +1,84 @@
+{
+  "title": {
+    "vi": "Thiết kế một nghiên cứu ngữ âm nhỏ",
+    "en": "Designing a small phonetic study"
+  },
+  "summary": {
+    "vi": "Từ câu hỏi nghiên cứu đến thu âm, đo đạc, phân tích và báo cáo",
+    "en": "From research question to recording, measurement, analysis and reporting"
+  },
+  "minutes": 14,
+  "module": "m8",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Một câu hỏi nghiên cứu tốt nên?",
+        "en": "A good research question should be?"
+      },
+      "options": [
+        {
+          "vi": "Cụ thể và có thể kiểm chứng bằng đo đạc",
+          "en": "Specific and testable with measurements"
+        },
+        {
+          "vi": "Thật chung chung",
+          "en": "As general as possible"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Ví dụ: VOT của /t/ ở người nói A cao hơn của /d/ không?",
+        "en": "For example: is the VOT of /t/ longer than that of /d/ for speaker A?"
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Vì sao dùng \"câu khung\" (carrier phrase) khi thu từ thử?",
+        "en": "Why use a \"carrier phrase\" when recording target words?"
+      },
+      "options": [
+        {
+          "vi": "Để các từ ở cùng điều kiện trọng âm và ngữ cảnh",
+          "en": "So the words are under the same stress and context conditions"
+        },
+        {
+          "vi": "Cho câu dài hơn",
+          "en": "To make sentences longer"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Ví dụ: \"Say ___ again.\"",
+        "en": "For example: \"Say ___ again.\""
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Khi báo cáo số đo, cần nêu gì?",
+        "en": "When reporting measurements, what should you state?"
+      },
+      "options": [
+        {
+          "vi": "Đơn vị, cách đo, số lượt đo, người nói và điều kiện",
+          "en": "Units, how measured, number of tokens, speakers and conditions"
+        },
+        {
+          "vi": "Chỉ nêu kết luận",
+          "en": "Only the conclusion"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Để người khác có thể lặp lại và đánh giá.",
+        "en": "So others can replicate and evaluate."
+      }
+    }
+  ]
+}

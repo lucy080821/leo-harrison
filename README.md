@@ -49,13 +49,15 @@ Build production (để deploy VPS): `npm run build && npm start`.
 
 Nội dung portfolio (tên, email, dự án, câu chữ) nằm trong `src/content/site.ts`; logo dự án trong `public/projects/`. Font Be Vietnam Pro và Newsreader được đóng gói sẵn (`@fontsource`), không tải từ Google.
 
-## Khoá Ngữ âm học tiếng Anh (dạng bài viết)
+## Khoá Ngữ âm học tiếng Anh (giáo trình dạng bài viết)
 
-- Nằm ở `/learning/english/phonetics`. Mỗi bài là một thư mục trong `content/phonetics/NN-slug/` gồm `lesson.json`, `vi.md`, `en.md`.
-- `lesson.json` khai báo `module` (m1 đến m5, định nghĩa trong `src/content/english.ts`), `kind` (`lesson` hoặc `practice`) và `quiz` (câu hỏi trắc nghiệm `choice` hoặc gõ đáp án `text`, kèm giải thích song ngữ).
-- Phiên âm viết trong dấu backtick, ví dụ `` `/θɪŋk/` ``, sẽ tự hiện bằng font IPA (Charis SIL).
+- Nằm ở `/learning/english/phonetics`: 8 module, 42 bài (bài học, bài ôn sau mỗi module, bảng thuật ngữ và tài liệu tham khảo), song ngữ Việt - Anh. Nguồn tham khảo và các giới hạn được ghi ở bài cuối và ở cuối từng bài.
+- Mỗi bài là một thư mục `content/phonetics/NN-slug/` gồm `lesson.json`, `vi.md`, `en.md`. `lesson.json` khai báo `module` (m1 đến m8, định nghĩa trong `src/content/english.ts`), `kind` (`lesson` hoặc `practice`) và `quiz` (câu hỏi `choice` hoặc `text`, kèm giải thích song ngữ).
+- Phiên âm viết trong backtick, ví dụ `` `/θɪŋk/` ``, sẽ tự hiện bằng font IPA (Charis SIL).
+- **Hình minh hoạ** nằm ở `public/phonetics/` (tạo bằng matplotlib từ số liệu và công thức chuẩn); chèn bằng cú pháp Markdown `![mô tả](/phonetics/ten.svg)`.
+- **Công cụ tương tác** chèn bằng một dòng riêng `{{widget:vowel-lab}}` (bộ tổng hợp nguyên âm F1-F2, Web Audio) hoặc `{{widget:spectrogram}}` (phổ đồ và F0 từ micro hoặc file âm thanh). Chạy hoàn toàn trong trình duyệt, âm thanh không được gửi đi đâu.
 - `node scripts/verify.mjs phonetics` kiểm tra mỗi bài có đủ bản VI/EN và câu hỏi hợp lệ.
-- Chưa có video và âm thanh; sau này thêm trường `video` vào `lesson.json` và nhúng ở `ArticleLesson`.
+- Chưa có video và âm thanh mẫu; sau này thêm trường `video` vào `lesson.json` và nhúng ở `ArticleLesson`.
 
 ## SEO
 

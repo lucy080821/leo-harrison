@@ -1,0 +1,84 @@
+{
+  "title": {
+    "vi": "Ngữ điệu và hệ ký hiệu ToBI",
+    "en": "Intonation and the ToBI labelling system"
+  },
+  "summary": {
+    "vi": "Chức năng của ngữ điệu, trường phái Anh và mô hình tự đoạn-nhịp điệu",
+    "en": "Functions of intonation, the British school and the autosegmental-metrical model"
+  },
+  "minutes": 14,
+  "module": "m5",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "H* và L* trong ToBI là loại nhãn nào?",
+        "en": "What kind of labels are H* and L* in ToBI?"
+      },
+      "options": [
+        {
+          "vi": "Trọng âm cao độ (pitch accent) gắn với âm tiết nhấn",
+          "en": "Pitch accents on stressed syllables"
+        },
+        {
+          "vi": "Dấu ngắt câu",
+          "en": "Punctuation marks"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Dấu * chỉ sự gắn kết với âm tiết nhấn.",
+        "en": "The asterisk marks alignment with a stressed syllable."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Nhãn H% và L% đánh dấu?",
+        "en": "What do the labels H% and L% mark?"
+      },
+      "options": [
+        {
+          "vi": "Âm điệu biên (boundary tones) ở ranh giới cụm",
+          "en": "Boundary tones at the edge of a phrase"
+        },
+        {
+          "vi": "Trọng âm từ",
+          "en": "Word stress"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "H% cao ở biên, L% thấp ở biên.",
+        "en": "H% is high at the edge, L% low at the edge."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Chỉ số ngắt (break index) 4 trong ToBI cho biết gì?",
+        "en": "What does break index 4 in ToBI show?"
+      },
+      "options": [
+        {
+          "vi": "Ranh giới cụm ngữ điệu đầy đủ",
+          "en": "A full intonation phrase boundary"
+        },
+        {
+          "vi": "Ranh giới giữa hai từ thông thường",
+          "en": "An ordinary word boundary"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Chỉ số 1 là ranh giới từ bình thường; 3 là cụm trung gian; 4 là cụm ngữ điệu.",
+        "en": "Index 1 is an ordinary word boundary; 3 an intermediate phrase; 4 an intonation phrase."
+      }
+    }
+  ]
+}

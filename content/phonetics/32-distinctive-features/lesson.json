@@ -1,0 +1,84 @@
+{
+  "title": {
+    "vi": "Đặc trưng khu biệt và lớp âm tự nhiên",
+    "en": "Distinctive features and natural classes"
+  },
+  "summary": {
+    "vi": "Phân tích âm thành các đặc trưng nhị phân để diễn đạt quy tắc ngắn gọn",
+    "en": "Breaking sounds into binary features to state rules compactly"
+  },
+  "minutes": 13,
+  "module": "m6",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Đặc trưng [±voice] phân biệt /p/ với?",
+        "en": "The feature [±voice] distinguishes /p/ from?"
+      },
+      "options": [
+        {
+          "vi": "/b/",
+          "en": "/b/"
+        },
+        {
+          "vi": "/t/",
+          "en": "/t/"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "/p/ và /b/ chỉ khác [voice].",
+        "en": "/p/ and /b/ differ only in [voice]."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "\"Lớp âm tự nhiên\" (natural class) là gì?",
+        "en": "What is a \"natural class\" of sounds?"
+      },
+      "options": [
+        {
+          "vi": "Nhóm âm có chung một số đặc trưng và cùng chịu một quy tắc",
+          "en": "A group of sounds sharing features and subject to the same rule"
+        },
+        {
+          "vi": "Nhóm âm ngẫu nhiên",
+          "en": "A random group of sounds"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Ví dụ {p t k} cùng là [-voice, -cont].",
+        "en": "For example {p t k} are all [-voice, -cont]."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Đuôi số nhiều -s đọc /z/ sau /ɡ/ nhưng /s/ sau /k/. Quy tắc dựa vào đặc trưng nào?",
+        "en": "The plural -s is /z/ after /ɡ/ but /s/ after /k/. Which feature does the rule rely on?"
+      },
+      "options": [
+        {
+          "vi": "[±voice] của âm đứng trước",
+          "en": "The [±voice] of the preceding sound"
+        },
+        {
+          "vi": "[±nasal]",
+          "en": "[±nasal]"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Âm cuối giống âm trước về hữu thanh.",
+        "en": "The suffix copies the voicing of the preceding sound."
+      }
+    }
+  ]
+}

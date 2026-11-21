@@ -1,0 +1,92 @@
+{
+  "title": {
+    "vi": "Sóng âm: tần số, biên độ và phổ",
+    "en": "Sound waves: frequency, amplitude and spectrum"
+  },
+  "summary": {
+    "vi": "Những khái niệm vật lý cần thiết để đọc một tín hiệu lời nói",
+    "en": "The physics you need to read a speech signal"
+  },
+  "minutes": 13,
+  "module": "m3",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Một sóng 200 Hz có chu kỳ bao nhiêu?",
+        "en": "What is the period of a 200 Hz wave?"
+      },
+      "options": [
+        {
+          "vi": "5 ms",
+          "en": "5 ms"
+        },
+        {
+          "vi": "20 ms",
+          "en": "20 ms"
+        },
+        {
+          "vi": "0,2 ms",
+          "en": "0.2 ms"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "T = 1/f = 1/200 s = 0,005 s = 5 ms.",
+        "en": "T = 1/f = 1/200 s = 0.005 s = 5 ms."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Biên độ tăng gấp đôi thì mức cường độ tăng khoảng bao nhiêu dB?",
+        "en": "If the amplitude doubles, by roughly how many dB does the level rise?"
+      },
+      "options": [
+        {
+          "vi": "6 dB",
+          "en": "6 dB"
+        },
+        {
+          "vi": "2 dB",
+          "en": "2 dB"
+        },
+        {
+          "vi": "20 dB",
+          "en": "20 dB"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "dB = 20·log10(2) ≈ 6 dB.",
+        "en": "dB = 20·log10(2) ≈ 6 dB."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Các họa âm của một âm có F0 = 120 Hz là?",
+        "en": "What are the harmonics of a sound with F0 = 120 Hz?"
+      },
+      "options": [
+        {
+          "vi": "120, 240, 360 Hz...",
+          "en": "120, 240, 360 Hz..."
+        },
+        {
+          "vi": "120, 121, 122 Hz...",
+          "en": "120, 121, 122 Hz..."
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Họa âm là các bội số nguyên của tần số cơ bản.",
+        "en": "Harmonics are integer multiples of the fundamental."
+      }
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "title": {
+    "vi": "Âm học của siêu đoạn: F0, độ dài và cường độ",
+    "en": "Acoustics of prosody: F0, duration and intensity"
+  },
+  "summary": {
+    "vi": "Đo cao độ, đổi sang nửa cung, và các thủ thuật khi theo dõi F0",
+    "en": "Measuring pitch, converting to semitones, and pitfalls in F0 tracking"
+  },
+  "minutes": 12,
+  "module": "m3",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Từ 100 Hz lên 200 Hz là bao nhiêu nửa cung (semitone)?",
+        "en": "How many semitones is a rise from 100 Hz to 200 Hz?"
+      },
+      "options": [
+        {
+          "vi": "12",
+          "en": "12"
+        },
+        {
+          "vi": "6",
+          "en": "6"
+        },
+        {
+          "vi": "100",
+          "en": "100"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Gấp đôi tần số là một quãng tám = 12 nửa cung. Công thức: 12·log2(f2/f1).",
+        "en": "Doubling the frequency is one octave = 12 semitones. Formula: 12·log2(f2/f1)."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Tương quan âm học chính của trọng âm trong tiếng Anh là?",
+        "en": "What are the main acoustic correlates of stress in English?"
+      },
+      "options": [
+        {
+          "vi": "F0, độ dài, cường độ và chất lượng nguyên âm",
+          "en": "F0, duration, intensity and vowel quality"
+        },
+        {
+          "vi": "Chỉ cường độ",
+          "en": "Intensity only"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Không có dấu hiệu duy nhất; chúng phối hợp.",
+        "en": "No single cue; they work together."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "\"Lỗi quãng tám\" (octave error) trong theo dõi F0 là gì?",
+        "en": "What is an \"octave error\" in F0 tracking?"
+      },
+      "options": [
+        {
+          "vi": "Thuật toán chọn nhầm F0 gấp đôi hoặc một nửa giá trị thật",
+          "en": "The algorithm picks an F0 double or half the true value"
+        },
+        {
+          "vi": "Lỗi do micro",
+          "en": "A microphone fault"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Thường xảy ra khi giọng két hoặc tín hiệu yếu.",
+        "en": "Common with creaky voice or weak signals."
+      }
+    }
+  ]
+}

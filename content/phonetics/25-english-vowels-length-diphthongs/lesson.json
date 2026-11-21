@@ -1,0 +1,84 @@
+{
+  "title": {
+    "vi": "Nguyên âm tiếng Anh: độ dài, nguyên âm đôi và rút gọn",
+    "en": "English vowels: length, diphthongs and reduction"
+  },
+  "summary": {
+    "vi": "Độ dài thật sự phụ thuộc vào ngữ cảnh, các nguyên âm đôi, và vì sao có âm /ə/",
+    "en": "True length depends on context, the diphthongs, and why /ə/ exists"
+  },
+  "minutes": 12,
+  "module": "m5",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Nguyên âm có xu hướng như thế nào trước phụ âm mạnh (vô thanh)?",
+        "en": "How do vowels tend to behave before a fortis (voiceless) consonant?"
+      },
+      "options": [
+        {
+          "vi": "Ngắn lại",
+          "en": "They get shorter"
+        },
+        {
+          "vi": "Dài ra",
+          "en": "They get longer"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Ví dụ bat ngắn hơn bad (rút ngắn trước phụ âm vô thanh).",
+        "en": "For example bat is shorter than bad (clipping before voiceless consonants)."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Nguyên âm /ɪə/ (near) là loại nào?",
+        "en": "What kind of vowel is /ɪə/ (near)?"
+      },
+      "options": [
+        {
+          "vi": "Nguyên âm đôi trượt về /ə/ (centring)",
+          "en": "A diphthong gliding towards /ə/ (centring)"
+        },
+        {
+          "vi": "Nguyên âm đơn dài",
+          "en": "A long monophthong"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Các nguyên âm đôi trượt về giữa gọi là centring diphthongs.",
+        "en": "Diphthongs gliding towards the centre are called centring diphthongs."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Vì sao âm tiết không nhấn thường chứa /ə/?",
+        "en": "Why do unstressed syllables often contain /ə/?"
+      },
+      "options": [
+        {
+          "vi": "Vì nguyên âm bị rút gọn khi không được nhấn",
+          "en": "Because vowels reduce when unstressed"
+        },
+        {
+          "vi": "Vì tiếng Anh viết là ə",
+          "en": "Because English spells it ə"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Rút gọn nguyên âm là một đặc điểm của nhịp stress-timed.",
+        "en": "Vowel reduction is a feature of stress-timed rhythm."
+      }
+    }
+  ]
+}

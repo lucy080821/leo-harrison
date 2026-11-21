@@ -1,0 +1,84 @@
+{
+  "title": {
+    "vi": "Quy tắc âm vị và biến đổi âm",
+    "en": "Phonological rules and sound change"
+  },
+  "summary": {
+    "vi": "Cách viết quy tắc, từ đồng cấu âm đến quy tắc, và biến đổi âm theo thời gian",
+    "en": "Writing rules, from coarticulation to rule, and sound change over time"
+  },
+  "minutes": 13,
+  "module": "m6",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Quy tắc A → B / C __ D đọc là?",
+        "en": "The rule A → B / C __ D reads as?"
+      },
+      "options": [
+        {
+          "vi": "A thành B khi đứng giữa C (trước) và D (sau)",
+          "en": "A becomes B when between C (before) and D (after)"
+        },
+        {
+          "vi": "B thành A",
+          "en": "B becomes A"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Gạch dưới __ là vị trí của A.",
+        "en": "The underline __ marks the position of A."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Vì sao đồng cấu âm có thể dẫn đến biến đổi âm?",
+        "en": "How can coarticulation lead to sound change?"
+      },
+      "options": [
+        {
+          "vi": "Một ảnh hưởng cấu âm nhỏ có thể được người nghe diễn giải thành quy tắc mới",
+          "en": "A small articulatory influence may be reinterpreted by listeners as a new rule"
+        },
+        {
+          "vi": "Nó không bao giờ liên quan",
+          "en": "It never matters"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Ví dụ mũi hoá nguyên âm trở thành nguyên âm mũi (tiếng Pháp).",
+        "en": "For example vowel nasalisation becomes nasal vowels (French)."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Quy tắc đồng hoá /n/ → [m] trước /p b m/ trong \"impossible\" thuộc loại nào?",
+        "en": "The rule /n/ → [m] before /p b m/ in \"impossible\" is which kind?"
+      },
+      "options": [
+        {
+          "vi": "Đồng hoá về vị trí cấu âm",
+          "en": "Place assimilation"
+        },
+        {
+          "vi": "Rụng âm",
+          "en": "Deletion"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "/n/ lợi thành /m/ hai môi theo âm hai môi kế sau.",
+        "en": "Alveolar /n/ becomes bilabial /m/ following a bilabial."
+      }
+    }
+  ]
+}

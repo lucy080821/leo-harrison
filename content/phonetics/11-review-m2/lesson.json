@@ -1,0 +1,130 @@
+{
+  "title": {
+    "vi": "Ôn tập: Cấu âm",
+    "en": "Review: Articulatory phonetics"
+  },
+  "summary": {
+    "vi": "Vài câu hỏi nhẹ nhàng để nhớ lại, không tính điểm",
+    "en": "A few gentle questions to recall, no score"
+  },
+  "minutes": 7,
+  "module": "m2",
+  "kind": "practice",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "/k/ là âm gì?",
+        "en": "What is /k/?"
+      },
+      "options": [
+        {
+          "vi": "Tắc vòm mềm vô thanh",
+          "en": "Voiceless velar plosive"
+        },
+        {
+          "vi": "Xát vòm mềm hữu thanh",
+          "en": "Voiced velar fricative"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Chặn hoàn toàn (tắc), thân lưỡi chạm vòm mềm, không rung.",
+        "en": "A complete closure (plosive), tongue body against the velum, no vibration."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Cơ chế nào tạo âm mút (implosive)?",
+        "en": "Which mechanism produces implosives?"
+      },
+      "options": [
+        {
+          "vi": "Thanh môn hạ xuống khi có chỗ cản",
+          "en": "The glottis lowers during a closure"
+        },
+        {
+          "vi": "Lưỡi tặc hai chỗ đóng",
+          "en": "Two lingual closures"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Đó là cơ chế thanh môn đi vào (glottalic ingressive).",
+        "en": "That is the glottalic ingressive mechanism."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Nguyên âm chuẩn [u] có đặc điểm nào?",
+        "en": "What are the features of cardinal vowel [u]?"
+      },
+      "options": [
+        {
+          "vi": "Khép, sau, tròn môi",
+          "en": "Close, back, rounded"
+        },
+        {
+          "vi": "Mở, trước, dẹt",
+          "en": "Open, front, unrounded"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Lưỡi cao và sau nhất, môi tròn.",
+        "en": "Tongue as high and back as possible, lips rounded."
+      }
+    },
+    {
+      "id": "q4",
+      "type": "choice",
+      "q": {
+        "vi": "Cấu âm phụ ngạc mềm hoá có ở âm nào của tiếng Anh?",
+        "en": "In which English sound does velarisation occur?"
+      },
+      "options": [
+        {
+          "vi": "l tối [ɫ]",
+          "en": "dark l [ɫ]"
+        },
+        {
+          "vi": "/p/",
+          "en": "/p/"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Dạng l sau nguyên âm hoặc cuối từ có gốc lưỡi lùi.",
+        "en": "The l after a vowel or word-finally has the back of the tongue retracted."
+      }
+    },
+    {
+      "id": "q5",
+      "type": "choice",
+      "q": {
+        "vi": "Đồng cấu âm là gì?",
+        "en": "What is coarticulation?"
+      },
+      "options": [
+        {
+          "vi": "Cấu âm của một âm bị ảnh hưởng bởi âm lân cận do cử động chồng lấn",
+          "en": "A sound's articulation influenced by neighbouring sounds through overlapping movements"
+        },
+        {
+          "vi": "Hai âm giống nhau",
+          "en": "Two identical sounds"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Là hiện tượng chồng lấn các cử động cấu âm.",
+        "en": "It is the overlapping of articulatory movements."
+      }
+    }
+  ]
+}

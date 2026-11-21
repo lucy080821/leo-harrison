@@ -1,0 +1,84 @@
+{
+  "title": {
+    "vi": "Thực hành với Praat",
+    "en": "Hands-on with Praat"
+  },
+  "summary": {
+    "vi": "Bốn bài tập từng bước: formant, VOT, F0 và phổ rộng, phổ hẹp",
+    "en": "Four step-by-step tasks: formants, VOT, F0 and wideband versus narrowband"
+  },
+  "minutes": 15,
+  "module": "m3",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Giá trị mặc định của Praat cho cửa sổ phổ đồ rộng là?",
+        "en": "What is Praat's default window length for a wideband spectrogram?"
+      },
+      "options": [
+        {
+          "vi": "0,005 giây (5 ms)",
+          "en": "0.005 s (5 ms)"
+        },
+        {
+          "vi": "0,5 giây",
+          "en": "0.5 s"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Cửa sổ 0,03 giây cho phổ hẹp.",
+        "en": "A 0.03 s window gives narrowband."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Để đo F1 và F2 của nguyên âm trên phổ đồ, ta nên đặt con trỏ ở đâu?",
+        "en": "Where should you place the cursor to measure F1 and F2 of a vowel on the spectrogram?"
+      },
+      "options": [
+        {
+          "vi": "Ở giữa (phần ổn định) của nguyên âm",
+          "en": "In the middle (steady part) of the vowel"
+        },
+        {
+          "vi": "Ở đầu từ",
+          "en": "At the start of the word"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Đầu và cuối nguyên âm chịu ảnh hưởng đồng cấu âm.",
+        "en": "The start and end of a vowel are affected by coarticulation."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "VOT được đo giữa hai mốc nào?",
+        "en": "Between which two landmarks is VOT measured?"
+      },
+      "options": [
+        {
+          "vi": "Vệt nhả và lúc bắt đầu chu kỳ rung đều của nguyên âm",
+          "en": "The release burst and the start of regular vibration of the vowel"
+        },
+        {
+          "vi": "Đầu và cuối câu",
+          "en": "The start and end of the sentence"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Dùng dạng sóng và phổ đồ cùng lúc để chọn hai mốc.",
+        "en": "Use the waveform and spectrogram together to place both landmarks."
+      }
+    }
+  ]
+}

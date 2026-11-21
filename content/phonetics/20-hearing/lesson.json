@@ -1,0 +1,84 @@
+{
+  "title": {
+    "vi": "Tai và sự nghe",
+    "en": "The ear and hearing"
+  },
+  "summary": {
+    "vi": "Từ sóng âm đến tín hiệu thần kinh, và các thang đo cảm nhận cao độ, độ to",
+    "en": "From sound wave to neural signal, and scales of perceived pitch and loudness"
+  },
+  "minutes": 13,
+  "module": "m4",
+  "kind": "lesson",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Bộ phận nào của tai trong phân tích tần số bằng cách rung ở các vị trí khác nhau?",
+        "en": "Which part of the inner ear analyses frequency by vibrating at different places?"
+      },
+      "options": [
+        {
+          "vi": "Màng nền (basilar membrane) trong ốc tai",
+          "en": "The basilar membrane in the cochlea"
+        },
+        {
+          "vi": "Xương búa",
+          "en": "The malleus"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Đây là sự \"tonotopy\": tần số cao ở đáy ốc tai, tần số thấp ở đỉnh.",
+        "en": "This is tonotopy: high frequencies at the base of the cochlea, low at the apex."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Vì sao dùng thang mel hoặc Bark thay cho Hz khi nói về cao độ nghe được?",
+        "en": "Why use the mel or Bark scale instead of Hz for perceived pitch?"
+      },
+      "options": [
+        {
+          "vi": "Vì tai phân biệt các tần số thấp chi tiết hơn tần số cao",
+          "en": "Because the ear resolves low frequencies more finely than high ones"
+        },
+        {
+          "vi": "Vì Hz không đo được",
+          "en": "Because Hz cannot be measured"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Cảm nhận cao độ không tuyến tính theo Hz.",
+        "en": "Perceived pitch is not linear in Hz."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "choice",
+      "q": {
+        "vi": "Thang dB SPL lấy quy chiếu là gì?",
+        "en": "What is the reference of the dB SPL scale?"
+      },
+      "options": [
+        {
+          "vi": "Áp suất âm gần ngưỡng nghe (khoảng 20 µPa)",
+          "en": "A sound pressure near the hearing threshold (about 20 µPa)"
+        },
+        {
+          "vi": "Mức ồn tối đa",
+          "en": "The maximum noise level"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "0 dB SPL xấp xỉ ngưỡng nghe ở khoảng 1 kHz.",
+        "en": "0 dB SPL is approximately the threshold of hearing at about 1 kHz."
+      }
+    }
+  ]
+}

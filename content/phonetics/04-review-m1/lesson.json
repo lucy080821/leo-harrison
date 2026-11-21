@@ -1,0 +1,122 @@
+{
+  "title": {
+    "vi": "Ôn tập: Nhập môn",
+    "en": "Review: Foundations"
+  },
+  "summary": {
+    "vi": "Vài câu hỏi nhẹ nhàng để nhớ lại, không tính điểm",
+    "en": "A few gentle questions to recall, no score"
+  },
+  "minutes": 7,
+  "module": "m1",
+  "kind": "practice",
+  "quiz": [
+    {
+      "id": "q1",
+      "type": "choice",
+      "q": {
+        "vi": "Chuỗi lời nói đi qua mấy kiểu chặng chính?",
+        "en": "Which stages does the speech chain pass through?"
+      },
+      "options": [
+        {
+          "vi": "Ngôn ngữ, cấu âm, âm học, thính giác, nhận biết",
+          "en": "Linguistic, articulatory, acoustic, hearing, recognition"
+        },
+        {
+          "vi": "Chỉ có cấu âm và chữ viết",
+          "en": "Only articulation and writing"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Từ não người nói qua cơ thể, sóng âm, tai rồi não người nghe.",
+        "en": "From the speaker's brain through the body, sound wave and ear to the listener's brain."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "choice",
+      "q": {
+        "vi": "Ngữ âm học khác âm vị học thế nào?",
+        "en": "How does phonetics differ from phonology?"
+      },
+      "options": [
+        {
+          "vi": "Ngữ âm học mô tả âm như hiện tượng vật lý; âm vị học nghiên cứu hệ thống âm",
+          "en": "Phonetics describes sounds as physical events; phonology studies the sound system"
+        },
+        {
+          "vi": "Không khác nhau",
+          "en": "They don't differ"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Hai ngành bổ sung cho nhau.",
+        "en": "The two complement each other."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "text",
+      "q": {
+        "vi": "Viết phiên âm của \"think\".",
+        "en": "Write the transcription of \"think\"."
+      },
+      "answers": [
+        "θɪŋk"
+      ],
+      "explain": {
+        "vi": "/θ/ + /ɪ/ + /ŋk/.",
+        "en": "/θ/ + /ɪ/ + /ŋk/."
+      }
+    },
+    {
+      "id": "q4",
+      "type": "choice",
+      "q": {
+        "vi": "[pʰɪn] là loại phiên âm nào?",
+        "en": "What kind of transcription is [pʰɪn]?"
+      },
+      "options": [
+        {
+          "vi": "Phiên âm hẹp (ngữ âm)",
+          "en": "Narrow (phonetic)"
+        },
+        {
+          "vi": "Phiên âm rộng (âm vị)",
+          "en": "Broad (phonemic)"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Dấu [ ] và chi tiết bật hơi ʰ cho biết đây là phiên âm hẹp.",
+        "en": "The [ ] brackets and the aspiration mark ʰ show it is narrow."
+      }
+    },
+    {
+      "id": "q5",
+      "type": "choice",
+      "q": {
+        "vi": "Praat thuộc nhóm công cụ nào?",
+        "en": "Which group of tools does Praat belong to?"
+      },
+      "options": [
+        {
+          "vi": "Phân tích âm học",
+          "en": "Acoustic analysis"
+        },
+        {
+          "vi": "Phiên âm tự động",
+          "en": "Automatic transcription"
+        }
+      ],
+      "answer": 0,
+      "explain": {
+        "vi": "Praat là phần mềm phân tích và thao tác âm thanh lời nói.",
+        "en": "Praat is software for analysing and manipulating speech sound."
+      }
+    }
+  ]
+}
