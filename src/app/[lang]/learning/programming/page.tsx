@@ -2,7 +2,24 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { categories, coursesOf } from "@/content/registry";
 import { getLessons } from "@/lib/content";
-import { dict, isLocale } from "@/lib/i18n";
+import { dict, isLocale, locales } from "@/lib/i18n";
+import { pageMeta } from "@/lib/seo";
+
+export function generateStaticParams() {
+  return locales.map((lang) => ({ lang }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang } = await params;
+  if (!isLocale(lang)) return {};
+  const t = dict[lang];
+  return pageMeta({
+    lang,
+    path: "/learning/programming",
+    title: lang === "vi" ? "Lexi Learn – Học lập trình từ A đến Z, có bài tập tự chấm" : "Lexi Learn – Learn programming A to Z with auto-checked exercises",
+    description: `${t.tagline}. ${t.heroDesc}`,
+  });
+}
 
 export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;

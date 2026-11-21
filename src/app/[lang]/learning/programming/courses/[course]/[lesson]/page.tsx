@@ -5,6 +5,8 @@ import { getEngineData, getLessonBody, getLessons } from "@/lib/content";
 import { LessonWorkspace } from "@/components/LessonWorkspace";
 import { Markdown } from "@/components/Markdown";
 import { dict, isLocale, locales } from "@/lib/i18n";
+import { abs, pageMeta } from "@/lib/seo";
+import { JsonLd } from "@/components/JsonLd";
 
 type Params = { lang: string; course: string; lesson: string };
 
@@ -18,7 +20,15 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const { lang, course, lesson } = await params;
   if (!isLocale(lang)) return {};
   const l = getLessons(course).find((x) => x.slug === lesson);
-  return l ? { title: l.title[lang] } : {};
+  const co = getCourse(course);
+  if (!l || !co) return {};
+  return pageMeta({
+    lang,
+    path: `/learning/programming/courses/${course}/${l.slug}`,
+    title: `${l.title[lang]} | ${co.name[lang]} – Lexi Learn`,
+    description: `${l.summary[lang]}. ${lang === "vi" ? "Bài học song ngữ có bài tập tự chấm, code chạy trực tiếp trên trình duyệt." : "A bilingual lesson with auto-checked exercises; code runs live in your browser."}`,
+    type: "article",
+  });
 }
 
 export default async function LessonPage({ params }: { params: Promise<Params> }) {
@@ -32,7 +42,37 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
   const t = dict[lang];
   const base = `/${lang}/learning/programming/courses/${course}`;
 
+  const co = getCourse(course)!;
+  const url = abs(`${base}/${l.slug}`);
   return (
+    <>
+      <JsonLd
+        data={[
+          {
+            "@context": "https://schema.org",
+            "@type": "LearningResource",
+            name: l.title[lang],
+            description: l.summary[lang],
+            inLanguage: lang,
+            url,
+            timeRequired: `PT${l.minutes}M`,
+            learningResourceType: "Interactive lesson",
+            isAccessibleForFree: true,
+            isPartOf: { "@type": "Course", name: co.name[lang], url: abs(base) },
+            author: { "@type": "Person", name: "Tạ Hoàng Anh Tuấn", url: abs(`/${lang}`) },
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Leo", item: abs(`/${lang}`) },
+              { "@type": "ListItem", position: 2, name: "Lexi Learn", item: abs(`/${lang}/learning/programming`) },
+              { "@type": "ListItem", position: 3, name: co.name[lang], item: abs(base) },
+              { "@type": "ListItem", position: 4, name: l.title[lang], item: url },
+            ],
+          },
+        ]}
+      />
     <LessonWorkspace
       lang={lang}
       t={t}
@@ -49,5 +89,6 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
     >
       <Markdown source={getLessonBody(course, l.slug, lang)} />
     </LessonWorkspace>
+    </>
   );
 }

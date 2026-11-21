@@ -1,43 +1,44 @@
+import Image from "next/image";
 import type { Locale } from "@/lib/i18n";
 import { t, type Project } from "@/content/site";
-import { LaptopFrame } from "@/components/Mockups";
 
-function Monogram({ name }: { name: string }) {
-  const letters = name.split(" ").map((w) => w[0]).join("").slice(0, 3);
+function Logo({ p }: { p: Project }) {
+  if (p.logo) {
+    return <Image src={p.logo} alt="" width={40} height={40} className="h-10 w-10 rounded-lg object-cover" />;
+  }
   return (
-    <span className="grid h-[52px] w-[52px] place-items-center rounded-xl border border-line bg-surface2 font-bold text-label" aria-hidden="true">
-      {letters}
+    <span className="grid h-10 w-10 place-items-center rounded-lg bg-surface2 text-sm font-bold text-brand" aria-hidden="true">
+      {p.name.split(" ").map((w) => w[0]).join("").slice(0, 3)}
     </span>
   );
 }
 
-/** Thay cho ảnh chụp màn hình khi dự án là kênh nội dung: tên kênh và địa chỉ trên từng nền tảng. */
+/** Thay cho ảnh chụp màn hình khi dự án là kênh nội dung: số liệu và địa chỉ trên từng nền tảng. */
 function ChannelPanel({ p, lang }: { p: Project; lang: Locale }) {
   return (
-    <div className="rounded-2xl border border-line bg-bg p-6 sm:p-8">
-      <p className="h-display text-3xl sm:text-4xl">{p.name}</p>
+    <div className="rounded-lg border border-line bg-surface p-6">
       {p.channelStats && (
-        <div className="mt-6">
+        <>
           <dl className="grid grid-cols-2 gap-x-6 gap-y-5">
             {p.channelStats.items.map((it, i) => (
               <div key={i}>
-                <dt className="h-display text-3xl">{it.n[lang]}</dt>
-                <dd className="label mt-1">{it.label[lang]}</dd>
+                <dt className="text-3xl font-bold tracking-tight">{it.n[lang]}</dt>
+                <dd className="mt-1 text-sm text-muted">{it.label[lang]}</dd>
               </div>
             ))}
           </dl>
-          <p className="mt-3 text-xs text-muted">
+          <p className="mt-4 text-xs text-muted">
             {t.statsAsOf[lang]} {p.channelStats.asOf}
           </p>
-        </div>
+        </>
       )}
-      <ul className="mt-6 space-y-3">
+      <ul className="mt-5 space-y-2 border-t border-line pt-5 text-sm">
         {p.channels?.map((c) => (
-          <li key={c.name}>
-            <a href={c.url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-between gap-4 rounded-xl border border-line bg-surface px-4 py-3 hover:border-hl">
-              <span className="font-semibold">{c.name}</span>
-              <span className="label break-all text-right">{c.handle}</span>
+          <li key={c.name} className="flex flex-wrap items-baseline justify-between gap-2">
+            <a href={c.url} target="_blank" rel="noopener noreferrer" className="link-quiet font-semibold">
+              {c.name}
             </a>
+            <span className="break-all text-muted">{c.handle}</span>
           </li>
         ))}
       </ul>
@@ -45,59 +46,65 @@ function ChannelPanel({ p, lang }: { p: Project; lang: Locale }) {
   );
 }
 
-/* eslint-disable @next/next/no-img-element */
-export function ProjectBlock({ p, lang, flip = false }: { p: Project; lang: Locale; flip?: boolean }) {
+export function ProjectBlock({ p, lang, eager = false }: { p: Project; lang: Locale; eager?: boolean }) {
   return (
-    <article
-      id={p.id}
-      className="scroll-mt-24 grid items-center gap-8 rounded-3xl border border-line bg-surface p-6 sm:p-8 md:grid-cols-2 md:gap-12"
-    >
-      <div className={flip ? "md:order-2" : ""}>
-        <div className="flex items-center gap-4">
-          {p.logo ? (
-            <img src={p.logo} alt="" width={52} height={52} className="h-[52px] w-[52px] rounded-xl border border-line object-cover" />
-          ) : (
-            <Monogram name={p.name} />
-          )}
+    <article id={p.id} className="grid scroll-mt-24 items-start gap-8 border-t border-line py-12 md:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] md:gap-12">
+      <div>
+        <div className="flex items-center gap-3">
+          <Logo p={p} />
           <div>
-            <h3 className="h-display text-3xl">{p.name}</h3>
-            <p className="label">{p.host}</p>
+            <h3 className="h-display text-2xl">{p.name}</h3>
+            <p className="text-sm text-muted">{p.host}</p>
           </div>
         </div>
-        <p className="mt-5 text-xl font-semibold leading-snug tracking-tight">{p.tagline[lang]}</p>
+        <p className="mt-5 text-lg font-semibold leading-snug">{p.tagline[lang]}</p>
         <p className="mt-3 leading-relaxed text-muted">{p.summary[lang]}</p>
-        <ul className="mt-4 space-y-2 text-[0.95rem]">
+        <ul className="mt-4 list-disc space-y-1.5 pl-5 text-[0.95rem] marker:text-brand">
           {p.points.map((pt, i) => (
-            <li key={i} className="flex gap-3">
-              <span className="mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full bg-hl" aria-hidden="true" />
-              <span>{pt[lang]}</span>
-            </li>
+            <li key={i}>{pt[lang]}</li>
           ))}
         </ul>
-        <div className="mt-6 flex flex-wrap items-center gap-3">
+        <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
           {p.channels ? (
-            p.channels.map((c) => (
-              <a key={c.name} href={c.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-hl px-5 py-2.5 text-sm font-bold text-hlfg hover:opacity-90">
-                {c.name}
-                <span aria-hidden="true">↗</span>
-              </a>
-            ))
+            p.channels.map((c, i) =>
+              i === 0 ? (
+                <a key={c.name} href={c.url} target="_blank" rel="noopener noreferrer" className="btn-primary text-sm">
+                  {c.name} ↗
+                </a>
+              ) : (
+                <a key={c.name} href={c.url} target="_blank" rel="noopener noreferrer" className="link-quiet text-sm font-semibold">
+                  {c.name} ↗
+                </a>
+              ),
+            )
           ) : (
-            <a href={p.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-hl px-5 py-2.5 text-sm font-bold text-hlfg hover:opacity-90">
-              {t.openProduct[lang]} {p.name}
-              <span aria-hidden="true">↗</span>
+            <a href={p.url} target="_blank" rel="noopener noreferrer" className="btn-primary text-sm">
+              {t.openProduct[lang]} {p.name} ↗
             </a>
           )}
           {p.links?.map((l) => (
-            <a key={l.url} href={l.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-line px-4 py-2.5 text-sm font-semibold hover:border-hl">
-              {l.label[lang]}
-              <span aria-hidden="true">↗</span>
+            <a key={l.url} href={l.url} target="_blank" rel="noopener noreferrer" className="link-quiet text-sm font-semibold">
+              {l.label[lang]} ↗
             </a>
           ))}
         </div>
       </div>
-      <div className={flip ? "md:order-1" : ""}>
-        {p.shot ? <LaptopFrame src={p.shot} alt={`${p.name}: ${p.tagline[lang]}`} /> : <ChannelPanel p={p} lang={lang} />}
+      <div>
+        {p.shot ? (
+          <a href={p.url} target="_blank" rel="noopener noreferrer" className="block overflow-hidden rounded-lg border border-line shadow-sm">
+            <Image
+              src={p.shot}
+              alt={`${p.name}: ${p.tagline[lang]}`}
+              width={1100}
+              height={687}
+              sizes="(min-width: 768px) 40vw, 92vw"
+              loading={eager ? "eager" : "lazy"}
+              className="h-auto w-full"
+            />
+          </a>
+        ) : (
+          <ChannelPanel p={p} lang={lang} />
+        )}
       </div>
     </article>
   );

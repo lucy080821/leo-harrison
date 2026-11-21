@@ -19,9 +19,8 @@
   --brand-soft: #dcebfb;
   --ok: #12936b;
   --bad: #d64545;
-  --hl: #8fede3;
-  --hl-fg: #06303a;
-  --label: #0a7d8a;
+  --on-brand: #ffffff;
+  --marker: #bdeee8;
 }
 
 .dark {
@@ -36,9 +35,8 @@
   --brand-soft: #12304f;
   --ok: #3ad6a3;
   --bad: #ff7676;
-  --hl: #35e0d0;
-  --hl-fg: #032229;
-  --label: #35e0d0;
+  --on-brand: #06182a;
+  --marker: #17545c;
 }
 
 @theme inline {
@@ -51,13 +49,10 @@
   --color-brand: var(--brand);
   --color-brand2: var(--brand-2);
   --color-brandsoft: var(--brand-soft);
-  --color-hl: var(--hl);
-  --color-hlfg: var(--hl-fg);
-  --color-label: var(--label);
+  --color-onbrand: var(--on-brand);
   --color-ok: var(--ok);
   --color-bad: var(--bad);
   --font-sans: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-label: "Space Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
 }
 
@@ -112,83 +107,40 @@ body {
 .hljs-title, .hljs-name, .hljs-tag { color: #7b5be6; }
 .dark .hljs-title, .dark .hljs-name, .dark .hljs-tag { color: #b39dff; }
 
-/* ---------- Trang chủ: câu mở đầu song ngữ theo cụm ---------- */
-@keyframes chunk-in {
-  from { opacity: 0; transform: translateY(0.35em); }
-  to { opacity: 1; transform: none; }
-}
-.chunk {
-  display: inline-flex;
-  flex-direction: column;
-}
-.chunk-gloss {
-  margin-top: 0.45em;
-  padding-top: 0.35em;
-  border-top: 1px solid var(--border);
-  font-size: 0.28em;
-  line-height: 1.35;
-  font-weight: 400;
-  letter-spacing: 0;
-  color: var(--brand);
-}
-
 /* ---------- Portfolio ---------- */
-.h-display { font-weight: 800; letter-spacing: -0.04em; line-height: 1.04; }
-.label { font-family: var(--font-label); font-size: 0.8rem; color: var(--label); letter-spacing: 0; }
-.hl {
-  background: var(--hl);
-  color: var(--hl-fg);
-  padding: 0 0.2em;
-  border-radius: 0.14em;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
+.h-display { font-weight: 700; letter-spacing: -0.025em; line-height: 1.15; }
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 0.5rem;
+  background: var(--brand);
+  color: var(--on-brand);
+  padding: 0.65rem 1.2rem;
+  font-weight: 600;
+  transition: filter 0.15s;
 }
-.chunk-gloss { font-family: var(--font-label); color: var(--label); }
+.btn-primary:hover { filter: brightness(1.08); }
+.link-quiet { text-decoration: underline; text-decoration-color: var(--border); text-underline-offset: 0.25em; }
+.link-quiet:hover { text-decoration-color: var(--brand); color: var(--brand); }
+/* vệt bút dạ quang dưới tên */
+.marker {
+  background: linear-gradient(transparent 58%, var(--marker) 58%);
+  padding: 0 0.12em;
+}
 
-/* ---------- Gõ chữ ---------- */
-.tw-slot { position: relative; display: block; }
-.tw-ghost { visibility: hidden; white-space: pre; display: block; }
-.tw-live { position: absolute; left: 0; top: 0; white-space: pre; }
-.tw-caret {
-  display: inline-block;
+/* ---------- Gõ chữ: chữ chưa gõ vẫn chiếm chỗ (trong suốt) nên bố cục không nhảy ---------- */
+.tw-rest { opacity: 0; }
+.tw-caret { display: inline-block; position: relative; width: 0; }
+.tw-caret::after {
+  content: "";
+  position: absolute;
+  left: 0.04em;
+  top: 0.12em;
   width: 0.07em;
-  height: 0.82em;
-  margin-left: 0.06em;
-  vertical-align: -0.06em;
-  background: var(--hl);
+  height: 0.85em;
+  background: var(--brand);
   animation: tw-blink 0.9s steps(1) infinite;
 }
-.chunk-gloss .tw-caret { width: 0.5em; height: 1em; margin-left: 0.1em; vertical-align: -0.12em; }
 @keyframes tw-blink { 50% { opacity: 0; } }
-@media (prefers-reduced-motion: reduce) { .tw-caret { animation: none; } }
-
-/* ---------- Nền phần đầu trang ---------- */
-.hero-grid {
-  background-image:
-    linear-gradient(color-mix(in srgb, var(--label) 11%, transparent) 1px, transparent 1px),
-    linear-gradient(90deg, color-mix(in srgb, var(--label) 11%, transparent) 1px, transparent 1px);
-  background-size: 52px 52px;
-  -webkit-mask-image: radial-gradient(ellipse 75% 70% at 62% 30%, #000 20%, transparent 75%);
-  mask-image: radial-gradient(ellipse 75% 70% at 62% 30%, #000 20%, transparent 75%);
-}
-.hero-glow {
-  background:
-    radial-gradient(40rem 32rem at 78% 28%, color-mix(in srgb, var(--hl) 16%, transparent), transparent 70%),
-    radial-gradient(30rem 24rem at 10% 70%, color-mix(in srgb, var(--brand) 12%, transparent), transparent 70%);
-}
-@keyframes greet-float {
-  0%, 100% { transform: translateY(0); opacity: 0.12; }
-  50% { transform: translateY(-12px); opacity: 0.4; }
-}
-.greet {
-  position: absolute;
-  font-size: 0.9rem;
-  white-space: nowrap;
-  animation: greet-float 12s ease-in-out infinite;
-}
-@media (max-width: 640px) {
-  .greet { display: none; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .greet { animation: none; opacity: 0.22; }
-}
+@media (prefers-reduced-motion: reduce) { .tw-caret::after { animation: none; } }

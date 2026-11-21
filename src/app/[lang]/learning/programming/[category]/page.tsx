@@ -3,9 +3,22 @@ import { notFound } from "next/navigation";
 import { categories, coursesOf, getCategory } from "@/content/registry";
 import { getLessons } from "@/lib/content";
 import { dict, isLocale, locales } from "@/lib/i18n";
+import { pageMeta } from "@/lib/seo";
 
 export function generateStaticParams() {
   return locales.flatMap((lang) => categories.map((c) => ({ lang, category: c.id })));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ lang: string; category: string }> }) {
+  const { lang, category } = await params;
+  const cat = getCategory(category);
+  if (!isLocale(lang) || !cat) return {};
+  return pageMeta({
+    lang,
+    path: `/learning/programming/${cat.id}`,
+    title: `${cat.name[lang]} – ${lang === "vi" ? "học lập trình" : "learn programming"} | Lexi Learn`,
+    description: cat.desc[lang],
+  });
 }
 
 export default async function CategoryPage({ params }: { params: Promise<{ lang: string; category: string }> }) {

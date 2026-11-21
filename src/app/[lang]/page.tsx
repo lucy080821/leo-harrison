@@ -1,120 +1,105 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { BilingualLine } from "@/components/BilingualLine";
 import { HeroBackground } from "@/components/HeroBackground";
+import { HeroLine } from "@/components/HeroLine";
+import { JsonLd } from "@/components/JsonLd";
 import { LearningRows } from "@/components/LearningRows";
 import { ProjectBlock } from "@/components/ProjectBlock";
 import { SocialLinks } from "@/components/SocialLinks";
-import { SectionHead } from "@/components/SectionHead";
-import { Logo } from "@/components/Logo";
-import { categories, coursesOf } from "@/content/registry";
-import { getLessons } from "@/lib/content";
-import { extraProducts, heroChunks, languageNames, owner, projects, stats, t } from "@/content/site";
+import { heroLine, owner, projects, seo, t } from "@/content/site";
 import { isLocale, locales } from "@/lib/i18n";
+import { abs, pageMeta, siteName } from "@/lib/seo";
 
-/* eslint-disable @next/next/no-img-element */
+export function generateStaticParams() {
+  return locales.map((lang) => ({ lang }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang } = await params;
+  if (!isLocale(lang)) return {};
+  const m = seo.home;
+  return pageMeta({ lang, path: "", title: m.title[lang], description: m.description[lang] });
+}
+
 export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
-  const values = {
-    products: projects.length + extraProducts,
-    lessons: 0,
-    languages: locales.length,
-  };
-  const lessonCount = categories.flatMap((c) => coursesOf(c.id)).reduce((n, co) => n + getLessons(co.id).length, 0);
-  values.lessons = lessonCount;
-  const langList = locales.map((l) => languageNames[lang][l]).join(lang === "vi" ? " và " : " and ");
+
+  const sameAs = [owner.github, owner.facebook, ...projects.flatMap((p) => p.channels?.map((c) => c.url) ?? [])];
 
   return (
     <div className="relative isolate overflow-x-clip">
-    <HeroBackground />
-    <div className="mx-auto max-w-6xl px-4">
-      {/* Hero */}
-      <section className="pb-20 pt-12 lg:pt-20">
-        <div>
-          <p className="mb-5 text-2xl font-bold tracking-tight sm:text-3xl">
-            {t.hello[lang]} <span className="hl">{owner.nick}</span>
+      <JsonLd
+        data={[
+          {
+            "@context": "https://schema.org",
+            "@type": "Person",
+            name: owner.name,
+            alternateName: owner.nick,
+            url: abs(`/${lang}`),
+            sameAs,
+            knowsAbout: ["Web development", "English language learning", "Data dashboards"],
+            owns: projects.filter((p) => !p.channels).map((p) => ({ "@type": "WebSite", name: p.name, url: p.url })),
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: siteName,
+            url: abs(`/${lang}`),
+            inLanguage: lang,
+            author: { "@type": "Person", name: owner.name },
+          },
+        ]}
+      />
+      <HeroBackground />
+      <div className="mx-auto max-w-5xl px-4">
+        <section className="pb-16 pt-14 sm:pt-20">
+          <p className="mb-4 text-lg text-muted">
+            {t.hello[lang]} <span className="marker font-semibold text-fg">{owner.nick}</span> ({owner.name})
           </p>
-          <BilingualLine chunks={heroChunks} lang={lang} />
-          <p className="mt-9 max-w-xl text-lg leading-relaxed text-muted">{t.heroSub[lang]}</p>
-
-          <dl className="mt-8 flex flex-wrap gap-x-10 gap-y-4">
-            {stats.map((s) => (
-              <div key={s.key}>
-                <dt className="h-display text-3xl sm:text-4xl">{values[s.key]}</dt>
-                <dd className="label mt-1 max-w-[11rem]">
-                  {s.label[lang]}
-                  {s.key === "languages" ? `: ${langList}` : ""}
-                </dd>
-              </div>
-            ))}
-          </dl>
-
-          <div className="mt-9 flex flex-wrap gap-3">
-            <Link href={`/${lang}/projects`} className="rounded-full bg-hl px-6 py-3 font-bold text-hlfg hover:opacity-90">
+          <HeroLine line={heroLine} lang={lang} srPrefix={`${owner.nick}, ${owner.name}:`} />
+          <p className="mt-8 max-w-2xl text-lg leading-relaxed">{t.heroSub[lang]}</p>
+          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
+            <Link href={`/${lang}/projects`} className="btn-primary">
               {t.seeProjects[lang]}
             </Link>
-            <Link href={`/${lang}/learning`} className="rounded-full border border-line px-6 py-3 font-semibold hover:border-hl">
-              {t.startLearning[lang]}
+            <Link href={`/${lang}/learning/programming`} className="link-quiet font-semibold">
+              {t.startLearning[lang]} →
             </Link>
           </div>
-        </div>
+        </section>
 
-      </section>
+        <section aria-labelledby="projects-h" className="py-8">
+          <h2 id="projects-h" className="h-display text-3xl">
+            {t.projectsTitle[lang]}
+          </h2>
+          <p className="mt-2 text-muted">{t.projectsIntro[lang]}</p>
+          <div className="mt-8">
+            {projects.map((p, i) => (
+              <ProjectBlock key={p.id} p={p} lang={lang} eager={i === 0} />
+            ))}
+          </div>
+        </section>
 
-      {/* Projects */}
-      <section aria-labelledby="projects-h" className="py-10">
-        <SectionHead id="projects-h" label={t.portfolio[lang]} title={t.projectsTitle[lang]} intro={t.projectsIntro[lang]} />
-        <ul className="mt-8 flex flex-wrap items-center justify-center gap-3" aria-label={t.projectsTitle[lang]}>
-          {projects.map((p) => (
-            <li key={p.id}>
-              <a href={`#${p.id}`} className="flex items-center gap-2 rounded-full border border-line bg-surface py-1.5 pl-1.5 pr-4 text-sm font-semibold hover:border-hl">
-                {p.logo ? (
-                  <img src={p.logo} alt="" className="h-7 w-7 rounded-full object-cover" />
-                ) : (
-                  <span className="grid h-7 w-7 place-items-center rounded-full bg-surface2 text-[0.65rem] font-bold text-label" aria-hidden="true">
-                    {p.name.split(" ").map((w) => w[0]).join("").slice(0, 3)}
-                  </span>
-                )}
-                {p.name}
-              </a>
-            </li>
-          ))}
-          <li>
-            <div className="flex h-10 items-center rounded-full border border-line bg-surface px-4 hover:border-hl">
-              <Logo href={`/${lang}/learning/programming`} size="text-base" />
-            </div>
-          </li>
-        </ul>
-        <div className="mt-10 space-y-6">
-          {projects.map((p, i) => (
-            <ProjectBlock key={p.id} p={p} lang={lang} flip={i % 2 === 1} />
-          ))}
-        </div>
-      </section>
+        <section aria-labelledby="learn-h" className="py-12">
+          <h2 id="learn-h" className="h-display text-3xl">
+            {t.learningTitle[lang]}
+          </h2>
+          <p className="mt-2 max-w-xl text-muted">{t.learningIntro[lang]}</p>
+          <LearningRows lang={lang} />
+        </section>
 
-      {/* Learning */}
-      <section aria-labelledby="learn-h" className="py-16">
-        <SectionHead id="learn-h" label={t.learningLabel[lang]} title={t.learningTitle[lang]} intro={t.learningIntro[lang]} />
-        <LearningRows lang={lang} />
-      </section>
-
-      {/* Contact */}
-      <section aria-labelledby="contact-h" className="py-16 text-center">
-        <p className="label">{t.contactTitle[lang]}</p>
-        <h2 id="contact-h" className="h-display mt-2 text-5xl sm:text-6xl">
-          {t.ctaLead[lang]} <span className="hl">{t.ctaWord[lang]}</span>
-        </h2>
-        <p className="mx-auto mt-4 max-w-md text-muted">{t.contactBody[lang]}</p>
-        <a
-          href={`mailto:${owner.email}`}
-          className="mt-8 inline-block max-w-full break-all rounded-full bg-hl px-7 py-3.5 text-base font-bold text-hlfg hover:opacity-90"
-        >
-          {t.emailMe[lang]}: {owner.email}
-        </a>
-        <SocialLinks className="mt-6 justify-center" />
-      </section>
-    </div>
+        <section aria-labelledby="contact-h" className="py-12">
+          <h2 id="contact-h" className="h-display text-3xl">
+            {t.contactTitle[lang]}
+          </h2>
+          <p className="mt-2 max-w-xl text-muted">{t.contactBody[lang]}</p>
+          <a href={`mailto:${owner.email}`} className="link-quiet mt-5 inline-block break-all text-xl font-semibold sm:text-2xl">
+            {owner.email}
+          </a>
+          <SocialLinks className="mt-5" />
+        </section>
+      </div>
     </div>
   );
 }

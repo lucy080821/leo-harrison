@@ -49,6 +49,15 @@ Build production (để deploy VPS): `npm run build && npm start`.
 
 Nội dung portfolio (tên, email, dự án, câu chữ) nằm trong `src/content/site.ts`; logo dự án trong `public/projects/`. Font Be Vietnam Pro và Newsreader được đóng gói sẵn (`@fontsource`), không tải từ Google.
 
+## SEO
+
+- Đặt địa chỉ thật của website trước khi build: `NEXT_PUBLIC_SITE_URL=https://ten-mien-cua-ban.com npm run build` (dùng cho canonical, hreflang, sitemap, ảnh chia sẻ).
+- Mỗi trang có `<title>`, mô tả, canonical, hreflang vi/en/x-default, Open Graph và Twitter Card (`src/lib/seo.ts`). Tiêu đề và mô tả các trang chính nằm trong `src/content/site.ts` (mục `seo`).
+- `/sitemap.xml` và `/robots.txt` được tạo tự động từ danh sách trang và bài học.
+- Dữ liệu có cấu trúc (JSON-LD): `Person` và `WebSite` ở trang chủ, `Course` ở trang khoá học, `LearningResource` và `BreadcrumbList` ở từng bài.
+- Ảnh chia sẻ `public/og-vi.png`, `public/og-en.png` (1200x630) được dựng sẵn; muốn đổi thì thay file.
+- Sau khi deploy: gửi `https://ten-mien/sitemap.xml` vào Google Search Console.
+
 ## Engine chạy code
 
 | Engine | Dùng cho | Cách chạy |

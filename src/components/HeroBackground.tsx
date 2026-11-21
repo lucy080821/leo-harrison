@@ -20,19 +20,6 @@ const LINKS: [number, number][] = [
   [0, 3], [1, 2], [2, 4], [0, 5], [5, 7], [7, 8], [8, 3], [6, 10], [10, 1], [7, 9], [5, 6], [2, 10],
 ];
 
-const GREETINGS: { t: string; x: string; y: string; d: number; s: number }[] = [
-  { t: "Hello", x: "6%", y: "12%", d: 0, s: 11 },
-  { t: "你好", x: "34%", y: "6%", d: 2, s: 13 },
-  { t: "Bonjour", x: "58%", y: "10%", d: 4, s: 12 },
-  { t: "こんにちは", x: "88%", y: "16%", d: 1, s: 14 },
-  { t: "Hola", x: "3%", y: "40%", d: 3, s: 10 },
-  { t: "안녕하세요", x: "80%", y: "40%", d: 5, s: 13 },
-  { t: "Xin chào", x: "92%", y: "58%", d: 2, s: 12 },
-  { t: "Hallo", x: "58%", y: "90%", d: 6, s: 11 },
-  { t: "Ciao", x: "70%", y: "78%", d: 1, s: 14 },
-  { t: "Привет", x: "8%", y: "88%", d: 4, s: 12 },
-];
-
 function hexToRgb(hex: string): [number, number, number] {
   const h = hex.trim().replace("#", "");
   const v = h.length === 3 ? h.split("").map((c) => c + c).join("") : h;
@@ -55,7 +42,7 @@ function slerp(a: number[], b: number[], s: number): [number, number, number] {
   return [a[0] * k1 + b[0] * k2, a[1] * k1 + b[1] * k2, a[2] * k1 + b[2] * k2];
 }
 
-/** Nền cho phần đầu trang: lưới điểm, quả cầu mạng lưới toàn cầu xoay chậm và lời chào nhiều ngôn ngữ. */
+/** Nền phần đầu trang: một quả cầu mạng lưới xoay chậm, rất nhẹ, gợi ý về kết nối quốc tế. */
 export function HeroBackground() {
   const wrapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -84,8 +71,8 @@ export function HeroBackground() {
     let rgb2: [number, number, number] = [74, 163, 255];
     const readColors = () => {
       const cs = getComputedStyle(document.documentElement);
-      rgb = hexToRgb(cs.getPropertyValue("--label") || "#35e0d0");
-      rgb2 = hexToRgb(cs.getPropertyValue("--brand") || "#4aa3ff");
+      rgb = hexToRgb(cs.getPropertyValue("--brand") || "#0b6fd6");
+      rgb2 = hexToRgb(cs.getPropertyValue("--brand-2") || "#0aa5b8");
     };
     const resize = () => {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -125,8 +112,8 @@ export function HeroBackground() {
       for (const d of dots) {
         const p = project(d, rot, R, cx);
         const front = p.z > 0;
-        ctx!.fillStyle = col(rgb, front ? 0.3 + 0.6 * p.z : 0.07);
-        const r = (front ? 1.9 : 1) * dpr;
+        ctx!.fillStyle = col(rgb, front ? 0.18 + 0.4 * p.z : 0.05);
+        const r = (front ? 1.6 : 0.9) * dpr;
         ctx!.fillRect(p.x - r / 2, p.y - r / 2, r, r);
       }
 
@@ -143,7 +130,7 @@ export function HeroBackground() {
           const lift = 1 + 0.2 * Math.sin(Math.PI * s);
           const p = project([v[0] * lift, v[1] * lift, v[2] * lift], rot, R, cx);
           if (prev && p.z > -0.05 && prev.z > -0.05) {
-            ctx!.strokeStyle = col(rgb2, 0.34);
+            ctx!.strokeStyle = col(rgb2, 0.3);
             ctx!.beginPath();
             ctx!.moveTo(prev.x, prev.y);
             ctx!.lineTo(p.x, p.y);
@@ -213,21 +200,10 @@ export function HeroBackground() {
   }, []);
 
   return (
-    <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[48rem] overflow-hidden sm:h-[52rem]">
-      <div className="hero-grid absolute inset-0" />
-      <div className="hero-glow absolute inset-0" />
-      <div ref={wrapRef} className="absolute -right-[22%] top-[8rem] aspect-square w-[46rem] max-w-[140vw] opacity-45 sm:-right-[8%] sm:top-[3rem] sm:opacity-80 lg:right-[-2%]">
+    <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[40rem] overflow-hidden">
+      <div ref={wrapRef} className="absolute -right-[22%] top-[8rem] aspect-square w-[46rem] max-w-[140vw] opacity-30 sm:-right-[10%] sm:top-[2rem] sm:opacity-60 lg:right-[-6%]">
         <canvas ref={canvasRef} className="h-full w-full" />
       </div>
-      {GREETINGS.map((g) => (
-        <span
-          key={g.t}
-          className="greet label"
-          style={{ left: g.x, top: g.y, animationDelay: `${g.d}s`, animationDuration: `${g.s}s` }}
-        >
-          {g.t}
-        </span>
-      ))}
     </div>
   );
 }

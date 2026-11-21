@@ -16,13 +16,11 @@ export const nav: { href: string; label: L10n }[] = [
   { href: "about", label: { vi: "Giới thiệu", en: "About" } },
 ];
 
-/** Câu mở đầu chia thành cụm: cụm tiếng Việt và cụm tiếng Anh thẳng hàng nhau. */
-export const heroChunks: L10n[] = [
-  { vi: "Tôi làm công cụ", en: "I build tools" },
-  { vi: "để việc học", en: "that make learning" },
-  { vi: "và dữ liệu", en: "and data" },
-  { vi: "dễ hiểu hơn.", en: "easier to grasp." },
-];
+/** Câu mở đầu: tiếng Việt và tiếng Anh, gõ lần lượt trên trang chủ. */
+export const heroLine: L10n = {
+  vi: "Mình làm công cụ để việc học và dữ liệu dễ hiểu hơn.",
+  en: "I build tools that make learning and data easier to understand.",
+};
 
 export type Project = {
   id: string;
@@ -123,48 +121,24 @@ export const projects: Project[] = [
   },
 ];
 
-/** Ba con số ở đầu trang chủ. Giá trị được tính từ dữ liệu thật (xem app/[lang]/page.tsx), không gõ tay. */
-export const stats: { key: "products" | "lessons" | "languages"; label: L10n }[] = [
-  { key: "products", label: { vi: "dự án", en: "projects" } },
-  { key: "lessons", label: { vi: "bài học có bài tập", en: "lessons with exercises" } },
-  { key: "languages", label: { vi: "ngôn ngữ", en: "languages" } },
-];
-
-/** Tên của từng ngôn ngữ giao diện, viết theo ngôn ngữ đang xem. */
-export const languageNames: Record<"vi" | "en", Record<"vi" | "en", string>> = {
-  vi: { vi: "Việt", en: "Anh" },
-  en: { vi: "Vietnamese", en: "English" },
-};
-
-/** Lexi Learn nằm trong mục Học, không nằm trong mảng projects, nên cộng thêm 1. */
-export const extraProducts = 1;
-
 export const t = {
-  learningLabel: { vi: "Chia sẻ kiến thức", en: "Knowledge sharing" } as L10n,
-  portfolio: { vi: "Portfolio", en: "Portfolio" } as L10n,
-  ctaLead: { vi: "Hãy", en: "Let's" } as L10n,
-  ctaWord: { vi: "trò chuyện", en: "talk" } as L10n,
-  emailMe: { vi: "Gửi email", en: "Email" } as L10n,
-  openProduct: { vi: "Xem", en: "View" } as L10n,
-  alsoHere: { vi: "Cũng ở đây", en: "Also here" } as L10n,
-  hello: { vi: "Xin chào, tôi là", en: "Hi, I'm" } as L10n,
+  hello: { vi: "Xin chào, mình là", en: "Hi, I'm" } as L10n,
   heroSub: {
-    vi: "Tôi thiết kế và xây dựng sản phẩm về học tập và dữ liệu, rồi viết lại những gì mình học để chia sẻ với mọi người.",
-    en: "I design and build products for learning and data, then write down what I learn to share with others.",
+    vi: "Mình làm Lucy Tutor (học và luyện thi tiếng Anh cùng AI), Cerno (biến Google Sheets thành dashboard) và Lexi Learn (khóa học lập trình song ngữ, có bài tập tự chấm). Mình cũng làm kênh Tiếng Anh Không Khó trên YouTube và TikTok.",
+    en: "I build Lucy Tutor (learn English and prepare for exams with AI), Cerno (turn Google Sheets into dashboards) and Lexi Learn (a bilingual programming course with auto-checked exercises). I also run the Tiếng Anh Không Khó channel on YouTube and TikTok.",
   } as L10n,
-  seeProjects: { vi: "Xem dự án", en: "See the projects" } as L10n,
-  startLearning: { vi: "Vào học", en: "Start learning" } as L10n,
+  seeProjects: { vi: "Xem các dự án", en: "See my projects" } as L10n,
+  startLearning: { vi: "Học lập trình", en: "Learn to code" } as L10n,
   projectsTitle: { vi: "Dự án", en: "Projects" } as L10n,
   projectsIntro: {
-    vi: "Những sản phẩm và kênh nội dung tôi đã thiết kế, xây dựng và vận hành.",
-    en: "Products and content channels I designed, built and run.",
+    vi: "Những sản phẩm và kênh mình đang làm.",
+    en: "The products and channels I'm working on.",
   } as L10n,
-  visit: { vi: "Mở", en: "Visit" } as L10n,
-  allProjects: { vi: "Tất cả dự án", en: "All projects" } as L10n,
-  learningTitle: { vi: "Học cùng tôi", en: "Learn with me" } as L10n,
+  openProduct: { vi: "Mở", en: "Open" } as L10n,
+  learningTitle: { vi: "Học cùng mình", en: "Learn with me" } as L10n,
   learningIntro: {
-    vi: "Những thứ tôi học và dạy lại, viết song ngữ và có bài tập để tự thử.",
-    en: "Things I learn and teach back, written in two languages with exercises to try yourself.",
+    vi: "Những gì mình học rồi viết lại thành bài, song ngữ và có bài tập để bạn tự thử.",
+    en: "What I learn, written up as lessons in two languages, with exercises you can try yourself.",
   } as L10n,
   programming: { vi: "Lập trình", en: "Programming" } as L10n,
   programmingDesc: {
@@ -178,23 +152,23 @@ export const t = {
   } as L10n,
   soon: { vi: "Sắp ra mắt", en: "Coming soon" } as L10n,
   lessons: { vi: "bài học", en: "lessons" } as L10n,
-  contactTitle: { vi: "Liên hệ", en: "Get in touch" } as L10n,
+  contactTitle: { vi: "Liên hệ", en: "Contact" } as L10n,
   contactBody: {
-    vi: "Muốn hợp tác, góp ý cho một dự án hay chỉ chào một tiếng, cứ gửi email.",
-    en: "Want to work together, give feedback on a project, or just say hi? Send an email.",
+    vi: "Muốn hợp tác, góp ý cho một dự án hay chỉ chào một tiếng, cứ gửi email cho mình.",
+    en: "If you'd like to work together, give feedback on a project, or just say hi, send me an email.",
   } as L10n,
   aboutTitle: { vi: "Giới thiệu", en: "About" } as L10n,
   aboutBody: [
     {
-      vi: "Tôi là Tạ Hoàng Anh Tuấn, mọi người gọi tôi là Leo. Tôi xây dựng các công cụ giúp việc học và việc đọc dữ liệu bớt nặng nề hơn.",
+      vi: "Mình là Tạ Hoàng Anh Tuấn, mọi người hay gọi mình là Leo. Mình làm những công cụ giúp việc học và việc đọc dữ liệu bớt nặng nề hơn.",
       en: "I'm Tạ Hoàng Anh Tuấn, and people call me Leo. I build tools that make learning and reading data less of a chore.",
     },
     {
-      vi: "Lucy Tutor ra đời để học và luyện thi tiếng Anh có người đồng hành là AI. Cerno dành cho ai có dữ liệu trong Google Sheets nhưng chưa có cách trình bày. Lexi Learn là nơi tôi viết lại những gì mình học về lập trình, để người khác bắt đầu từ con số 0 mà không bị lạc. Kênh Tiếng Anh Không Khó trên YouTube và TikTok đưa tiếng Anh đến người học theo cách nhẹ nhàng hơn.",
-      en: "Lucy Tutor lets people study and prepare for English exams with an AI alongside them. Cerno is for anyone whose data sits in Google Sheets with no good way to show it. Lexi Learn is where I write down what I learn about programming so others can start from zero without getting lost. The Tiếng Anh Không Khó channel on YouTube and TikTok brings English to learners in a lighter way.",
+      vi: "Lucy Tutor ra đời để học và luyện thi tiếng Anh có AI đồng hành. Cerno dành cho ai có dữ liệu trong Google Sheets nhưng chưa có cách trình bày. Lexi Learn là nơi mình viết lại những gì đã học về lập trình, để người khác bắt đầu từ con số 0 mà không bị lạc. Kênh Tiếng Anh Không Khó trên YouTube và TikTok đưa tiếng Anh đến người học theo cách nhẹ nhàng hơn.",
+      en: "Lucy Tutor lets people study and prepare for English exams with an AI alongside them. Cerno is for anyone whose data sits in Google Sheets with no good way to show it. Lexi Learn is where I write down what I've learned about programming so others can start from zero without getting lost. The Tiếng Anh Không Khó channel on YouTube and TikTok brings English to learners in a lighter way.",
     },
     {
-      vi: "Trang này gom tất cả lại một chỗ, kèm những gì tôi học được và muốn chia sẻ. Phần tiếng Anh chuyên sâu sẽ là chủ đề tiếp theo.",
+      vi: "Trang này gom tất cả lại một chỗ, kèm những gì mình học được và muốn chia sẻ. Phần tiếng Anh chuyên sâu sẽ là chủ đề tiếp theo.",
       en: "This site puts everything in one place, along with what I've learned and want to share. In-depth English is the next topic.",
     },
   ] as L10n[],
@@ -210,4 +184,44 @@ export const t = {
   backToLearning: { vi: "Về trang Học", en: "Back to Learning" } as L10n,
   statsAsOf: { vi: "Số liệu YouTube tính đến", en: "YouTube figures as of" } as L10n,
   rights: { vi: "Mọi quyền được bảo lưu.", en: "All rights reserved." } as L10n,
+  skip: { vi: "Bỏ qua, đến nội dung chính", en: "Skip to main content" } as L10n,
+};
+
+/** Tiêu đề và mô tả dùng cho SEO. Tiêu đề khoảng 60 ký tự, mô tả khoảng 150 ký tự. */
+export const seo: Record<"home" | "projects" | "learning" | "about" | "english", { title: L10n; description: L10n }> = {
+  home: {
+    title: { vi: "Leo – Tạ Hoàng Anh Tuấn | Lập trình, tiếng Anh, dữ liệu", en: "Leo – Tạ Hoàng Anh Tuấn | Code, English learning, data" },
+    description: {
+      vi: "Mình là Leo. Mình làm Lucy Tutor (học tiếng Anh cùng AI), Cerno (dashboard từ Google Sheets) và Lexi Learn (học lập trình song ngữ, có bài tập tự chấm).",
+      en: "I'm Leo. I build Lucy Tutor (learn English with AI), Cerno (dashboards from Google Sheets) and Lexi Learn (a bilingual programming course with auto-checked exercises).",
+    },
+  },
+  projects: {
+    title: { vi: "Dự án: Lucy Tutor, Cerno, Tiếng Anh Không Khó | Leo", en: "Projects: Lucy Tutor, Cerno, Tiếng Anh Không Khó | Leo" },
+    description: {
+      vi: "Lucy Tutor học và luyện thi tiếng Anh cùng AI, Cerno tạo dashboard từ Google Sheets, và kênh Tiếng Anh Không Khó trên YouTube, TikTok.",
+      en: "Lucy Tutor for English learning and exam prep with AI, Cerno for dashboards from Google Sheets, and the Tiếng Anh Không Khó channel on YouTube and TikTok.",
+    },
+  },
+  learning: {
+    title: { vi: "Học cùng Leo | Lập trình và tiếng Anh", en: "Learn with Leo | Programming and English" },
+    description: {
+      vi: "Các khóa học song ngữ Việt - Anh do Leo biên soạn: lập trình từ con số 0 với bài tập tự chấm, và tiếng Anh chuyên sâu (sắp ra mắt).",
+      en: "Bilingual Vietnamese-English courses by Leo: programming from zero with auto-checked exercises, and in-depth English (coming soon).",
+    },
+  },
+  about: {
+    title: { vi: "Giới thiệu | Leo – Tạ Hoàng Anh Tuấn", en: "About | Leo – Tạ Hoàng Anh Tuấn" },
+    description: {
+      vi: "Tạ Hoàng Anh Tuấn (Leo) làm công cụ giúp việc học và đọc dữ liệu dễ hơn: Lucy Tutor, Cerno, Lexi Learn và kênh Tiếng Anh Không Khó.",
+      en: "Tạ Hoàng Anh Tuấn (Leo) builds tools that make learning and reading data easier: Lucy Tutor, Cerno, Lexi Learn and the Tiếng Anh Không Khó channel.",
+    },
+  },
+  english: {
+    title: { vi: "Tiếng Anh chuyên sâu (sắp ra mắt) | Leo", en: "Advanced English (coming soon) | Leo" },
+    description: {
+      vi: "Phần tiếng Anh chuyên sâu đang được soạn: cách dùng từ tự nhiên, ngữ pháp người học hay sai và kỹ năng cho bài thi.",
+      en: "In-depth English is being written: natural word choice, grammar where learners often slip, and exam skills.",
+    },
+  },
 };

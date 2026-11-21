@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { projects, t } from "@/content/site";
+import { projects, t, seo } from "@/content/site";
+import { pageMeta } from "@/lib/seo";
 import { isLocale, locales } from "@/lib/i18n";
 
 export function generateStaticParams() {
@@ -9,7 +10,9 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
-  return { title: isLocale(lang) ? t.englishPageTitle[lang] : "English" };
+  if (!isLocale(lang)) return {};
+  const m = seo.english;
+  return pageMeta({ lang, path: "/learning/english", title: m.title[lang], description: m.description[lang] });
 }
 
 export default async function EnglishPage({ params }: { params: Promise<{ lang: string }> }) {

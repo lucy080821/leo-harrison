@@ -36,7 +36,7 @@ const items = [
 /** Các cách liên hệ khác ngoài email. Địa chỉ Facebook chỉ nằm trong liên kết, không hiện thành chữ. */
 export function SocialLinks({ compact = false, className = "" }: { compact?: boolean; className?: string }) {
   return (
-    <ul className={`flex flex-wrap items-center gap-3 ${className}`}>
+    <ul className={`flex flex-wrap items-center ${compact ? "gap-3" : "gap-x-6 gap-y-3"} ${className}`}>
       {items.map((it) => (
         <li key={it.key}>
           <a
@@ -44,14 +44,10 @@ export function SocialLinks({ compact = false, className = "" }: { compact?: boo
             {...(it.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
             aria-label={it.label}
             title={it.label}
-            className={
-              compact
-                ? "grid h-9 w-9 place-items-center rounded-full border border-line text-label hover:border-hl"
-                : "inline-flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-2.5 text-sm font-semibold hover:border-hl"
-            }
+            className="inline-flex items-center gap-2 text-muted hover:text-brand"
           >
-            <span className="text-label">{icons[it.key]}</span>
-            {!compact && it.label}
+            {icons[it.key]}
+            {!compact && <span className="link-quiet text-fg">{it.label}</span>}
           </a>
         </li>
       ))}

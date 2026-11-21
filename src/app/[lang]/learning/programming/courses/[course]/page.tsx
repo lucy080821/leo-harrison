@@ -4,9 +4,24 @@ import { courses, getCategory, getCourse } from "@/content/registry";
 import { getLessons } from "@/lib/content";
 import { CourseProgress, LessonStatus } from "@/components/LessonStatus";
 import { dict, isLocale, locales } from "@/lib/i18n";
+import { abs, pageMeta } from "@/lib/seo";
+import { JsonLd } from "@/components/JsonLd";
 
 export function generateStaticParams() {
   return locales.flatMap((lang) => courses.map((c) => ({ lang, course: c.id })));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ lang: string; course: string }> }) {
+  const { lang, course } = await params;
+  const co = getCourse(course);
+  if (!isLocale(lang) || !co) return {};
+  const n = getLessons(co.id).length;
+  return pageMeta({
+    lang,
+    path: `/learning/programming/courses/${co.id}`,
+    title: `${lang === "vi" ? "Học" : "Learn"} ${co.name[lang]} ${lang === "vi" ? "từ cơ bản" : "from scratch"} | Lexi Learn`,
+    description: `${co.desc[lang]} ${n > 0 ? `${n} ${lang === "vi" ? "bài học có bài tập tự chấm." : "lessons with auto-checked exercises."}` : ""}`.trim(),
+  });
 }
 
 export default async function CoursePage({ params }: { params: Promise<{ lang: string; course: string }> }) {
@@ -20,6 +35,18 @@ export default async function CoursePage({ params }: { params: Promise<{ lang: s
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Course",
+          name: co.name[lang],
+          description: co.desc[lang],
+          inLanguage: lang,
+          url: abs(`/${lang}/learning/programming/courses/${co.id}`),
+          provider: { "@type": "Person", name: "Tạ Hoàng Anh Tuấn", url: abs(`/${lang}`) },
+          isAccessibleForFree: true,
+        }}
+      />
       <Link href={`/${lang}/learning/programming/${cat.id}`} className="text-sm text-muted hover:text-brand">
         ← {cat.name[lang]}
       </Link>
