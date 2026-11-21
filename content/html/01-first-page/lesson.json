@@ -1,0 +1,103 @@
+{
+  "title": {
+    "vi": "Trang HTML đầu tiên",
+    "en": "Your first HTML page"
+  },
+  "summary": {
+    "vi": "Cấu trúc một tài liệu HTML, thẻ và phần tử",
+    "en": "Structure of an HTML document, tags and elements"
+  },
+  "minutes": 10,
+  "preview": "web",
+  "files": [
+    {
+      "name": "index.html",
+      "lang": "html",
+      "code": "<!DOCTYPE html>\n<html lang=\"vi\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <title>Trang đầu tiên</title>\n  </head>\n  <body>\n    <h1>Xin chào, Lexi Learn!</h1>\n    <p>Đây là đoạn văn đầu tiên của tôi.</p>\n  </body>\n</html>\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Trong thẻ <body>, thêm một tiêu đề <h1> và một đoạn văn <p> với nội dung tuỳ ý.",
+        "en": "Inside <body>, add an <h1> heading and a <p> paragraph with any content."
+      },
+      "hint": {
+        "vi": "Thẻ mở và thẻ đóng: <h1>Nội dung</h1>. Đừng quên thẻ đóng có dấu gạch chéo.",
+        "en": "Opening and closing tags: <h1>Content</h1>. Don't forget the slash in the closing tag."
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<!DOCTYPE html>\n<html lang=\"vi\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <title>Bài tập 1</title>\n  </head>\n  <body>\n    <!-- Viết code của bạn ở đây -->\n  </body>\n</html>\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<!DOCTYPE html>\n<html lang=\"vi\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <title>Bài tập 1</title>\n  </head>\n  <body>\n    <h1>Xin chào!</h1>\n    <p>Tôi đang học HTML.</p>\n  </body>\n</html>\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có thẻ <h1> với nội dung chữ",
+            "en": "There is an <h1> with text"
+          },
+          "test": "(document.querySelector('body h1')||{textContent:''}).textContent.trim().length>0"
+        },
+        {
+          "label": {
+            "vi": "Có thẻ <p> với nội dung chữ",
+            "en": "There is a <p> with text"
+          },
+          "test": "(document.querySelector('body p')||{textContent:''}).textContent.trim().length>0"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Hoàn thiện phần <head>: đặt <title> cho trang và khai báo ngôn ngữ bằng thuộc tính lang trên thẻ <html>.",
+        "en": "Complete the <head>: give the page a <title> and declare the language with the lang attribute on <html>."
+      },
+      "hint": {
+        "vi": "Dạng thuộc tính: <html lang=\"vi\">. Thẻ <title> nằm trong <head>.",
+        "en": "Attribute form: <html lang=\"en\">. The <title> element goes inside <head>."
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<!DOCTYPE html>\n<html>\n  <head>\n    <meta charset=\"UTF-8\" />\n  </head>\n  <body>\n    <h1>Trang của tôi</h1>\n  </body>\n</html>\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<!DOCTYPE html>\n<html lang=\"vi\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <title>Trang của tôi</title>\n  </head>\n  <body>\n    <h1>Trang của tôi</h1>\n  </body>\n</html>\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Trang có <title> không rỗng",
+            "en": "The page has a non-empty <title>"
+          },
+          "test": "document.title.trim().length>0"
+        },
+        {
+          "label": {
+            "vi": "Thẻ <html> có thuộc tính lang",
+            "en": "The <html> tag has a lang attribute"
+          },
+          "test": "document.documentElement.getAttribute('lang')!==null && document.documentElement.getAttribute('lang').trim().length>0"
+        }
+      ]
+    }
+  ]
+}

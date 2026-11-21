@@ -1,0 +1,103 @@
+{
+  "title": {
+    "vi": "Văn bản, danh sách, liên kết và hình ảnh",
+    "en": "Text, lists, links and images"
+  },
+  "summary": {
+    "vi": "Định dạng chữ, ul/ol, thẻ a và thẻ img",
+    "en": "Text formatting, ul/ol, the a tag and the img tag"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "index.html",
+      "lang": "html",
+      "code": "<!DOCTYPE html>\n<html lang=\"vi\">\n  <body>\n    <h1>Món ăn yêu thích</h1>\n    <p>Danh sách <strong>3 món</strong> tôi thích nhất:</p>\n    <ul>\n      <li>Phở</li>\n      <li>Bún chả</li>\n      <li>Cơm tấm</li>\n    </ul>\n    <p>\n      Đọc thêm tại\n      <a href=\"https://vi.wikipedia.org/wiki/Ẩm_thực_Việt_Nam\" target=\"_blank\">Wikipedia</a>.\n    </p>\n  </body>\n</html>\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tạo một danh sách không thứ tự <ul> có ít nhất 3 mục <li>.",
+        "en": "Create an unordered list <ul> with at least 3 <li> items."
+      },
+      "hint": {
+        "vi": "<ul> bao quanh các <li>; mỗi <li> là một mục.",
+        "en": "<ul> wraps the <li> elements; each <li> is one item."
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<!DOCTYPE html>\n<html lang=\"vi\">\n  <body>\n    <h2>Việc cần làm</h2>\n    <!-- Thêm danh sách ở đây -->\n  </body>\n</html>\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<!DOCTYPE html>\n<html lang=\"vi\">\n  <body>\n    <h2>Việc cần làm</h2>\n    <ul>\n      <li>Học HTML</li>\n      <li>Học CSS</li>\n      <li>Học JavaScript</li>\n    </ul>\n  </body>\n</html>\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có một thẻ <ul>",
+            "en": "There is a <ul>"
+          },
+          "test": "document.querySelectorAll('ul').length>=1"
+        },
+        {
+          "label": {
+            "vi": "<ul> có ít nhất 3 thẻ <li>",
+            "en": "The <ul> has at least 3 <li>"
+          },
+          "test": "(document.querySelector('ul')||{querySelectorAll:()=>[]}).querySelectorAll('li').length>=3"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Thêm một liên kết <a> có thuộc tính href và chữ hiển thị, cùng một hình <img> có thuộc tính alt mô tả.",
+        "en": "Add a link <a> with an href attribute and visible text, plus an <img> that has a descriptive alt attribute."
+      },
+      "hint": {
+        "vi": "<a href=\"https://example.com\">Chữ</a> và <img src=\"...\" alt=\"Mô tả\" />. Với ảnh bạn có thể dùng src=\"https://placehold.co/200x100\".",
+        "en": "<a href=\"https://example.com\">Text</a> and <img src=\"...\" alt=\"Description\" />. For the image you can use src=\"https://placehold.co/200x100\"."
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<!DOCTYPE html>\n<html lang=\"vi\">\n  <body>\n    <h2>Liên kết và hình ảnh</h2>\n    <!-- Thêm thẻ a và thẻ img -->\n  </body>\n</html>\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<!DOCTYPE html>\n<html lang=\"vi\">\n  <body>\n    <h2>Liên kết và hình ảnh</h2>\n    <a href=\"https://example.com\">Đến example.com</a>\n    <img src=\"https://placehold.co/200x100\" alt=\"Ảnh minh hoạ\" />\n  </body>\n</html>\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có thẻ <a> với href và chữ hiển thị",
+            "en": "There is an <a> with href and visible text"
+          },
+          "test": "(function(){var a=document.querySelector('a[href]');return !!a && a.textContent.trim().length>0})()"
+        },
+        {
+          "label": {
+            "vi": "Có thẻ <img> với alt không rỗng",
+            "en": "There is an <img> with a non-empty alt"
+          },
+          "test": "(function(){var i=document.querySelector('img');return !!i && (i.getAttribute('alt')||'').trim().length>0})()"
+        }
+      ]
+    }
+  ]
+}

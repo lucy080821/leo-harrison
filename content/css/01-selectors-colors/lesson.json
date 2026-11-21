@@ -1,0 +1,121 @@
+{
+  "title": {
+    "vi": "Bộ chọn và màu sắc",
+    "en": "Selectors and colors"
+  },
+  "summary": {
+    "vi": "Cách viết quy tắc CSS, bộ chọn thẻ/class/id, màu sắc",
+    "en": "Writing CSS rules, tag/class/id selectors, colors"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "index.html",
+      "lang": "html",
+      "code": "<h1 id=\"title\">Học CSS</h1>\n<p>CSS giúp trang web đẹp hơn.</p>\n<p class=\"note\">Đây là một ghi chú quan trọng.</p>\n"
+    },
+    {
+      "name": "style.css",
+      "lang": "css",
+      "code": "/* Bộ chọn thẻ: áp dụng cho mọi <p> */\np {\n  color: #334155;\n  font-size: 18px;\n}\n\n/* Bộ chọn class: các phần tử có class=\"note\" */\n.note {\n  background-color: #fef3c7;\n  padding: 8px 12px;\n  border-radius: 6px;\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Đổi màu chữ của <h1> sang một màu khác đen, và đặt background-color cho phần tử có class \"note\".",
+        "en": "Change the <h1> text color to something other than black, and set a background-color on the element with class \"note\"."
+      },
+      "hint": {
+        "vi": "h1 { color: tomato; } và .note { background-color: yellow; }",
+        "en": "h1 { color: tomato; } and .note { background-color: yellow; }"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<h1 id=\"title\">Học CSS</h1>\n<p>CSS giúp trang web đẹp hơn.</p>\n<p class=\"note\">Đây là một ghi chú quan trọng.</p>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "/* Viết CSS của bạn ở đây */\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<h1 id=\"title\">Học CSS</h1>\n<p>CSS giúp trang web đẹp hơn.</p>\n<p class=\"note\">Đây là một ghi chú quan trọng.</p>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "h1 {\n  color: tomato;\n}\n\n.note {\n  background-color: yellow;\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Chữ <h1> không còn màu đen mặc định",
+            "en": "The <h1> text is no longer default black"
+          },
+          "test": "getComputedStyle(document.querySelector('h1')).color!=='rgb(0, 0, 0)'"
+        },
+        {
+          "label": {
+            "vi": ".note có màu nền",
+            "en": ".note has a background color"
+          },
+          "test": "getComputedStyle(document.querySelector('.note')).backgroundColor!=='rgba(0, 0, 0, 0)'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Dùng bộ chọn id (#title) để đặt font-size của tiêu đề lớn hơn hoặc bằng 40px.",
+        "en": "Use an id selector (#title) to set the heading's font-size to at least 40px."
+      },
+      "hint": {
+        "vi": "#title { font-size: 48px; } — id dùng dấu # trước tên.",
+        "en": "#title { font-size: 48px; } — ids use a # before the name."
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<h1 id=\"title\">Học CSS</h1>\n<p>CSS giúp trang web đẹp hơn.</p>\n<p class=\"note\">Đây là một ghi chú quan trọng.</p>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "/* Viết CSS của bạn ở đây */\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<h1 id=\"title\">Học CSS</h1>\n<p>CSS giúp trang web đẹp hơn.</p>\n<p class=\"note\">Đây là một ghi chú quan trọng.</p>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": "#title {\n  font-size: 48px;\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "font-size của #title ≥ 40px",
+            "en": "#title font-size ≥ 40px"
+          },
+          "test": "parseFloat(getComputedStyle(document.getElementById('title')).fontSize)>=40"
+        }
+      ]
+    }
+  ]
+}

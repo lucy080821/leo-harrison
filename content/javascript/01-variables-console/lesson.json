@@ -1,0 +1,89 @@
+{
+  "title": {
+    "vi": "Biến, kiểu dữ liệu và console.log",
+    "en": "Variables, data types and console.log"
+  },
+  "summary": {
+    "vi": "const/let, số, chuỗi, boolean và phép toán",
+    "en": "const/let, numbers, strings, booleans and operators"
+  },
+  "minutes": 15,
+  "preview": "console",
+  "files": [
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "// Khai báo biến bằng const (không đổi) hoặc let (có thể đổi)\nconst name = \"Lexi\";\nlet age = 20;\n\nconsole.log(\"Xin chào,\", name);\nconsole.log(\"Năm sau bạn sẽ\", age + 1, \"tuổi\");\n\nage = age + 1;       // gán lại giá trị cho biến let\nconsole.log(age);    // 21\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Khai báo biến name chứa tên của bạn và in ra dòng có dạng \"Hello, <tên>!\" bằng console.log.",
+        "en": "Declare a variable name holding your name and print a line like \"Hello, <name>!\" with console.log."
+      },
+      "hint": {
+        "vi": "Dùng template string: console.log(`Hello, ${name}!`)",
+        "en": "Use a template string: console.log(`Hello, ${name}!`)"
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "// Viết code của bạn ở đây\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const name = \"Lexi\";\nconsole.log(`Hello, ${name}!`);\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In ra đúng dạng \"Hello, <tên>!\"",
+            "en": "Prints exactly the form \"Hello, <name>!\""
+          },
+          "test": "logs.some(function(l){return /^Hello, .+!$/.test(l)})"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Cho width = 5 và height = 3. Tính diện tích hình chữ nhật và in kết quả (chỉ in con số).",
+        "en": "Given width = 5 and height = 3, compute the rectangle's area and print the result (print only the number)."
+      },
+      "hint": {
+        "vi": "Diện tích = width * height.",
+        "en": "Area = width * height."
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const width = 5;\nconst height = 3;\n// Tính và in diện tích\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const width = 5;\nconst height = 3;\nconsole.log(width * height);\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In ra 15",
+            "en": "Prints 15"
+          },
+          "test": "logs.indexOf('15')>=0"
+        }
+      ]
+    }
+  ]
+}

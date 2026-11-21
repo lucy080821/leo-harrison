@@ -1,0 +1,135 @@
+{
+  "title": {
+    "vi": "Mô hình hộp (Box Model)",
+    "en": "The box model"
+  },
+  "summary": {
+    "vi": "content, padding, border, margin và box-sizing",
+    "en": "content, padding, border, margin and box-sizing"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "index.html",
+      "lang": "html",
+      "code": "<div class=\"card\">\n  <h2>Hộp CSS</h2>\n  <p>Mọi phần tử đều là một chiếc hộp.</p>\n</div>\n"
+    },
+    {
+      "name": "style.css",
+      "lang": "css",
+      "code": "body {\n  font-family: system-ui, sans-serif;\n  background: #eaf2fb;\n  padding: 24px;\n}\n\n.card {\n  width: 300px;\n  background: white;\n  /* thử thêm padding, border, margin ở đây */\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Cho .card padding 20px, viền (border) dày 2px và margin 16px.",
+        "en": "Give .card a padding of 20px, a 2px border and a margin of 16px."
+      },
+      "hint": {
+        "vi": "padding: 20px; border: 2px solid #0b6fd6; margin: 16px;",
+        "en": "padding: 20px; border: 2px solid #0b6fd6; margin: 16px;"
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<div class=\"card\">\n  <h2>Hộp CSS</h2>\n  <p>Mọi phần tử đều là một chiếc hộp.</p>\n</div>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": ".card {\n  width: 300px;\n  background: white;\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<div class=\"card\">\n  <h2>Hộp CSS</h2>\n  <p>Mọi phần tử đều là một chiếc hộp.</p>\n</div>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": ".card {\n  width: 300px;\n  background: white;\n  padding: 20px;\n  border: 2px solid #0b6fd6;\n  margin: 16px;\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "padding-top là 20px",
+            "en": "padding-top is 20px"
+          },
+          "test": "getComputedStyle(document.querySelector('.card')).paddingTop==='20px'"
+        },
+        {
+          "label": {
+            "vi": "border dày 2px",
+            "en": "border is 2px thick"
+          },
+          "test": "getComputedStyle(document.querySelector('.card')).borderTopWidth==='2px'"
+        },
+        {
+          "label": {
+            "vi": "margin-top là 16px",
+            "en": "margin-top is 16px"
+          },
+          "test": "getComputedStyle(document.querySelector('.card')).marginTop==='16px'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Đặt .card có width 300px và padding 20px nhưng tổng chiều rộng hiển thị vẫn đúng 300px (dùng box-sizing).",
+        "en": "Make .card have width 300px and padding 20px but a total rendered width of exactly 300px (use box-sizing)."
+      },
+      "hint": {
+        "vi": "box-sizing: border-box; tính cả padding và border vào width.",
+        "en": "box-sizing: border-box; includes padding and border in the width."
+      },
+      "starter": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<div class=\"card\">\n  <h2>Hộp CSS</h2>\n  <p>Mọi phần tử đều là một chiếc hộp.</p>\n</div>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": ".card {\n  width: 300px;\n  padding: 20px;\n  background: white;\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.html",
+          "lang": "html",
+          "code": "<div class=\"card\">\n  <h2>Hộp CSS</h2>\n  <p>Mọi phần tử đều là một chiếc hộp.</p>\n</div>\n"
+        },
+        {
+          "name": "style.css",
+          "lang": "css",
+          "code": ".card {\n  box-sizing: border-box;\n  width: 300px;\n  padding: 20px;\n  background: white;\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "box-sizing là border-box",
+            "en": "box-sizing is border-box"
+          },
+          "test": "getComputedStyle(document.querySelector('.card')).boxSizing==='border-box'"
+        },
+        {
+          "label": {
+            "vi": "Chiều rộng hiển thị đúng 300px",
+            "en": "Rendered width is exactly 300px"
+          },
+          "test": "Math.round(document.querySelector('.card').getBoundingClientRect().width)===300"
+        }
+      ]
+    }
+  ]
+}
