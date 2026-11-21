@@ -1,0 +1,97 @@
+{
+  "title": {
+    "vi": "Chống quá khớp trong deep learning",
+    "en": "Fighting overfitting in deep learning"
+  },
+  "summary": {
+    "vi": "dropout, weight decay, dừng sớm, batch normalization",
+    "en": "dropout, weight decay, early stopping, batch normalization"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\ndef dropout(a, p, rng):\n    # inverted dropout: tắt ngẫu nhiên tỉ lệ p và phóng đại phần còn lại để giữ trung bình\n    mask = (rng.random(a.shape) >= p) / (1 - p)\n    return a * mask\n\nrng = np.random.default_rng(0)\na = np.ones((1000, 100))\nout = dropout(a, 0.5, rng)\nprint(round(out.mean(), 2), round((out == 0).mean(), 2))   # ~1.0 và ~0.5\n\ndef l2_penalty(W, lam):\n    return lam / 2 * np.sum(W ** 2), lam * W              # (hình phạt, gradient)\n\nW = np.array([[1.0, 2.0], [3.0, 4.0]])\npen, grad = l2_penalty(W, 0.1)\nprint(round(float(pen), 4), np.round(grad, 4).tolist())\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Cài dropout(a, p, rng) kiểu 'inverted': mask = (rng.random(a.shape) >= p) / (1 − p), trả về a * mask. Với a toàn 1 và p = 0.5, trung bình của out phải ≈ 1 và khoảng 50% phần tử bằng 0.",
+        "en": "Implement 'inverted' dropout(a, p, rng): mask = (rng.random(a.shape) >= p) / (1 − p), returning a * mask. With a all ones and p = 0.5, out's mean must be ≈ 1 and about 50% of entries 0."
+      },
+      "hint": {
+        "vi": "mask = (rng.random(a.shape) >= p) / (1 - p); return a * mask",
+        "en": "mask = (rng.random(a.shape) >= p) / (1 - p); return a * mask"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\ndef dropout(a, p, rng):\n    # viết ở đây\n    return a\n\nrng = np.random.default_rng(0)\na = np.ones((1000, 100))\nout = dropout(a, 0.5, rng)\nprint(round(float(out.mean()), 2), round(float((out == 0).mean()), 2))\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\ndef dropout(a, p, rng):\n    mask = (rng.random(a.shape) >= p) / (1 - p)\n    return a * mask\n\nrng = np.random.default_rng(0)\na = np.ones((1000, 100))\nout = dropout(a, 0.5, rng)\nprint(round(float(out.mean()), 2), round(float((out == 0).mean()), 2))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Trung bình ≈ 1 (giữ kỳ vọng)",
+            "en": "Mean ≈ 1 (expectation preserved)"
+          },
+          "test": "abs(float(out.mean()) - 1.0) < 0.02"
+        },
+        {
+          "label": {
+            "vi": "Khoảng 50% phần tử bị tắt",
+            "en": "About 50% of entries are dropped"
+          },
+          "test": "0.48 < float((out == 0).mean()) < 0.52"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Cài l2_penalty(W, lam) trả về (hình phạt, gradient): hình phạt = lam/2 · Σ W², gradient = lam · W. Với W = [[1,2],[3,4]], lam = 0.1 in hình phạt (4 chữ số) rồi gradient (làm tròn 4 chữ số, tolist).",
+        "en": "Implement l2_penalty(W, lam) returning (penalty, gradient): penalty = lam/2 · Σ W², gradient = lam · W. For W = [[1,2],[3,4]], lam = 0.1 print the penalty (4 decimals) then the gradient (rounded to 4 decimals, tolist)."
+      },
+      "hint": {
+        "vi": "return lam / 2 * np.sum(W ** 2), lam * W",
+        "en": "return lam / 2 * np.sum(W ** 2), lam * W"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\ndef l2_penalty(W, lam):\n    # trả về (penalty, grad)\n    pass\n\nW = np.array([[1.0, 2.0], [3.0, 4.0]])\npen, grad = l2_penalty(W, 0.1)\nprint(round(float(pen), 4))\nprint(np.round(grad, 4).tolist())\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\ndef l2_penalty(W, lam):\n    return lam / 2 * np.sum(W ** 2), lam * W\n\nW = np.array([[1.0, 2.0], [3.0, 4.0]])\npen, grad = l2_penalty(W, 0.1)\nprint(round(float(pen), 4))\nprint(np.round(grad, 4).tolist())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 1.5 rồi [[0.1, 0.2], [0.3, 0.4]]",
+            "en": "Prints 1.5 then [[0.1, 0.2], [0.3, 0.4]]"
+          },
+          "test": "_out == '1.5\\n[[0.1, 0.2], [0.3, 0.4]]'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Nơ-ron, perceptron và hàm kích hoạt",
+    "en": "Neurons, the perceptron and activation functions"
+  },
+  "summary": {
+    "vi": "mô hình nơ-ron, luật học perceptron, sigmoid/tanh/ReLU/softmax",
+    "en": "the neuron model, the perceptron rule, sigmoid/tanh/ReLU/softmax"
+  },
+  "minutes": 22,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\n# Perceptron học cổng AND\nX = np.array([[0, 0], [0, 1], [1, 0], [1, 1]], dtype=float)\ny = np.array([0, 0, 0, 1])\n\nw = np.zeros(2)\nb = 0.0\nlr = 0.1\nfor epoch in range(20):\n    for xi, target in zip(X, y):\n        pred = 1 if w @ xi + b > 0 else 0       # hàm bậc thang\n        w += lr * (target - pred) * xi           # luật học perceptron\n        b += lr * (target - pred)\nprint(w, b)\nprint([1 if w @ xi + b > 0 else 0 for xi in X])\n\n# Các hàm kích hoạt\ndef relu(z): return np.maximum(0, z)\ndef sigmoid(z): return 1 / (1 + np.exp(-z))\ndef softmax(z):\n    e = np.exp(z - np.max(z))                    # trừ max cho ổn định số\n    return e / e.sum()\nprint(softmax(np.array([1.0, 2.0, 3.0])).round(3))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Huấn luyện perceptron học cổng AND: lặp 20 epoch, với mỗi mẫu cập nhật w += lr·(target − pred)·x và b += lr·(target − pred). Sau khi học, perceptron phải dự đoán đúng cả 4 mẫu.",
+        "en": "Train a perceptron to learn the AND gate: loop 20 epochs, updating w += lr·(target − pred)·x and b += lr·(target − pred) per sample. After learning, it must predict all 4 samples correctly."
+      },
+      "hint": {
+        "vi": "pred = 1 if w @ xi + b > 0 else 0; w += lr * (target - pred) * xi; b += lr * (target - pred)",
+        "en": "pred = 1 if w @ xi + b > 0 else 0; w += lr * (target - pred) * xi; b += lr * (target - pred)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nX = np.array([[0, 0], [0, 1], [1, 0], [1, 1]], dtype=float)\ny = np.array([0, 0, 0, 1])\nw = np.zeros(2)\nb = 0.0\nlr = 0.1\n# vòng lặp huấn luyện 20 epoch ở đây\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nX = np.array([[0, 0], [0, 1], [1, 0], [1, 1]], dtype=float)\ny = np.array([0, 0, 0, 1])\nw = np.zeros(2)\nb = 0.0\nlr = 0.1\nfor epoch in range(20):\n    for xi, target in zip(X, y):\n        pred = 1 if w @ xi + b > 0 else 0\n        w += lr * (target - pred) * xi\n        b += lr * (target - pred)\nprint([1 if w @ xi + b > 0 else 0 for xi in X])\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Dự đoán đúng cả 4 mẫu AND",
+            "en": "Predicts all 4 AND samples correctly"
+          },
+          "test": "all((1 if float(w @ xi + b) > 0 else 0) == int(t) for xi, t in zip(X, y))"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Viết softmax(z) ổn định số (trừ max(z) trước khi lấy mũ) và in softmax([1, 2, 3]) làm tròn 3 chữ số dưới dạng list.",
+        "en": "Write a numerically stable softmax(z) (subtract max(z) before exponentiating) and print softmax([1, 2, 3]) rounded to 3 decimals as a list."
+      },
+      "hint": {
+        "vi": "e = np.exp(z - np.max(z)); return e / e.sum()",
+        "en": "e = np.exp(z - np.max(z)); return e / e.sum()"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\ndef softmax(z):\n    # viết ở đây\n    pass\n\nprint(softmax(np.array([1.0, 2.0, 3.0])).round(3).tolist())\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\ndef softmax(z):\n    e = np.exp(z - np.max(z))\n    return e / e.sum()\n\nprint(softmax(np.array([1.0, 2.0, 3.0])).round(3).tolist())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In [0.09, 0.245, 0.665]",
+            "en": "Prints [0.09, 0.245, 0.665]"
+          },
+          "test": "_out == '[0.09, 0.245, 0.665]'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

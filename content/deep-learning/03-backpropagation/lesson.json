@@ -1,0 +1,97 @@
+{
+  "title": {
+    "vi": "Lan truyền ngược (Backpropagation)",
+    "en": "Backpropagation"
+  },
+  "summary": {
+    "vi": "quy tắc chuỗi trên đồ thị tính toán, gradient của mạng 2 tầng, kiểm tra gradient",
+    "en": "the chain rule over a computation graph, gradients of a 2-layer net, gradient checking"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\nrng = np.random.default_rng(0)\nX = rng.normal(size=(5, 3))\ny = rng.normal(size=(5, 1))\nparams = {\n    \"W1\": rng.normal(size=(3, 4)) * 0.5, \"b1\": np.zeros((1, 4)),\n    \"W2\": rng.normal(size=(4, 1)) * 0.5, \"b2\": np.zeros((1, 1)),\n}\n\ndef forward(p):\n    z1 = X @ p[\"W1\"] + p[\"b1\"]\n    a1 = np.tanh(z1)\n    out = a1 @ p[\"W2\"] + p[\"b2\"]\n    return a1, out\n\ndef loss(p):\n    _, out = forward(p)\n    return 0.5 * np.mean((out - y) ** 2)       # L = 1/(2N) * sum (out - y)^2\n\ndef numeric_grads(p, h=1e-6):\n    grads = {}\n    for k in p:\n        g = np.zeros_like(p[k])\n        for idx in np.ndindex(p[k].shape):\n            old = p[k][idx]\n            p[k][idx] = old + h; lp = loss(p)\n            p[k][idx] = old - h; lm = loss(p)\n            p[k][idx] = old\n            g[idx] = (lp - lm) / (2 * h)\n        grads[k] = g\n    return grads\n\ndef backward(p):\n    a1, out = forward(p)\n    N = X.shape[0]\n    dout = (out - y) / N                        # dL/d(out)\n    dW2 = a1.T @ dout\n    db2 = dout.sum(axis=0, keepdims=True)\n    da1 = dout @ p[\"W2\"].T\n    dz1 = da1 * (1 - a1 ** 2)                   # tanh'(z) = 1 - tanh(z)^2\n    dW1 = X.T @ dz1\n    db1 = dz1.sum(axis=0, keepdims=True)\n    return {\"W1\": dW1, \"b1\": db1, \"W2\": dW2, \"b2\": db2}\n\nanalytic = backward(params)\nnumeric = numeric_grads(params)\nmax_err = max(np.abs(analytic[k] - numeric[k]).max() for k in params)\nprint(\"sai lệch lớn nhất:\", max_err)\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Đạo hàm của MỘT nơ-ron sigmoid: L = (σ(w·x + b) − y)². Cài grad(w, b) trả về (dL/dw, dL/db) bằng quy tắc chuỗi: dL/dz = 2(a − y)·a(1 − a), rồi dL/dw = dL/dz·x, dL/db = dL/dz. Phải khớp đạo hàm số.",
+        "en": "The derivatives of ONE sigmoid neuron: L = (σ(w·x + b) − y)². Implement grad(w, b) returning (dL/dw, dL/db) via the chain rule: dL/dz = 2(a − y)·a(1 − a), then dL/dw = dL/dz·x, dL/db = dL/dz. It must match the numerical derivative."
+      },
+      "hint": {
+        "vi": "a = sigmoid(w * x + b); dz = 2 * (a - y) * a * (1 - a); return dz * x, dz",
+        "en": "a = sigmoid(w * x + b); dz = 2 * (a - y) * a * (1 - a); return dz * x, dz"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nx, y = 1.5, 1.0\n\ndef sigmoid(z):\n    return 1 / (1 + np.exp(-z))\n\ndef loss(w, b):\n    return (sigmoid(w * x + b) - y) ** 2\n\ndef grad(w, b):\n    # trả về (dL/dw, dL/db)\n    return 0.0, 0.0\n\nprint(grad(0.5, 0.1))\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nx, y = 1.5, 1.0\n\ndef sigmoid(z):\n    return 1 / (1 + np.exp(-z))\n\ndef loss(w, b):\n    return (sigmoid(w * x + b) - y) ** 2\n\ndef grad(w, b):\n    a = sigmoid(w * x + b)\n    dz = 2 * (a - y) * a * (1 - a)\n    return dz * x, dz\n\nprint(grad(0.5, 0.1))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "dL/dw khớp đạo hàm số",
+            "en": "dL/dw matches the numerical derivative"
+          },
+          "test": "abs(grad(0.5, 0.1)[0] - (loss(0.5 + 1e-6, 0.1) - loss(0.5 - 1e-6, 0.1)) / 2e-6) < 1e-6"
+        },
+        {
+          "label": {
+            "vi": "dL/db khớp đạo hàm số",
+            "en": "dL/db matches the numerical derivative"
+          },
+          "test": "abs(grad(0.5, 0.1)[1] - (loss(0.5, 0.1 + 1e-6) - loss(0.5, 0.1 - 1e-6)) / 2e-6) < 1e-6"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Hoàn thiện backward(p) cho mạng 2 tầng (tanh ẩn, tuyến tính ra, L = 1/(2N)·Σ(out − y)²). Gradient phải khớp đạo hàm số: max_err < 1e-6.",
+        "en": "Complete backward(p) for the 2-layer network (tanh hidden, linear output, L = 1/(2N)·Σ(out − y)²). The gradients must match the numerical ones: max_err < 1e-6."
+      },
+      "hint": {
+        "vi": "dout = (out − y)/N; dW2 = a1ᵀ·dout; da1 = dout·W2ᵀ; dz1 = da1·(1 − a1²); dW1 = Xᵀ·dz1",
+        "en": "dout = (out − y)/N; dW2 = a1ᵀ·dout; da1 = dout·W2ᵀ; dz1 = da1·(1 − a1²); dW1 = Xᵀ·dz1"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nrng = np.random.default_rng(0)\nX = rng.normal(size=(5, 3))\ny = rng.normal(size=(5, 1))\nparams = {\n    \"W1\": rng.normal(size=(3, 4)) * 0.5, \"b1\": np.zeros((1, 4)),\n    \"W2\": rng.normal(size=(4, 1)) * 0.5, \"b2\": np.zeros((1, 1)),\n}\n\ndef forward(p):\n    z1 = X @ p[\"W1\"] + p[\"b1\"]\n    a1 = np.tanh(z1)\n    out = a1 @ p[\"W2\"] + p[\"b2\"]\n    return a1, out\n\ndef loss(p):\n    _, out = forward(p)\n    return 0.5 * np.mean((out - y) ** 2)       # L = 1/(2N) * sum (out - y)^2\n\ndef numeric_grads(p, h=1e-6):\n    grads = {}\n    for k in p:\n        g = np.zeros_like(p[k])\n        for idx in np.ndindex(p[k].shape):\n            old = p[k][idx]\n            p[k][idx] = old + h; lp = loss(p)\n            p[k][idx] = old - h; lm = loss(p)\n            p[k][idx] = old\n            g[idx] = (lp - lm) / (2 * h)\n        grads[k] = g\n    return grads\n\ndef backward(p):\n    a1, out = forward(p)\n    N = X.shape[0]\n    # TODO: tính dW1, db1, dW2, db2\n    return {k: np.zeros_like(v) for k, v in p.items()}\n\nanalytic = backward(params)\nnumeric = numeric_grads(params)\nmax_err = max(np.abs(analytic[k] - numeric[k]).max() for k in params)\nprint(\"max_err:\", max_err)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nrng = np.random.default_rng(0)\nX = rng.normal(size=(5, 3))\ny = rng.normal(size=(5, 1))\nparams = {\n    \"W1\": rng.normal(size=(3, 4)) * 0.5, \"b1\": np.zeros((1, 4)),\n    \"W2\": rng.normal(size=(4, 1)) * 0.5, \"b2\": np.zeros((1, 1)),\n}\n\ndef forward(p):\n    z1 = X @ p[\"W1\"] + p[\"b1\"]\n    a1 = np.tanh(z1)\n    out = a1 @ p[\"W2\"] + p[\"b2\"]\n    return a1, out\n\ndef loss(p):\n    _, out = forward(p)\n    return 0.5 * np.mean((out - y) ** 2)       # L = 1/(2N) * sum (out - y)^2\n\ndef numeric_grads(p, h=1e-6):\n    grads = {}\n    for k in p:\n        g = np.zeros_like(p[k])\n        for idx in np.ndindex(p[k].shape):\n            old = p[k][idx]\n            p[k][idx] = old + h; lp = loss(p)\n            p[k][idx] = old - h; lm = loss(p)\n            p[k][idx] = old\n            g[idx] = (lp - lm) / (2 * h)\n        grads[k] = g\n    return grads\n\ndef backward(p):\n    a1, out = forward(p)\n    N = X.shape[0]\n    dout = (out - y) / N\n    dW2 = a1.T @ dout\n    db2 = dout.sum(axis=0, keepdims=True)\n    da1 = dout @ p[\"W2\"].T\n    dz1 = da1 * (1 - a1 ** 2)\n    dW1 = X.T @ dz1\n    db1 = dz1.sum(axis=0, keepdims=True)\n    return {\"W1\": dW1, \"b1\": db1, \"W2\": dW2, \"b2\": db2}\n\nanalytic = backward(params)\nnumeric = numeric_grads(params)\nmax_err = max(np.abs(analytic[k] - numeric[k]).max() for k in params)\nprint(\"max_err:\", max_err)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Gradient giải tích khớp gradient số",
+            "en": "Analytic gradients match numerical ones"
+          },
+          "test": "float(max_err) < 1e-6"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

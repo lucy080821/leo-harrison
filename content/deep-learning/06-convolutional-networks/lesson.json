@@ -1,0 +1,97 @@
+{
+  "title": {
+    "vi": "Mạng tích chập (CNN)",
+    "en": "Convolutional neural networks (CNN)"
+  },
+  "summary": {
+    "vi": "phép tích chập, kernel, stride/padding, pooling, kiến trúc CNN",
+    "en": "the convolution operation, kernels, stride/padding, pooling, CNN architecture"
+  },
+  "minutes": 28,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\nimg = np.arange(25, dtype=float).reshape(5, 5)\nkernel = np.array([[1, 0, -1],\n                   [1, 0, -1],\n                   [1, 0, -1]], dtype=float)           # bộ phát hiện cạnh dọc\n\ndef conv2d(image, k):\n    kh, kw = k.shape\n    H, W = image.shape\n    out = np.zeros((H - kh + 1, W - kw + 1))\n    for i in range(out.shape[0]):\n        for j in range(out.shape[1]):\n            out[i, j] = np.sum(image[i:i + kh, j:j + kw] * k)   # trượt và nhân-cộng\n    return out\n\nprint(conv2d(img, kernel))\n\ndef max_pool(x, size=2):\n    H, W = x.shape\n    return x.reshape(H // size, size, W // size, size).max(axis=(1, 3))\n\nprint(max_pool(np.arange(16.0).reshape(4, 4)))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Cài conv2d(image, k) 'valid' (stride 1, không padding): trượt kernel k trên ảnh, mỗi vị trí lấy tổng của (vùng ảnh × kernel). Gán out = conv2d(img, kernel) cho ảnh 5×5 và kernel 3×3 cho sẵn.",
+        "en": "Implement a 'valid' conv2d(image, k) (stride 1, no padding): slide kernel k over the image, at each position taking the sum of (image patch × kernel). Assign out = conv2d(img, kernel) for the given 5×5 image and 3×3 kernel."
+      },
+      "hint": {
+        "vi": "out[i, j] = np.sum(image[i:i+kh, j:j+kw] * k)",
+        "en": "out[i, j] = np.sum(image[i:i+kh, j:j+kw] * k)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nimg = np.arange(25, dtype=float).reshape(5, 5)\nkernel = np.array([[1, 0, -1], [1, 0, -1], [1, 0, -1]], dtype=float)\n\ndef conv2d(image, k):\n    # viết ở đây\n    pass\n\nout = conv2d(img, kernel)\nprint(out)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nimg = np.arange(25, dtype=float).reshape(5, 5)\nkernel = np.array([[1, 0, -1], [1, 0, -1], [1, 0, -1]], dtype=float)\n\ndef conv2d(image, k):\n    kh, kw = k.shape\n    H, W = image.shape\n    out = np.zeros((H - kh + 1, W - kw + 1))\n    for i in range(out.shape[0]):\n        for j in range(out.shape[1]):\n            out[i, j] = np.sum(image[i:i + kh, j:j + kw] * k)\n    return out\n\nout = conv2d(img, kernel)\nprint(out)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "out có hình dạng (3, 3)",
+            "en": "out has shape (3, 3)"
+          },
+          "test": "out.shape == (3, 3)"
+        },
+        {
+          "label": {
+            "vi": "out đúng từng phần tử",
+            "en": "out is right element by element"
+          },
+          "test": "__import__('numpy').allclose(out, __import__('numpy').array([[(img[i:i+3, j:j+3] * kernel).sum() for j in range(3)] for i in range(3)]))"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Cài max_pool(x, size=2): chia ảnh thành các ô size×size không chồng lấn và lấy giá trị lớn nhất mỗi ô. Gán pooled = max_pool(x) cho ảnh 4×4 cho sẵn (kết quả 2×2).",
+        "en": "Implement max_pool(x, size=2): split the image into non-overlapping size×size blocks and take each block's maximum. Assign pooled = max_pool(x) for the given 4×4 image (a 2×2 result)."
+      },
+      "hint": {
+        "vi": "x.reshape(H // size, size, W // size, size).max(axis=(1, 3))",
+        "en": "x.reshape(H // size, size, W // size, size).max(axis=(1, 3))"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nx = np.array([[1, 3, 2, 1], [4, 6, 5, 0], [7, 2, 9, 8], [1, 0, 3, 4]], dtype=float)\n\ndef max_pool(x, size=2):\n    # viết ở đây\n    pass\n\npooled = max_pool(x)\nprint(pooled)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nx = np.array([[1, 3, 2, 1], [4, 6, 5, 0], [7, 2, 9, 8], [1, 0, 3, 4]], dtype=float)\n\ndef max_pool(x, size=2):\n    H, W = x.shape\n    return x.reshape(H // size, size, W // size, size).max(axis=(1, 3))\n\npooled = max_pool(x)\nprint(pooled)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "pooled là [[6, 5], [7, 9]]",
+            "en": "pooled is [[6, 5], [7, 9]]"
+          },
+          "test": "pooled.tolist() == [[6.0, 5.0], [7.0, 9.0]]"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

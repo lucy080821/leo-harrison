@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Mạng nhiều tầng (MLP) và lan truyền xuôi",
+    "en": "Multi-layer networks (MLP) and the forward pass"
+  },
+  "summary": {
+    "vi": "tầng, trọng số, lan truyền xuôi bằng ma trận, giải XOR, đếm tham số",
+    "en": "layers, weights, matrix forward pass, solving XOR, counting parameters"
+  },
+  "minutes": 22,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\ndef sigmoid(z):\n    return 1 / (1 + np.exp(-z))\n\ndef forward(X, W1, b1, W2, b2):\n    h = sigmoid(X @ W1 + b1)        # tầng ẩn\n    return sigmoid(h @ W2 + b2)     # tầng ra\n\n# Trọng số được chọn tay để mạng giải XOR\nW1 = np.array([[20., -20.], [20., -20.]])\nb1 = np.array([-10., 30.])\nW2 = np.array([[20.], [20.]])\nb2 = np.array([-30.])\n\nX = np.array([[0, 0], [0, 1], [1, 0], [1, 1]], dtype=float)\nprint(forward(X, W1, b1, W2, b2).round(3).ravel())      # ~ [0, 1, 1, 0]\n\ndef count_params(sizes):\n    return sum(n_in * n_out + n_out for n_in, n_out in zip(sizes[:-1], sizes[1:]))\nprint(count_params([2, 2, 1]))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết forward(X, W1, b1, W2, b2): tầng ẩn sigmoid(X@W1+b1), tầng ra sigmoid(h@W2+b2). Với trọng số cho sẵn (giải XOR), in dự đoán đã làm tròn thành số nguyên 0/1 dưới dạng list.",
+        "en": "Write forward(X, W1, b1, W2, b2): hidden layer sigmoid(X@W1+b1), output layer sigmoid(h@W2+b2). With the given weights (solving XOR), print the predictions rounded to integer 0/1 as a list."
+      },
+      "hint": {
+        "vi": "h = sigmoid(X @ W1 + b1); return sigmoid(h @ W2 + b2)",
+        "en": "h = sigmoid(X @ W1 + b1); return sigmoid(h @ W2 + b2)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\ndef sigmoid(z):\n    return 1 / (1 + np.exp(-z))\n\ndef forward(X, W1, b1, W2, b2):\n    # viết ở đây\n    pass\n\nW1 = np.array([[20., -20.], [20., -20.]])\nb1 = np.array([-10., 30.])\nW2 = np.array([[20.], [20.]])\nb2 = np.array([-30.])\nX = np.array([[0, 0], [0, 1], [1, 0], [1, 1]], dtype=float)\nout = forward(X, W1, b1, W2, b2)\nprint(np.round(out).astype(int).ravel().tolist())\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\ndef sigmoid(z):\n    return 1 / (1 + np.exp(-z))\n\ndef forward(X, W1, b1, W2, b2):\n    h = sigmoid(X @ W1 + b1)\n    return sigmoid(h @ W2 + b2)\n\nW1 = np.array([[20., -20.], [20., -20.]])\nb1 = np.array([-10., 30.])\nW2 = np.array([[20.], [20.]])\nb2 = np.array([-30.])\nX = np.array([[0, 0], [0, 1], [1, 0], [1, 1]], dtype=float)\nout = forward(X, W1, b1, W2, b2)\nprint(np.round(out).astype(int).ravel().tolist())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In [0, 1, 1, 0] (XOR)",
+            "en": "Prints [0, 1, 1, 0] (XOR)"
+          },
+          "test": "_out == '[0, 1, 1, 0]'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Viết count_params(sizes) đếm tổng số tham số (trọng số + bias) của MLP có kích thước các tầng sizes. In count_params([4, 8, 3]) rồi count_params([784, 128, 10]).",
+        "en": "Write count_params(sizes) counting the total parameters (weights + biases) of an MLP with layer sizes sizes. Print count_params([4, 8, 3]) then count_params([784, 128, 10])."
+      },
+      "hint": {
+        "vi": "sum(n_in * n_out + n_out for n_in, n_out in zip(sizes[:-1], sizes[1:]))",
+        "en": "sum(n_in * n_out + n_out for n_in, n_out in zip(sizes[:-1], sizes[1:]))"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def count_params(sizes):\n    # viết ở đây\n    pass\n\nprint(count_params([4, 8, 3]))\nprint(count_params([784, 128, 10]))\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def count_params(sizes):\n    return sum(n_in * n_out + n_out for n_in, n_out in zip(sizes[:-1], sizes[1:]))\n\nprint(count_params([4, 8, 3]))\nprint(count_params([784, 128, 10]))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 67 rồi 101770",
+            "en": "Prints 67 then 101770"
+          },
+          "test": "_out == '67\\n101770'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

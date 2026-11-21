@@ -1,0 +1,104 @@
+{
+  "title": {
+    "vi": "Attention và Transformer",
+    "en": "Attention and the Transformer"
+  },
+  "summary": {
+    "vi": "scaled dot-product attention, multi-head, mã hoá vị trí, khối Transformer",
+    "en": "scaled dot-product attention, multi-head, positional encoding, the Transformer block"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\ndef softmax(z, axis=-1):\n    e = np.exp(z - z.max(axis=axis, keepdims=True))\n    return e / e.sum(axis=axis, keepdims=True)\n\ndef attention(Q, K, V):\n    d = Q.shape[-1]\n    scores = Q @ K.T / np.sqrt(d)             # độ tương hợp truy vấn-khoá\n    weights = softmax(scores, axis=-1)        # mỗi hàng là phân phối, tổng = 1\n    return weights @ V, weights               # trung bình có trọng số của V\n\nrng = np.random.default_rng(0)\nQ = rng.normal(size=(3, 4)); K = rng.normal(size=(3, 4)); V = rng.normal(size=(3, 2))\nout, w = attention(Q, K, V)\nprint(out.shape, w.sum(axis=1).round(3))\n\ndef positional_encoding(n, d):\n    pos = np.arange(n)[:, None]\n    i = np.arange(d)[None, :]\n    angle = pos / np.power(10000, (2 * (i // 2)) / d)\n    pe = np.zeros((n, d))\n    pe[:, 0::2] = np.sin(angle[:, 0::2])\n    pe[:, 1::2] = np.cos(angle[:, 1::2])\n    return pe\nprint(positional_encoding(4, 6).round(3)[1])\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Cài attention(Q, K, V) = softmax(Q·Kᵀ/√d)·V, trả về (out, weights). Mỗi hàng của weights phải có tổng bằng 1 và out phải khớp công thức.",
+        "en": "Implement attention(Q, K, V) = softmax(Q·Kᵀ/√d)·V, returning (out, weights). Each row of weights must sum to 1 and out must match the formula."
+      },
+      "hint": {
+        "vi": "weights = softmax(Q @ K.T / np.sqrt(d)); return weights @ V, weights",
+        "en": "weights = softmax(Q @ K.T / np.sqrt(d)); return weights @ V, weights"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\ndef softmax(z, axis=-1):\n    e = np.exp(z - z.max(axis=axis, keepdims=True))\n    return e / e.sum(axis=axis, keepdims=True)\n\ndef attention(Q, K, V):\n    # trả về (out, weights)\n    pass\n\nrng = np.random.default_rng(0)\nQ = rng.normal(size=(3, 4)); K = rng.normal(size=(3, 4)); V = rng.normal(size=(3, 2))\nout, weights = attention(Q, K, V)\nprint(out.shape)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\ndef softmax(z, axis=-1):\n    e = np.exp(z - z.max(axis=axis, keepdims=True))\n    return e / e.sum(axis=axis, keepdims=True)\n\ndef attention(Q, K, V):\n    d = Q.shape[-1]\n    weights = softmax(Q @ K.T / np.sqrt(d), axis=-1)\n    return weights @ V, weights\n\nrng = np.random.default_rng(0)\nQ = rng.normal(size=(3, 4)); K = rng.normal(size=(3, 4)); V = rng.normal(size=(3, 2))\nout, weights = attention(Q, K, V)\nprint(out.shape)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "out có hình dạng (3, 2)",
+            "en": "out has shape (3, 2)"
+          },
+          "test": "out.shape == (3, 2)"
+        },
+        {
+          "label": {
+            "vi": "Mỗi hàng của weights có tổng 1",
+            "en": "Each row of weights sums to 1"
+          },
+          "test": "__import__('numpy').allclose(weights.sum(axis=1), 1.0)"
+        },
+        {
+          "label": {
+            "vi": "out khớp công thức softmax(QKᵀ/√d)V",
+            "en": "out matches softmax(QKᵀ/√d)V"
+          },
+          "test": "(lambda s: __import__('numpy').allclose(out, (__import__('numpy').exp(s - s.max(axis=1, keepdims=True)) / __import__('numpy').exp(s - s.max(axis=1, keepdims=True)).sum(axis=1, keepdims=True)) @ V))(Q @ K.T / __import__('numpy').sqrt(Q.shape[-1]))"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Cài positional_encoding(n, d): PE[pos, 2i] = sin(pos / 10000^(2i/d)), PE[pos, 2i+1] = cos(pos / 10000^(2i/d)). In PE[1, 0] (phải bằng sin(1)) làm tròn 4 chữ số và PE.shape.",
+        "en": "Implement positional_encoding(n, d): PE[pos, 2i] = sin(pos / 10000^(2i/d)), PE[pos, 2i+1] = cos(pos / 10000^(2i/d)). Print PE[1, 0] (which equals sin(1)) rounded to 4 decimals and PE.shape."
+      },
+      "hint": {
+        "vi": "angle = pos / np.power(10000, (2 * (i // 2)) / d); pe[:, 0::2] = sin; pe[:, 1::2] = cos",
+        "en": "angle = pos / np.power(10000, (2 * (i // 2)) / d); pe[:, 0::2] = sin; pe[:, 1::2] = cos"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\ndef positional_encoding(n, d):\n    # viết ở đây\n    pass\n\nPE = positional_encoding(4, 6)\nprint(round(float(PE[1, 0]), 4))\nprint(PE.shape)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\ndef positional_encoding(n, d):\n    pos = np.arange(n)[:, None]\n    i = np.arange(d)[None, :]\n    angle = pos / np.power(10000, (2 * (i // 2)) / d)\n    pe = np.zeros((n, d))\n    pe[:, 0::2] = np.sin(angle[:, 0::2])\n    pe[:, 1::2] = np.cos(angle[:, 1::2])\n    return pe\n\nPE = positional_encoding(4, 6)\nprint(round(float(PE[1, 0]), 4))\nprint(PE.shape)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 0.8415 rồi (4, 6)",
+            "en": "Prints 0.8415 then (4, 6)"
+          },
+          "test": "_out == '0.8415\\n(4, 6)'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

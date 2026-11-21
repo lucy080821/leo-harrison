@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Huấn luyện mạng nơ-ron và bộ tối ưu",
+    "en": "Training a neural network and optimizers"
+  },
+  "summary": {
+    "vi": "vòng lặp huấn luyện, epoch/batch, learning rate, momentum, Adam",
+    "en": "the training loop, epochs/batches, learning rate, momentum, Adam"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\nfrom sklearn.datasets import make_moons\n\nX, y = make_moons(n_samples=300, noise=0.2, random_state=0)\ny = y.reshape(-1, 1)\nrng = np.random.default_rng(1)\nW1 = rng.normal(0, 0.5, size=(2, 16)); b1 = np.zeros((1, 16))\nW2 = rng.normal(0, 0.5, size=(16, 1)); b2 = np.zeros((1, 1))\n\ndef sigmoid(z):\n    return 1 / (1 + np.exp(-z))\n\ndef forward(X):\n    a1 = np.tanh(X @ W1 + b1)\n    p = sigmoid(a1 @ W2 + b2)\n    return a1, p\n\ndef backward(X, y, a1, p):\n    N = X.shape[0]\n    dz2 = (p - y) / N                       # đạo hàm của BCE theo logit\n    dW2 = a1.T @ dz2\n    db2 = dz2.sum(axis=0, keepdims=True)\n    dz1 = (dz2 @ W2.T) * (1 - a1 ** 2)\n    dW1 = X.T @ dz1\n    db1 = dz1.sum(axis=0, keepdims=True)\n    return dW1, db1, dW2, db2\n\nlr = 0.5\nfor epoch in range(2000):\n    a1, p = forward(X)\n    dW1, db1, dW2, db2 = backward(X, y, a1, p)\n    W1 -= lr * dW1; b1 -= lr * db1          # gradient descent\n    W2 -= lr * dW2; b2 -= lr * db2\n\n_, p = forward(X)\nacc = float(((p > 0.5) == y).mean())\nprint(\"accuracy:\", round(acc, 3))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết vòng lặp huấn luyện 2000 epoch (lr = 0.5): lan truyền xuôi, tính gradient bằng backward, cập nhật W1, b1, W2, b2. Sau đó gán acc = độ chính xác trên toàn bộ dữ liệu (phải trên 0.9).",
+        "en": "Write the training loop for 2000 epochs (lr = 0.5): forward pass, compute gradients with backward, update W1, b1, W2, b2. Then assign acc = accuracy on all the data (above 0.9)."
+      },
+      "hint": {
+        "vi": "W1 -= lr * dW1; b1 -= lr * db1; W2 -= lr * dW2; b2 -= lr * db2",
+        "en": "W1 -= lr * dW1; b1 -= lr * db1; W2 -= lr * dW2; b2 -= lr * db2"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nfrom sklearn.datasets import make_moons\n\nX, y = make_moons(n_samples=300, noise=0.2, random_state=0)\ny = y.reshape(-1, 1)\nrng = np.random.default_rng(1)\nW1 = rng.normal(0, 0.5, size=(2, 16)); b1 = np.zeros((1, 16))\nW2 = rng.normal(0, 0.5, size=(16, 1)); b2 = np.zeros((1, 1))\n\ndef sigmoid(z):\n    return 1 / (1 + np.exp(-z))\n\ndef forward(X):\n    a1 = np.tanh(X @ W1 + b1)\n    p = sigmoid(a1 @ W2 + b2)\n    return a1, p\n\ndef backward(X, y, a1, p):\n    N = X.shape[0]\n    dz2 = (p - y) / N                       # đạo hàm của BCE theo logit\n    dW2 = a1.T @ dz2\n    db2 = dz2.sum(axis=0, keepdims=True)\n    dz1 = (dz2 @ W2.T) * (1 - a1 ** 2)\n    dW1 = X.T @ dz1\n    db1 = dz1.sum(axis=0, keepdims=True)\n    return dW1, db1, dW2, db2\n\nlr = 0.5\n# vòng lặp huấn luyện 2000 epoch ở đây\n\n# gán acc\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nfrom sklearn.datasets import make_moons\n\nX, y = make_moons(n_samples=300, noise=0.2, random_state=0)\ny = y.reshape(-1, 1)\nrng = np.random.default_rng(1)\nW1 = rng.normal(0, 0.5, size=(2, 16)); b1 = np.zeros((1, 16))\nW2 = rng.normal(0, 0.5, size=(16, 1)); b2 = np.zeros((1, 1))\n\ndef sigmoid(z):\n    return 1 / (1 + np.exp(-z))\n\ndef forward(X):\n    a1 = np.tanh(X @ W1 + b1)\n    p = sigmoid(a1 @ W2 + b2)\n    return a1, p\n\ndef backward(X, y, a1, p):\n    N = X.shape[0]\n    dz2 = (p - y) / N                       # đạo hàm của BCE theo logit\n    dW2 = a1.T @ dz2\n    db2 = dz2.sum(axis=0, keepdims=True)\n    dz1 = (dz2 @ W2.T) * (1 - a1 ** 2)\n    dW1 = X.T @ dz1\n    db1 = dz1.sum(axis=0, keepdims=True)\n    return dW1, db1, dW2, db2\n\nlr = 0.5\nfor epoch in range(2000):\n    a1, p = forward(X)\n    dW1, db1, dW2, db2 = backward(X, y, a1, p)\n    W1 -= lr * dW1; b1 -= lr * db1\n    W2 -= lr * dW2; b2 -= lr * db2\n\n_, p = forward(X)\nacc = float(((p > 0.5) == y).mean())\nprint(round(acc, 3))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Độ chính xác trên 0.9",
+            "en": "Accuracy above 0.9"
+          },
+          "test": "float(acc) > 0.9"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Cài một bước Adam: m = β1·m + (1−β1)·g; v = β2·v + (1−β2)·g²; hiệu chỉnh m̂ = m/(1−β1ᵗ), v̂ = v/(1−β2ᵗ); x −= lr·m̂/(√v̂ + ε). Chạy 300 bước để cực tiểu hoá f(x) = (x − 3)² từ x = 0 và gán x_final (phải gần 3 với sai số < 0.05).",
+        "en": "Implement an Adam step: m = β1·m + (1−β1)·g; v = β2·v + (1−β2)·g²; bias-correct m̂ = m/(1−β1ᵗ), v̂ = v/(1−β2ᵗ); x −= lr·m̂/(√v̂ + ε). Run 300 steps to minimize f(x) = (x − 3)² from x = 0 and assign x_final (within 0.05 of 3)."
+      },
+      "hint": {
+        "vi": "m_hat = m / (1 - b1 ** t); v_hat = v / (1 - b2 ** t); x -= lr * m_hat / (np.sqrt(v_hat) + eps)",
+        "en": "m_hat = m / (1 - b1 ** t); v_hat = v / (1 - b2 ** t); x -= lr * m_hat / (np.sqrt(v_hat) + eps)"
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nx = 0.0\nm = v = 0.0\nlr, b1, b2, eps = 0.1, 0.9, 0.999, 1e-8\n\nfor t in range(1, 301):\n    g = 2 * (x - 3)          # gradient của (x - 3)^2\n    # cập nhật m, v, hiệu chỉnh và cập nhật x\n\nx_final = x\nprint(round(x_final, 3))\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n\nx = 0.0\nm = v = 0.0\nlr, b1, b2, eps = 0.1, 0.9, 0.999, 1e-8\n\nfor t in range(1, 301):\n    g = 2 * (x - 3)\n    m = b1 * m + (1 - b1) * g\n    v = b2 * v + (1 - b2) * g ** 2\n    m_hat = m / (1 - b1 ** t)\n    v_hat = v / (1 - b2 ** t)\n    x -= lr * m_hat / (np.sqrt(v_hat) + eps)\n\nx_final = x\nprint(round(x_final, 3))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "x_final gần 3 (sai số < 0.05)",
+            "en": "x_final within 0.05 of 3"
+          },
+          "test": "abs(float(x_final) - 3.0) < 0.05"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}
