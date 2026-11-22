@@ -1,0 +1,56 @@
+{
+  "title": {
+    "vi": "Hàm, trừu tượng hoá và phạm vi",
+    "en": "Functions, abstraction and scope"
+  },
+  "summary": {
+    "vi": "phân rã bài toán, tham số, giá trị trả về, phạm vi, ngăn xếp lời gọi",
+    "en": "decomposition, parameters, return values, scope, the call stack"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "def area(w, h):               # w, h: tham số (parameters)\n    return w * h\n\nx = 10\ndef f():\n    x = 99                     # x cục bộ, che x toàn cục\n    return x\n\nprint(area(3, 4))              # 3, 4: đối số (arguments)\nprint(f(), x)                  # 99 10\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết hàm compose(f, g) trả về hàm mới h sao cho h(x) = f(g(x)). Dùng nó để in compose(lambda x: x + 1, lambda x: x * 2)(5).",
+        "en": "Write compose(f, g) returning a new function h with h(x) = f(g(x)). Use it to print compose(lambda x: x + 1, lambda x: x * 2)(5)."
+      },
+      "hint": {
+        "vi": "Hàm có thể trả về một hàm khác.",
+        "en": "A function can return another function."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def compose(f, g):\n    pass\n\nprint(compose(lambda x: x + 1, lambda x: x * 2)(5))\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def compose(f, g):\n    def h(x):\n        return f(g(x))\n    return h\n\nprint(compose(lambda x: x + 1, lambda x: x * 2)(5))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In ra 11",
+            "en": "Prints 11"
+          },
+          "test": "_out == '11'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

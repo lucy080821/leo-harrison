@@ -1,0 +1,56 @@
+{
+  "title": {
+    "vi": "Kiểm thử, gỡ lỗi và kỹ nghệ phần mềm",
+    "en": "Testing, debugging and software engineering"
+  },
+  "summary": {
+    "vi": "lỗi, assert, kiểm thử đơn vị, gỡ lỗi có hệ thống",
+    "en": "bugs, assert, unit tests, systematic debugging"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "def is_leap(y):\n    return y % 4 == 0 and (y % 100 != 0 or y % 400 == 0)\n\n# Kiểm thử: so khớp kết quả thực với kết quả mong đợi\nassert is_leap(2024) is True\nassert is_leap(1900) is False\nassert is_leap(2000) is True\nprint(\"all tests passed\")\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Hàm is_even(n) bên dưới có lỗi. Sửa để các assert đều đúng rồi in 'ok'.",
+        "en": "The function is_even(n) below has a bug. Fix it so every assert holds, then print 'ok'."
+      },
+      "hint": {
+        "vi": "n % 2 == 0 mới đúng cho số chẵn.",
+        "en": "n % 2 == 0 is the right test for even."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def is_even(n):\n    return n % 2 == 1\n\nassert is_even(4) is True\nassert is_even(7) is False\nassert is_even(0) is True\nprint('ok')\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def is_even(n):\n    return n % 2 == 0\n\nassert is_even(4) is True\nassert is_even(7) is False\nassert is_even(0) is True\nprint('ok')\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In ra ok",
+            "en": "Prints ok"
+          },
+          "test": "_out == 'ok'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

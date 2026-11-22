@@ -35,6 +35,7 @@ Build production (để deploy VPS): `npm run build && npm start`.
 - [x] Giai đoạn 3: Python cơ bản (16 bài), Python Data Analyst (14 bài), SQL (15 bài) — chạy bằng Pyodide và SQLite WASM
 - [x] Giai đoạn 4: Toán cho ML (7 bài), Machine Learning (13), Deep Learning (10), AI hiện đại (8) — scikit-learn chạy trong trình duyệt, mạng nơ-ron tự cài bằng NumPy
 - [x] Giai đoạn 5: React (8 bài), Node.js (9), Next.js (6), React Native (5) — React/JSX chạy bằng Babel + esm.sh, Node chạy bằng bản mô phỏng trong trình duyệt
+- [x] Nền tảng lập trình (12 bài khái niệm cơ bản, có nguồn học thuật): `content/foundations`
 - [ ] Ý tưởng sau này: WebContainers (Node thật trong trình duyệt, cần giấy phép thương mại và header COOP/COEP), tài khoản đăng nhập để đồng bộ tiến độ
 
 ## Cấu trúc trang

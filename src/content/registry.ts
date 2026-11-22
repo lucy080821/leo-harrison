@@ -1,6 +1,6 @@
 import type { L10n } from "@/lib/i18n";
 
-export type CategoryId = "frontend" | "backend" | "data" | "ai";
+export type CategoryId = "foundations" | "frontend" | "backend" | "data" | "ai";
 
 export type Category = {
   id: CategoryId;
@@ -17,6 +17,14 @@ export type Course = {
 };
 
 export const categories: Category[] = [
+  {
+    id: "foundations",
+    name: { vi: "Nền tảng", en: "Foundations" },
+    desc: {
+      vi: "Khái niệm cốt lõi của khoa học máy tính, trình bày học thuật nhưng giải thích đơn giản: tính toán, nhị phân, thuật toán, web, dữ liệu, kiểm thử, học máy.",
+      en: "Core computer-science concepts, presented academically but explained simply: computation, binary, algorithms, the web, data, testing, machine learning.",
+    },
+  },
   {
     id: "frontend",
     name: { vi: "Frontend", en: "Frontend" },
@@ -52,6 +60,17 @@ export const categories: Category[] = [
 ];
 
 export const courses: Course[] = [
+  // Foundations
+  {
+    id: "foundations",
+    category: "foundations",
+    badge: "CS",
+    name: { vi: "Nền tảng lập trình", en: "Programming Foundations" },
+    desc: {
+      vi: "12 bài khái niệm cơ bản dựa trên CS2023, CS50, MIT 6.0001, RFC và các bài báo gốc; mỗi bài có nguồn tham khảo.",
+      en: "12 lessons on basic concepts based on CS2023, CS50, MIT 6.0001, RFCs and original papers; every lesson lists its sources.",
+    },
+  },
   // Frontend
   {
     id: "html",

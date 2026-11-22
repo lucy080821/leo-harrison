@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Nhị phân và biểu diễn dữ liệu",
+    "en": "Binary and data representation"
+  },
+  "summary": {
+    "vi": "bit, byte, hệ nhị phân, ASCII, Unicode",
+    "en": "bits, bytes, base 2, ASCII, Unicode"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "n = 13\nprint(bin(n))                 # 0b1101\nprint(int(\"1101\", 2))         # 13\nprint(format(n, \"08b\"))       # 00001101  (đủ 8 bit)\n\nprint(ord(\"A\"), chr(65))      # 65 A  (mã ký tự)\nprint(\"é\".encode(\"utf-8\"))    # b'\\xc3\\xa9'  (2 byte)\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết to_binary(n) trả về chuỗi nhị phân của số nguyên n ≥ 0 KHÔNG có tiền tố '0b' (dùng phép chia 2 liên tiếp, không dùng bin/format). In to_binary(10).",
+        "en": "Write to_binary(n) returning the binary string of an integer n ≥ 0 WITHOUT the '0b' prefix (use repeated division by 2; no bin/format). Print to_binary(10)."
+      },
+      "hint": {
+        "vi": "Lặp: lấy n % 2 làm bit, n //= 2, rồi đảo ngược chuỗi. Xử lý n = 0.",
+        "en": "Loop: take n % 2 as a bit, n //= 2, then reverse. Handle n = 0."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def to_binary(n):\n    pass\n\nprint(to_binary(10))\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def to_binary(n):\n    if n == 0:\n        return '0'\n    bits = ''\n    while n > 0:\n        bits = str(n % 2) + bits\n        n //= 2\n    return bits\n\nprint(to_binary(10))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In ra 1010",
+            "en": "Prints 1010"
+          },
+          "test": "_out == '1010'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "In ra mã của chữ 'a' rồi ký tự có mã 98 trên hai dòng.",
+        "en": "Print the code of the letter 'a', then the character with code 98, on two lines."
+      },
+      "hint": {
+        "vi": "ord('a') và chr(98).",
+        "en": "ord('a') and chr(98)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "# in ord('a') rồi chr(98)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "print(ord('a'))\nprint(chr(98))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra '97' rồi 'b'",
+            "en": "Output '97' then 'b'"
+          },
+          "test": "_out == '97\\nb'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

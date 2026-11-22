@@ -1,0 +1,56 @@
+{
+  "title": {
+    "vi": "Cấu trúc dữ liệu",
+    "en": "Data structures"
+  },
+  "summary": {
+    "vi": "kiểu dữ liệu trừu tượng, list, dict, set, ngăn xếp, hàng đợi",
+    "en": "abstract data types, list, dict, set, stack, queue"
+  },
+  "minutes": 20,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "stack = []\nstack.append(1); stack.append(2); stack.append(3)\nprint(stack.pop())            # 3  (vào sau, ra trước: LIFO)\n\nfrom collections import deque\nq = deque([1, 2, 3])\nprint(q.popleft())            # 1  (vào trước, ra trước: FIFO)\n\nages = {\"An\": 20, \"Binh\": 22}   # dict: ánh xạ khoá -> giá trị\nprint(ages[\"An\"], \"Binh\" in ages)\nprint(len({1, 2, 2, 3}))        # set: không trùng -> 3\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết count_words(text) trả về dict đếm số lần mỗi từ (tách theo khoảng trắng, đã viết thường). In count_words('a b a')['a'] rồi count_words('a b a')['b'].",
+        "en": "Write count_words(text) returning a dict counting each word (split on whitespace, lower-cased). Print count_words('a b a')['a'] then count_words('a b a')['b']."
+      },
+      "hint": {
+        "vi": "counts[w] = counts.get(w, 0) + 1.",
+        "en": "counts[w] = counts.get(w, 0) + 1."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def count_words(text):\n    pass\n\nprint(count_words('a b a')['a'])\nprint(count_words('a b a')['b'])\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def count_words(text):\n    counts = {}\n    for w in text.lower().split():\n        counts[w] = counts.get(w, 0) + 1\n    return counts\n\nprint(count_words('a b a')['a'])\nprint(count_words('a b a')['b'])\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra 2 rồi 1",
+            "en": "Output 2 then 1"
+          },
+          "test": "_out == '2\\n1'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

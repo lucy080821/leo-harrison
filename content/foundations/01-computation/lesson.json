@@ -1,0 +1,56 @@
+{
+  "title": {
+    "vi": "Tính toán, thuật toán và chương trình",
+    "en": "Computation, algorithms and programs"
+  },
+  "summary": {
+    "vi": "Máy tính làm gì, thuật toán là gì, ngôn ngữ lập trình đứng ở đâu",
+    "en": "What a computer does, what an algorithm is, where programming languages fit"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "# Một chương trình = đầu vào -> xử lý -> đầu ra\ndef average(numbers):\n    total = 0\n    for x in numbers:        # lặp qua từng phần tử\n        total = total + x\n    return total / len(numbers)\n\nprint(average([4, 8, 6]))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết hàm largest(numbers) trả về số lớn nhất trong danh sách, KHÔNG dùng max(). In largest([3, 9, 2]).",
+        "en": "Write largest(numbers) returning the biggest number in a list WITHOUT using max(). Print largest([3, 9, 2])."
+      },
+      "hint": {
+        "vi": "Giữ một biến best, duyệt từng phần tử và cập nhật khi gặp số lớn hơn.",
+        "en": "Keep a variable best, scan each element and update it when you meet a larger one."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def largest(numbers):\n    # viết thuật toán ở đây\n    pass\n\nprint(largest([3, 9, 2]))\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def largest(numbers):\n    best = numbers[0]\n    for x in numbers:\n        if x > best:\n            best = x\n    return best\n\nprint(largest([3, 9, 2]))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In ra 9",
+            "en": "Prints 9"
+          },
+          "test": "_out == '9'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

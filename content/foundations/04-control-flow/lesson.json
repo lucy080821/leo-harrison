@@ -1,0 +1,56 @@
+{
+  "title": {
+    "vi": "Biểu thức, điều kiện và vòng lặp",
+    "en": "Expressions, conditions and loops"
+  },
+  "summary": {
+    "vi": "biểu thức vs câu lệnh, logic Boolean, rẽ nhánh, lặp",
+    "en": "expression vs statement, Boolean logic, branching, iteration"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "x = 7\nprint(x % 2 == 0)                 # biểu thức -> True/False\nprint(x > 3 and x < 10)           # logic Boolean\n\nif x % 2 == 0:\n    print(\"chẵn\")\nelif x % 3 == 0:\n    print(\"chia hết cho 3\")\nelse:\n    print(\"khác\")\n\ntotal = 0\nfor i in range(1, 6):             # 1..5\n    total += i\nprint(total)\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết fizz(n): trả 'Fizz' nếu n chia hết cho 3, 'Buzz' nếu chia hết cho 5, 'FizzBuzz' nếu cả hai, ngược lại trả str(n). In fizz(15), fizz(9), fizz(10), fizz(7) mỗi cái một dòng.",
+        "en": "Write fizz(n): return 'Fizz' if n is divisible by 3, 'Buzz' if by 5, 'FizzBuzz' if both, else str(n). Print fizz(15), fizz(9), fizz(10), fizz(7) one per line."
+      },
+      "hint": {
+        "vi": "Kiểm tra trường hợp 'cả hai' trước.",
+        "en": "Test the 'both' case first."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def fizz(n):\n    pass\n\nfor k in (15, 9, 10, 7):\n    print(fizz(k))\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def fizz(n):\n    if n % 15 == 0:\n        return 'FizzBuzz'\n    if n % 3 == 0:\n        return 'Fizz'\n    if n % 5 == 0:\n        return 'Buzz'\n    return str(n)\n\nfor k in (15, 9, 10, 7):\n    print(fizz(k))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == 'FizzBuzz\\nFizz\\nBuzz\\n7'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

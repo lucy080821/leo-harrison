@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Đệ quy và sắp xếp",
+    "en": "Recursion and sorting"
+  },
+  "summary": {
+    "vi": "trường hợp cơ sở, bước đệ quy, sắp xếp chọn và sắp xếp trộn",
+    "en": "base case, recursive step, selection sort and merge sort"
+  },
+  "minutes": 20,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "def factorial(n):\n    if n == 0:                 # trường hợp cơ sở\n        return 1\n    return n * factorial(n - 1)   # bước đệ quy\n\nprint(factorial(5))            # 120\n\ndef merge(a, b):\n    out = []\n    while a and b:\n        out.append(a.pop(0) if a[0] <= b[0] else b.pop(0))\n    return out + a + b\n\ndef merge_sort(xs):\n    if len(xs) <= 1:\n        return xs\n    m = len(xs) // 2\n    return merge(merge_sort(xs[:m]), merge_sort(xs[m:]))\n\nprint(merge_sort([5, 2, 9, 1, 7]))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết fib(n) đệ quy: fib(0)=0, fib(1)=1, fib(n)=fib(n-1)+fib(n-2). In fib(10).",
+        "en": "Write a recursive fib(n): fib(0)=0, fib(1)=1, fib(n)=fib(n-1)+fib(n-2). Print fib(10)."
+      },
+      "hint": {
+        "vi": "Hai trường hợp cơ sở: n == 0 và n == 1.",
+        "en": "Two base cases: n == 0 and n == 1."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def fib(n):\n    pass\n\nprint(fib(10))\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def fib(n):\n    if n < 2:\n        return n\n    return fib(n - 1) + fib(n - 2)\n\nprint(fib(10))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In ra 55",
+            "en": "Prints 55"
+          },
+          "test": "_out == '55'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Viết selection_sort(xs) trả về danh sách đã sắp xếp tăng dần mà KHÔNG dùng sorted()/sort(). In selection_sort([4, 2, 7, 1]).",
+        "en": "Write selection_sort(xs) returning the list sorted ascending WITHOUT sorted()/sort(). Print selection_sort([4, 2, 7, 1])."
+      },
+      "hint": {
+        "vi": "Lặp: tìm phần tử nhỏ nhất của phần còn lại và hoán đổi vào vị trí i.",
+        "en": "Loop: find the smallest of the rest and swap it into position i."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def selection_sort(xs):\n    xs = list(xs)\n    pass\n\nprint(selection_sort([4, 2, 7, 1]))\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def selection_sort(xs):\n    xs = list(xs)\n    for i in range(len(xs)):\n        m = i\n        for j in range(i + 1, len(xs)):\n            if xs[j] < xs[m]:\n                m = j\n        xs[i], xs[m] = xs[m], xs[i]\n    return xs\n\nprint(selection_sort([4, 2, 7, 1]))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In [1, 2, 4, 7]",
+            "en": "Prints [1, 2, 4, 7]"
+          },
+          "test": "_out == '[1, 2, 4, 7]'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

@@ -1,0 +1,56 @@
+{
+  "title": {
+    "vi": "Dữ liệu và cơ sở dữ liệu",
+    "en": "Data and databases"
+  },
+  "summary": {
+    "vi": "dữ liệu dạng bảng, mô hình quan hệ, tidy data, khoá",
+    "en": "tabular data, the relational model, tidy data, keys"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "rows = [\n    {\"id\": 1, \"name\": \"An\",   \"city\": \"HN\"},\n    {\"id\": 2, \"name\": \"Binh\", \"city\": \"HCM\"},\n    {\"id\": 3, \"name\": \"Chi\",  \"city\": \"HN\"},\n]\n# lọc (selection) và chiếu (projection) trên bảng\nprint([r[\"name\"] for r in rows if r[\"city\"] == \"HN\"])\n\n# gom nhóm (group by)\ncounts = {}\nfor r in rows:\n    counts[r[\"city\"]] = counts.get(r[\"city\"], 0) + 1\nprint(counts)\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Cho rows như ví dụ (mỗi dòng có 'city'). Tính số người theo thành phố và in counts['HN'] rồi counts['HCM'].",
+        "en": "Given rows like the example (each has 'city'). Count people per city and print counts['HN'] then counts['HCM']."
+      },
+      "hint": {
+        "vi": "Dùng counts.get(key, 0) + 1.",
+        "en": "Use counts.get(key, 0) + 1."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "rows = [\n    {'id': 1, 'city': 'HN'},\n    {'id': 2, 'city': 'HCM'},\n    {'id': 3, 'city': 'HN'},\n]\ncounts = {}\n# đếm theo city\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "rows = [\n    {'id': 1, 'city': 'HN'},\n    {'id': 2, 'city': 'HCM'},\n    {'id': 3, 'city': 'HN'},\n]\ncounts = {}\nfor r in rows:\n    counts[r['city']] = counts.get(r['city'], 0) + 1\nprint(counts['HN'])\nprint(counts['HCM'])\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra 2 rồi 1",
+            "en": "Output 2 then 1"
+          },
+          "test": "_out == '2\\n1'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

@@ -1,0 +1,56 @@
+{
+  "title": {
+    "vi": "Web hoạt động thế nào",
+    "en": "How the web works"
+  },
+  "summary": {
+    "vi": "client–server, URL, HTTP, HTML/CSS/JS, REST",
+    "en": "client–server, URL, HTTP, HTML/CSS/JS, REST"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "request = \"GET /learning HTTP/1.1\\r\\nHost: example.com\\r\\nAccept: text/html\\r\\n\\r\\n\"\n\nline, *headers = request.split(\"\\r\\n\")\nmethod, path, version = line.split(\" \")\nprint(method, path, version)\n\nresponse = \"HTTP/1.1 200 OK\\r\\nContent-Type: text/html\\r\\n\\r\\n<h1>Hi</h1>\"\nhead, body = response.split(\"\\r\\n\\r\\n\")\nprint(head.split(\" \")[1], body)\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Cho request = 'POST /api/users HTTP/1.1\\r\\nHost: x.com\\r\\n\\r\\n'. Tách dòng đầu và in method rồi path trên hai dòng.",
+        "en": "Given request = 'POST /api/users HTTP/1.1\\r\\nHost: x.com\\r\\n\\r\\n'. Split the first line and print the method then the path on two lines."
+      },
+      "hint": {
+        "vi": "request.split('\\r\\n')[0].split(' ').",
+        "en": "request.split('\\r\\n')[0].split(' ')."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "request = 'POST /api/users HTTP/1.1\\r\\nHost: x.com\\r\\n\\r\\n'\n# in method, rồi path\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "request = 'POST /api/users HTTP/1.1\\r\\nHost: x.com\\r\\n\\r\\n'\nmethod, path, _ = request.split('\\r\\n')[0].split(' ')\nprint(method)\nprint(path)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra POST rồi /api/users",
+            "en": "Output POST then /api/users"
+          },
+          "test": "_out == 'POST\\n/api/users'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

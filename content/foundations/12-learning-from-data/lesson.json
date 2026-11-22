@@ -1,0 +1,56 @@
+{
+  "title": {
+    "vi": "Học từ dữ liệu: ý tưởng nền của ML",
+    "en": "Learning from data: the idea behind ML"
+  },
+  "summary": {
+    "vi": "khác biệt giữa lập trình quy tắc và học máy, mô hình, hàm mất mát",
+    "en": "rule-based programming vs machine learning, models, loss functions"
+  },
+  "minutes": 20,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "# Dữ liệu: giờ học -> điểm\nxs = [1, 2, 3, 4]\nys = [2, 4, 6, 8]\n\nw = 0.0                       # mô hình: y_hat = w * x\nfor step in range(200):\n    # hàm mất mát: trung bình bình phương sai số (MSE)\n    grad = sum(2 * (w * x - y) * x for x, y in zip(xs, ys)) / len(xs)\n    w -= 0.01 * grad          # gradient descent\nprint(round(w, 3))            # ~2.0\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết mse(w, xs, ys) trả về trung bình của (w*x - y)**2. In mse(2, [1, 2, 3], [2, 4, 6]) rồi mse(1, [1, 2, 3], [2, 4, 6]).",
+        "en": "Write mse(w, xs, ys) returning the mean of (w*x - y)**2. Print mse(2, [1, 2, 3], [2, 4, 6]) then mse(1, [1, 2, 3], [2, 4, 6])."
+      },
+      "hint": {
+        "vi": "sum(...) / len(xs). Với w=1: sai số là 1,2,3 nên bình phương 1,4,9.",
+        "en": "sum(...) / len(xs). For w=1 the errors are 1,2,3 so squares 1,4,9."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def mse(w, xs, ys):\n    pass\n\nprint(mse(2, [1, 2, 3], [2, 4, 6]))\nprint(mse(1, [1, 2, 3], [2, 4, 6]))\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def mse(w, xs, ys):\n    return sum((w * x - y) ** 2 for x, y in zip(xs, ys)) / len(xs)\n\nprint(mse(2, [1, 2, 3], [2, 4, 6]))\nprint(mse(1, [1, 2, 3], [2, 4, 6]))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra 0.0 rồi 4.666666666666667",
+            "en": "Output 0.0 then 4.666666666666667"
+          },
+          "test": "_out == '0.0\\n4.666666666666667'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

@@ -1,0 +1,56 @@
+{
+  "title": {
+    "vi": "Giá trị, kiểu và tên",
+    "en": "Values, types and names"
+  },
+  "summary": {
+    "vi": "biến là cái tên gắn vào đối tượng; kiểu; bất biến và khả biến",
+    "en": "a variable is a name bound to an object; types; immutable vs mutable"
+  },
+  "minutes": 15,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "a = [1, 2, 3]\nb = a                # b là TÊN thứ hai của CÙNG một đối tượng\nb.append(4)\nprint(a)             # [1, 2, 3, 4]\nprint(a is b)        # True\n\ns = \"hi\"\nt = s\nt = t + \"!\"          # chuỗi bất biến: tạo đối tượng MỚI\nprint(s, t)          # hi hi!\nprint(type(a), type(s), id(a) == id(b))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Cho a = [1, 2, 3]. Tạo b là BẢN SAO độc lập của a (không phải tên thứ hai), thêm 99 vào b, rồi in a và b trên hai dòng.",
+        "en": "Given a = [1, 2, 3], make b an independent COPY of a (not a second name), append 99 to b, then print a and b on two lines."
+      },
+      "hint": {
+        "vi": "b = a.copy() hoặc b = list(a).",
+        "en": "b = a.copy() or b = list(a)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "a = [1, 2, 3]\n# tạo b, thêm 99, in a rồi b\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "a = [1, 2, 3]\nb = a.copy()\nb.append(99)\nprint(a)\nprint(b)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "a giữ nguyên, b có 99",
+            "en": "a unchanged, b has 99"
+          },
+          "test": "_out == '[1, 2, 3]\\n[1, 2, 3, 99]'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}
