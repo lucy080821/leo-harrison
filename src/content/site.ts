@@ -16,6 +16,16 @@ export const nav: { href: string; label: L10n }[] = [
   { href: "about", label: { vi: "Giới thiệu", en: "About" } },
 ];
 
+/** Thanh menu trên cùng. "hash" = cuộn tới mục trên trang chủ; "page" = sang trang riêng. */
+export const headerNav: { id: string; kind: "hash" | "page"; target: string; label: L10n }[] = [
+  { id: "about", kind: "hash", target: "about", label: { vi: "Giới thiệu", en: "About" } },
+  { id: "experience", kind: "hash", target: "experience", label: { vi: "Kinh nghiệm", en: "Experience" } },
+  { id: "skills", kind: "hash", target: "skills", label: { vi: "Kỹ năng", en: "Skills" } },
+  { id: "projects", kind: "page", target: "projects", label: { vi: "Dự án", en: "Projects" } },
+  { id: "learning", kind: "page", target: "learning", label: { vi: "Học", en: "Learning" } },
+  { id: "contact", kind: "hash", target: "contact", label: { vi: "Liên hệ", en: "Contact" } },
+];
+
 /** Câu mở đầu: tiếng Việt và tiếng Anh, gõ lần lượt trên trang chủ. */
 export const heroLine: L10n = {
   vi: "Mình làm công cụ để việc học và dữ liệu dễ hiểu hơn.",
