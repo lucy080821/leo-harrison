@@ -9,6 +9,7 @@ import { Experience } from "@/components/Experience";
 import { LearningRows } from "@/components/LearningRows";
 import { ProjectBlock } from "@/components/ProjectBlock";
 import { Reveal } from "@/components/Reveal";
+import { ScrollBackground } from "@/components/ScrollBackground";
 import { SocialLinks } from "@/components/SocialLinks";
 import { categories, coursesOf } from "@/content/registry";
 import {
@@ -125,6 +126,7 @@ export default async function Home({
           },
         ]}
       />
+      <ScrollBackground />
       <HeroBackground />
       <div className="mx-auto max-w-5xl px-4">
         <header className="pb-12 pt-10 sm:pt-16">
@@ -216,7 +218,7 @@ export default async function Home({
 
         <section id="about" aria-labelledby="about-h" className="py-12">
           <Reveal>
-            <h2 id="about-h" className="h-display text-3xl">
+            <h2 id="about-h" className="h-display sec-h text-3xl">
               {t.objectiveTitle[lang]}
             </h2>
             <p className="mt-4 max-w-3xl text-xl leading-relaxed">
@@ -227,7 +229,7 @@ export default async function Home({
 
         <section id="experience" aria-labelledby="exp-h" className="py-12">
           <Reveal>
-            <h2 id="exp-h" className="h-display text-3xl">
+            <h2 id="exp-h" className="h-display sec-h text-3xl">
               {t.experienceTitle[lang]}
             </h2>
           </Reveal>
@@ -236,13 +238,17 @@ export default async function Home({
 
         <section id="skills" aria-labelledby="skills-h" className="py-12">
           <Reveal>
-            <h2 id="skills-h" className="h-display text-3xl">
+            <h2 id="skills-h" className="h-display sec-h text-3xl">
               {t.skillsTitle[lang]}
             </h2>
           </Reveal>
           <div className="mt-8 grid gap-x-10 gap-y-8 sm:grid-cols-2">
             {skillGroups.map((g, i) => (
-              <Reveal key={g.items[0]} delay={i * 80}>
+              <Reveal
+                key={g.items[0]}
+                delay={i * 90}
+                variant={i % 2 ? "right" : "left"}
+              >
                 <h3 className="text-sm font-semibold uppercase tracking-wide text-muted">
                   {g.name[lang]}
                 </h3>
@@ -263,14 +269,14 @@ export default async function Home({
 
         <section id="projects" aria-labelledby="projects-h" className="py-12">
           <Reveal>
-            <h2 id="projects-h" className="h-display text-3xl">
+            <h2 id="projects-h" className="h-display sec-h text-3xl">
               {t.projectsTitle[lang]}
             </h2>
             <p className="mt-2 text-muted">{t.projectsIntro[lang]}</p>
           </Reveal>
           <div className="mt-8">
             {projects.map((p, i) => (
-              <Reveal key={p.id}>
+              <Reveal key={p.id} variant={i % 2 ? "right" : "left"}>
                 <ProjectBlock p={p} lang={lang} eager={i === 0} />
               </Reveal>
             ))}
@@ -279,7 +285,7 @@ export default async function Home({
 
         <section id="learning" aria-labelledby="learn-h" className="py-12">
           <Reveal>
-            <h2 id="learn-h" className="h-display text-3xl">
+            <h2 id="learn-h" className="h-display sec-h text-3xl">
               {t.learningTitle[lang]}
             </h2>
             <p className="mt-2 max-w-xl text-muted">{t.learningIntro[lang]}</p>
@@ -293,7 +299,7 @@ export default async function Home({
           className="py-12 pb-20"
         >
           <Reveal>
-            <h2 id="contact-h" className="h-display text-3xl">
+            <h2 id="contact-h" className="h-display sec-h text-3xl">
               {t.contactTitle[lang]}
             </h2>
             <p className="mt-2 max-w-xl text-muted">{t.contactBody[lang]}</p>

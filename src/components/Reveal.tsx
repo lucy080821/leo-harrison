@@ -12,11 +12,13 @@ export function Reveal({
   delay = 0,
   as: Tag = "div",
   className = "",
+  variant = "up",
 }: {
   children: ReactNode;
   delay?: number;
   as?: "div" | "li" | "section" | "article";
   className?: string;
+  variant?: "up" | "left" | "right" | "zoom";
 }) {
   const ref = useRef<HTMLElement | null>(null);
   const [state, setState] = useState<"ssr" | "hidden" | "shown">("ssr");
@@ -44,7 +46,7 @@ export function Reveal({
     };
   }, []);
 
-  const cls = `${className} ${state === "hidden" ? "reveal-hidden" : state === "shown" ? "reveal-shown" : ""}`;
+  const cls = `${className} rv-${variant} ${state === "hidden" ? "reveal-hidden" : state === "shown" ? "reveal-shown" : ""}`;
   return (
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     <Tag ref={ref as any} className={cls} style={state !== "ssr" ? { transitionDelay: `${delay}ms` } : undefined}>

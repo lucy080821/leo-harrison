@@ -161,10 +161,46 @@ body {
 .prose-lesson a, .prose-lesson li { overflow-wrap: anywhere; }
 
 /* ---------- Hiện dần khi cuộn (xem components/Reveal.tsx) ---------- */
-.reveal-hidden { opacity: 0; transform: translateY(18px); }
-.reveal-shown { opacity: 1; transform: none; transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
+.reveal-hidden { opacity: 0; filter: blur(4px); }
+.reveal-hidden.rv-up { transform: translateY(28px); }
+.reveal-hidden.rv-left { transform: translateX(-36px); }
+.reveal-hidden.rv-right { transform: translateX(36px); }
+.reveal-hidden.rv-zoom { transform: scale(.88); }
+.reveal-shown { opacity: 1; filter: none; transform: none; transition: opacity .7s ease, transform .75s cubic-bezier(.2,.75,.2,1), filter .7s ease; }
+.sec-h::after { content: ""; display: block; height: 3px; width: 2.75rem; margin-top: .55rem; border-radius: 2px; background: linear-gradient(90deg, var(--brand), var(--brand-2)); transition: width .9s cubic-bezier(.2,.75,.2,1) .25s; }
+.reveal-hidden .sec-h::after { width: 0; }
+
+/* ---------- Dòng thời gian kinh nghiệm chạy theo cuộn trang ---------- */
+.tl { --tl: 1; position: relative; }
+.tl-line { position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--border); }
+.tl-line > i { position: absolute; left: 0; top: 0; width: 100%; height: calc(var(--tl) * 100%); background: linear-gradient(var(--brand), var(--brand-2)); border-radius: 2px; box-shadow: 0 0 12px var(--brand-2); }
+.tl-item { transition: opacity .6s ease, transform .7s cubic-bezier(.2,.75,.2,1), filter .6s ease; }
+.tl-dyn .tl-item.tl-off { opacity: .22; transform: translateX(22px); filter: blur(2px); }
+.tl-dot { transition: background .4s, box-shadow .4s, transform .4s; }
+.tl-dyn .tl-item.tl-off .tl-dot { background: var(--border); transform: scale(.7); }
+@keyframes tl-pulse { 0% { box-shadow: 0 0 0 0 var(--brand-2); } 100% { box-shadow: 0 0 0 14px transparent; } }
+.tl-item.tl-now .tl-dot { animation: tl-pulse 1.8s ease-out infinite; }
+
+/* ---------- Nền chuyển động theo cuộn trang ---------- */
+.sbg { --sp: 0; --sy: 0; position: fixed; inset: 0; z-index: -10; overflow: hidden; pointer-events: none; }
+.sbg > * { position: absolute; will-change: transform; }
+.sbg-dots { inset: -20% 0; opacity: .5; background-image: radial-gradient(circle, color-mix(in srgb, var(--brand) 30%, transparent) 1px, transparent 1.4px); background-size: 34px 34px; transform: translate3d(0, calc(var(--sy) * -.06px), 0); mask-image: radial-gradient(ellipse at 50% 40%, #000 20%, transparent 75%); }
+.sbg-orb { border-radius: 9999px; filter: blur(70px); }
+.sbg-o1 { width: 46vmax; height: 46vmax; left: -14vmax; top: -10vmax; background: radial-gradient(circle, color-mix(in srgb, var(--brand) 38%, transparent), transparent 65%); transform: translate3d(calc(var(--sp) * 22vw), calc(var(--sp) * 70vh), 0) scale(calc(1 + var(--sp) * .35)); }
+.sbg-o2 { width: 40vmax; height: 40vmax; right: -12vmax; top: 18vh; background: radial-gradient(circle, color-mix(in srgb, var(--brand-2) 34%, transparent), transparent 65%); transform: translate3d(calc(var(--sp) * -26vw), calc(var(--sp) * -30vh), 0) scale(calc(1.2 - var(--sp) * .3)); }
+.sbg-o3 { width: 30vmax; height: 30vmax; left: 30vw; bottom: -14vmax; background: radial-gradient(circle, color-mix(in srgb, var(--brand) 26%, transparent), transparent 65%); transform: translate3d(calc(var(--sp) * 18vw), calc(var(--sp) * -55vh), 0); }
+.sbg-ring { width: 64vmin; height: 64vmin; right: 4vw; top: 12vh; border-radius: 9999px; border: 1px dashed color-mix(in srgb, var(--brand-2) 40%, transparent); transform: rotate(calc(var(--sp) * 540deg)) translate3d(0, calc(var(--sp) * 20vh), 0); }
+.sbg-ring::after { content: ""; position: absolute; left: 50%; top: -5px; width: 10px; height: 10px; border-radius: 9999px; background: var(--brand-2); box-shadow: 0 0 16px var(--brand-2); }
+.sbg-line { width: 1px; height: 38vh; background: linear-gradient(transparent, color-mix(in srgb, var(--brand-2) 55%, transparent), transparent); }
+.sbg-l1 { left: 12vw; top: 60vh; transform: translate3d(0, calc(var(--sp) * -140vh), 0); }
+.sbg-l2 { left: 54vw; top: 90vh; transform: translate3d(0, calc(var(--sp) * -190vh), 0); }
+.sbg-l3 { left: 86vw; top: 70vh; transform: translate3d(0, calc(var(--sp) * -120vh), 0); }
 @media (prefers-reduced-motion: reduce) {
-  .reveal-hidden, .reveal-shown { opacity: 1; transform: none; transition: none; }
+  .reveal-hidden, .reveal-shown { opacity: 1; transform: none; filter: none; transition: none; }
+  .reveal-hidden .sec-h::after { width: 2.75rem; }
+  .tl-dyn .tl-item.tl-off { opacity: 1; transform: none; filter: none; }
+  .sbg > * { transform: none !important; }
+  .tl-item.tl-now .tl-dot { animation: none; }
 }
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }

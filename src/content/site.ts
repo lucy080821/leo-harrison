@@ -241,8 +241,8 @@ export const t = {
   } as L10n,
   objectiveTitle: { vi: "Mục tiêu nghề nghiệp", en: "Career objective" } as L10n,
   objective: {
-    vi: "Chuyên gia phân tích dữ liệu đam mê tối ưu hóa vận hành. Mục tiêu sử dụng tư duy phân tích chuyên sâu để nhận diện rủi ro biên lợi nhuận và đóng góp vào kế hoạch chiến lược dài hạn của công ty.",
-    en: "A data analyst passionate about optimising operations. My goal is to apply deep analytical thinking to spot margin risks and contribute to the company's long-term strategic plans.",
+    vi: "Mình tin dữ liệu không chỉ là những con số: nó là cách để nhìn thấy thế giới. Mình dùng công nghệ và dữ liệu để kết nối con người với nhau, và để soi vào những góc khuất đang bị che đi sau các bảng tính và biểu đồ. Từ một dòng số tưởng chừng vô hồn, mình muốn tìm ra điều thật sự đang diễn ra, rồi biến nó thành một quyết định sáng suốt hơn.",
+    en: "I believe data is more than numbers: it is a way of seeing the world. I use technology and data to connect people, and to shine a light on the blind spots hidden behind spreadsheets and charts. From a row of seemingly lifeless figures, I want to find what is really going on, and turn it into a wiser decision.",
   } as L10n,
   statSince: { vi: "Làm việc từ", en: "Working since" } as L10n,
   statJobs: { vi: "Vị trí đã làm", en: "Roles held" } as L10n,

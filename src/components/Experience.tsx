@@ -1,15 +1,67 @@
-import { Reveal } from "@/components/Reveal";
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import { experience } from "@/content/site";
 import type { Locale } from "@/lib/i18n";
 
-/** Dòng thời gian kinh nghiệm làm việc, mỗi mục hiện dần khi cuộn tới. */
+/**
+ * Dòng thời gian kinh nghiệm: đường kẻ "chạy" theo vị trí cuộn trang, các mốc sáng dần khi đường kẻ đi tới.
+ * Khi chưa có JS hoặc người dùng giảm chuyển động, toàn bộ hiện sẵn và đường kẻ đầy.
+ */
 export function Experience({ lang }: { lang: Locale }) {
+  const olRef = useRef<HTMLOListElement>(null);
+  const itemRefs = useRef<(HTMLLIElement | null)[]>([]);
+  const [dyn, setDyn] = useState(false);
+  const [active, setActive] = useState(experience.length);
+
+  useEffect(() => {
+    const ol = olRef.current;
+    if (!ol || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const rect = ol.getBoundingClientRect();
+      const anchor = window.innerHeight * 0.62;
+      const p = Math.min(1, Math.max(0, (anchor - rect.top) / rect.height));
+      ol.style.setProperty("--tl", p.toFixed(4));
+      let n = 0;
+      itemRefs.current.forEach((li) => {
+        if (li && li.getBoundingClientRect().top + 14 < anchor) n++;
+      });
+      setActive(n);
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    const t = setTimeout(() => {
+      setDyn(true);
+      update();
+    }, 0);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      clearTimeout(t);
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
+
   return (
-    <ol className="mt-8 space-y-9 border-l-2 border-line pl-7">
+    <ol ref={olRef} className={`tl mt-8 space-y-9 pl-8 ${dyn ? "tl-dyn" : ""}`}>
+      <span className="tl-line" aria-hidden>
+        <i />
+      </span>
       {experience.map((j, i) => (
-        <Reveal as="li" key={`${j.company}-${j.from}`} delay={Math.min(i, 2) * 70} className="relative">
+        <li
+          key={`${j.company}-${j.from}`}
+          ref={(el) => {
+            itemRefs.current[i] = el;
+          }}
+          className={`tl-item relative ${i < active ? "tl-on" : "tl-off"} ${dyn && i === active - 1 ? "tl-now" : ""}`}
+        >
           <span
-            className={`absolute -left-[2.2rem] top-1.5 h-3 w-3 rounded-full border-2 border-bg ${i === 0 ? "bg-brand ring-4 ring-brand-soft" : "bg-brand/70"}`}
+            className={`tl-dot absolute -left-[2.45rem] top-1.5 h-3.5 w-3.5 rounded-full border-2 border-bg ${i === 0 ? "bg-brand" : "bg-brand/80"}`}
             aria-hidden
           />
           <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5">
@@ -25,7 +77,7 @@ export function Experience({ lang }: { lang: Locale }) {
               <li key={k}>{pt[lang]}</li>
             ))}
           </ul>
-        </Reveal>
+        </li>
       ))}
     </ol>
   );
