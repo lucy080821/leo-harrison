@@ -139,9 +139,6 @@ export default async function Home({
                 </span>
               </p>
               <h1 className="h-display text-4xl sm:text-6xl">{owner.name}</h1>
-              <p className="mt-2 text-xl font-semibold text-brand sm:text-2xl">
-                {t.heroRole[lang]}
-              </p>
               <div className="mt-5 text-lg">
                 <HeroLine
                   line={heroLine}
