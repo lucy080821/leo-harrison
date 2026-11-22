@@ -56,14 +56,14 @@ function Typewriter({ main, sub, lang, other, srPrefix }: { main: string; sub: s
 
   return (
     <>
-      <h1 className="h-display text-[2rem] sm:text-5xl">
+      <p className="h-display text-[2rem] sm:text-5xl">
         <span className="sr-only">{srPrefix} {main}</span>
         <span aria-hidden="true" lang={lang}>
           {main.slice(0, mainN)}
           {step.phase === "main" && caret}
           <span className="tw-rest">{main.slice(mainN)}</span>
         </span>
-      </h1>
+      </p>
       <p className="mt-4 text-lg text-muted sm:text-xl" lang={other} aria-hidden="true">
         {sub.slice(0, subN)}
         {step.phase === "sub" && caret}

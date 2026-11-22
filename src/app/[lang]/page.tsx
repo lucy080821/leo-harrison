@@ -130,7 +130,7 @@ export default async function Home({
       <HeroBackground />
       <div className="mx-auto max-w-5xl px-4">
         <header className="pb-12 pt-10 sm:pt-16">
-          <div className="grid items-center gap-x-10 gap-y-6 md:grid-cols-[minmax(0,1fr)_auto]">
+          <div className="grid items-start gap-x-10 gap-y-6 md:grid-cols-[minmax(0,1fr)_auto]">
             <div className="order-2 md:order-1">
               <p className="mb-3 text-lg text-muted">
                 {t.hello[lang]}{" "}
@@ -167,7 +167,7 @@ export default async function Home({
                 </Link>
               </div>
             </div>
-            <div className="order-1 md:order-2">
+            <div className="order-1 md:order-2 md:pt-6">
               <div className="relative h-32 w-32 sm:h-44 sm:w-44 md:h-60 md:w-60">
                 <div
                   className="absolute inset-0 rounded-full bg-gradient-to-br from-brandsoft via-surface2 to-brandsoft ring-1 ring-line"
