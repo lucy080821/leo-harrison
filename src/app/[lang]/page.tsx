@@ -95,7 +95,7 @@ export default async function Home({
               alternateName: owner.nick,
               url: abs(`/${lang}`),
               email: owner.email,
-              image: abs("/leo.webp"),
+              image: abs("/leo-portrait.webp"),
               jobTitle: "Data Analyst",
               description: t.objective[lang],
               worksFor: { "@type": "Organization", name: current.company },
@@ -178,7 +178,7 @@ export default async function Home({
                   aria-hidden
                 />
                 <Image
-                  src="/leo.webp"
+                  src="/leo-portrait.webp"
                   alt={`${owner.name} (${owner.nick})`}
                   width={640}
                   height={640}
