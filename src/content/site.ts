@@ -121,6 +121,77 @@ export const projects: Project[] = [
   },
 ];
 
+export type Job = {
+  company: string;
+  role: L10n;
+  from: string;
+  to: L10n;
+  about?: L10n;
+  points: L10n[];
+};
+
+/** Kinh nghiệm làm việc, mới nhất trước. Nguồn: CV và thông tin do chủ trang cung cấp. */
+export const experience: Job[] = [
+  {
+    company: "Vinasoy",
+    role: { vi: "Giám sát", en: "Supervisor" },
+    from: "08/2026",
+    to: { vi: "nay", en: "present" },
+    points: [
+      { vi: "Giám sát đội ngũ và kết quả kinh doanh tại điểm bán, đảm bảo chỉ tiêu doanh số.", en: "Supervise the team and sales results at the point of sale, making sure sales targets are met." },
+      { vi: "Dùng số liệu bán hàng để theo dõi, báo cáo và đề xuất cải tiến vận hành.", en: "Use sales data to monitor, report and suggest operational improvements." },
+    ],
+  },
+  {
+    company: "DMC Global",
+    role: { vi: "Nhân viên kinh doanh quốc tế (Sales Representative)", en: "International Sales Representative" },
+    from: "04/2026",
+    to: { vi: "07/2026", en: "07/2026" },
+    about: {
+      vi: "Công ty cổ phần xuất nhập khẩu chuyên về dầu gốc.",
+      en: "An import–export joint-stock company specialising in base oil.",
+    },
+    points: [
+      { vi: "Làm việc với khách hàng và đối tác quốc tế trong mảng xuất nhập khẩu dầu gốc, bằng tiếng Anh.", en: "Worked with international customers and partners in base-oil import–export, in English." },
+    ],
+  },
+  {
+    company: "Vinasoy",
+    role: { vi: "Giám sát bán hàng kênh MT", en: "Sales Supervisor, Modern Trade" },
+    from: "08/2022",
+    to: { vi: "08/2025", en: "08/2025" },
+    points: [
+      { vi: "Chịu trách nhiệm KPI doanh số tại các hệ thống siêu thị lớn (WinMart, Co.op Mart, AEON…).", en: "Owned sales KPIs at major supermarket chains (WinMart, Co.op Mart, AEON…)." },
+      { vi: "Tuyển dụng, đào tạo và giám sát đội PG/PB về kỹ năng bán hàng và diện mạo.", en: "Recruited, trained and supervised PG/PB staff on selling skills and presentation." },
+      { vi: "Quản lý tồn kho (FIFO/FEFO), trưng bày theo chuẩn Planogram và POSM.", en: "Managed stock (FIFO/FEFO) and displays to Planogram and POSM standards." },
+      { vi: "Phối hợp với quản lý ngành hàng triển khai khuyến mãi và báo cáo phân tích thị trường định kỳ.", en: "Worked with category managers on promotions and regular market-analysis reports." },
+    ],
+  },
+  {
+    company: "Vinasoy",
+    role: { vi: "Nhân viên bán hàng kênh MT", en: "Sales Representative, Modern Trade" },
+    from: "08/2016",
+    to: { vi: "07/2022", en: "07/2022" },
+    points: [
+      { vi: "Tư vấn, thuyết phục khách hàng và đảm bảo chỉ tiêu doanh số cá nhân.", en: "Advised and persuaded customers and met personal sales targets." },
+      { vi: "Trưng bày hàng hoá theo Planogram, quản lý tồn kho và hạn dùng (FIFO/FEFO).", en: "Merchandised to Planogram and managed stock and expiry dates (FIFO/FEFO)." },
+      { vi: "Phối hợp khuyến mãi, sampling và báo cáo định kỳ về doanh số, phản hồi khách hàng.", en: "Ran promotions and sampling and reported regularly on sales and customer feedback." },
+    ],
+  },
+  {
+    company: "Nutifood",
+    role: { vi: "Nhân viên bán hàng kênh MT", en: "Sales Representative, Modern Trade" },
+    from: "08/2014",
+    to: { vi: "07/2016", en: "07/2016" },
+    points: [
+      { vi: "Tư vấn khách hàng, đảm bảo chỉ tiêu doanh số cá nhân và trưng bày theo Planogram.", en: "Advised customers, met personal sales targets and merchandised to Planogram." },
+      { vi: "Quản lý tồn kho, hạn dùng và phối hợp khuyến mãi, sampling.", en: "Managed stock and expiry dates and supported promotions and sampling." },
+    ],
+  },
+];
+
+export const skills: string[] = ["SQL", "Python (Pandas, Matplotlib, Seaborn)", "Excel", "Power BI", "Data cleaning", "Data visualization", "English"];
+
 export const t = {
   hello: { vi: "Xin chào, mình là", en: "Hi, I'm" } as L10n,
   heroSub: {
@@ -158,6 +229,8 @@ export const t = {
     en: "If you'd like to work together, give feedback on a project, or just say hi, send me an email.",
   } as L10n,
   aboutTitle: { vi: "Giới thiệu", en: "About" } as L10n,
+  experienceTitle: { vi: "Kinh nghiệm làm việc", en: "Work experience" } as L10n,
+  skillsTitle: { vi: "Kỹ năng", en: "Skills" } as L10n,
   aboutBody: [
     {
       vi: "Mình là Tạ Hoàng Anh Tuấn, mọi người hay gọi mình là Leo. Mình làm những công cụ giúp việc học và việc đọc dữ liệu bớt nặng nề hơn.",
