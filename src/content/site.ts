@@ -60,23 +60,23 @@ export const projects: Project[] = [
     shot: "/projects/lucytutor-d.jpg",
     tagline: { vi: "Học và luyện thi tiếng Anh cùng AI", en: "Learn English and prepare for exams with AI" },
     summary: {
-      vi: "Nền tảng cho cả học viên và giáo viên. Học viên làm bài kiểm tra trình độ, luyện bốn kỹ năng và được AI chấm Writing; trang còn có blog chia sẻ cách học và các game để học mà chơi. Giáo viên quản lý lớp, điểm danh và học phí trong cùng một nơi.",
+      vi: "Nền tảng cho cả học viên và giáo viên. Học viên làm bài kiểm tra trình độ, luyện bốn kỹ năng và được AI chấm Writing; trang còn có blog chia sẻ cách học và các trò chơi để học mà chơi. Giáo viên quản lý lớp, điểm danh và học phí trong cùng một nơi.",
       en: "A platform for both students and teachers. Students take a level test, practise all four skills and get Writing graded by AI; the site also has a blog on how to study and games that make learning feel like play. Teachers manage classes, attendance and tuition in one place.",
     },
     links: [
-      { label: { vi: "Blog", en: "Blog" }, url: "https://lucytutor.online/blog" },
-      { label: { vi: "Game học tiếng Anh", en: "English games" }, url: "https://lucytutor.online/game-hoc-tieng-anh" },
+      { label: { vi: "Bài viết", en: "Blog" }, url: "https://lucytutor.online/blog" },
+      { label: { vi: "Trò chơi học tiếng Anh", en: "English games" }, url: "https://lucytutor.online/game-hoc-tieng-anh" },
     ],
     points: [
       { vi: "Kiểm tra trình độ từ A1 đến C1", en: "Level test from A1 to C1" },
       { vi: "Bảng 44 âm IPA và luyện phát âm với AI", en: "A 44-sound IPA chart and pronunciation practice with AI" },
       { vi: "Đề THPT Quốc gia và IELTS Cambridge", en: "National high-school exam and IELTS Cambridge papers" },
       {
-        vi: "Blog: mẹo luyện thi, phát âm, ngữ pháp và phương pháp tự học từ giáo viên",
+        vi: "Bài viết: mẹo luyện thi, phát âm, ngữ pháp và phương pháp tự học từ giáo viên",
         en: "Blog: exam tips, pronunciation, grammar and self-study methods from teachers",
       },
       {
-        vi: "Game: Qilin Run (chạy và vượt cổng bằng cách trả lời câu hỏi), Nông Trại Qilin (cây chín theo lịch ôn lặp lại ngắt quãng) và bộ trò chơi cho học sinh lớp 3",
+        vi: "Trò chơi: Qilin Run (chạy và vượt cổng bằng cách trả lời câu hỏi), Nông Trại Qilin (cây chín theo lịch ôn lặp lại ngắt quãng) và bộ trò chơi cho học sinh lớp 3",
         en: "Games: Qilin Run (run and clear gates by answering questions), Qilin Farm (plants ripen on a spaced-repetition schedule) and a set of games for grade 3",
       },
     ],
@@ -88,16 +88,16 @@ export const projects: Project[] = [
     host: "cerno.cloud",
     logo: "/projects/cerno.svg",
     shot: "/projects/cerno-d.jpg",
-    tagline: { vi: "Dashboard từ Google Sheets, đặt biểu đồ tự do", en: "Dashboards from Google Sheets, charts placed freely" },
+    tagline: { vi: "Bảng điều khiển từ Google Sheets, đặt biểu đồ tự do", en: "Dashboards from Google Sheets, charts placed freely" },
     summary: {
       vi: "Chọn cột dữ liệu, kéo biểu đồ và chỉ số lên một khung vẽ tự do, rồi chia sẻ bằng liên kết hoặc nhúng vào trang khác. Không cần biết lập trình.",
       en: "Pick your columns, drag charts and KPIs onto a free canvas, then share by link or embed in another page. No programming needed.",
     },
     points: [
-      { vi: "13 loại biểu đồ, từ cột và đường đến heatmap và gauge", en: "13 chart types, from columns and lines to heatmap and gauge" },
+      { vi: "13 loại biểu đồ, từ cột và đường đến bản đồ nhiệt và đồng hồ đo", en: "13 chart types, from columns and lines to heatmap and gauge" },
       { vi: "Dữ liệu tự làm mới sau mỗi 2 giờ", en: "Data refreshes automatically every 2 hours" },
-      { vi: "Trợ lý AI chỉnh dashboard bằng tiếng Việt", en: "An AI assistant that edits the dashboard in plain language" },
-      { vi: "Chia sẻ bằng liên kết, lời mời email hoặc iframe", en: "Share by link, email invite or iframe" },
+      { vi: "Trợ lý AI chỉnh bảng điều khiển bằng tiếng Việt", en: "An AI assistant that edits the dashboard in plain language" },
+      { vi: "Chia sẻ bằng liên kết, lời mời qua thư điện tử hoặc nhúng vào trang web", en: "Share by link, email invite or iframe" },
     ],
   },
   {
@@ -144,7 +144,7 @@ export type Job = {
 export const experience: Job[] = [
   {
     company: "Vinasoy",
-    role: { vi: "Giám sát", en: "Supervisor" },
+    role: { vi: "Giám sát bán hàng", en: "Sales Supervisor" },
     from: "08/2026",
     to: { vi: "nay", en: "present" },
     points: [
@@ -154,7 +154,7 @@ export const experience: Job[] = [
   },
   {
     company: "DMC Global",
-    role: { vi: "Nhân viên kinh doanh quốc tế (Sales Representative)", en: "International Sales Representative" },
+    role: { vi: "Nhân viên kinh doanh quốc tế", en: "International Sales Representative" },
     from: "04/2026",
     to: { vi: "07/2026", en: "07/2026" },
     about: {
@@ -200,18 +200,49 @@ export const experience: Job[] = [
   },
 ];
 
-export const skillGroups: { name: L10n; items: string[] }[] = [
-  { name: { vi: "Phân tích dữ liệu", en: "Data analysis" }, items: ["SQL", "Python (Pandas, Matplotlib, Seaborn)", "Power BI", "Data cleaning", "Data visualization"] },
-  { name: { vi: "Văn phòng", en: "Office" }, items: ["Microsoft Excel", "Microsoft PowerPoint", "Microsoft Word"] },
-  { name: { vi: "Kinh doanh", en: "Sales" }, items: ["Modern Trade", "KPI", "Planogram / POSM", "FIFO / FEFO", "Team training"] },
-  { name: { vi: "Ngôn ngữ", en: "Languages" }, items: ["English", "Tiếng Việt"] },
+export const skillGroups: { name: L10n; items: L10n[] }[] = [
+  {
+    name: { vi: "Phân tích dữ liệu", en: "Data analysis" },
+    items: [
+      { vi: "SQL", en: "SQL" },
+      { vi: "Python (Pandas, Matplotlib, Seaborn)", en: "Python (Pandas, Matplotlib, Seaborn)" },
+      { vi: "Power BI", en: "Power BI" },
+      { vi: "Làm sạch dữ liệu", en: "Data cleaning" },
+      { vi: "Trực quan hóa dữ liệu", en: "Data visualization" },
+    ],
+  },
+  {
+    name: { vi: "Văn phòng", en: "Office" },
+    items: [
+      { vi: "Microsoft Excel", en: "Microsoft Excel" },
+      { vi: "Microsoft PowerPoint", en: "Microsoft PowerPoint" },
+      { vi: "Microsoft Word", en: "Microsoft Word" },
+    ],
+  },
+  {
+    name: { vi: "Kinh doanh", en: "Sales" },
+    items: [
+      { vi: "Kênh siêu thị (MT)", en: "Modern Trade" },
+      { vi: "Chỉ tiêu doanh số (KPI)", en: "Sales KPIs" },
+      { vi: "Trưng bày Planogram / POSM", en: "Planogram / POSM merchandising" },
+      { vi: "Quản lý tồn kho FIFO / FEFO", en: "FIFO / FEFO stock control" },
+      { vi: "Đào tạo đội ngũ", en: "Team training" },
+    ],
+  },
+  {
+    name: { vi: "Ngôn ngữ", en: "Languages" },
+    items: [
+      { vi: "Tiếng Anh", en: "English" },
+      { vi: "Tiếng Việt", en: "Vietnamese" },
+    ],
+  },
 ];
-export const skills: string[] = skillGroups.flatMap((g) => g.items);
+export const skills: L10n[] = skillGroups.flatMap((g) => g.items);
 
 export const t = {
   hello: { vi: "Xin chào, mình là", en: "Hi, I'm" } as L10n,
   heroSub: {
-    vi: "Mình làm Lucy Tutor (học và luyện thi tiếng Anh cùng AI), Cerno (biến Google Sheets thành dashboard) và Lexi Learn (khóa học lập trình song ngữ, có bài tập tự chấm). Mình cũng làm kênh Tiếng Anh Không Khó trên YouTube và TikTok.",
+    vi: "Mình làm Lucy Tutor (học và luyện thi tiếng Anh cùng AI), Cerno (biến Google Sheets thành bảng điều khiển dữ liệu) và Lexi Learn (khóa học lập trình song ngữ, có bài tập tự chấm). Mình cũng làm kênh Tiếng Anh Không Khó trên YouTube và TikTok.",
     en: "I build Lucy Tutor (learn English and prepare for exams with AI), Cerno (turn Google Sheets into dashboards) and Lexi Learn (a bilingual programming course with auto-checked exercises). I also run the Tiếng Anh Không Khó channel on YouTube and TikTok.",
   } as L10n,
   seeProjects: { vi: "Xem các dự án", en: "See my projects" } as L10n,
@@ -241,10 +272,10 @@ export const t = {
   lessons: { vi: "bài học", en: "lessons" } as L10n,
   contactTitle: { vi: "Liên hệ", en: "Contact" } as L10n,
   contactBody: {
-    vi: "Muốn hợp tác, góp ý cho một dự án hay chỉ chào một tiếng, cứ gửi email cho mình.",
+    vi: "Muốn hợp tác, góp ý cho một dự án hay chỉ chào một tiếng, cứ gửi thư điện tử cho mình.",
     en: "If you'd like to work together, give feedback on a project, or just say hi, send me an email.",
   } as L10n,
-  heroRole: { vi: "Data Analyst", en: "Data Analyst" } as L10n,
+  heroRole: { vi: "Chuyên viên phân tích dữ liệu", en: "Data Analyst" } as L10n,
   heroSummary: {
     vi: "Hơn 10 năm làm kinh doanh ngành hàng tiêu dùng và xuất nhập khẩu. Mình dùng SQL, Python và Power BI để đọc dữ liệu bán hàng, và xây công cụ học tập: Lucy Tutor, Cerno, Lexi Learn.",
     en: "Over 10 years in consumer-goods sales and import–export. I use SQL, Python and Power BI to read sales data, and I build learning tools: Lucy Tutor, Cerno and Lexi Learn.",
@@ -294,16 +325,16 @@ export const t = {
 /** Tiêu đề và mô tả dùng cho SEO. Tiêu đề khoảng 60 ký tự, mô tả khoảng 150 ký tự. */
 export const seo: Record<"home" | "projects" | "learning" | "about" | "english", { title: L10n; description: L10n }> = {
   home: {
-    title: { vi: "Tạ Hoàng Anh Tuấn (Leo) – Data Analyst | CV online, dự án, học lập trình", en: "Tạ Hoàng Anh Tuấn (Leo) – Data Analyst | Online CV, projects, learn to code" },
+    title: { vi: "Tạ Hoàng Anh Tuấn (Leo) – Chuyên viên phân tích dữ liệu | hồ sơ trực tuyến, dự án, học lập trình", en: "Tạ Hoàng Anh Tuấn (Leo) – Data Analyst | Online CV, projects, learn to code" },
     description: {
-      vi: "CV online của Tạ Hoàng Anh Tuấn (Leo): Data Analyst, hơn 10 năm kinh doanh và xuất nhập khẩu. Kỹ năng SQL, Python, Power BI; dự án Lucy Tutor, Cerno và khoá học lập trình Lexi Learn.",
+      vi: "Hồ sơ trực tuyến của Tạ Hoàng Anh Tuấn (Leo): chuyên viên phân tích dữ liệu, hơn 10 năm kinh doanh và xuất nhập khẩu. Kỹ năng SQL, Python, Power BI; dự án Lucy Tutor, Cerno và khoá học lập trình Lexi Learn.",
       en: "Online CV of Tạ Hoàng Anh Tuấn (Leo): Data Analyst with 10+ years in sales and import–export. SQL, Python and Power BI skills; projects Lucy Tutor, Cerno and the Lexi Learn programming course.",
     },
   },
   projects: {
     title: { vi: "Dự án: Lucy Tutor, Cerno, Tiếng Anh Không Khó | Leo", en: "Projects: Lucy Tutor, Cerno, Tiếng Anh Không Khó | Leo" },
     description: {
-      vi: "Lucy Tutor học và luyện thi tiếng Anh cùng AI, Cerno tạo dashboard từ Google Sheets, và kênh Tiếng Anh Không Khó trên YouTube, TikTok.",
+      vi: "Lucy Tutor học và luyện thi tiếng Anh cùng AI, Cerno tạo bảng điều khiển từ Google Sheets, và kênh Tiếng Anh Không Khó trên YouTube, TikTok.",
       en: "Lucy Tutor for English learning and exam prep with AI, Cerno for dashboards from Google Sheets, and the Tiếng Anh Không Khó channel on YouTube and TikTok.",
     },
   },

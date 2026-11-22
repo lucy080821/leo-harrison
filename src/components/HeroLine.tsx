@@ -3,76 +3,46 @@
 import { useEffect, useState } from "react";
 import type { L10n, Locale } from "@/lib/i18n";
 
-type Step = { phase: "main" | "sub" | "done"; n: number };
-
 /**
- * Câu mở đầu được gõ như máy chữ: ngôn ngữ đang chọn trước (chữ lớn), rồi bản dịch (chữ nhỏ).
- * Phần chữ chưa gõ vẫn nằm trong trang nhưng trong suốt, nên bố cục không bị nhảy.
- * Người dùng giảm chuyển động sẽ thấy câu hiện đủ ngay.
+ * Câu mở đầu gõ như máy chữ, chỉ bằng ngôn ngữ đang chọn.
+ * Bố cục không bao giờ nhảy: bản đầy đủ nằm sẵn (vô hình) để giữ chỗ, còn chữ đang gõ được xếp chồng lên đúng
+ * vị trí đó nên cách xuống dòng luôn giống hệt. Con trỏ có chiều rộng 0 để không làm đổi dòng.
+ * Người dùng giảm chuyển động thấy câu hiện đủ ngay.
  */
-export function HeroLine({ line, lang, srPrefix }: { line: L10n; lang: Locale; srPrefix: string }) {
-  const other: Locale = lang === "vi" ? "en" : "vi";
-  const main = line[lang];
-  const sub = line[other];
-  return <Typewriter key={lang} main={main} sub={sub} lang={lang} other={other} srPrefix={srPrefix} />;
+export function HeroLine({ line, lang }: { line: L10n; lang: Locale; srPrefix?: string }) {
+  return <Typewriter key={lang} text={line[lang]} lang={lang} />;
 }
 
-function Typewriter({ main, sub, lang, other, srPrefix }: { main: string; sub: string; lang: Locale; other: Locale; srPrefix: string }) {
-  const [step, setStep] = useState<Step>({ phase: "main", n: 0 });
-  const [caretOn, setCaretOn] = useState(true);
+function Typewriter({ text, lang }: { text: string; lang: Locale }) {
+  const [n, setN] = useState(0);
+  const [caret, setCaret] = useState(true);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       const id = setTimeout(() => {
-        setStep({ phase: "done", n: 0 });
-        setCaretOn(false);
+        setN(text.length);
+        setCaret(false);
       }, 0);
       return () => clearTimeout(id);
     }
-    if (step.phase === "done") {
-      const id = setTimeout(() => setCaretOn(false), 2200);
+    if (n < text.length) {
+      const id = setTimeout(() => setN(n + 1), n === 0 ? 500 : 38);
       return () => clearTimeout(id);
     }
-    const text = step.phase === "main" ? main : sub;
-    let next: Step;
-    let delay = step.phase === "main" ? 42 : 20;
-    if (step.n < text.length) {
-      next = { ...step, n: step.n + 1 };
-      if (step.n === 0) delay = step.phase === "main" ? 450 : 250;
-    } else if (step.phase === "main") {
-      next = { phase: "sub", n: 0 };
-      delay = 300;
-    } else {
-      next = { phase: "done", n: 0 };
-      delay = 0;
-    }
-    const id = setTimeout(() => setStep(next), delay);
+    const id = setTimeout(() => setCaret(false), 2200);
     return () => clearTimeout(id);
-  }, [step, main, sub]);
-
-  const mainN = step.phase === "main" ? step.n : main.length;
-  const subN = step.phase === "main" ? 0 : step.phase === "sub" ? step.n : sub.length;
-  const caret = caretOn ? <span className="tw-caret" aria-hidden="true" /> : null;
+  }, [n, text]);
 
   return (
-    <>
-      <p className="h-display text-[2rem] sm:text-5xl">
-        <span className="sr-only">{srPrefix} {main}</span>
-        <span aria-hidden="true" lang={lang}>
-          {main.slice(0, mainN)}
-          {step.phase === "main" && caret}
-          <span className="tw-rest">{main.slice(mainN)}</span>
+    <p className="h-display text-[2rem] sm:text-5xl" lang={lang}>
+      <span className="sr-only">{text}</span>
+      <span aria-hidden="true" className="relative block">
+        <span className="invisible block">{text}</span>
+        <span className="absolute inset-0 block">
+          {text.slice(0, n)}
+          {caret && <span className="tw-caret" />}
         </span>
-      </p>
-      <p className="mt-4 text-lg text-muted sm:text-xl" lang={other} aria-hidden="true">
-        {sub.slice(0, subN)}
-        {step.phase === "sub" && caret}
-        {step.phase === "done" && caret}
-        <span className="tw-rest">{sub.slice(subN)}</span>
-      </p>
-      <noscript>
-        <style>{".tw-rest{opacity:1!important}"}</style>
-      </noscript>
-    </>
+      </span>
+    </p>
   );
 }

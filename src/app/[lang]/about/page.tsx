@@ -33,8 +33,8 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
         <h3 className="mt-10 text-lg font-semibold">{t.skillsTitle[lang]}</h3>
         <ul className="mt-3 flex flex-wrap gap-2">
           {skills.map((k) => (
-            <li key={k} className="rounded-full border border-line bg-surface px-3 py-1 text-sm">
-              {k}
+            <li key={k.en} className="rounded-full border border-line bg-surface px-3 py-1 text-sm">
+              {k[lang]}
             </li>
           ))}
         </ul>

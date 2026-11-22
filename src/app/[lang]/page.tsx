@@ -245,7 +245,7 @@ export default async function Home({
           <div className="mt-8 grid gap-x-10 gap-y-8 sm:grid-cols-2">
             {skillGroups.map((g, i) => (
               <Reveal
-                key={g.items[0]}
+                key={g.items[0].en}
                 delay={i * 90}
                 variant={i % 2 ? "right" : "left"}
               >
@@ -253,13 +253,16 @@ export default async function Home({
                   {g.name[lang]}
                 </h3>
                 <ul className="mt-3 flex flex-wrap gap-2">
-                  {g.items.map((k) => (
-                    <li
-                      key={k}
+                  {g.items.map((k, j) => (
+                    <Reveal
+                      as="li"
+                      variant="zoom"
+                      delay={150 + j * 70}
+                      key={k.en}
                       className="rounded-full border border-line bg-surface px-3 py-1 text-sm"
                     >
-                      {k}
-                    </li>
+                      {k[lang]}
+                    </Reveal>
                   ))}
                 </ul>
               </Reveal>

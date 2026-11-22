@@ -123,7 +123,7 @@ export function SiteHeader({ lang }: { lang: Locale }) {
 
   return (
     <header
-      className={`sticky top-0 z-30 border-b backdrop-blur-xl transition-[background-color,box-shadow,border-color] duration-300 ${
+      className={`sticky top-0 z-30 border-b backdrop-blur-md transition-[background-color,box-shadow,border-color] duration-300 ${
         scrolled || open ? "border-line bg-bg/90 shadow-[0_6px_24px_-14px_rgba(11,37,64,.35)]" : "border-transparent bg-bg/55"
       }`}
     >
