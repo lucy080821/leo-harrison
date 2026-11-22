@@ -20,6 +20,9 @@ $$
 f'(x)\approx\frac{f(x+h)-f(x-h)}{2h}
 $$
 
+![The gradient points along steepest ascent on contour lines](/lessons/math-for-ml/03-calculus-derivatives-fig-en.svg)
+*The gradient points along steepest ascent on contour lines*
+
 ## Derivatives to know by heart
 
 | $f(x)$ | $f'(x)$ |

@@ -21,6 +21,9 @@ $$
 
 Example house price: `price = 30·area + 150·rooms − 8·age − 60·distance + 500`. Each coefficient has an **easy interpretation**, a big strength.
 
+![Linear regression: the line minimising squared residuals](/lessons/machine-learning/02-linear-regression-fig-en.svg)
+*Linear regression: the line minimising squared residuals*
+
 ## Learning the parameters: ordinary least squares (OLS)
 
 Choose $\mathbf{w}, b$ to minimize the **sum of squared errors** (MSE):

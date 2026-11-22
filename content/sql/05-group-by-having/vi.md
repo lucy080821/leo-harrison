@@ -29,6 +29,9 @@ GROUP BY category;
 
 Nhóm theo **nhiều cột**: `GROUP BY category, city` (mỗi cặp giá trị là một nhóm).
 
+![GROUP BY: mỗi nhóm cho một dòng kết quả](/lessons/sql/05-group-by-having-fig-vi.svg)
+*GROUP BY: mỗi nhóm cho một dòng kết quả*
+
 ## HAVING: lọc các nhóm
 
 - `WHERE` lọc **dòng**, chạy **trước** khi nhóm.

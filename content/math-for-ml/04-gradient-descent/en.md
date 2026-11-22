@@ -21,6 +21,9 @@ for _ in range(50):
     x = x - 0.1 * 2 * (x - 3)     # minimize (x-3)^2, derivative 2(x-3)
 ```
 
+![Learning rate: too small, just right, too large](/lessons/math-for-ml/04-gradient-descent-fig-en.svg)
+*Learning rate: too small, just right, too large*
+
 ## The learning rate: the most important parameter
 
 | Learning rate | What happens |

@@ -24,6 +24,9 @@ stats.norm.ppf(0.975)                       # 1.96: the z-value for a 95% confid
 
 The normal distribution appears everywhere; why? Because of the **CLT** (below).
 
+![The binomial approaches the normal curve as n grows](/lessons/math-for-ml/06-distributions-clt-fig-en.svg)
+*The binomial approaches the normal curve as n grows*
+
 ## Common distributions
 
 | Distribution | Description | Example |

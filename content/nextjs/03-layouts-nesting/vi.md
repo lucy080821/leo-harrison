@@ -22,6 +22,9 @@ export default function RootLayout({ children }) {
 
 Khi chuyển trang, layout **không bị vẽ lại** và giữ nguyên state — rất mượt.
 
+![Layout lồng nhau bao quanh page](/lessons/nextjs/03-layouts-nesting-fig-vi.svg)
+*Layout lồng nhau bao quanh page*
+
 ## Layout lồng nhau
 
 Mỗi thư mục có thể có `layout.js` riêng; chúng lồng vào nhau theo cây thư mục:

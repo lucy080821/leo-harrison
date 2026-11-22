@@ -10,6 +10,9 @@ The RP tradition splits monophthongs into **short** (`/ɪ e æ ʌ ɒ ʊ ə/`) an
 
 In GA, it is common to classify vowels as **tense** (`i u eɪ oʊ ɑ ɔ`) and **lax** (`ɪ ʊ ɛ ə æ`) instead of short-long.
 
+![Diphthongs glide from one position to another (approximate positions)](/lessons/phonetics/25-english-vowels-length-diphthongs-fig-en.svg)
+*Diphthongs glide from one position to another (approximate positions)*
+
 ## Diphthongs
 
 RP has 8 diphthongs: **closing** (ending in a high position, gliding towards `/ɪ/` or `/ʊ/`) and **centring** (gliding towards `/ə/`):

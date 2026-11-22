@@ -10,6 +10,9 @@ Without it, phones pretend the screen is ~980px wide and then shrink the whole p
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 ```
 
+![Layout adapts at breakpoints: phone, tablet, desktop](/lessons/css/13-responsive-design-fig-en.svg)
+*Layout adapts at breakpoints: phone, tablet, desktop*
+
 ## Step 2: flexible units and images
 
 ```css

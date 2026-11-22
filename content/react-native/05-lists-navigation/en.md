@@ -17,6 +17,9 @@ On a phone a list can hold thousands of rows. `FlatList` only renders the rows *
 
 Don't `.map()` a long list inside a `ScrollView` — that renders **everything** at once. `ScrollView` is for short, fixed content.
 
+![FlatList renders only visible rows; stack navigation stacks screens](/lessons/react-native/05-lists-navigation-fig-en.svg)
+*FlatList renders only visible rows; stack navigation stacks screens*
+
 ## Navigating between screens
 
 Real apps have many screens. The standard library is **React Navigation** (or **Expo Router**, with Next.js-style folder routing):

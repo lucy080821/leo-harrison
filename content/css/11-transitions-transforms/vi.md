@@ -23,6 +23,9 @@ $$
 x' = x\cos\theta - y\sin\theta,\qquad y' = x\sin\theta + y\cos\theta
 $$
 
+![transform: translate, rotate, scale](/lessons/css/11-transitions-transforms-fig-vi.svg)
+*transform: translate, rotate, scale*
+
 ## Transition: chuyển động mượt
 
 Khi một thuộc tính **đổi giá trị** (ví dụ khi `:hover`), `transition` làm nó đổi từ từ thay vì nhảy ngay.

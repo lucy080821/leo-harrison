@@ -13,6 +13,9 @@ This is a **medical binary classification** problem. The two kinds of error have
 
 So **recall** for the malignant case matters more than accuracy. (In sklearn's data the "malignant" class is coded 0, so when reporting pay attention to which class is positive. In this lesson we treat class 1 as positive for simplicity.)
 
+![Breast-cancer prediction workflow: explore → model → evaluate](/lessons/machine-learning/13-project-breast-cancer-fig-en.svg)
+*Breast-cancer prediction workflow: explore → model → evaluate*
+
 ## Step 2: Split the data and explore
 
 ```python

@@ -10,6 +10,9 @@ Thẻ ngữ nghĩa đã mang sẵn khả năng truy cập:
 - Liên kết → `<a href>`.
 - Tiêu đề → `<h1>`...`<h6>`, không dùng chữ to để giả tiêu đề.
 
+![HTML ngữ nghĩa trở thành cây trợ năng cho trình đọc màn hình](/lessons/html/11-accessibility-fig-vi.svg)
+*HTML ngữ nghĩa trở thành cây trợ năng cho trình đọc màn hình*
+
 ## 2. Văn bản thay thế cho ảnh
 
 ```html

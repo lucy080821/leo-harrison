@@ -15,6 +15,9 @@ const questions = [
 
 Rồi viết **một hàm** biến dữ liệu thành giao diện. Thêm câu hỏi mới chỉ là thêm một phần tử vào mảng.
 
+![Vòng chơi quiz: hiện câu hỏi → chọn → chấm → điểm](/lessons/javascript/22-project-quiz-game-fig-vi.svg)
+*Vòng chơi quiz: hiện câu hỏi → chọn → chấm → điểm*
+
 ## Trạng thái (state)
 
 Chương trình cần **nhớ** vài thứ:

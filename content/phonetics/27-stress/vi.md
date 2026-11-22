@@ -4,6 +4,9 @@
 
 **Trọng âm** (*stress*) là sự nổi bật của một **âm tiết** so với các âm tiết khác trong từ. Về âm học, nó kết hợp **F0**, **độ dài**, **cường độ** và **chất lượng nguyên âm** (xem module 3). Trong phiên âm, `/ˈ/` đặt trước âm tiết có **trọng âm chính**, `/ˌ/` trước âm tiết có **trọng âm phụ**.
 
+![Mẫu trọng âm của vài từ tiếng Anh](/lessons/phonetics/27-stress-fig-vi.svg)
+*Mẫu trọng âm của vài từ tiếng Anh*
+
 ## Trọng âm trong tiếng Anh là "tự do"
 
 Khác với một số ngôn ngữ cố định trọng âm (tiếng Pháp thường ở âm cuối, tiếng Ba Lan ở âm áp chót), trọng âm tiếng Anh **không cố định** mà phụ thuộc từng từ. Nó **có giá trị phân biệt**:

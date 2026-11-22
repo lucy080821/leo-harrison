@@ -29,6 +29,9 @@ GROUP BY category;
 
 Group by **several columns**: `GROUP BY category, city` (each pair of values is a group).
 
+![GROUP BY: one result row per group](/lessons/sql/05-group-by-having-fig-en.svg)
+*GROUP BY: one result row per group*
+
 ## HAVING: filtering groups
 
 - `WHERE` filters **rows**, running **before** grouping.

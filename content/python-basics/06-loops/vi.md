@@ -28,6 +28,9 @@ for fruit in ["táo", "cam", "xoài"]:
     print(fruit)
 ```
 
+![Vòng for duyệt từng phần tử, while lặp theo điều kiện](/lessons/python-basics/06-loops-fig-vi.svg)
+*Vòng for duyệt từng phần tử, while lặp theo điều kiện*
+
 ## Mẫu cộng dồn
 
 ```python

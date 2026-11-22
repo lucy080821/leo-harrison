@@ -25,6 +25,9 @@ $$
 
 (Because $\sigma'(z)$ cancels with the derivative of the log.) Likewise for softmax + categorical cross-entropy: $\hat{\mathbf p} - \mathbf y$. That's why this "activation + loss" pair always goes together.
 
+![SGD and momentum paths on the same landscape](/lessons/deep-learning/04-training-optimizers-fig-en.svg)
+*SGD and momentum paths on the same landscape*
+
 ## Epoch, batch, iteration
 
 | Term | Meaning |

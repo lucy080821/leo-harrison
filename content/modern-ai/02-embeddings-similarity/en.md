@@ -11,6 +11,9 @@ An **embedding** represents an object (a word, sentence, image, user...) as a **
 - "dog" and "cat" are **close**, far from "rocket".
 - Semantic relations have **linear structure**.
 
+![Illustrative embeddings: related words sit close together](/lessons/modern-ai/02-embeddings-similarity-fig-en.svg)
+*Illustrative embeddings: related words sit close together*
+
 ## Learning embeddings: "know a word by the company it keeps"
 
 > "You shall know a word by the company it keeps." (J. R. Firth)

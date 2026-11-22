@@ -15,6 +15,9 @@ document
 
 Đối tượng `document` là cửa vào của mọi thao tác.
 
+![Sự kiện: người dùng bấm → trình duyệt gọi hàm xử lý](/lessons/javascript/08-dom-basics-events-fig-vi.svg)
+*Sự kiện: người dùng bấm → trình duyệt gọi hàm xử lý*
+
 ## Chọn phần tử
 
 ```javascript

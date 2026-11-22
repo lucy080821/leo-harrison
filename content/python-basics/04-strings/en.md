@@ -14,6 +14,9 @@ over many lines'''                # triple quotes for multiple lines
 
 Special characters use `\`: `\n` newline, `\t` tab, `\"` a double quote, `\\` a backslash.
 
+![Positive and negative string indexes, and slicing](/lessons/python-basics/04-strings-fig-en.svg)
+*Positive and negative string indexes, and slicing*
+
 ## Indexing and slicing
 
 Indexes start at **0**, and **negative** numbers count from the end.

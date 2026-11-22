@@ -11,6 +11,9 @@ dispatch({ type: "add", price: 25 });
 
 Ưu điểm: mọi thay đổi nằm một chỗ, dễ đọc, dễ kiểm thử. Reducer phải **thuần** — không sửa `state` tại chỗ, luôn trả về đối tượng mới.
 
+![Context phát dữ liệu cho mọi component con, không cần truyền props](/lessons/react/08-reducer-context-fig-vi.svg)
+*Context phát dữ liệu cho mọi component con, không cần truyền props*
+
 ## Context — tránh truyền props qua nhiều tầng
 
 Truyền props qua 5 tầng component chỉ để tới một nút ở đáy gọi là *prop drilling*. Context cho phép "phát sóng" dữ liệu:

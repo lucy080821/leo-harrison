@@ -30,6 +30,9 @@ df["date"].max() - df["date"].min()          # a Timedelta
 
 You can also parse while loading: `pd.read_csv("sales.csv", parse_dates=["date"])`.
 
+![pd.cut bins ages into groups](/lessons/python-data/07-transform-columns-fig-en.svg)
+*pd.cut bins ages into groups*
+
 ## Vectorized arithmetic between columns
 
 ```python

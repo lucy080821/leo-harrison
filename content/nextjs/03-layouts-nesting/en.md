@@ -22,6 +22,9 @@ export default function RootLayout({ children }) {
 
 On navigation a layout **does not re-render** and keeps its state — very smooth.
 
+![Nested layouts wrap the page](/lessons/nextjs/03-layouts-nesting-fig-en.svg)
+*Nested layouts wrap the page*
+
 ## Nested layouts
 
 Each folder may have its own `layout.js`; they nest along the folder tree:

@@ -29,6 +29,9 @@ student.pop("age")              # take out and remove
 "name" in student               # does the key exist? → True
 ```
 
+![A dict: key → value, fast lookup](/lessons/python-basics/09-dictionaries-fig-en.svg)
+*A dict: key → value, fast lookup*
+
 ## Iterating a dictionary
 
 ```python

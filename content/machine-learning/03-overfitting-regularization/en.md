@@ -14,6 +14,9 @@ Try fitting data $y = \sin x + \text{noise}$ with polynomials of different degre
 
 An overly complex model **memorizes the noise** of the training set instead of the true pattern.
 
+![Underfit, good fit, overfit with polynomial degrees 1, 4, 15](/lessons/machine-learning/03-overfitting-regularization-fig-en.svg)
+*Underfit, good fit, overfit with polynomial degrees 1, 4, 15*
+
 ## Polynomial features
 
 Turn linear regression into a **non-linear** model by adding powers of the features:

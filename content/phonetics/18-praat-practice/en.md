@@ -12,6 +12,9 @@ If you don't have Praat installed, you can do much of it with the **live spectro
 2. Save the file at a **sampling rate of 22 kHz or higher** (commonly 44.1 kHz).
 3. In Praat: open the file (*Open > Read from file*), select it and click **View & Edit**.
 
+![The Praat window layout: waveform, spectrogram, F0 and formant tracks](/lessons/phonetics/18-praat-practice-fig-en.svg)
+*The Praat window layout: waveform, spectrogram, F0 and formant tracks*
+
 ## Task 1: Measure the formants of three vowels
 
 1. Record yourself saying *beet*, *father*, *boot* (or equivalent words).

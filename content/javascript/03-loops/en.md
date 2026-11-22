@@ -16,6 +16,9 @@ Three parts in the parentheses, separated by `;`:
 2. **Condition** `i <= 5`: checked before every round; if false, stop.
 3. **Step** `i++`: runs after every round (`i++` means `i = i + 1`).
 
+![The for loop: init, test, update](/lessons/javascript/03-loops-fig-en.svg)
+*The for loop: init, test, update*
+
 ## while and do...while
 
 ```javascript

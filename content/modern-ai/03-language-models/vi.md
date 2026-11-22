@@ -12,6 +12,9 @@ $$
 
 Mô hình ngôn ngữ chỉ cần học $P(\text{từ tiếp theo}\mid\text{các từ trước})$. Sinh văn bản = **lấy mẫu từng từ một** từ phân phối đó (**tự hồi quy**).
 
+![Mô hình ngôn ngữ dự đoán token tiếp theo bằng một phân phối xác suất](/lessons/modern-ai/03-language-models-fig-vi.svg)
+*Mô hình ngôn ngữ dự đoán token tiếp theo bằng một phân phối xác suất*
+
 ## Mô hình n-gram
 
 Quá khó điều kiện trên **toàn bộ lịch sử**, nên xấp xỉ bằng $n-1$ từ gần nhất (**giả định Markov**). **Bigram** ($n=2$):

@@ -20,6 +20,9 @@ Some characters have a special meaning in HTML (`<`, `>`, `&`). To show them as 
 
 You can also use numeric codes such as `&#169;` or `&#x1F600;`. In a UTF-8 document you can type characters like `©` or `é` directly.
 
+![HTML entities to show special characters](/lessons/html/12-entities-text-semantics-fig-en.svg)
+*HTML entities to show special characters*
+
 ## Meaningful text tags
 
 | Tag | Used for |

@@ -22,6 +22,9 @@ app.post("/todos", (req, res) => {
 });
 ```
 
+![REST CRUD: phương thức HTTP tương ứng thao tác dữ liệu](/lessons/nodejs/08-rest-crud-fig-vi.svg)
+*REST CRUD: phương thức HTTP tương ứng thao tác dữ liệu*
+
 ## Mẫu một route CRUD
 
 ```javascript

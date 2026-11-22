@@ -14,6 +14,9 @@ students = {
 }
 ```
 
+![Grade book: list of dicts → average → letter grade](/lessons/python-basics/16-project-grade-book-fig-en.svg)
+*Grade book: list of dicts → average → letter grade*
+
 ## Split the work into small functions
 
 Each function does **one thing** and can be tested alone:

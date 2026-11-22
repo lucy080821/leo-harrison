@@ -21,6 +21,9 @@ app.put("/users/:id", handler);   // update
 app.delete("/users/:id", handler);// delete
 ```
 
+![Express routes by method and path](/lessons/nodejs/06-express-routing-fig-en.svg)
+*Express routes by method and path*
+
 ## Reading data from the request
 
 | Source | Example | Access |

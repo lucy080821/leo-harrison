@@ -36,6 +36,9 @@ Next.js uses the **Web Standard** `Request`/`Response` classes (also built into 
 | Read a header | `request.headers.get("authorization")` |
 | Return JSON | `Response.json(data, { status: 200 })` |
 
+![Route Handler: URL → GET/POST function → JSON](/lessons/nextjs/05-route-handlers-fig-en.svg)
+*Route Handler: URL → GET/POST function → JSON*
+
 ## Dynamic paths
 
 `app/api/todos/[id]/route.js` receives the id through the second argument (a Promise since Next 15):

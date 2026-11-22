@@ -15,6 +15,9 @@
 
 Conversion: $\text{rem} = \dfrac{\text{px}}{16}$, e.g. $20 \div 16 = 1.25$rem.
 
+![Comparing units: px is fixed, rem follows the root size](/lessons/css/03-units-typography-fig-en.svg)
+*Comparing units: px is fixed, rem follows the root size*
+
 ## Common text properties
 
 ```css

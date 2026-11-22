@@ -9,6 +9,9 @@
 
 For example: *I WANT to GO to the SHOP.* The capitalised words are stressed; the rest are **weak**.
 
+![Strong and weak forms of function words](/lessons/phonetics/28-weak-forms-connected-speech-fig-en.svg)
+*Strong and weak forms of function words*
+
 ## Weak forms
 
 Function words have a **strong form** (when stressed, alone, or sentence-final) and a **weak form** (in normal speech). Weak forms often have a **vowel reduced** to `/ə/` or `/ɪ/` and sometimes **lose a consonant**:

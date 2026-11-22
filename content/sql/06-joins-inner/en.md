@@ -17,6 +17,9 @@ customers          orders
 └────┴─────────┘   └────┴─────────────┴────────────┘
 ```
 
+![INNER JOIN keeps rows with matching keys in both tables](/lessons/sql/06-joins-inner-fig-en.svg)
+*INNER JOIN keeps rows with matching keys in both tables*
+
 ## INNER JOIN
 
 ```sql

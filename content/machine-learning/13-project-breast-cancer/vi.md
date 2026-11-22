@@ -13,6 +13,9 @@ Dự án cuối của khoá Machine Learning: chạy trọn **một quy trình M
 
 Vì vậy **recall** của ca ác tính quan trọng hơn accuracy. (Trong dữ liệu sklearn lớp "ác tính" mã là 0, nên khi báo cáo cần chú ý lớp nào là lớp dương. Ở bài này ta xem lớp 1 làm dương để đơn giản.)
 
+![Quy trình dự đoán ung thư vú: khám phá → mô hình → đánh giá](/lessons/machine-learning/13-project-breast-cancer-fig-vi.svg)
+*Quy trình dự đoán ung thư vú: khám phá → mô hình → đánh giá*
+
 ## Bước 2: Chia dữ liệu và khám phá
 
 ```python

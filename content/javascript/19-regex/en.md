@@ -12,6 +12,9 @@ const re2 = new RegExp("abc");
 "say hello".match(/hello/);  // match details
 ```
 
+![Regex: literals, character classes and quantifiers](/lessons/javascript/19-regex-fig-en.svg)
+*Regex: literals, character classes and quantifiers*
+
 ## Flags
 
 | Flag | Meaning |

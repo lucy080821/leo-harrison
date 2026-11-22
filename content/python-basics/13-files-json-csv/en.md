@@ -25,6 +25,9 @@ with open("notes.txt", encoding="utf-8") as f:         # default "r": read
 | `"a"` | **Append** to the end |
 | `"x"` | Create new, error if it exists |
 
+![Reading/writing files with with open(...)](/lessons/python-basics/13-files-json-csv-fig-en.svg)
+*Reading/writing files with with open(...)*
+
 ## Ways to read
 
 ```python

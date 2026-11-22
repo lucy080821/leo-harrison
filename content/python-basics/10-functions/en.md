@@ -18,6 +18,9 @@ print(message)
 
 > Don't confuse: `print` **displays** on screen, `return` **hands back a value** for further use. Functions should usually `return` rather than `print`.
 
+![A function: parameters in, return value out](/lessons/python-basics/10-functions-fig-en.svg)
+*A function: parameters in, return value out*
+
 ## Default parameters and keyword arguments
 
 ```python

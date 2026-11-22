@@ -22,6 +22,9 @@ app.post("/todos", (req, res) => {
 });
 ```
 
+![REST CRUD: HTTP methods map to data operations](/lessons/nodejs/08-rest-crud-fig-en.svg)
+*REST CRUD: HTTP methods map to data operations*
+
 ## A typical CRUD route
 
 ```javascript

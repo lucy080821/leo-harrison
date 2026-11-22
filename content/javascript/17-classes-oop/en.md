@@ -21,6 +21,9 @@ cat.speak();                     // "Cat makes a sound"
 - `constructor` initialises the object; `this` is the object being created/called on.
 - You must use `new` to create objects.
 
+![A class is a blueprint, objects are instances built from it](/lessons/javascript/17-classes-oop-fig-en.svg)
+*A class is a blueprint, objects are instances built from it*
+
 ## Inheritance with extends and super
 
 ```javascript

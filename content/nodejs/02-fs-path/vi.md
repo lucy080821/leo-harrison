@@ -26,6 +26,9 @@ Mỗi hàm có ba biến thể:
 
 Với server, ưu tiên bản **Promise** để không chặn các yêu cầu khác.
 
+![path ghép đường dẫn; fs đọc và ghi tệp](/lessons/nodejs/02-fs-path-fig-vi.svg)
+*path ghép đường dẫn; fs đọc và ghi tệp*
+
 ## path — ghép đường dẫn đúng chuẩn
 
 Đừng nối chuỗi tay (`"a" + "/" + "b"`) vì Windows dùng `\`. Hãy để `path` lo:

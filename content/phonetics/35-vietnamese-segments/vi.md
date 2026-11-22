@@ -8,6 +8,9 @@
 - Âm tiết có cấu trúc **(C₁)(w)V(G|C₂)+T**: một phụ âm đầu tuỳ chọn, âm đệm /w/ tuỳ chọn, nguyên âm, một âm cuối tuỳ chọn và **thanh điệu**.
 - **Không có cụm phụ âm**; mỗi âm tiết thường là một hình vị.
 
+![Khung âm tiết tiếng Việt: (âm đầu)(âm đệm) vần (âm cuối) + thanh điệu](/lessons/phonetics/35-vietnamese-segments-fig-vi.svg)
+*Khung âm tiết tiếng Việt: (âm đầu)(âm đệm) vần (âm cuối) + thanh điệu*
+
 ## Phụ âm đầu (giọng Hà Nội)
 
 | Chữ viết | IPA | Ghi chú |

@@ -21,6 +21,9 @@ li:nth-child(even) { background: #eaf2fb; }   /* sọc xen kẽ */
 a:not(.btn) { text-decoration: underline; }
 ```
 
+![Bộ chọn tổ hợp: con trực tiếp (>) và anh em liền kề (+)](/lessons/css/10-pseudo-classes-elements-fig-vi.svg)
+*Bộ chọn tổ hợp: con trực tiếp (>) và anh em liền kề (+)*
+
 ## Pseudo-element: chọn **một phần** của phần tử
 
 Viết với **hai** dấu hai chấm `::`.

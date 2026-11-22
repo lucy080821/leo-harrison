@@ -20,6 +20,9 @@ $$
 f'(x)\approx\frac{f(x+h)-f(x-h)}{2h}
 $$
 
+![Gradient chỉ hướng tăng nhanh nhất trên đường đồng mức](/lessons/math-for-ml/03-calculus-derivatives-fig-vi.svg)
+*Gradient chỉ hướng tăng nhanh nhất trên đường đồng mức*
+
 ## Các đạo hàm cần thuộc
 
 | $f(x)$ | $f'(x)$ |

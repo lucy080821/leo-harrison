@@ -22,6 +22,9 @@ print(r.area())           # 12
 - **`self`** là chính đối tượng đang được xử lý, **luôn là tham số đầu tiên** của phương thức. Khi gọi `r.area()`, Python tự truyền `r` vào `self`.
 - Tên lớp quy ước viết `PascalCase`.
 
+![Lớp và đối tượng trong Python](/lessons/python-basics/15-classes-oop-fig-vi.svg)
+*Lớp và đối tượng trong Python*
+
 ## Đối tượng độc lập nhau
 
 ```python

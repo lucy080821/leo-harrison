@@ -12,6 +12,9 @@ The forward pass is a chain of simple operations:
 
 To update with gradient descent we need $\dfrac{\partial L}{\partial W_1}$, $\dfrac{\partial L}{\partial b_1}$, $\dfrac{\partial L}{\partial W_2}$, $\dfrac{\partial L}{\partial b_2}$.
 
+![Backpropagation: derivatives flow backward through the computation graph](/lessons/deep-learning/03-backpropagation-fig-en.svg)
+*Backpropagation: derivatives flow backward through the computation graph*
+
 ## The idea: walk backward from the end
 
 The chain rule: the gradient at a node = (the gradient arriving from the next node) × (that node's **local** derivative). Walking backward from $L$ **reuses** already-computed derivatives, so the cost is only **about one forward pass**, instead of computing each parameter separately.

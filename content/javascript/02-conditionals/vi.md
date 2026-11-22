@@ -18,6 +18,9 @@ if (score >= 90) {
 
 Các nhánh được kiểm tra **từ trên xuống**; nhánh đúng đầu tiên chạy và các nhánh còn lại bị bỏ qua. Vì vậy hãy kiểm tra điều kiện **hẹp/lớn nhất trước**.
 
+![Cây quyết định if / else if / else](/lessons/javascript/02-conditionals-fig-vi.svg)
+*Cây quyết định if / else if / else*
+
 ## Toán tử so sánh và logic
 
 | Toán tử | Ý nghĩa |

@@ -9,6 +9,9 @@ Các cặp như /p/-/b/, /t/-/d/, /s/-/z/ thường được gọi là **mạnh*
 - Âm yếu đầu từ thường **ít hữu thanh**: /b d ɡ/ thường có VOT gần 0 hoặc hơi âm, còn âm mạnh /p t k/ có **VOT dài** (bật hơi).
 - Nguyên âm **ngắn hơn** trước âm mạnh: *bat* có nguyên âm ngắn hơn *bad* (đặc biệt rõ ở GA).
 
+![Các biến thể của /t/ theo vị trí](/lessons/phonetics/24-english-allophony-fig-vi.svg)
+*Các biến thể của /t/ theo vị trí*
+
 ## Bật hơi
 
 Các âm tắc vô thanh `/p t k/` và tắc-xát `/tʃ/` được **bật hơi** ở đầu âm tiết có trọng âm: *pin* `[pʰɪn]`, *tin* `[tʰɪn]`, *kin* `[kʰɪn]`. Chúng **không** bật hơi sau `/s/`: *spin* `[spɪn]`, *stop*, *skin*. Chúng cũng ít bật hơi khi sau là nguyên âm hoàn toàn không nhấn.

@@ -26,6 +26,9 @@ SELECT * FROM products WHERE price BETWEEN 1000000 AND 5000000;
 SELECT * FROM products WHERE category IN ('Furniture', 'Stationery');
 ```
 
+![WHERE lọc hàng](/lessons/sql/02-where-filtering-fig-vi.svg)
+*WHERE lọc hàng*
+
 ## Kết hợp điều kiện: AND, OR, NOT
 
 ```sql

@@ -12,6 +12,9 @@ Trọng âm, ngữ điệu, nhịp và thanh điệu đều thể hiện qua ba 
 
 Chú ý: đây là các đại lượng **đo được**, còn "cảm nhận" là phản ứng của người nghe và không tương ứng tuyến tính (xem module 4).
 
+![Đường F0, cường độ và độ dài là ba tín hiệu của ngữ điệu (minh hoạ)](/lessons/phonetics/17-prosodic-acoustics-fig-vi.svg)
+*Đường F0, cường độ và độ dài là ba tín hiệu của ngữ điệu (minh hoạ)*
+
 ## F0 của giọng nói
 
 F0 trung bình **khác nhau giữa các nhóm người nói**: nam thường thấp hơn nữ, trẻ em cao hơn. Ví dụ F0 khi nói của nam trưởng thành thường quanh **100 đến 120 Hz** và của nữ quanh **190 đến 220 Hz** (đây là giá trị **xấp xỉ**; số liệu chính xác theo nhóm tuổi xem Titze 1989 và Baken và Orlikoff 2000). Một tổng hợp thường trích khác ghi trung bình khoảng 106 Hz (nam) và 193 Hz (nữ) khi kéo dài nguyên âm /a/, cho thấy số đo phụ thuộc vào **nhiệm vụ nói**.

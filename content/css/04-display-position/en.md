@@ -14,6 +14,9 @@
 
 `display: none` differs from `visibility: hidden`: the latter hides but **still takes space**.
 
+![position: absolute is placed against a positioned ancestor](/lessons/css/04-display-position-fig-en.svg)
+*position: absolute is placed against a positioned ancestor*
+
 ## position
 
 | Value | Meaning |

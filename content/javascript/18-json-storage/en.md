@@ -21,6 +21,9 @@ Unlike JavaScript objects, JSON is **stricter**:
 - **No** trailing commas, comments, functions or `undefined`.
 - Allowed types: string, number, boolean, `null`, array, object.
 
+![JSON.stringify and JSON.parse convert between objects and strings](/lessons/javascript/18-json-storage-fig-en.svg)
+*JSON.stringify and JSON.parse convert between objects and strings*
+
 ## stringify and parse
 
 ```javascript

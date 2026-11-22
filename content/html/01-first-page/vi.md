@@ -16,6 +16,9 @@ Một **phần tử (element)** thường gồm thẻ mở, nội dung và thẻ
 - Phần ở giữa là **nội dung**.
 - Một số thẻ không có nội dung nên không cần thẻ đóng, ví dụ `<br />` (xuống dòng), `<img />` (hình ảnh). Chúng gọi là **thẻ rỗng**.
 
+![Cấu trúc một tài liệu HTML: html chứa head và body](/lessons/html/01-first-page-fig-vi.svg)
+*Cấu trúc một tài liệu HTML: html chứa head và body*
+
 ## Khung của một tài liệu HTML
 
 ```html

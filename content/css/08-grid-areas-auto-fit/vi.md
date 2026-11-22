@@ -32,6 +32,9 @@ Mỗi chuỗi trong `grid-template-areas` là **một hàng**, mỗi từ là **
 }
 ```
 
+![grid-template-areas mô tả bố cục bằng tên vùng](/lessons/css/08-grid-areas-auto-fit-fig-vi.svg)
+*grid-template-areas mô tả bố cục bằng tên vùng*
+
 ## Lưới tự co giãn: `auto-fit` và `minmax()`
 
 ```css

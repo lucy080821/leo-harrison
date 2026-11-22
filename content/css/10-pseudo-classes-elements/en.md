@@ -21,6 +21,9 @@ li:nth-child(even) { background: #eaf2fb; }   /* zebra stripes */
 a:not(.btn) { text-decoration: underline; }
 ```
 
+![Combinators: direct child (>) and adjacent sibling (+)](/lessons/css/10-pseudo-classes-elements-fig-en.svg)
+*Combinators: direct child (>) and adjacent sibling (+)*
+
 ## Pseudo-elements: select **a part** of an element
 
 Written with **two** colons `::`.

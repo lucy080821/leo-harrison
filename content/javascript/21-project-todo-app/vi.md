@@ -12,6 +12,9 @@ Bạn sẽ dựng ứng dụng **danh sách việc cần làm** hoàn chỉnh ch
 | Xoá việc | `element.remove()` |
 | Hoạt động với việc thêm sau này | **Ủy quyền sự kiện** trên `<ul>` |
 
+![Luồng dữ liệu app Todo: state → render → sự kiện](/lessons/javascript/21-project-todo-app-fig-vi.svg)
+*Luồng dữ liệu app Todo: state → render → sự kiện*
+
 ## Cấu trúc HTML mỗi việc
 
 ```html

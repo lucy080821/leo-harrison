@@ -18,6 +18,9 @@ if (score >= 90) {
 
 Branches are tested **top to bottom**; the first true one runs and the rest are skipped. So test the **narrowest/largest condition first**.
 
+![Decision tree: if / else if / else](/lessons/javascript/02-conditionals-fig-en.svg)
+*Decision tree: if / else if / else*
+
 ## Comparison and logical operators
 
 | Operator | Meaning |

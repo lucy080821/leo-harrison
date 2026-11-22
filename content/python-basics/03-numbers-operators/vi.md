@@ -12,6 +12,9 @@
 
 Lưu ý: `/` **luôn** trả về số thực (`6 / 2` là `3.0`), còn `//` giữ số nguyên.
 
+![Thứ tự ưu tiên của toán tử](/lessons/python-basics/03-numbers-operators-fig-vi.svg)
+*Thứ tự ưu tiên của toán tử*
+
 ## Chia nguyên và chia dư: bộ đôi rất hữu ích
 
 Hai toán tử này luôn đi cùng nhau: $a = (a // b) \times b + (a \% b)$.

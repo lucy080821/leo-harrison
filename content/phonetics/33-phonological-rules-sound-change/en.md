@@ -8,6 +8,9 @@ A **phonological rule** describes how a phoneme is **realised** in environments.
 
 meaning "A becomes B when it follows C and precedes D". The underline `__` marks the position of A. `#` is a word boundary; `∅` means "nothing".
 
+![Anatomy of a phonological rule: A → B / C _ D](/lessons/phonetics/33-phonological-rules-sound-change-fig-en.svg)
+*Anatomy of a phonological rule: A → B / C _ D*
+
 ## Examples in English
 
 | Rule | Reads | Example |

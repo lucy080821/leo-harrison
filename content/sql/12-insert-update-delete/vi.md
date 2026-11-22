@@ -24,6 +24,9 @@ INSERT INTO customers (id, name, city) VALUES
 - Cột `INTEGER PRIMARY KEY` có thể **tự tăng**: bỏ qua `id` và để CSDL tự điền.
 - Thêm từ kết quả truy vấn: `INSERT INTO archive SELECT * FROM orders WHERE status = 'completed';`
 
+![Ba lệnh thay đổi dữ liệu](/lessons/sql/12-insert-update-delete-fig-vi.svg)
+*Ba lệnh thay đổi dữ liệu*
+
 ## UPDATE: sửa dòng
 
 ```sql

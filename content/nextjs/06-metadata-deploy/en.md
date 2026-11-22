@@ -20,6 +20,9 @@ export async function generateMetadata({ params }) {
 }
 ```
 
+![Deploying to a VPS: build → run node → Nginx → users](/lessons/nextjs/06-metadata-deploy-fig-en.svg)
+*Deploying to a VPS: build → run node → Nginx → users*
+
 ## Built-in optimisation
 
 - `next/image`: automatically resizes, compresses and lazy-loads images. `<Image src="/a.png" alt="…" width={600} height={400} />`

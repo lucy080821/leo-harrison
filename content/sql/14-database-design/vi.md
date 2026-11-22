@@ -10,6 +10,9 @@ Thiết kế tốt giúp dữ liệu **nhất quán, không lặp, dễ mở r�
 4. Xác định **quan hệ** giữa các bảng và biểu diễn bằng **khoá ngoại**.
 5. **Chuẩn hoá** để loại dữ liệu lặp.
 
+![Sơ đồ quan hệ: khách 1–n đơn hàng n–n sản phẩm](/lessons/sql/14-database-design-fig-vi.svg)
+*Sơ đồ quan hệ: khách 1–n đơn hàng n–n sản phẩm*
+
 ## Ba loại quan hệ
 
 ### Một - nhiều (1-n): phổ biến nhất

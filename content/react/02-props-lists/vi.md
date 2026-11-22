@@ -14,6 +14,9 @@ function Badge({ text, color }) {
 
 Dùng destructuring `{ text, color }` cho gọn. Giá trị không phải chuỗi đặt trong `{}`: `<Counter start={5} />`.
 
+![Props chảy một chiều từ cha xuống con](/lessons/react/02-props-lists-fig-vi.svg)
+*Props chảy một chiều từ cha xuống con*
+
 ## children
 
 Nội dung đặt giữa hai thẻ là prop đặc biệt `children`:

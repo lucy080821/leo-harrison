@@ -26,6 +26,9 @@ for x_t in seq:
 
 Có thể lấy **đầu ra ở mỗi bước** (gán nhãn từng từ) hoặc chỉ **bước cuối** $\mathbf h_T$ (phân loại cả câu).
 
+![RNN trải ra theo thời gian: trạng thái ẩn truyền từ bước này sang bước sau](/lessons/deep-learning/07-rnn-lstm-fig-vi.svg)
+*RNN trải ra theo thời gian: trạng thái ẩn truyền từ bước này sang bước sau*
+
 ## Huấn luyện: BPTT
 
 Trải mạng theo thời gian thành một mạng **rất sâu** (mỗi bước một tầng, cùng trọng số) rồi lan truyền ngược: **Backpropagation Through Time (BPTT)**. Gradient của $W_h$ là **tổng đóng góp từ mọi bước**.

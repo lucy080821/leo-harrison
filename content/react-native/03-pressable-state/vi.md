@@ -22,6 +22,9 @@ Bọc bất cứ thứ gì để làm nó bấm được:
 - `onLongPress`: giữ lâu.
 - `style` có thể là **hàm** nhận `{ pressed }` để đổi giao diện khi đang nhấn.
 
+![Bấm Pressable → onPress → setState → giao diện đổi](/lessons/react-native/03-pressable-state-fig-vi.svg)
+*Bấm Pressable → onPress → setState → giao diện đổi*
+
 ## Button — nút có sẵn
 
 ```jsx

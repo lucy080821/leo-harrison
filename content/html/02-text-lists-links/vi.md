@@ -12,6 +12,9 @@
 
 Hãy chọn thẻ theo **ý nghĩa**, không phải theo hình thức. Hình thức sẽ do CSS lo ở bài sau.
 
+![Cấu tạo một liên kết: thẻ, thuộc tính, nội dung](/lessons/html/02-text-lists-links-fig-vi.svg)
+*Cấu tạo một liên kết: thẻ, thuộc tính, nội dung*
+
 ## Danh sách
 
 ```html

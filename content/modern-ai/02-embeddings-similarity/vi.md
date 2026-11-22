@@ -11,6 +11,9 @@
 - "chó" và "mèo" **gần nhau**, xa "tên lửa".
 - Có **cấu trúc tuyến tính** của quan hệ ngữ nghĩa.
 
+![Embedding minh hoạ: từ gần nghĩa nằm gần nhau](/lessons/modern-ai/02-embeddings-similarity-fig-vi.svg)
+*Embedding minh hoạ: từ gần nghĩa nằm gần nhau*
+
 ## Học embedding: "biết từ qua bạn bè của nó"
 
 > "Bạn sẽ biết một từ qua những từ đi cùng nó." (J. R. Firth)

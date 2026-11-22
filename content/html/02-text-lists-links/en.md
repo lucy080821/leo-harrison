@@ -12,6 +12,9 @@
 
 Pick tags by **meaning**, not by looks. CSS takes care of the looks in a later lesson.
 
+![Anatomy of a link: tag, attribute, content](/lessons/html/02-text-lists-links-fig-en.svg)
+*Anatomy of a link: tag, attribute, content*
+
 ## Lists
 
 ```html

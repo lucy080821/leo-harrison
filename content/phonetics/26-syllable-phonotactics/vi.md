@@ -11,6 +11,9 @@ Một **âm tiết** (*syllable*) gồm:
 
 Với *strengths* `/streŋθs/`: onset `/str/`, nucleus `/e/`, coda `/ŋθs/` (nhiều người nói `/ŋkθs/`).
 
+![Cấu trúc âm tiết: onset, vần (nucleus + coda)](/lessons/phonetics/26-syllable-phonotactics-fig-vi.svg)
+*Cấu trúc âm tiết: onset, vần (nucleus + coda)*
+
 ## Cấu trúc tối đa
 
 Âm tiết tiếng Anh có thể viết gọn là **(C)³V(C)⁴**: tối đa **3** phụ âm ở đầu và **4** phụ âm ở cuối.

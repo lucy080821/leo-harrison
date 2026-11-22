@@ -16,6 +16,9 @@ Ba phần trong ngoặc, cách nhau bằng `;`:
 2. **Điều kiện** `i <= 5`: kiểm tra trước mỗi lượt; sai thì dừng.
 3. **Bước nhảy** `i++`: chạy sau mỗi lượt (`i++` nghĩa là `i = i + 1`).
 
+![Vòng lặp for: khởi tạo, điều kiện, cập nhật](/lessons/javascript/03-loops-fig-vi.svg)
+*Vòng lặp for: khởi tạo, điều kiện, cập nhật*
+
 ## while và do...while
 
 ```javascript

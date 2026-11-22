@@ -24,6 +24,9 @@ function f() {
 
 Trình duyệt tìm biến theo **chuỗi phạm vi**: từ trong ra ngoài, gặp tên đầu tiên là dùng. `var` chỉ có phạm vi hàm (không phải khối) nên dễ gây lỗi, hãy dùng `let` và `const`.
 
+![Closure: hàm bên trong nhớ biến của hàm bao ngoài](/lessons/javascript/11-scope-closures-higher-order-fig-vi.svg)
+*Closure: hàm bên trong nhớ biến của hàm bao ngoài*
+
 ## Closure
 
 **Closure** là hàm **ghi nhớ** các biến ở nơi nó được tạo ra, ngay cả khi hàm bên ngoài đã chạy xong.

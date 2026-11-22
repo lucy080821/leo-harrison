@@ -9,6 +9,9 @@ Pairs such as /p/-/b/, /t/-/d/, /s/-/z/ are often called **fortis** (p t k tʃ f
 - Initial lenis consonants are often **weakly voiced**: /b d ɡ/ often have a VOT near 0 or slightly negative, while fortis /p t k/ have **long VOT** (aspiration).
 - Vowels are **shorter** before fortis consonants: *bat* has a shorter vowel than *bad* (especially clear in GA).
 
+![Allophones of /t/ by environment](/lessons/phonetics/24-english-allophony-fig-en.svg)
+*Allophones of /t/ by environment*
+
 ## Aspiration
 
 The voiceless stops `/p t k/` and the affricate `/tʃ/` are **aspirated** at the start of a stressed syllable: *pin* `[pʰɪn]`, *tin* `[tʰɪn]`, *kin* `[kʰɪn]`. They are **not** aspirated after `/s/`: *spin* `[spɪn]`, *stop*, *skin*. They are also less aspirated when followed by a completely unstressed vowel.

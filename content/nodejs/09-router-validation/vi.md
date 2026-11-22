@@ -30,6 +30,9 @@ my-api/
 
 Tách `app.js` (không `listen`) giúp kiểm thử dễ, giống cách `app.inject` ở đây.
 
+![Router tách nhóm route; validation chặn dữ liệu sai trước khi vào handler](/lessons/nodejs/09-router-validation-fig-vi.svg)
+*Router tách nhóm route; validation chặn dữ liệu sai trước khi vào handler*
+
 ## Kiểm tra dữ liệu đầu vào
 
 **Không bao giờ tin dữ liệu từ client.** Kiểm tra kiểu, độ dài, định dạng trước khi dùng; sai thì trả `400`.

@@ -24,6 +24,9 @@ function f() {
 
 Variables are looked up along the **scope chain**: from the inside out, the first matching name is used. `var` has function scope only (not block scope) which causes bugs, so use `let` and `const`.
 
+![Closure: the inner function remembers the outer variables](/lessons/javascript/11-scope-closures-higher-order-fig-en.svg)
+*Closure: the inner function remembers the outer variables*
+
 ## Closures
 
 A **closure** is a function that **remembers** the variables from where it was created, even after the outer function has finished.

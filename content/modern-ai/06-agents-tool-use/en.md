@@ -10,6 +10,9 @@ A plain LLM only **generates text**. An **agent** is a system that uses an LLM a
 | Uses only knowledge in the model | **Calls tools** to fetch data and act |
 | Doesn't affect the world | Can **send email, edit code, book appointments** |
 
+![The agent loop: think → call a tool → observe](/lessons/modern-ai/06-agents-tool-use-fig-en.svg)
+*The agent loop: think → call a tool → observe*
+
 ## Tool calling (function calling)
 
 You **describe the tools** (name, description, parameters) to the model. When needed, the model **doesn't compute by itself** but returns a **structured call** (usually JSON); **your program** executes it and feeds the result back to the model.

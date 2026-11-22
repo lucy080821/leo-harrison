@@ -26,6 +26,9 @@ Phần `<head>` chứa **thông tin về trang** mà người dùng không thấ
 | `link rel="stylesheet"` | Nạp file CSS |
 | `script defer` | Nạp JavaScript mà không chặn hiển thị trang |
 
+![Thẻ title và meta description hiện trong kết quả tìm kiếm](/lessons/html/10-head-meta-seo-fig-vi.svg)
+*Thẻ title và meta description hiện trong kết quả tìm kiếm*
+
 ## Open Graph: xem trước khi chia sẻ
 
 Khi dán link vào Facebook, Zalo, Slack..., chúng đọc các thẻ này để dựng thẻ xem trước:

@@ -24,6 +24,9 @@ INSERT INTO customers (id, name, city) VALUES
 - An `INTEGER PRIMARY KEY` column can **auto-increment**: omit `id` and let the database fill it.
 - Insert from a query result: `INSERT INTO archive SELECT * FROM orders WHERE status = 'completed';`
 
+![The three data-changing statements](/lessons/sql/12-insert-update-delete-fig-en.svg)
+*The three data-changing statements*
+
 ## UPDATE: changing rows
 
 ```sql

@@ -15,6 +15,9 @@ df["region"].unique()          # instantly shows messy 'south', ' East '...
 df.describe()                  # odd values, outliers?
 ```
 
+![Missing data (NaN): drop rows or fill values](/lessons/python-data/06-clean-missing-data-fig-en.svg)
+*Missing data (NaN): drop rows or fill values*
+
 ## Missing data (NaN)
 
 pandas uses `NaN` for blank cells.

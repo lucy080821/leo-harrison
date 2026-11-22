@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
   "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="460.8pt" height="191.808pt" viewBox="0 0 460.8 191.808" xmlns="http://www.w3.org/2000/svg" version="1.1">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="382.68pt" height="160.7616pt" viewBox="0 0 382.68 160.7616" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-11-22T16:09:13.380402</dc:date>
+    <dc:date>2026-11-22T16:23:36.316548</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -21,43 +21,43 @@
  </defs>
  <g id="figure_1">
   <g id="patch_1">
-   <path d="M 0 191.808 
-L 460.8 191.808 
-L 460.8 0 
+   <path d="M 0 160.7616 
+L 382.68 160.7616 
+L 382.68 0 
 L 0 0 
 z
 " style="fill: #ffffff"/>
   </g>
   <g id="axes_1">
    <g id="patch_2">
-    <path d="M 30.06439 149.1264 
-L 136.764878 149.1264 
-Q 143.297561 149.1264 143.297561 142.03008 
-L 143.297561 73.43232 
-Q 143.297561 66.336 136.764878 66.336 
-L 30.06439 66.336 
-Q 23.531707 66.336 23.531707 73.43232 
-L 23.531707 142.03008 
-Q 23.531707 149.1264 30.06439 149.1264 
+    <path d="M 26.063122 124.28928 
+L 114.091024 124.28928 
+Q 119.480488 124.28928 119.480488 118.434816 
+L 119.480488 61.841664 
+Q 119.480488 55.9872 114.091024 55.9872 
+L 26.063122 55.9872 
+Q 20.673659 55.9872 20.673659 61.841664 
+L 20.673659 118.434816 
+Q 20.673659 124.28928 26.063122 124.28928 
 z
-" clip-path="url(#pd2cb13615c)" style="fill: #e0f2fe; stroke: #0e7490; stroke-width: 1.4; stroke-linejoin: miter"/>
+" clip-path="url(#p3d8b5ce50b)" style="fill: #e0f2fe; stroke: #0e7490; stroke-width: 1.4; stroke-linejoin: miter"/>
    </g>
    <g id="patch_3">
-    <path d="M 318.59122 149.1264 
-L 425.291707 149.1264 
-Q 431.82439 149.1264 431.82439 142.03008 
-L 431.82439 73.43232 
-Q 431.82439 66.336 425.291707 66.336 
-L 318.59122 66.336 
-Q 312.058537 66.336 312.058537 73.43232 
-L 312.058537 142.03008 
-Q 312.058537 149.1264 318.59122 149.1264 
+    <path d="M 264.097756 124.28928 
+L 352.125659 124.28928 
+Q 357.515122 124.28928 357.515122 118.434816 
+L 357.515122 61.841664 
+Q 357.515122 55.9872 352.125659 55.9872 
+L 264.097756 55.9872 
+Q 258.708293 55.9872 258.708293 61.841664 
+L 258.708293 118.434816 
+Q 258.708293 124.28928 264.097756 124.28928 
 z
-" clip-path="url(#pd2cb13615c)" style="fill: #e2e8f0; stroke: #334155; stroke-width: 1.4; stroke-linejoin: miter"/>
+" clip-path="url(#p3d8b5ce50b)" style="fill: #e2e8f0; stroke: #334155; stroke-width: 1.4; stroke-linejoin: miter"/>
    </g>
    <g id="text_1">
     <!-- Your machine -->
-    <g style="fill: #0f172a" transform="translate(49.665415 104.32788) scale(0.1 -0.1)">
+    <g style="fill: #0f172a" transform="translate(36.327854 86.73492) scale(0.1 -0.1)">
      <defs>
       <path id="DejaVuSans-3c" d="M -13 4666 
 L 666 4666 
@@ -307,7 +307,7 @@ z
      <use xlink:href="#DejaVuSans-48" transform="translate(613.453125 0)"/>
     </g>
     <!-- (local repo) -->
-    <g style="fill: #0f172a" transform="translate(55.017759 116.330614) scale(0.1 -0.1)">
+    <g style="fill: #0f172a" transform="translate(41.680198 98.737654) scale(0.1 -0.1)">
      <defs>
       <path id="DejaVuSans-b" d="M 1984 4856 
 Q 1566 4138 1362 3434 
@@ -385,7 +385,7 @@ z
    </g>
    <g id="text_2">
     <!-- GitHub -->
-    <g style="fill: #0f172a" transform="translate(352.882245 103.987548) scale(0.11 -0.11)">
+    <g style="fill: #0f172a" transform="translate(289.052489 86.394588) scale(0.11 -0.11)">
      <defs>
       <path id="DejaVuSans-2a" d="M 3809 666 
 L 3809 1919 
@@ -483,7 +483,7 @@ z
      <use xlink:href="#DejaVuSans-45" transform="translate(283.046875 0)"/>
     </g>
     <!-- (origin) -->
-    <g style="fill: #0f172a" transform="translate(351.990213 117.190555) scale(0.11 -0.11)">
+    <g style="fill: #0f172a" transform="translate(288.160457 99.597595) scale(0.11 -0.11)">
      <defs>
       <path id="DejaVuSans-4a" d="M 2906 1791 
 Q 2906 2416 2648 2759 
@@ -531,18 +531,18 @@ z
     </g>
    </g>
    <g id="patch_4">
-    <path d="M 144.386341 89.9904 
-Q 227.678049 89.9904 308.733688 89.9904 
+    <path d="M 120.378732 75.50208 
+Q 189.09439 75.50208 255.573981 75.50208 
 " style="fill: none; stroke: #0e7490; stroke-width: 2; stroke-linecap: round"/>
-    <path d="M 304.333688 87.7904 
-L 308.733688 89.9904 
-L 304.333688 92.1904 
+    <path d="M 251.173981 73.30208 
+L 255.573981 75.50208 
+L 251.173981 77.70208 
 z
 " style="fill: #0e7490; stroke: #0e7490; stroke-width: 2; stroke-linecap: round"/>
    </g>
    <g id="text_3">
     <!-- git push -->
-    <g style="fill: #0e7490" transform="translate(209.472033 80.52864) scale(0.09 -0.09)">
+    <g style="fill: #0e7490" transform="translate(170.888375 67.696128) scale(0.09 -0.09)">
      <defs>
       <path id="DejaVuSans-56" d="M 2834 3397 
 L 2834 2853 
@@ -587,18 +587,18 @@ z
     </g>
    </g>
    <g id="patch_5">
-    <path d="M 310.969756 119.5584 
-Q 227.678049 119.5584 146.622409 119.5584 
+    <path d="M 257.810049 99.89568 
+Q 189.09439 99.89568 122.6148 99.89568 
 " style="fill: none; stroke: #16a34a; stroke-width: 2; stroke-linecap: round"/>
-    <path d="M 151.022409 121.7584 
-L 146.622409 119.5584 
-L 151.022409 117.3584 
+    <path d="M 127.0148 102.09568 
+L 122.6148 99.89568 
+L 127.0148 97.69568 
 z
 " style="fill: #16a34a; stroke: #16a34a; stroke-width: 2; stroke-linecap: round"/>
    </g>
    <g id="text_4">
     <!-- git pull / fetch -->
-    <g style="fill: #16a34a" transform="translate(196.348205 139.66464) scale(0.09 -0.09)">
+    <g style="fill: #16a34a" transform="translate(157.764546 116.483328) scale(0.09 -0.09)">
      <defs>
       <path id="DejaVuSans-12" d="M 1625 4666 
 L 2156 4666 
@@ -648,18 +648,18 @@ z
     </g>
    </g>
    <g id="patch_6">
-    <path d="M 224.956098 42.6816 
-Q 224.956098 48.5952 224.956098 52.831749 
+    <path d="M 186.84878 36.47232 
+Q 186.84878 41.35104 186.84878 44.552709 
 " style="fill: none; stroke: #ffffff; stroke-width: 1.5; stroke-linecap: round"/>
-    <path d="M 227.156098 48.431749 
-L 224.956098 52.831749 
-L 222.756098 48.431749 
+    <path d="M 189.04878 40.152709 
+L 186.84878 44.552709 
+L 184.64878 40.152709 
 z
 " style="fill: #ffffff; stroke: #ffffff; stroke-width: 1.5; stroke-linecap: round"/>
    </g>
    <g id="text_5">
     <!-- git clone: first-time download of the whole repo -->
-    <g style="fill: #475569" transform="translate(117.959457 36.768) scale(0.09 -0.09)">
+    <g style="fill: #475569" transform="translate(79.85214 31.5936) scale(0.09 -0.09)">
      <defs>
       <path id="DejaVuSans-1d" d="M 750 794 
 L 1409 794 
@@ -805,8 +805,8 @@ z
   </g>
  </g>
  <defs>
-  <clipPath id="pd2cb13615c">
-   <rect x="7.2" y="7.2" width="446.4" height="177.408"/>
+  <clipPath id="p3d8b5ce50b">
+   <rect x="7.2" y="7.2" width="368.28" height="146.3616"/>
   </clipPath>
  </defs>
 </svg>

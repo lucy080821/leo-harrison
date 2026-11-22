@@ -26,6 +26,9 @@ const o = await getOrders(u.id);
 console.log(o);
 ```
 
+![fetch + await: gửi request rồi đợi phản hồi JSON](/lessons/javascript/16-async-await-fetch-fig-vi.svg)
+*fetch + await: gửi request rồi đợi phản hồi JSON*
+
 ## Xử lý lỗi bằng try/catch
 
 Promise bị reject sẽ **ném lỗi** tại dòng `await`, nên bắt bằng `try/catch` quen thuộc:

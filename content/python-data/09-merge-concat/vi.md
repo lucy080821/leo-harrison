@@ -19,6 +19,9 @@ customers.merge(orders, left_on="id", right_on="customer_id", how="inner")
 - Nếu hai bảng **cùng tên cột khoá**, chỉ cần `on="id"`.
 - `how=`: kiểu ghép (xem bên dưới).
 
+![merge: ghép hai bảng theo khoá chung](/lessons/python-data/09-merge-concat-fig-vi.svg)
+*merge: ghép hai bảng theo khoá chung*
+
 ## Các kiểu ghép (how)
 
 Với bảng trái `customers` (id 1-4) và bảng phải `orders` (khách 1, 1, 2, 3, 9):

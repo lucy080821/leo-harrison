@@ -13,6 +13,9 @@ A **form** lets users enter data and send it off: logging in, searching, signing
 - `action`: where the data goes.
 - `method`: `get` (data appears in the URL, used for search) or `post` (sent in the request body, used for logins or changing data).
 
+![A form sends data: label, input, submit, request to the server](/lessons/html/06-forms-basics-fig-en.svg)
+*A form sends data: label, input, submit, request to the server*
+
 ## `<input>` and the `type` attribute
 
 ```html

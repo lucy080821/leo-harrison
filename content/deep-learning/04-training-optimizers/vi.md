@@ -25,6 +25,9 @@ $$
 
 (Vì $\sigma'(z)$ triệt tiêu với đạo hàm của log.) Tương tự với softmax + categorical cross-entropy: $\hat{\mathbf p} - \mathbf y$. Đây là lý do cặp "kích hoạt + mất mát" này luôn đi cùng nhau.
 
+![Quỹ đạo SGD và momentum trên cùng một địa hình](/lessons/deep-learning/04-training-optimizers-fig-vi.svg)
+*Quỹ đạo SGD và momentum trên cùng một địa hình*
+
 ## Epoch, batch, iteration
 
 | Thuật ngữ | Nghĩa |

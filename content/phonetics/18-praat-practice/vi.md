@@ -12,6 +12,9 @@ Nếu chưa cài Praat, bạn có thể làm phần lớn với **công cụ ph�
 2. Lưu file ở **tần số lấy mẫu 22 kHz hoặc cao hơn** (thường là 44,1 kHz).
 3. Trong Praat: mở file (*Open > Read from file*), chọn rồi bấm **View & Edit**.
 
+![Bố cục cửa sổ Praat: sóng âm, phổ đồ, đường F0 và formant](/lessons/phonetics/18-praat-practice-fig-vi.svg)
+*Bố cục cửa sổ Praat: sóng âm, phổ đồ, đường F0 và formant*
+
 ## Bài 1: Đo formant của ba nguyên âm
 
 1. Ghi âm bạn nói *beet*, *father*, *boot* (hoặc các từ tương đương).

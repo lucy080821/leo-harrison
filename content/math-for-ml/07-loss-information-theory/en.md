@@ -18,6 +18,9 @@ mse = np.mean((y_true - y_pred) ** 2)
 mae = np.mean(np.abs(y_true - y_pred))
 ```
 
+![Cross-entropy loss −log p: heavy penalty for confident mistakes](/lessons/math-for-ml/07-loss-information-theory-fig-en.svg)
+*Cross-entropy loss −log p: heavy penalty for confident mistakes*
+
 ## Entropy: the average "surprise"
 
 For a distribution $p$ over outcomes:

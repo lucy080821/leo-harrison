@@ -25,6 +25,9 @@ SELECT
 FROM orders;
 ```
 
+![CASE classifies values; NULL equals nothing](/lessons/sql/09-case-null-functions-fig-en.svg)
+*CASE classifies values; NULL equals nothing*
+
 ## Handling NULL
 
 ```sql

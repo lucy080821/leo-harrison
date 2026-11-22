@@ -43,6 +43,9 @@ lengths = [len(w) for w in ["a", "bb", "ccc"]]    # [1, 2, 3]
 pairs = [(x, y) for x in range(2) for y in range(2)]   # nested loops
 ```
 
+![List comprehension: filter then transform each item](/lessons/python-basics/11-comprehensions-lambda-fig-en.svg)
+*List comprehension: filter then transform each item*
+
 ## Dict and set comprehensions
 
 ```python

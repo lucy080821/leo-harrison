@@ -10,6 +10,9 @@ Priority order when a model overfits:
 2. **Reduce the model's capacity** (fewer layers/neurons).
 3. The techniques below.
 
+![Early stopping: stop when the validation loss starts rising](/lessons/deep-learning/05-regularization-deep-learning-fig-en.svg)
+*Early stopping: stop when the validation loss starts rising*
+
 ## Weight decay (L2)
 
 Add a penalty for large weights to the loss (like Ridge):

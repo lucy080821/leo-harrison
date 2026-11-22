@@ -10,6 +10,9 @@
 
 `.row` trở thành **flex container**; các con trực tiếp của nó trở thành **flex item** và tự xếp thành hàng ngang.
 
+![Flexbox: trục chính và trục phụ](/lessons/css/05-flexbox-basics-fig-vi.svg)
+*Flexbox: trục chính và trục phụ*
+
 ## Hai trục
 
 ```text

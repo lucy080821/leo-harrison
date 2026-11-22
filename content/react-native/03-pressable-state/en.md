@@ -22,6 +22,9 @@ Wrap anything to make it pressable:
 - `onLongPress`: press and hold.
 - `style` can be a **function** receiving `{ pressed }` to restyle while pressed.
 
+![Press a Pressable → onPress → setState → UI updates](/lessons/react-native/03-pressable-state-fig-en.svg)
+*Press a Pressable → onPress → setState → UI updates*
+
 ## Button — the ready-made button
 
 ```jsx

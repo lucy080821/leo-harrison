@@ -10,6 +10,9 @@ Semantic tags come with accessibility built in:
 - Links → `<a href>`.
 - Headings → `<h1>`...`<h6>`, not big text faking a heading.
 
+![Semantic HTML becomes the accessibility tree for screen readers](/lessons/html/11-accessibility-fig-en.svg)
+*Semantic HTML becomes the accessibility tree for screen readers*
+
 ## 2. Alternative text for images
 
 ```html

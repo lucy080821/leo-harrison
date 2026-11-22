@@ -17,6 +17,9 @@ export default async function Posts() {
 
 Trình duyệt nhận HTML đã có sẵn dữ liệu. Bạn cũng có thể gọi thẳng cơ sở dữ liệu ở đây vì code chạy trên server.
 
+![loading.tsx hiện trong lúc dữ liệu đang tải, error.tsx khi lỗi](/lessons/nextjs/04-data-loading-fig-vi.svg)
+*loading.tsx hiện trong lúc dữ liệu đang tải, error.tsx khi lỗi*
+
 ## loading.js — trạng thái tải
 
 Đặt file `loading.js` cạnh `page.js`. Next hiện nó ngay trong lúc trang chờ dữ liệu (dựa trên React Suspense):

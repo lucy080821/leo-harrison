@@ -4,6 +4,9 @@
 
 The spelling of most languages does not record sounds consistently. Phoneticians need a system with **one symbol per sound** to describe any language. That is the **International Phonetic Alphabet** (IPA), maintained by the International Phonetic Association.
 
+![Broad and narrow transcription of the word pin](/lessons/phonetics/02-transcription-ipa-fig-en.svg)
+*Broad and narrow transcription of the word pin*
+
 ## The parts of the IPA chart
 
 The official chart has seven blocks:

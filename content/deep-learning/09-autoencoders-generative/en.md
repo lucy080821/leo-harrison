@@ -32,6 +32,9 @@ A **non-linear** autoencoder (with activations) is stronger: it can compress cur
 | **Anomaly detection** | Unusual samples have a **large reconstruction error** |
 | **Pretraining** | The representation is reused for other tasks |
 
+![Autoencoder: compress to a latent space then reconstruct](/lessons/deep-learning/09-autoencoders-generative-fig-en.svg)
+*Autoencoder: compress to a latent space then reconstruct*
+
 ## Generative models
 
 Goal: learn the data distribution $p(\mathbf x)$ to **generate new samples** that look real (images, text, audio). Three main families:

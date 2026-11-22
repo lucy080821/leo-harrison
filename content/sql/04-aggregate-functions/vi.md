@@ -32,6 +32,9 @@ SELECT COUNT(*) FROM orders WHERE status = 'completed';
 SELECT AVG(price) FROM products WHERE category = 'Electronics';
 ```
 
+![Hàm gộp thu nhiều hàng thành một giá trị](/lessons/sql/04-aggregate-functions-fig-vi.svg)
+*Hàm gộp thu nhiều hàng thành một giá trị*
+
 ## Tính toán bên trong hàm
 
 ```sql

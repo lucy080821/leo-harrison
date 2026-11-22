@@ -31,6 +31,9 @@ Tables display **data in rows and columns**. Don't use tables for page layout, t
 
 The temporary `border="1"` in the example is only to show the lines. In real work you draw borders with CSS.
 
+![Table anatomy: table, tr, th, td](/lessons/html/05-tables-fig-en.svg)
+*Table anatomy: table, tr, th, td*
+
 ## Merging cells
 
 ```html

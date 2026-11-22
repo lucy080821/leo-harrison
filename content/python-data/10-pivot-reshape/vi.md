@@ -39,6 +39,9 @@ df.pivot_table(index="region", columns="category", values="revenue",
 
 Nhiều hàm cùng lúc: `aggfunc=["sum", "mean"]`. Nhiều cấp dòng: `index=["region", "product"]`.
 
+![pivot: chuyển từ dạng dài sang dạng rộng](/lessons/python-data/10-pivot-reshape-fig-vi.svg)
+*pivot: chuyển từ dạng dài sang dạng rộng*
+
 ## groupby + unstack: cách thứ hai
 
 ```python

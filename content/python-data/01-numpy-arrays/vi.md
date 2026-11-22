@@ -12,6 +12,9 @@
 | Toán học cả mảng | Phải viết vòng lặp | `a * 2`, `a + b` trực tiếp |
 | Nhiều chiều | Danh sách lồng nhau | Hỗ trợ chuẩn (ma trận, tensor) |
 
+![Mảng NumPy 1 chiều và 2 chiều, thuộc tính shape](/lessons/python-data/01-numpy-arrays-fig-vi.svg)
+*Mảng NumPy 1 chiều và 2 chiều, thuộc tính shape*
+
 ## Tạo mảng
 
 ```python

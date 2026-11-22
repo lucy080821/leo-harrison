@@ -17,6 +17,9 @@ useEffect(() => {
 | `[]` | **once**, after the first render |
 | `[a, b]` | when `a` or `b` **changes** |
 
+![useEffect lifecycle: render → commit → effect → cleanup](/lessons/react/05-effects-fig-en.svg)
+*useEffect lifecycle: render → commit → effect → cleanup*
+
 ## Cleanup
 
 The returned function runs before the next run and when the component disappears. Use it for `clearInterval`, removing listeners, cancelling requests.

@@ -4,6 +4,9 @@
 
 **Ngữ âm học** (*phonetics*) là ngành nghiên cứu **âm thanh của lời nói**: chúng được tạo ra thế nào, truyền đi ra sao và được người nghe nhận biết thế nào. Nó coi lời nói trước hết là một **hiện tượng vật lý và sinh lý**, chưa hỏi các âm đó có chức năng gì trong ngữ pháp hay nghĩa.
 
+![Chuỗi lời nói: từ não người nói đến não người nghe](/lessons/phonetics/01-speech-chain-fig-vi.svg)
+*Chuỗi lời nói: từ não người nói đến não người nghe*
+
 ## Chuỗi lời nói
 
 Một cách quen thuộc để hình dung là **chuỗi lời nói** (*speech chain*): một thông điệp đi từ não người nói đến não người nghe qua nhiều chặng.

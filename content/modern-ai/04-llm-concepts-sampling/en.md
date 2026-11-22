@@ -29,6 +29,9 @@ Continue training on **tens of thousands of (request → good answer) pairs** wr
 
 Humans **compare answers** (A is better than B). Learn a **reward model** then use **reinforcement learning** (or **DPO**, more direct) so the model prefers helpful, honest, safe answers.
 
+![Temperature sharpens or flattens the distribution](/lessons/modern-ai/04-llm-concepts-sampling-fig-en.svg)
+*Temperature sharpens or flattens the distribution*
+
 ## Generating text: choosing the next token
 
 At each step the model outputs **logits** $z_i$ for every token in the vocabulary; $\text{softmax}$ turns them into probabilities. How you **choose** shapes the output's character.

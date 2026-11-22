@@ -23,6 +23,9 @@ $$
 - $z\to+\infty$: $\hat p\to 1$; $z\to-\infty$: $\hat p\to 0$; $z=0$: $\hat p = 0.5$.
 - Class prediction: **1 if $\hat p\ge 0.5$**, otherwise 0. The $0.5$ threshold corresponds to $z = 0$: a **linear decision boundary** $\mathbf{w}\cdot\mathbf{x}+b=0$.
 
+![The sigmoid turns a score into a probability](/lessons/machine-learning/04-logistic-regression-fig-en.svg)
+*The sigmoid turns a score into a probability*
+
 ## Interpreting coefficients: odds
 
 $$

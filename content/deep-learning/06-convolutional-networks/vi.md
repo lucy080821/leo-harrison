@@ -32,6 +32,9 @@ $$
 - **Stride**: bước trượt (stride 2 giảm một nửa kích thước).
 - **Padding**: viền số 0 quanh ảnh. `same` giữ nguyên kích thước; `valid` (không đệm) thu nhỏ.
 
+![Bộ lọc 3×3 trượt trên ảnh tạo bản đồ đặc trưng](/lessons/deep-learning/06-convolutional-networks-fig-vi.svg)
+*Bộ lọc 3×3 trượt trên ảnh tạo bản đồ đặc trưng*
+
 ## Tầng tích chập và các kênh
 
 - Đầu vào có **nhiều kênh** (ảnh RGB có 3).

@@ -24,6 +24,9 @@
 
 Mô hình hoá bằng **MDP** (Markov Decision Process): trạng thái tiếp theo và phần thưởng chỉ phụ thuộc $(s,a)$ hiện tại.
 
+![Vòng agent – môi trường và bảng Q](/lessons/modern-ai/07-reinforcement-learning-fig-vi.svg)
+*Vòng agent – môi trường và bảng Q*
+
 ## Lợi tức chiết khấu
 
 Mục tiêu: tối đa hoá **tổng phần thưởng tương lai**, nhưng phần thưởng **sớm quý hơn** phần thưởng muộn, nên **chiết khấu** bằng $\gamma\in[0,1)$:

@@ -13,6 +13,9 @@ age = 20
 - Có thể gán lại giá trị khác (thậm chí khác kiểu): `age = "hai mươi"`.
 - Tên biến: chữ, số, dấu `_`, **không** bắt đầu bằng số, **phân biệt hoa thường**. Quy ước: `snake_case` như `user_name`.
 
+![Mỗi biến trỏ tới một giá trị có kiểu](/lessons/python-basics/02-variables-types-fig-vi.svg)
+*Mỗi biến trỏ tới một giá trị có kiểu*
+
 ## Các kiểu dữ liệu cơ bản
 
 | Kiểu | Tên | Ví dụ |

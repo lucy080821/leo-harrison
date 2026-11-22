@@ -21,6 +21,9 @@ app.put("/users/:id", handler);   // sửa
 app.delete("/users/:id", handler);// xóa
 ```
 
+![Express định tuyến theo phương thức và đường dẫn](/lessons/nodejs/06-express-routing-fig-vi.svg)
+*Express định tuyến theo phương thức và đường dẫn*
+
 ## Lấy dữ liệu từ request
 
 | Nguồn | Ví dụ | Truy cập |

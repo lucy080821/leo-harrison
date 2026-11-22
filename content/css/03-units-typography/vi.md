@@ -15,6 +15,9 @@
 
 Công thức đổi: $\text{rem} = \dfrac{\text{px}}{16}$, ví dụ $20 \div 16 = 1.25$rem.
 
+![So sánh đơn vị: px cố định, rem theo cỡ gốc](/lessons/css/03-units-typography-fig-vi.svg)
+*So sánh đơn vị: px cố định, rem theo cỡ gốc*
+
 ## Thuộc tính chữ thường dùng
 
 ```css

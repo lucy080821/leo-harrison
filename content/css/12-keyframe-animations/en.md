@@ -22,6 +22,9 @@ The percentages are the **progress** of one run. Two special keywords: `from` (=
 .dot { animation: pulse 1.5s ease-in-out infinite; }
 ```
 
+![@keyframes defines states along the timeline](/lessons/css/12-keyframe-animations-fig-en.svg)
+*@keyframes defines states along the timeline*
+
 ## Animation properties
 
 | Property | Meaning |

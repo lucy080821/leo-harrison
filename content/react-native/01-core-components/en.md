@@ -19,6 +19,9 @@ You already know React (components, props, state, hooks) — it all **carries ov
 
 **All text must be inside `<Text>`** — bare text in a `<View>` is an error.
 
+![RN components map to native UI elements](/lessons/react-native/01-core-components-fig-en.svg)
+*RN components map to native UI elements*
+
 ## Styling with JavaScript
 
 No CSS files. Use `StyleSheet.create` with **camelCase** property names and numeric (dp) or string values:

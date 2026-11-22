@@ -22,6 +22,9 @@ plt.show()
 
 Every good chart needs a **title**, **axis labels** (with units), and to be easy to read.
 
+![The parts of a matplotlib figure](/lessons/python-data/11-matplotlib-basics-fig-en.svg)
+*The parts of a matplotlib figure*
+
 ## Choosing a chart type
 
 | To show | Chart | Function |

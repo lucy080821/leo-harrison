@@ -17,6 +17,9 @@ export default async function Posts() {
 
 The browser receives HTML that already contains the data. You can even query a database here since the code runs on the server.
 
+![loading.tsx shows while data loads, error.tsx on failure](/lessons/nextjs/04-data-loading-fig-en.svg)
+*loading.tsx shows while data loads, error.tsx on failure*
+
 ## loading.js — loading state
 
 Put a `loading.js` file next to `page.js`. Next shows it instantly while the page waits for data (built on React Suspense):

@@ -19,6 +19,9 @@ Khác HTML một chút:
 | `onclick` | `onClick` |
 | `<br>` | `<br />` (thẻ phải đóng) |
 
+![Component lồng nhau tạo thành cây giao diện](/lessons/react/01-components-jsx-fig-vi.svg)
+*Component lồng nhau tạo thành cây giao diện*
+
 ## Biểu thức trong `{}`
 
 Mọi biểu thức JavaScript đặt trong `{}`: biến, phép tính, gọi hàm.

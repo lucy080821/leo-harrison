@@ -14,6 +14,9 @@ students = {
 }
 ```
 
+![Sổ điểm: danh sách dict → trung bình → xếp loại](/lessons/python-basics/16-project-grade-book-fig-vi.svg)
+*Sổ điểm: danh sách dict → trung bình → xếp loại*
+
 ## Chia việc thành các hàm nhỏ
 
 Mỗi hàm **một việc**, dễ kiểm tra riêng:

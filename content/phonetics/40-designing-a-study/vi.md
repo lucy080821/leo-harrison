@@ -10,6 +10,9 @@ Chọn một câu hỏi **cụ thể, đo được**, nhỏ đủ để trả l�
 - F1 của /ɪ/ và /iː/ ở một nhóm học viên **cách nhau bao nhiêu**?
 - Độ dài nguyên âm trong *bat* và *bad* **khác nhau thế nào**?
 
+![Quy trình một nghiên cứu ngữ âm nhỏ](/lessons/phonetics/40-designing-a-study-fig-vi.svg)
+*Quy trình một nghiên cứu ngữ âm nhỏ*
+
 ## 2. Giả thuyết
 
 Một dự đoán có thể **sai**. Ví dụ: "VOT của /t/ lớn hơn VOT của /d/ ít nhất 30 ms." Giả thuyết cho bạn biết **đo gì** và **so sánh gì**.

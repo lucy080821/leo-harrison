@@ -11,6 +11,9 @@ df["product"]                      # một cột -> Series
 df[["product", "units"]]           # nhiều cột -> DataFrame
 ```
 
+![Lọc hàng bằng mặt nạ boolean](/lessons/python-data/05-select-filter-sort-fig-vi.svg)
+*Lọc hàng bằng mặt nạ boolean*
+
 ## Chọn dòng: loc và iloc
 
 | | Dựa trên | Ví dụ |

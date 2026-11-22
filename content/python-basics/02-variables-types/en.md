@@ -13,6 +13,9 @@ age = 20
 - You can reassign another value (even another type): `age = "twenty"`.
 - Names: letters, digits, `_`, **not** starting with a digit, **case-sensitive**. Convention: `snake_case` like `user_name`.
 
+![Each variable names a value that has a type](/lessons/python-basics/02-variables-types-fig-en.svg)
+*Each variable names a value that has a type*
+
 ## Basic data types
 
 | Type | Name | Example |

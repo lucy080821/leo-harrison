@@ -18,6 +18,9 @@ const { address: { city } } = user;         // nested
 function show({ name, age }) { return `${name} (${age})`; }
 ```
 
+![ES6+ syntax: destructuring, spread, template literals](/lessons/javascript/13-modern-javascript-fig-en.svg)
+*ES6+ syntax: destructuring, spread, template literals*
+
 ## Spread (...) and Rest (...)
 
 The same three dots with two roles:

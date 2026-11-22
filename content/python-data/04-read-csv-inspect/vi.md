@@ -26,6 +26,9 @@ Các tuỳ chọn hay dùng của `read_csv`:
 
 Tương tự có `pd.read_excel`, `pd.read_json`, `pd.read_sql`.
 
+![Quy trình khám phá dữ liệu sau khi đọc CSV](/lessons/python-data/04-read-csv-inspect-fig-vi.svg)
+*Quy trình khám phá dữ liệu sau khi đọc CSV*
+
 ## Quy trình "khám phá" chuẩn: luôn làm đủ 5 bước
 
 ```python

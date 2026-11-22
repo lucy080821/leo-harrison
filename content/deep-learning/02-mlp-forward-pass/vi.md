@@ -34,6 +34,9 @@ def forward(X, W1, b1, W2, b2):
 
 Kiểm tra **hình dạng** luôn hữu ích: $(N,d)\cdot(d,h)\to(N,h)$, rồi $(N,h)\cdot(h,k)\to(N,k)$.
 
+![Mạng nhiều tầng: dữ liệu đi từ vào qua tầng ẩn tới ra](/lessons/deep-learning/02-mlp-forward-pass-fig-vi.svg)
+*Mạng nhiều tầng: dữ liệu đi từ vào qua tầng ẩn tới ra*
+
 ## Giải bài toán XOR
 
 Mạng hai tầng ẩn **với đúng 2 nơ-ron ẩn** là đủ cho XOR, điều perceptron đơn không làm được. Trực giác: $\text{XOR}(a,b)=\text{AND}\big(\text{OR}(a,b),\ \text{NAND}(a,b)\big)$:

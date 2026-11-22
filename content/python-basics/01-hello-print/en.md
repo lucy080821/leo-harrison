@@ -17,6 +17,9 @@ print("2 + 3 =", 2 + 3)      # print several values, separated by spaces
 - Numbers and calculations need **no** quotes: `2 + 3` is evaluated to `5` before printing.
 - Each `print` **ends with a new line** by default.
 
+![From source code through the interpreter to output](/lessons/python-basics/01-hello-print-fig-en.svg)
+*From source code through the interpreter to output*
+
 ## Two handy arguments: sep and end
 
 ```python

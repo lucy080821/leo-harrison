@@ -11,6 +11,9 @@
 3. **Nhiều biến:** ma trận tương quan, so sánh nhóm.
 4. **Ghi lại phát hiện** và câu hỏi mới.
 
+![Ba biểu đồ EDA cơ bản: histogram, scatter, box](/lessons/python-data/12-eda-visualization-fig-vi.svg)
+*Ba biểu đồ EDA cơ bản: histogram, scatter, box*
+
 ## Biểu đồ trực tiếp từ pandas
 
 pandas bọc sẵn matplotlib nên bạn vẽ nhanh từ DataFrame:

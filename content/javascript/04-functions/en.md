@@ -16,6 +16,9 @@ console.log(result);       // 5
 - `return` ends the function and sends a value to the caller. A function without `return` returns `undefined`.
 - Functions declared with `function` are **hoisted**: usable before the line that declares them.
 
+![A function takes parameters and returns a value](/lessons/javascript/04-functions-fig-en.svg)
+*A function takes parameters and returns a value*
+
 ## Default parameters and rest
 
 ```javascript

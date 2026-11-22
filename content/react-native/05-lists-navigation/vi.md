@@ -17,6 +17,9 @@ Trên điện thoại, danh sách có thể có hàng nghìn dòng. `FlatList` c
 
 Đừng dùng `.map()` trong `ScrollView` cho danh sách dài — nó vẽ **tất cả** cùng lúc. `ScrollView` chỉ hợp với nội dung ngắn, cố định.
 
+![FlatList chỉ vẽ phần tử đang nhìn thấy; stack navigation xếp màn hình](/lessons/react-native/05-lists-navigation-fig-vi.svg)
+*FlatList chỉ vẽ phần tử đang nhìn thấy; stack navigation xếp màn hình*
+
 ## Điều hướng giữa màn hình
 
 App thật có nhiều màn hình. Thư viện chuẩn là **React Navigation** (hoặc **Expo Router** theo cấu trúc thư mục giống Next.js):

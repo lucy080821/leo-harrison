@@ -15,6 +15,9 @@ Có giám sát chia làm hai:
 - **Phân loại** (classification): dự đoán **nhãn rời rạc** (spam/không, loài hoa).
 - **Hồi quy** (regression): dự đoán **một số liên tục** (giá nhà, nhiệt độ).
 
+![Quy trình Machine Learning từ dữ liệu đến triển khai](/lessons/machine-learning/01-ml-overview-workflow-fig-vi.svg)
+*Quy trình Machine Learning từ dữ liệu đến triển khai*
+
 ## Khái niệm cốt lõi
 
 - **Mẫu** (sample): một dòng dữ liệu. **Đặc trưng** (feature) $X$: các cột đầu vào. **Nhãn/mục tiêu** (target) $y$: thứ cần dự đoán.

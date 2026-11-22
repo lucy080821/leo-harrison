@@ -5,3 +5,7 @@
 ## Một việc nhỏ
 
 Thử nhìn môi một người đang nói trong video đã tắt tiếng và đoán lời họ nói. Việc đó khó đến mức nào, và nó cho bạn biết gì về vai trò của thị giác?
+
+![Bản đồ Module 4: thính giác](/lessons/phonetics/22-review-m4-fig-vi.svg)
+*Bản đồ Module 4: thính giác*
+

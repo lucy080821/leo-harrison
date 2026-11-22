@@ -13,6 +13,9 @@ except ValueError:                # chạy NẾU gặp ValueError
 
 Nếu không có lỗi, khối `except` bị bỏ qua.
 
+![try / except / else / finally](/lessons/python-basics/14-exceptions-fig-vi.svg)
+*try / except / else / finally*
+
 ## Các ngoại lệ thường gặp
 
 | Ngoại lệ | Khi nào |

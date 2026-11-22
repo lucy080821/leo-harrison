@@ -15,6 +15,9 @@ HTML5 có vài phần tử tương tác **không cần JavaScript**.
 - Thêm `open` để mở sẵn: `<details open>`.
 - Rất hợp làm **FAQ** (câu hỏi thường gặp).
 
+![details/summary: trạng thái đóng và mở](/lessons/html/09-interactive-elements-fig-vi.svg)
+*details/summary: trạng thái đóng và mở*
+
 ## dialog: hộp thoại
 
 ```html

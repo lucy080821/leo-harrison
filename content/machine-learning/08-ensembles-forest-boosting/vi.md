@@ -38,6 +38,9 @@ rf = RandomForestClassifier(n_estimators=100, random_state=0).fit(X_train, y_tra
 
 **Ưu điểm**: hiệu quả "ngay từ đầu", ít cần tinh chỉnh, khó quá khớp, cho **độ quan trọng đặc trưng**, không cần chuẩn hoá.
 
+![Random Forest: nhiều cây bỏ phiếu, lấy đa số](/lessons/machine-learning/08-ensembles-forest-boosting-fig-vi.svg)
+*Random Forest: nhiều cây bỏ phiếu, lấy đa số*
+
 ## Boosting và Gradient Boosting
 
 Bagging huấn luyện cây **song song, độc lập**. **Boosting** huấn luyện **tuần tự**: mỗi cây mới **sửa lỗi** của các cây trước.

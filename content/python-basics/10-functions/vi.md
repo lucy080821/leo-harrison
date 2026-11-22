@@ -18,6 +18,9 @@ print(message)
 
 > Phân biệt: `print` **hiển thị** ra màn hình, `return` **trả giá trị** để dùng tiếp. Hàm thường nên `return` thay vì `print`.
 
+![Hàm: tham số vào, giá trị trả về](/lessons/python-basics/10-functions-fig-vi.svg)
+*Hàm: tham số vào, giá trị trả về*
+
 ## Tham số mặc định và đối số có tên
 
 ```python

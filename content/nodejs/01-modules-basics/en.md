@@ -19,6 +19,9 @@ console.log(math.add(2, 3));
 
 (Node also supports ES-module `import`/`export` in `.mjs` files or with `"type": "module"`.)
 
+![require/import loads a module; module.exports exposes it](/lessons/nodejs/01-modules-basics-fig-en.svg)
+*require/import loads a module; module.exports exposes it*
+
 ## Globals
 
 - `process`: process info — `process.env` (environment variables), `process.argv` (arguments), `process.exit()`.

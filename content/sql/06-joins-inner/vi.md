@@ -17,6 +17,9 @@ customers          orders
 └────┴─────────┘   └────┴─────────────┴────────────┘
 ```
 
+![INNER JOIN: chỉ giữ các hàng có khoá khớp ở cả hai bảng](/lessons/sql/06-joins-inner-fig-vi.svg)
+*INNER JOIN: chỉ giữ các hàng có khoá khớp ở cả hai bảng*
+
 ## INNER JOIN
 
 ```sql

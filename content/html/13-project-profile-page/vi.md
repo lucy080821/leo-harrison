@@ -10,6 +10,9 @@
 - **Danh sách, văn bản nhấn mạnh, hình ảnh** có `alt`.
 - **Biểu mẫu liên hệ** có `label`, `required`, nút `submit`.
 
+![Phác thảo trang hồ sơ cá nhân](/lessons/html/13-project-profile-page-fig-vi.svg)
+*Phác thảo trang hồ sơ cá nhân*
+
 ## Quy trình đề xuất
 
 1. **Phác thảo cấu trúc** trên giấy: trang có những phần nào, thứ tự ra sao.

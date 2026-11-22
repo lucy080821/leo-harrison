@@ -18,6 +18,9 @@ The **Contrastive Analysis Hypothesis** (**Lado 1957**) holds that **where the f
 
 Such errors are described fairly often in teaching materials for Vietnamese learners of English, but should be regarded as **predictions** to be verified.
 
+![Contrastive analysis predicts transfer errors from Vietnamese to English](/lessons/phonetics/37-contrastive-intelligibility-fig-en.svg)
+*Contrastive analysis predicts transfer errors from Vietnamese to English*
+
 ## Limits of contrastive analysis
 
 - **Not every** difference causes errors, and sometimes **similarity** causes confusion.

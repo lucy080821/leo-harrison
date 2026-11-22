@@ -15,6 +15,9 @@ input.addEventListener("keydown", (e) => {
 });
 ```
 
+![Events bubble from the child up to ancestors](/lessons/javascript/10-events-forms-fig-en.svg)
+*Events bubble from the child up to ancestors*
+
 ## Handling forms
 
 When a form is submitted, the browser **reloads the page** by default. In a JavaScript app you want to handle it yourself so you must stop the default behaviour:

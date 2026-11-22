@@ -12,6 +12,9 @@
 
 Ví dụ thu nhập `[10, 12, 11, 13, 500]` triệu: trung bình là 109, nhưng trung vị là 12, phản ánh người "điển hình" tốt hơn nhiều. **Dữ liệu lệch hoặc có ngoại lệ → ưu tiên trung vị.**
 
+![Hệ số tương quan r cho ba kiểu quan hệ](/lessons/python-data/13-statistics-correlation-fig-vi.svg)
+*Hệ số tương quan r cho ba kiểu quan hệ*
+
 ## Đo độ phân tán
 
 | Đại lượng | pandas | Ý nghĩa |

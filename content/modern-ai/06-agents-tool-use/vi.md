@@ -10,6 +10,9 @@ Một LLM thuần chỉ **sinh văn bản**. Một **agent** là hệ thống d�
 | Chỉ dùng kiến thức trong mô hình | **Gọi công cụ** để lấy dữ liệu và hành động |
 | Không tác động thế giới | Có thể **gửi email, sửa code, đặt lịch** |
 
+![Vòng lặp của agent: suy nghĩ → gọi công cụ → quan sát](/lessons/modern-ai/06-agents-tool-use-fig-vi.svg)
+*Vòng lặp của agent: suy nghĩ → gọi công cụ → quan sát*
+
 ## Gọi công cụ (function calling)
 
 Bạn **mô tả các công cụ** (tên, mô tả, tham số) cho mô hình. Khi cần, mô hình **không tự tính** mà trả về một **lời gọi có cấu trúc** (thường JSON); **chương trình của bạn** thực thi và đưa kết quả lại cho mô hình.

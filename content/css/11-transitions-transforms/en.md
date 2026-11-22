@@ -23,6 +23,9 @@ $$
 x' = x\cos\theta - y\sin\theta,\qquad y' = x\sin\theta + y\cos\theta
 $$
 
+![transform: translate, rotate, scale](/lessons/css/11-transitions-transforms-fig-en.svg)
+*transform: translate, rotate, scale*
+
 ## Transition: smooth motion
 
 When a property **changes value** (e.g. on `:hover`), `transition` makes it change gradually instead of jumping.

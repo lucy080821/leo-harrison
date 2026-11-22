@@ -32,6 +32,9 @@ SELECT COUNT(*) FROM orders WHERE status = 'completed';
 SELECT AVG(price) FROM products WHERE category = 'Electronics';
 ```
 
+![Aggregate functions collapse many rows into one value](/lessons/sql/04-aggregate-functions-fig-en.svg)
+*Aggregate functions collapse many rows into one value*
+
 ## Computing inside the function
 
 ```sql

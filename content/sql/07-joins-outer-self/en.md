@@ -22,6 +22,9 @@ LEFT JOIN orders o ON o.customer_id = c.id;
 
 Em Hoang and Hoa Bui haven't ordered, so they still appear with `order_id = NULL`.
 
+![LEFT JOIN keeps all left rows, NULL where missing](/lessons/sql/07-joins-outer-self-fig-en.svg)
+*LEFT JOIN keeps all left rows, NULL where missing*
+
 ## The "anti-join" pattern: finding rows with NO relation
 
 `LEFT JOIN` then filtering `IS NULL` on the right table gives the **left rows with no counterpart**:

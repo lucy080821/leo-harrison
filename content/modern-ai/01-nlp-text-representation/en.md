@@ -25,6 +25,9 @@ tokens = re.findall(r"[a-z']+", "The cat sat on the mat!".lower())
 - **Stemming/lemmatization**: reduce "running", "ran" to the root "run".
 - Modern models (Transformers) usually **skip** these steps and learn directly from raw text.
 
+![From text to vectors: tokenise → ids → bag of words](/lessons/modern-ai/01-nlp-text-representation-fig-en.svg)
+*From text to vectors: tokenise → ids → bag of words*
+
 ## Step 2: Bag of Words (BoW)
 
 Each document becomes a **count vector** over the vocabulary, **ignoring order**:

@@ -14,6 +14,9 @@
 
 Các con trực tiếp tự lấp vào các ô lưới theo thứ tự, hết một hàng thì xuống hàng kế.
 
+![Grid 3 cột với 1fr 2fr 1fr](/lessons/css/07-grid-basics-fig-vi.svg)
+*Grid 3 cột với 1fr 2fr 1fr*
+
 ## Đơn vị `fr`
 
 `fr` (fraction) là **một phần của không gian còn trống**.

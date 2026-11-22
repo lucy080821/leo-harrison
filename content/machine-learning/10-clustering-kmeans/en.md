@@ -35,6 +35,9 @@ $$
 - Assumes **spherical, similar-sized** clusters; poor with elongated, off-center or oddly shaped clusters.
 - Sensitive to outliers.
 
+![K-Means: assign points to the nearest centroid, then move the centroids](/lessons/machine-learning/10-clustering-kmeans-fig-en.svg)
+*K-Means: assign points to the nearest centroid, then move the centroids*
+
 ## Choosing $K$
 
 ### The elbow method

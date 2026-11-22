@@ -32,6 +32,9 @@ Autoencoder **phi tuyến** (có kích hoạt) mạnh hơn: nén được cấu 
 | **Phát hiện bất thường** | Mẫu lạ có **lỗi tái dựng lớn** |
 | **Học trước (pretraining)** | Biểu diễn dùng cho bài toán khác |
 
+![Autoencoder: nén xuống không gian tiềm ẩn rồi dựng lại](/lessons/deep-learning/09-autoencoders-generative-fig-vi.svg)
+*Autoencoder: nén xuống không gian tiềm ẩn rồi dựng lại*
+
 ## Mô hình sinh (generative models)
 
 Mục tiêu: học phân phối dữ liệu $p(\mathbf x)$ để **sinh mẫu mới** trông như thật (ảnh, văn bản, âm thanh). Ba họ chính:

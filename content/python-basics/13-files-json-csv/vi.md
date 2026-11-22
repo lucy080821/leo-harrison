@@ -25,6 +25,9 @@ with open("notes.txt", encoding="utf-8") as f:         # mặc định "r": đ�
 | `"a"` | Ghi **nối tiếp** vào cuối |
 | `"x"` | Tạo mới, lỗi nếu đã tồn tại |
 
+![Đọc/ghi tệp bằng with open(...)](/lessons/python-basics/13-files-json-csv-fig-vi.svg)
+*Đọc/ghi tệp bằng with open(...)*
+
 ## Các cách đọc
 
 ```python

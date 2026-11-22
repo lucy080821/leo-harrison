@@ -10,6 +10,9 @@ Hầu hết các giọng có **24 phụ âm**:
 
 Ngoài ra có `/x/` với phân bố hạn chế (ví dụ *loch* ở một số giọng). Sự khác biệt chính giữa hai giọng về phụ âm là **/ɹ/**: GA là giọng **rhotic** (đọc /ɹ/ sau nguyên âm), RP thì **không**.
 
+![Một vài khác biệt chính giữa RP và GA](/lessons/phonetics/23-english-inventory-wells-fig-vi.svg)
+*Một vài khác biệt chính giữa RP và GA*
+
 ## Nguyên âm
 
 Số nguyên âm **phụ thuộc vào cách phân tích**:

@@ -19,6 +19,9 @@ Slightly different from HTML:
 | `onclick` | `onClick` |
 | `<br>` | `<br />` (tags must close) |
 
+![Nested components form a UI tree](/lessons/react/01-components-jsx-fig-en.svg)
+*Nested components form a UI tree*
+
 ## Expressions in `{}`
 
 Any JavaScript expression goes in `{}`: variables, math, function calls.

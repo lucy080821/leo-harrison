@@ -20,6 +20,9 @@ ORDER BY category ASC, price DESC;    -- theo nhóm A→Z, trong nhóm đắt tr
 
 Với `NULL`: trong SQLite, `NULL` được coi là **nhỏ nhất** (đứng đầu khi `ASC`).
 
+![ORDER BY sắp xếp, LIMIT lấy một phần](/lessons/sql/03-order-limit-distinct-fig-vi.svg)
+*ORDER BY sắp xếp, LIMIT lấy một phần*
+
 ## LIMIT và OFFSET: lấy một phần
 
 ```sql

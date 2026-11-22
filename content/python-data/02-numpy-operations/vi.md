@@ -20,6 +20,9 @@ Hai mảng **cùng hình dạng** tính theo từng cặp: `a + b`, `a * b`, `a 
 
 > `x * y` là nhân **từng cặp phần tử**, không phải nhân ma trận. Nhân ma trận dùng `x @ y` hoặc `np.dot`.
 
+![Broadcasting: mảng (3,) được kéo giãn để cộng với (3,3)](/lessons/python-data/02-numpy-operations-fig-vi.svg)
+*Broadcasting: mảng (3,) được kéo giãn để cộng với (3,3)*
+
 ## Broadcasting: mảng khác hình dạng
 
 NumPy tự "**kéo giãn**" mảng nhỏ để khớp mảng lớn, nếu các chiều **tương thích** (bằng nhau hoặc một bên là 1):

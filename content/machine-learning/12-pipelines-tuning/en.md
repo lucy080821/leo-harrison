@@ -33,6 +33,9 @@ Xtr_s, Xte_s = scaler.transform(Xtr), scaler.transform(Xte)
 
 > A warning sign: a score **suspiciously high** (99%+) on a hard problem.
 
+![Pipeline: split first, then every step learns only from the training set](/lessons/machine-learning/12-pipelines-tuning-fig-en.svg)
+*Pipeline: split first, then every step learns only from the training set*
+
 ## Pipeline: packaging the steps
 
 `Pipeline` chains preprocessing steps and a model into **one object** with `fit`/`predict`:

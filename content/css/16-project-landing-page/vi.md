@@ -16,6 +16,9 @@ Xem kết quả mẫu ở khung bên phải (`style.css` đã có bản hoàn ch
 └───────────────────────────────┘
 ```
 
+![Phác thảo trang landing: hero, tính năng, giá, chân trang](/lessons/css/16-project-landing-page-fig-vi.svg)
+*Phác thảo trang landing: hero, tính năng, giá, chân trang*
+
 ## Kế hoạch từng bước
 
 1. **Nền tảng:** `box-sizing: border-box`, bỏ margin mặc định của `body`, phông chữ hệ thống, khai báo **biến màu** `--brand`, `--accent` ở `:root`.

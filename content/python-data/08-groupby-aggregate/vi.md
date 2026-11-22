@@ -15,6 +15,9 @@
                        └────────┴─────┘
 ```
 
+![groupby: tách – áp dụng – gộp](/lessons/python-data/08-groupby-aggregate-fig-vi.svg)
+*groupby: tách – áp dụng – gộp*
+
 ## Cú pháp cơ bản
 
 ```python

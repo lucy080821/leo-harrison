@@ -15,6 +15,9 @@
                        └────────┴─────┘
 ```
 
+![groupby: split – apply – combine](/lessons/python-data/08-groupby-aggregate-fig-en.svg)
+*groupby: split – apply – combine*
+
 ## Basic syntax
 
 ```python

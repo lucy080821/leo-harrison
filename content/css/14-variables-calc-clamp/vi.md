@@ -40,6 +40,9 @@ Chính trang web này dùng cách đó cho dark mode.
 
 JavaScript cũng đọc và đổi được biến: `el.style.setProperty("--brand", "tomato")`.
 
+![clamp(min, ưa thích, max) giữ cỡ chữ trong khoảng cho phép](/lessons/css/14-variables-calc-clamp-fig-vi.svg)
+*clamp(min, ưa thích, max) giữ cỡ chữ trong khoảng cho phép*
+
 ## `calc()`: tính toán ngay trong CSS
 
 Trộn được các đơn vị khác nhau:

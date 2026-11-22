@@ -36,6 +36,9 @@ Next.js dùng chính các lớp `Request`/`Response` của **Web Standard** (cũ
 | Đọc header | `request.headers.get("authorization")` |
 | Trả JSON | `Response.json(data, { status: 200 })` |
 
+![Route Handler: URL → hàm GET/POST → JSON](/lessons/nextjs/05-route-handlers-fig-vi.svg)
+*Route Handler: URL → hàm GET/POST → JSON*
+
 ## Đường dẫn động
 
 `app/api/todos/[id]/route.js` nhận id qua tham số thứ hai (một Promise từ Next 15):

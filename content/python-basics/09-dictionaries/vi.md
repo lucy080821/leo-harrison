@@ -29,6 +29,9 @@ student.pop("age")              # lấy ra và xoá
 "name" in student               # kiểm tra có khoá không → True
 ```
 
+![Từ điển: khoá → giá trị, tra cứu nhanh](/lessons/python-basics/09-dictionaries-fig-vi.svg)
+*Từ điển: khoá → giá trị, tra cứu nhanh*
+
 ## Duyệt từ điển
 
 ```python

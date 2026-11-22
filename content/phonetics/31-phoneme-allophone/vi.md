@@ -11,6 +11,9 @@ Ta đã mô tả âm ở mức ngữ âm (module 2 đến 5). Giờ là câu h�
 
 Một âm vị là một **phạm trù trừu tượng**, được thực hiện bằng các âm cụ thể.
 
+![Một âm vị, nhiều biến thể](/lessons/phonetics/31-phoneme-allophone-fig-vi.svg)
+*Một âm vị, nhiều biến thể*
+
 ## Biến thể (allophones)
 
 Các cách thực hiện cụ thể của một âm vị gọi là **biến thể** (*allophones*). Chúng không tạo cặp tối thiểu với nhau. Có hai kiểu quan hệ:

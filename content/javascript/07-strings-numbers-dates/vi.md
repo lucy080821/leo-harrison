@@ -26,6 +26,9 @@ const name = "Lexi";
 const msg = `Xin chào ${name.toUpperCase()}, 2 + 3 = ${2 + 3}`;
 ```
 
+![Thao tác chuỗi: slice cắt theo chỉ số](/lessons/javascript/07-strings-numbers-dates-fig-vi.svg)
+*Thao tác chuỗi: slice cắt theo chỉ số*
+
 ## Số
 
 JavaScript chỉ có **một kiểu số** `number` (số thực 64-bit).

@@ -23,6 +23,9 @@ len(nums)      # 4
 
 Khác chuỗi, danh sách **sửa được**: `nums[0] = 99`.
 
+![Danh sách: chỉ số và cắt lát](/lessons/python-basics/07-lists-fig-vi.svg)
+*Danh sách: chỉ số và cắt lát*
+
 ## Thêm, bớt phần tử
 
 | Phương thức | Tác dụng |

@@ -15,6 +15,9 @@ Một mô hình đạt độ chính xác cao trong phòng thí nghiệm có th�
 
 **Bỏ cột nhạy cảm không đủ** vì các đặc trưng khác vẫn mã hoá nó (proxy).
 
+![Vòng đời AI có trách nhiệm: dữ liệu → đánh giá theo nhóm → giám sát](/lessons/modern-ai/08-responsible-ai-deployment-fig-vi.svg)
+*Vòng đời AI có trách nhiệm: dữ liệu → đánh giá theo nhóm → giám sát*
+
 ## Đo công bằng
 
 Hai chỉ số phổ biến, tính theo **nhóm** (ví dụ giới tính, độ tuổi):

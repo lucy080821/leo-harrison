@@ -11,6 +11,9 @@
 3. **Many variables:** a correlation matrix, group comparisons.
 4. **Write down findings** and new questions.
 
+![Three basic EDA plots: histogram, scatter, box](/lessons/python-data/12-eda-visualization-fig-en.svg)
+*Three basic EDA plots: histogram, scatter, box*
+
 ## Charts straight from pandas
 
 pandas wraps matplotlib so you can plot quickly from a DataFrame:

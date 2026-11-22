@@ -18,6 +18,9 @@ Bài này dành cho người muốn hiểu **vì sao** người Việt gặp nh�
 
 Những lỗi như vậy được mô tả khá thường xuyên trong tài liệu dạy tiếng Anh cho người Việt, nhưng cần xem là **dự đoán** cần kiểm chứng.
 
+![Phân tích đối chiếu dự đoán lỗi chuyển di từ tiếng Việt sang tiếng Anh](/lessons/phonetics/37-contrastive-intelligibility-fig-vi.svg)
+*Phân tích đối chiếu dự đoán lỗi chuyển di từ tiếng Việt sang tiếng Anh*
+
 ## Giới hạn của phân tích đối chiếu
 
 - Không phải **mọi** khác biệt đều gây lỗi, và có khi chỗ **giống nhau** lại gây nhầm.

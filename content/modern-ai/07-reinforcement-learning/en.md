@@ -24,6 +24,9 @@ Applications: playing Go (AlphaGo), robotics, control, recommendation, and **RLH
 
 Modelled as an **MDP** (Markov Decision Process): the next state and reward depend only on the current $(s,a)$.
 
+![The agent–environment loop and the Q-table](/lessons/modern-ai/07-reinforcement-learning-fig-en.svg)
+*The agent–environment loop and the Q-table*
+
 ## Discounted return
 
 The goal: maximize the **total future reward**, but **earlier rewards are worth more** than later ones, so we **discount** with $\gamma\in[0,1)$:

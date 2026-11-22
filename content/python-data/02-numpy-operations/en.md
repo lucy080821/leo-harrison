@@ -20,6 +20,9 @@ Two arrays of the **same shape** compute pair by pair: `a + b`, `a * b`, `a / b`
 
 > `x * y` multiplies **element by element**, not matrix multiplication. For matrix multiplication use `x @ y` or `np.dot`.
 
+![Broadcasting: a (3,) array is stretched to add to (3,3)](/lessons/python-data/02-numpy-operations-fig-en.svg)
+*Broadcasting: a (3,) array is stretched to add to (3,3)*
+
 ## Broadcasting: arrays of different shapes
 
 NumPy automatically "**stretches**" the smaller array to match the larger one, provided the dimensions are **compatible** (equal, or one of them is 1):

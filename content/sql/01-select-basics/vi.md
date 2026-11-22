@@ -19,6 +19,9 @@ Mọi bài trong khoá này dùng cùng một cơ sở dữ liệu mẫu (đư�
 | `employees` | `id`, `name`, `department_id`, `salary`, `manager_id`, `hire_date` |
 
 
+![SELECT chọn cột từ bảng](/lessons/sql/01-select-basics-fig-vi.svg)
+*SELECT chọn cột từ bảng*
+
 ## Câu lệnh SELECT
 
 ```sql

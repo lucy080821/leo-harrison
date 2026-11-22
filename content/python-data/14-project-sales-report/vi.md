@@ -17,6 +17,9 @@ Dự án cuối khoá **Python cho Data Analyst**. Bạn sẽ làm đúng công 
 8. Kết luận         viết thành lời: con số nói gì? khuyến nghị gì?
 ```
 
+![Quy trình báo cáo: đọc → làm sạch → tổng hợp → vẽ biểu đồ](/lessons/python-data/14-project-sales-report-fig-vi.svg)
+*Quy trình báo cáo: đọc → làm sạch → tổng hợp → vẽ biểu đồ*
+
 ## Bước 1-3: nạp và biến đổi
 
 ```python

@@ -16,6 +16,9 @@ Speech sounds need an obstructed or compressed airflow. Three parts can **initia
 - **Clicks** (e.g. `[ǀ] [ǃ] [ǁ]`): two closures are made in the mouth and the tongue body is lowered to rarefy the air between them. They are ordinary sounds in languages of southern Africa. English has the "tsk tsk" sound `[ǀ]` but only outside ordinary vocabulary.
 - The proportions of languages with each type (ejectives about 16%, implosives about 13%, clicks under 2%) are statistical estimates from surveys, so treat them as approximate.
 
+![Phonation types from voiceless to glottalised](/lessons/phonetics/06-airstream-phonation-fig-en.svg)
+*Phonation types from voiceless to glottalised*
+
 ## Phonation types
 
 **Phonation** is how the vocal folds (and arytenoids) behave. The main types:

@@ -4,6 +4,9 @@
 
 Âm vị `/p/` không phải một "nguyên tử" không chia được. Nó là một **bó** đặc trưng: vô thanh, hai môi, tắc... Việc chia nhỏ này giúp ta **nhóm** các âm hành xử giống nhau và viết **quy tắc** gọn.
 
+![Ma trận đặc trưng phân biệt cho /p b m/](/lessons/phonetics/32-distinctive-features-fig-vi.svg)
+*Ma trận đặc trưng phân biệt cho /p b m/*
+
 ## Đặc trưng khu biệt (distinctive features)
 
 **Đặc trưng khu biệt** là thuộc tính nhỏ nhất **phân biệt** một âm với âm khác trong một ngôn ngữ. **Roman Jakobson** (1941) đề xuất lý thuyết đặc trưng; **Chomsky và Halle** (1968, *The Sound Pattern of English*) chuẩn hoá chúng thành các đặc trưng **nhị phân** (+ hoặc −).

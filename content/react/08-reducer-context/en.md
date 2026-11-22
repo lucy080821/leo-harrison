@@ -11,6 +11,9 @@ dispatch({ type: "add", price: 25 });
 
 Benefits: every change lives in one place, easy to read and test. A reducer must be **pure** — never mutate `state` in place; always return a new object.
 
+![Context broadcasts data to descendants without prop drilling](/lessons/react/08-reducer-context-fig-en.svg)
+*Context broadcasts data to descendants without prop drilling*
+
 ## Context — avoid threading props through many layers
 
 Passing props through 5 components just to reach a button at the bottom is *prop drilling*. Context "broadcasts" data instead:

@@ -38,6 +38,9 @@ pca.components_                      # các hướng (hàng)
 pca.explained_variance_ratio_        # tỉ lệ phương sai mỗi thành phần
 ```
 
+![PCA chiếu dữ liệu lên hướng có phương sai lớn nhất](/lessons/machine-learning/11-pca-dimensionality-fig-vi.svg)
+*PCA chiếu dữ liệu lên hướng có phương sai lớn nhất*
+
 ## Tỉ lệ phương sai giải thích
 
 $$

@@ -15,6 +15,9 @@ WHERE price > (SELECT AVG(price) FROM products);
 
 Cơ sở dữ liệu tính `AVG(price)` trước (một con số), rồi dùng nó trong `WHERE`. Bạn **không thể** viết `WHERE price > AVG(price)` trực tiếp vì `WHERE` chạy trước khi có hàm tổng hợp.
 
+![Truy vấn con chạy trước, kết quả đưa cho truy vấn ngoài](/lessons/sql/08-subqueries-fig-vi.svg)
+*Truy vấn con chạy trước, kết quả đưa cho truy vấn ngoài*
+
 ## Subquery trả về một danh sách: IN
 
 ```sql

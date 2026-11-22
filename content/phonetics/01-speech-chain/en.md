@@ -4,6 +4,9 @@
 
 **Phonetics** is the study of the **sounds of speech**: how they are made, how they travel and how listeners perceive them. It treats speech first of all as a **physical and physiological event**, without yet asking what function the sounds have in grammar or meaning.
 
+![The speech chain: from the speaker's brain to the listener's brain](/lessons/phonetics/01-speech-chain-fig-en.svg)
+*The speech chain: from the speaker's brain to the listener's brain*
+
 ## The speech chain
 
 A familiar way to picture this is the **speech chain**: a message travels from the speaker's brain to the listener's brain in several stages.

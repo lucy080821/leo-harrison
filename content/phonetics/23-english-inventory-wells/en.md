@@ -10,6 +10,9 @@ Most accents have **24 consonants**:
 
 There is also `/x/` with limited distribution (for example *loch* in some accents). The main consonant difference between the two accents is **/ɹ/**: GA is **rhotic** (pronounces /ɹ/ after vowels), RP is **not**.
 
+![Some key differences between RP and GA](/lessons/phonetics/23-english-inventory-wells-fig-en.svg)
+*Some key differences between RP and GA*
+
 ## Vowels
 
 The number of vowels **depends on the analysis**:

@@ -33,6 +33,9 @@ Xtr_s, Xte_s = scaler.transform(Xtr), scaler.transform(Xte)
 
 > Dấu hiệu nghi ngờ: điểm **cao đến khó tin** (99%+) trên bài toán khó.
 
+![Pipeline: chia dữ liệu trước, rồi mọi bước chỉ học từ tập train](/lessons/machine-learning/12-pipelines-tuning-fig-vi.svg)
+*Pipeline: chia dữ liệu trước, rồi mọi bước chỉ học từ tập train*
+
 ## Pipeline: đóng gói các bước
 
 `Pipeline` nối tiếp các bước tiền xử lý và mô hình thành **một đối tượng** có `fit`/`predict`:

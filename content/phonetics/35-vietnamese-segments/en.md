@@ -8,6 +8,9 @@ To contrast with English we need to understand the Vietnamese sound system. This
 - The syllable has the structure **(C₁)(w)V(G|C₂)+T**: an optional initial consonant, an optional medial /w/, a vowel, an optional final and a **tone**.
 - **No consonant clusters**; each syllable is usually a morpheme.
 
+![The Vietnamese syllable frame: (initial)(glide) nucleus (final) + tone](/lessons/phonetics/35-vietnamese-segments-fig-en.svg)
+*The Vietnamese syllable frame: (initial)(glide) nucleus (final) + tone*
+
 ## Initial consonants (Hanoi)
 
 | Spelling | IPA | Note |

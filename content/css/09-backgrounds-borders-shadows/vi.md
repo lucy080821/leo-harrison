@@ -19,6 +19,9 @@ Viết gọn: `background: #eaf2fb url("anh.jpg") center / cover no-repeat;`
 | `cover` | Phủ kín khung, có thể bị cắt |
 | `contain` | Thấy trọn ảnh, có thể thừa chỗ |
 
+![Bo góc, bóng đổ và nền gradient](/lessons/css/09-backgrounds-borders-shadows-fig-vi.svg)
+*Bo góc, bóng đổ và nền gradient*
+
 ## Gradient (chuyển sắc)
 
 Gradient là một dạng **ảnh** tạo bằng CSS, không cần file ảnh.

@@ -47,6 +47,9 @@ from sklearn.tree import DecisionTreeClassifier
 tree = DecisionTreeClassifier(max_depth=3, random_state=0).fit(X_train, y_train)
 ```
 
+![A decision tree: each node asks a question, each leaf predicts](/lessons/machine-learning/07-decision-trees-fig-en.svg)
+*A decision tree: each node asks a question, each leaf predicts*
+
 ## Too deep a tree → overfitting
 
 Without limits the tree keeps splitting until **each leaf holds a single sample**: it memorizes even the noise, 100% on train but poor on test. Control it with **hyperparameters**:

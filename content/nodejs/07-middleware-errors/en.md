@@ -15,6 +15,9 @@ app.use((req, res, next) => {
 
 Express runs things in **declaration order**. General middleware (logging, `express.json()`) goes **before** routes.
 
+![Middleware forms a chain; errors jump to the error handler](/lessons/nodejs/07-middleware-errors-fig-en.svg)
+*Middleware forms a chain; errors jump to the error handler*
+
 ## Middleware for a single route
 
 ```javascript

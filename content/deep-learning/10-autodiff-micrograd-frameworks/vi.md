@@ -37,6 +37,9 @@ def __mul__(self, other):
 
 Một nút có thể được **dùng nhiều lần** (ví dụ $a$ xuất hiện ở hai nhánh). Gradient tổng là **tổng các đóng góp** (quy tắc chuỗi nhiều đường). Ghi đè `=` sẽ sai.
 
+![Đồ thị tính toán của L = (a·b + c) và gradient của từng nút](/lessons/deep-learning/10-autodiff-micrograd-frameworks-fig-vi.svg)
+*Đồ thị tính toán của L = (a·b + c) và gradient của từng nút*
+
 ## Các đạo hàm cục bộ cần nhớ
 
 | Phép toán | Đạo hàm cục bộ |

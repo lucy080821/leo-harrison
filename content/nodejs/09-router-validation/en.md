@@ -30,6 +30,9 @@ my-api/
 
 Keeping `app.js` free of `listen` makes testing easy — just like `app.inject` here.
 
+![Routers group routes; validation blocks bad data before the handler](/lessons/nodejs/09-router-validation-fig-en.svg)
+*Routers group routes; validation blocks bad data before the handler*
+
 ## Validating input
 
 **Never trust client data.** Check type, length and format before using it; respond `400` when wrong.

@@ -14,6 +14,9 @@ Mặc định flex item **không xuống hàng**, chúng co lại để vừa m�
 
 `gap` thay thế cho việc đặt `margin` lên từng item: gọn và không bị lẻ lề ở rìa.
 
+![flex-grow chia phần không gian còn thừa theo tỷ lệ](/lessons/css/06-flexbox-wrap-grow-fig-vi.svg)
+*flex-grow chia phần không gian còn thừa theo tỷ lệ*
+
 ## Các thuộc tính trên flex item
 
 ```css

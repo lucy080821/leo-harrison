@@ -4,6 +4,9 @@
 
 **Stress** is the prominence of one **syllable** relative to the others in a word. Acoustically it combines **F0**, **duration**, **intensity** and **vowel quality** (see module 3). In transcription, `/ˈ/` goes before the syllable with **primary stress** and `/ˌ/` before the one with **secondary stress**.
 
+![Stress patterns of some English words](/lessons/phonetics/27-stress-fig-en.svg)
+*Stress patterns of some English words*
+
 ## English stress is "free"
 
 Unlike languages with fixed stress (French usually on the last syllable, Polish on the penultimate), English stress is **not fixed** but depends on the word. It is **contrastive**:

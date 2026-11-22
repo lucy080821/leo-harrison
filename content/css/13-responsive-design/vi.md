@@ -10,6 +10,9 @@ Không có thẻ này, điện thoại sẽ giả vờ màn hình rộng ~980px 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 ```
 
+![Bố cục thích ứng theo điểm ngắt: điện thoại, máy tính bảng, máy tính](/lessons/css/13-responsive-design-fig-vi.svg)
+*Bố cục thích ứng theo điểm ngắt: điện thoại, máy tính bảng, máy tính*
+
 ## Bước 2: đơn vị và ảnh linh hoạt
 
 ```css

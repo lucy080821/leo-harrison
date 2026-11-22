@@ -23,6 +23,9 @@ $$
 - $z\to+\infty$: $\hat p\to 1$; $z\to-\infty$: $\hat p\to 0$; $z=0$: $\hat p = 0.5$.
 - Dự đoán lớp: **1 nếu $\hat p\ge 0.5$**, ngược lại 0. Ngưỡng $0.5$ tương ứng $z = 0$: **ranh giới quyết định tuyến tính** $\mathbf{w}\cdot\mathbf{x}+b=0$.
 
+![Hàm sigmoid biến điểm số thành xác suất](/lessons/machine-learning/04-logistic-regression-fig-vi.svg)
+*Hàm sigmoid biến điểm số thành xác suất*
+
 ## Diễn giải hệ số: tỉ lệ cược (odds)
 
 $$

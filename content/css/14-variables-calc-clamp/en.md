@@ -40,6 +40,9 @@ This very website uses that approach for its dark mode.
 
 JavaScript can read and change variables too: `el.style.setProperty("--brand", "tomato")`.
 
+![clamp(min, preferred, max) keeps the font size within bounds](/lessons/css/14-variables-calc-clamp-fig-en.svg)
+*clamp(min, preferred, max) keeps the font size within bounds*
+
 ## `calc()`: math right in CSS
 
 You can mix different units:

@@ -14,6 +14,9 @@
 - `value` của `<option>` là dữ liệu được gửi đi; chữ bên trong là phần người dùng thấy.
 - `selected` chọn sẵn một mục.
 
+![Các điều khiển biểu mẫu và thuộc tính kiểm tra hợp lệ](/lessons/html/07-forms-controls-validation-fig-vi.svg)
+*Các điều khiển biểu mẫu và thuộc tính kiểm tra hợp lệ*
+
 ## Radio: chọn một
 
 Các radio thuộc cùng một nhóm khi có **cùng `name`**. Trong nhóm chỉ chọn được một.

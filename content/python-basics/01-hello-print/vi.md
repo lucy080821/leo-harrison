@@ -17,6 +17,9 @@ print("2 + 3 =", 2 + 3)      # in nhiều giá trị, cách nhau bằng dấu c�
 - Số và phép tính **không** cần nháy: `2 + 3` được tính ra `5` trước khi in.
 - Mỗi `print` mặc định **xuống dòng** sau khi in.
 
+![Từ mã nguồn qua trình thông dịch đến kết quả](/lessons/python-basics/01-hello-print-fig-vi.svg)
+*Từ mã nguồn qua trình thông dịch đến kết quả*
+
 ## Hai đối số hữu ích: sep và end
 
 ```python

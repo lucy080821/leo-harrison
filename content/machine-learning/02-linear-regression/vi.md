@@ -21,6 +21,9 @@ $$
 
 Ví dụ giá nhà: `price = 30·diện_tích + 150·số_phòng − 8·tuổi − 60·khoảng_cách + 500`. Mỗi hệ số có **ý nghĩa dễ diễn giải**, đây là điểm mạnh lớn.
 
+![Hồi quy tuyến tính: đường thẳng làm nhỏ tổng bình phương phần dư](/lessons/machine-learning/02-linear-regression-fig-vi.svg)
+*Hồi quy tuyến tính: đường thẳng làm nhỏ tổng bình phương phần dư*
+
 ## Học tham số: bình phương tối thiểu (OLS)
 
 Chọn $\mathbf{w}, b$ cực tiểu **tổng bình phương sai số** (MSE):

@@ -4,6 +4,9 @@
 
 JavaScript chạy **một việc một lúc** (đơn luồng). Nhưng nhiều việc **chậm**: tải dữ liệu từ mạng, đọc file, chờ người dùng bấm. Nếu đứng chờ, cả trang sẽ đơ. Giải pháp: **bắt đầu việc, đi làm việc khác, và được gọi lại khi xong**. Đó là **bất đồng bộ** (asynchronous).
 
+![Vòng lặp sự kiện: call stack, Web API, hàng đợi callback](/lessons/javascript/14-timers-event-loop-fig-vi.svg)
+*Vòng lặp sự kiện: call stack, Web API, hàng đợi callback*
+
 ## setTimeout và setInterval
 
 ```javascript

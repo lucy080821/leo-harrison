@@ -12,6 +12,9 @@
 
 Note: `/` **always** returns a float (`6 / 2` is `3.0`) while `//` keeps integers.
 
+![Operator precedence](/lessons/python-basics/03-numbers-operators-fig-en.svg)
+*Operator precedence*
+
 ## Floor division and remainder: a very useful pair
 
 The two always go together: $a = (a // b) \times b + (a \% b)$.

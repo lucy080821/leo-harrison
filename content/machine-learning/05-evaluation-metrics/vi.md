@@ -6,6 +6,9 @@
 
 Một bệnh hiếm gặp ở 1% dân số. Mô hình **luôn trả lời "khoẻ mạnh"** đạt accuracy 99% mà **không phát hiện được ca bệnh nào**. Với dữ liệu **mất cân bằng**, accuracy gây hiểu lầm.
 
+![Ma trận nhầm lẫn và công thức precision, recall](/lessons/machine-learning/05-evaluation-metrics-fig-vi.svg)
+*Ma trận nhầm lẫn và công thức precision, recall*
+
 ## Ma trận nhầm lẫn (confusion matrix)
 
 Với phân loại nhị phân (lớp "dương" là lớp quan tâm, ví dụ có bệnh):

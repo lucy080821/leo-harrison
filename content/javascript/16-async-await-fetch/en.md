@@ -26,6 +26,9 @@ const o = await getOrders(u.id);
 console.log(o);
 ```
 
+![fetch + await: send a request then wait for the JSON response](/lessons/javascript/16-async-await-fetch-fig-en.svg)
+*fetch + await: send a request then wait for the JSON response*
+
 ## Error handling with try/catch
 
 A rejected Promise **throws** at the `await` line, so catch it with the familiar `try/catch`:

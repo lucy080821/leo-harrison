@@ -19,6 +19,9 @@ list.appendChild(li);                       // 3. attach to the DOM tree → app
 | `el.cloneNode(true)` | Copy (with children) |
 | `parent.replaceChildren()` | Remove all children |
 
+![The DOM tree and creating/appending elements](/lessons/javascript/09-dom-manipulation-fig-en.svg)
+*The DOM tree and creating/appending elements*
+
 ## classList: working with classes
 
 ```javascript

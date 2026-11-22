@@ -15,6 +15,9 @@ CREATE TABLE reviews (
 
 Mỗi cột có **tên**, **kiểu dữ liệu** và các **ràng buộc**.
 
+![Bảng với ràng buộc và chỉ mục](/lessons/sql/13-create-table-constraints-fig-vi.svg)
+*Bảng với ràng buộc và chỉ mục*
+
 ## Kiểu dữ liệu
 
 SQLite có kiểu **linh hoạt**; các nhóm chính:

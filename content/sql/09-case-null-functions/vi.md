@@ -25,6 +25,9 @@ SELECT
 FROM orders;
 ```
 
+![CASE phân loại giá trị; NULL không bằng bất cứ gì](/lessons/sql/09-case-null-functions-fig-vi.svg)
+*CASE phân loại giá trị; NULL không bằng bất cứ gì*
+
 ## Xử lý NULL
 
 ```sql

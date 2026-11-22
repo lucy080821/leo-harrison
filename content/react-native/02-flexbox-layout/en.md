@@ -14,6 +14,9 @@ In React Native **every View is a flex container**. Two differences from the web
 | `flex` | share of space | `1` = fill the free space |
 | `gap` | space between children | number |
 
+![In RN flexDirection defaults to column](/lessons/react-native/02-flexbox-layout-fig-en.svg)
+*In RN flexDirection defaults to column*
+
 ## Everyday recipes
 
 **Center everything**

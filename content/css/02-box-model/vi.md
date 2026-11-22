@@ -30,6 +30,9 @@ border: 2px solid #0b6fd6; /* độ dày, kiểu, màu */
 margin: 16px auto;         /* auto ở trái-phải giúp canh giữa khối có width */
 ```
 
+![Mô hình hộp: content, padding, border, margin](/lessons/css/02-box-model-fig-vi.svg)
+*Mô hình hộp: content, padding, border, margin*
+
 ## Vấn đề kích thước và `box-sizing`
 
 Mặc định (`content-box`), `width` chỉ tính phần **content**. Khi đó:

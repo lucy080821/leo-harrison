@@ -27,6 +27,9 @@ const [email, setEmail] = useState("");
 | `maxLength` | giới hạn độ dài |
 | `onSubmitEditing` | khi bấm Enter/Xong trên bàn phím |
 
+![TextInput điều khiển bằng state](/lessons/react-native/04-textinput-forms-fig-vi.svg)
+*TextInput điều khiển bằng state*
+
 ## Biểu mẫu = nhiều state + một nút
 
 ```jsx

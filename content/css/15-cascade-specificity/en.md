@@ -10,6 +10,9 @@ The browser checks in turn:
 2. **Specificity** of the selector: the more specific wins.
 3. **Source order**: when tied, the rule **written later** wins.
 
+![Specificity ladder: inline > id > class > element](/lessons/css/15-cascade-specificity-fig-en.svg)
+*Specificity ladder: inline > id > class > element*
+
 ## Specificity
 
 Each selector is scored in three columns `(id, class, tag)`:

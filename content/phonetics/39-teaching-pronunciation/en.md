@@ -6,6 +6,9 @@ This lesson is for **teachers**: using what you have learned in phonetics to tea
 
 For most learners the realistic goal is **to be understood easily** and **to speak with confidence** (see the lesson on intelligibility), not to erase their first-language accent.
 
+![A five-stage pronunciation-teaching cycle](/lessons/phonetics/39-teaching-pronunciation-fig-en.svg)
+*A five-stage pronunciation-teaching cycle*
+
 ## Step 1: Diagnose
 
 1. Collect a sample: **a short reading** and a few minutes of **free speech**.

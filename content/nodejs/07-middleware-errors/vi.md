@@ -15,6 +15,9 @@ app.use((req, res, next) => {
 
 Express chạy theo **thứ tự khai báo**. Middleware chung (log, `express.json()`) đặt **trước** route.
 
+![Middleware xếp thành chuỗi; lỗi chuyển tới error handler](/lessons/nodejs/07-middleware-errors-fig-vi.svg)
+*Middleware xếp thành chuỗi; lỗi chuyển tới error handler*
+
 ## Middleware cho một route
 
 ```javascript

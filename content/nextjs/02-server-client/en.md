@@ -21,6 +21,9 @@ export default async function Posts() {
 }
 ```
 
+![Server Components run on the server, Client Components in the browser](/lessons/nextjs/02-server-client-fig-en.svg)
+*Server Components run on the server, Client Components in the browser*
+
 ## Client Components: when you need interactivity
 
 State, events (`onClick`) and browser hooks (`useEffect`, `window`) only work on the client. Add `"use client"` at the **top of the file**:

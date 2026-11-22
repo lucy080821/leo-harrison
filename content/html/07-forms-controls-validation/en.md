@@ -14,6 +14,9 @@
 - An `<option>`'s `value` is the data sent; the text inside is what users see.
 - `selected` preselects an item.
 
+![Form controls and validation attributes](/lessons/html/07-forms-controls-validation-fig-en.svg)
+*Form controls and validation attributes*
+
 ## Radio: pick one
 
 Radios belong to one group when they share the **same `name`**. Only one in the group can be selected.

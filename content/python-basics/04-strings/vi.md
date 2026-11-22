@@ -14,6 +14,9 @@ nhiều dòng'''                     # ba nháy cho nhiều dòng
 
 Ký tự đặc biệt dùng `\`: `\n` xuống dòng, `\t` tab, `\"` nháy kép, `\\` dấu gạch chéo ngược.
 
+![Chỉ số dương và âm của chuỗi, và cắt lát](/lessons/python-basics/04-strings-fig-vi.svg)
+*Chỉ số dương và âm của chuỗi, và cắt lát*
+
 ## Chỉ số và cắt lát (slicing)
 
 Chỉ số bắt đầu từ **0**, và số **âm** đếm từ cuối.

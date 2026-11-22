@@ -10,6 +10,9 @@ Thứ tự ưu tiên khi mô hình quá khớp:
 2. **Giảm dung lượng** mô hình (ít tầng/nơ-ron hơn).
 3. Các kỹ thuật dưới đây.
 
+![Dừng sớm: dừng huấn luyện khi lỗi validation bắt đầu tăng](/lessons/deep-learning/05-regularization-deep-learning-fig-vi.svg)
+*Dừng sớm: dừng huấn luyện khi lỗi validation bắt đầu tăng*
+
 ## Weight decay (L2)
 
 Thêm hình phạt cho trọng số lớn vào hàm mất mát (giống Ridge):

@@ -22,6 +22,9 @@ LEFT JOIN orders o ON o.customer_id = c.id;
 
 Em Hoang và Hoa Bui chưa đặt hàng nên vẫn xuất hiện, với `order_id = NULL`.
 
+![LEFT JOIN giữ mọi hàng bên trái, thiếu thì NULL](/lessons/sql/07-joins-outer-self-fig-vi.svg)
+*LEFT JOIN giữ mọi hàng bên trái, thiếu thì NULL*
+
 ## Mẫu "anti-join": tìm dòng KHÔNG có quan hệ
 
 `LEFT JOIN` rồi lọc `IS NULL` ở bảng phải cho ra **những dòng bên trái không có đối ứng**:

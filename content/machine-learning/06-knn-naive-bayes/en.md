@@ -41,6 +41,9 @@ KNN relies on distance so features with a **large scale dominate** the others. F
 - **Curse of dimensionality**: in many dimensions all points are "equally far apart", so distance loses meaning.
 - Memory-hungry.
 
+![K-NN: a new point takes the label of its k nearest neighbours](/lessons/machine-learning/06-knn-naive-bayes-fig-en.svg)
+*K-NN: a new point takes the label of its k nearest neighbours*
+
 ## Naive Bayes
 
 Based on **Bayes' theorem** (Math lesson): for features $\mathbf{x}=(x_1,\dots,x_d)$,

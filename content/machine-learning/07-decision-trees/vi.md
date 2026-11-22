@@ -47,6 +47,9 @@ from sklearn.tree import DecisionTreeClassifier
 tree = DecisionTreeClassifier(max_depth=3, random_state=0).fit(X_train, y_train)
 ```
 
+![Cây quyết định: mỗi nút là một câu hỏi, lá là dự đoán](/lessons/machine-learning/07-decision-trees-fig-vi.svg)
+*Cây quyết định: mỗi nút là một câu hỏi, lá là dự đoán*
+
 ## Cây quá sâu → quá khớp
 
 Nếu không giới hạn, cây tiếp tục chia cho đến khi **mỗi lá chỉ còn một mẫu**: nhớ thuộc cả nhiễu, train 100% nhưng test tệ. Kiểm soát bằng **siêu tham số**:

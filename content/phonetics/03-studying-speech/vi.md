@@ -6,6 +6,9 @@
 
 **2. Phân tích thiết bị** (*instrumental*): dùng máy đo để có số liệu khách quan và lặp lại được. Hai cách thường kết hợp.
 
+![Ba cách nghiên cứu lời nói: cấu âm, âm học, thính giác](/lessons/phonetics/03-studying-speech-fig-vi.svg)
+*Ba cách nghiên cứu lời nói: cấu âm, âm học, thính giác*
+
 ## Các kỹ thuật thiết bị chính
 
 | Mục tiêu | Kỹ thuật | Cho biết |

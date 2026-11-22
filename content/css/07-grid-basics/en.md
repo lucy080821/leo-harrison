@@ -14,6 +14,9 @@
 
 Direct children fill the grid cells in order, wrapping to the next row when one is full.
 
+![A 3-column grid with 1fr 2fr 1fr](/lessons/css/07-grid-basics-fig-en.svg)
+*A 3-column grid with 1fr 2fr 1fr*
+
 ## The `fr` unit
 
 `fr` (fraction) is **a share of the free space**.

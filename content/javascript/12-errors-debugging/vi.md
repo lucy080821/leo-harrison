@@ -10,6 +10,9 @@ Lỗi là chuyện **bình thường** khi lập trình. Bài này dạy cách *
 | **Thời gian chạy** (`TypeError`, `ReferenceError`...) | Gọi hàm trên `undefined`, dùng biến chưa khai báo | Khi đang chạy |
 | **Logic** | Kết quả sai nhưng không báo lỗi | Bạn phải tự phát hiện |
 
+![try / catch / finally: luồng xử lý lỗi](/lessons/javascript/12-errors-debugging-fig-vi.svg)
+*try / catch / finally: luồng xử lý lỗi*
+
 ## try / catch / finally
 
 ```javascript

@@ -16,6 +16,9 @@ An **element** usually consists of an opening tag, content and a closing tag:
 - What sits in between is the **content**.
 - Some tags have no content so they need no closing tag, e.g. `<br />` (line break) and `<img />` (image). They are called **void elements**.
 
+![Structure of an HTML document: html holds head and body](/lessons/html/01-first-page-fig-en.svg)
+*Structure of an HTML document: html holds head and body*
+
 ## The skeleton of an HTML document
 
 ```html

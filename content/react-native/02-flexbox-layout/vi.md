@@ -14,6 +14,9 @@ Trong React Native, **mọi View đều là flex container**. Khác với web �
 | `flex` | tỉ lệ chiếm chỗ | `1` = chiếm hết phần trống |
 | `gap` | khoảng cách giữa các con | số |
 
+![Trong RN, flexDirection mặc định là column](/lessons/react-native/02-flexbox-layout-fig-vi.svg)
+*Trong RN, flexDirection mặc định là column*
+
 ## Ví dụ hay gặp
 
 **Căn giữa mọi thứ**

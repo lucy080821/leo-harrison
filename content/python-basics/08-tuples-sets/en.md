@@ -29,6 +29,9 @@ def min_max(nums):
 lo, hi = min_max([3, 1, 4])
 ```
 
+![list vs tuple vs set compared](/lessons/python-basics/08-tuples-sets-fig-en.svg)
+*list vs tuple vs set compared*
+
 ## Set: a collection with no duplicates
 
 ```python

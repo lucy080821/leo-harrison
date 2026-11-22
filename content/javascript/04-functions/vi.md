@@ -16,6 +16,9 @@ console.log(result);       // 5
 - `return` kết thúc hàm và đưa giá trị về nơi gọi. Hàm không có `return` trả về `undefined`.
 - Hàm khai báo bằng `function` được **hoisting**: dùng được trước dòng khai báo.
 
+![Hàm nhận tham số và trả về giá trị](/lessons/javascript/04-functions-fig-vi.svg)
+*Hàm nhận tham số và trả về giá trị*
+
 ## Tham số mặc định và rest
 
 ```javascript

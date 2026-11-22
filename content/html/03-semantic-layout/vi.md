@@ -14,6 +14,9 @@ Bạn có thể dựng cả trang chỉ bằng `<div>`, nhưng trình duyệt, c
 | `<aside>` | Nội dung phụ liên quan (thanh bên, ghi chú) |
 | `<footer>` | Phần cuối (bản quyền, liên hệ) |
 
+![Bố cục ngữ nghĩa: header, nav, main, aside, footer](/lessons/html/03-semantic-layout-fig-vi.svg)
+*Bố cục ngữ nghĩa: header, nav, main, aside, footer*
+
 ## Ví dụ cấu trúc một trang
 
 ```html

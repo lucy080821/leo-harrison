@@ -9,6 +9,9 @@
 
 Ví dụ: *I WANT to GO to the SHOP.* Các từ in hoa được nhấn; còn lại đọc **yếu**.
 
+![Dạng mạnh và dạng yếu của từ chức năng](/lessons/phonetics/28-weak-forms-connected-speech-fig-vi.svg)
+*Dạng mạnh và dạng yếu của từ chức năng*
+
 ## Dạng yếu (weak forms)
 
 Từ chức năng có **dạng mạnh** (khi nhấn, đứng riêng, hoặc cuối câu) và **dạng yếu** (trong lời nói thường). Dạng yếu thường có **nguyên âm rút gọn** về `/ə/` hoặc `/ɪ/` và đôi khi **mất phụ âm**:

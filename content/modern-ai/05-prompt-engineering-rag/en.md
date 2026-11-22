@@ -15,6 +15,9 @@ An **LLM** is programmed not with code but with **prompts**. How you write the p
 
 A foundational principle: **the more specific the better**, and **treat the model like a smart colleague who knows nothing about your context**.
 
+![RAG: retrieve relevant documents and put them in the prompt](/lessons/modern-ai/05-prompt-engineering-rag-fig-en.svg)
+*RAG: retrieve relevant documents and put them in the prompt*
+
 ## Common techniques
 
 ### Zero-shot and few-shot

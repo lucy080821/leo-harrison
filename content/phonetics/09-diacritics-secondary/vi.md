@@ -17,6 +17,9 @@ Ký hiệu cơ bản của IPA chỉ ghi âm ở mức "rộng". Để ghi **chi
 
 Các dấu có thể đặt trên hoặc dưới ký hiệu, hoặc ở bên phải.
 
+![Dấu phụ thêm chi tiết cho ký hiệu cơ bản](/lessons/phonetics/09-diacritics-secondary-fig-vi.svg)
+*Dấu phụ thêm chi tiết cho ký hiệu cơ bản*
+
 ## Cấu âm phụ (*secondary articulation*)
 
 Một âm có thể có **hai cấu âm cùng lúc**: cấu âm **chính** (xác định vị trí và phương thức) và một cấu âm **phụ** nhẹ hơn.

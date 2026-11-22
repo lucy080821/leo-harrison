@@ -12,6 +12,9 @@ pending ──┤
 
 A Promise **changes state only once**, then stays that way.
 
+![The three states of a Promise](/lessons/javascript/15-promises-fig-en.svg)
+*The three states of a Promise*
+
 ## Creating a Promise
 
 ```javascript

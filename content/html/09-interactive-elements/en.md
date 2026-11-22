@@ -15,6 +15,9 @@ HTML5 has a few interactive elements that need **no JavaScript**.
 - Add `open` to start expanded: `<details open>`.
 - Perfect for an **FAQ**.
 
+![details/summary: closed and open states](/lessons/html/09-interactive-elements-fig-en.svg)
+*details/summary: closed and open states*
+
 ## dialog: a dialog box
 
 ```html

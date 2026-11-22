@@ -4,6 +4,9 @@
 
 A real listener **understands** speech; they do not "read" a spectrogram. They must separate speech from noise, normalise across speakers, and recognise words in a continuous stream. **Speech perception** studies how that happens.
 
+![Categorical perception: identification shifts abruptly at the boundary (illustrative)](/lessons/phonetics/21-speech-perception-fig-en.svg)
+*Categorical perception: identification shifts abruptly at the boundary (illustrative)*
+
 ## Acoustic cues
 
 A sound is usually recognised through **many cues** at once. For example the difference between word-initial /b/ and /p/ can be: **VOT**, the amount of aspiration, **F1 at vowel onset** and F0 at vowel onset. Cues can **trade off** against each other (*trading relations*): a slightly shorter VOT can be compensated by a different F1.

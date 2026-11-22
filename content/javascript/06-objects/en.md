@@ -28,6 +28,9 @@ delete person.email;       // remove
 
 > `const` only forbids **reassigning the variable**, not changing **inside** the object.
 
+![An object: a set of key–value pairs](/lessons/javascript/06-objects-fig-en.svg)
+*An object: a set of key–value pairs*
+
 ## `this` in methods
 
 When you call `person.greet()`, `this` is `person`, so `this.name` is `"Lexi"`. Use the method syntax `greet() {}` and **not** an arrow function for methods, because arrows have no `this` of their own.

@@ -14,6 +14,9 @@ You can build a whole page from `<div>`s alone, but browsers, search engines and
 | `<aside>` | Related side content (sidebar, notes) |
 | `<footer>` | The bottom (copyright, contact) |
 
+![Semantic layout: header, nav, main, aside, footer](/lessons/html/03-semantic-layout-fig-en.svg)
+*Semantic layout: header, nav, main, aside, footer*
+
 ## A typical page structure
 
 ```html

@@ -10,6 +10,9 @@ This is a **capstone** lesson: you play the shop's data analyst and answer busin
 4. **Sanity-check the result:** do the group totals add up to the overall total? Does the number look plausible?
 5. **Present:** give columns readable names and a sensible order.
 
+![The sales-analysis workflow in SQL](/lessons/sql/15-project-sales-analysis-fig-en.svg)
+*The sales-analysis workflow in SQL*
+
 ## The revenue formula
 
 Each `order_items` row contributes $\text{quantity} \times \text{price}$ to revenue, so

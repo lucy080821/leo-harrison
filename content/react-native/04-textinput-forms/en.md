@@ -27,6 +27,9 @@ const [email, setEmail] = useState("");
 | `maxLength` | length cap |
 | `onSubmitEditing` | when Return/Done is pressed |
 
+![A TextInput controlled by state](/lessons/react-native/04-textinput-forms-fig-en.svg)
+*A TextInput controlled by state*
+
 ## A form = several states + one button
 
 ```jsx

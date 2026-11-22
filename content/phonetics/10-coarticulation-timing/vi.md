@@ -4,6 +4,9 @@
 
 Khi phiên âm `/kæt/`, ta có ba ký hiệu rời nhau. Nhưng khi nói, các cử động cấu âm của chúng **chồng lấn** trong thời gian. Hiện tượng này gọi là **đồng cấu âm** (*coarticulation*): cấu âm của một âm bị ảnh hưởng bởi âm lân cận.
 
+![Lược đồ cử động cấu âm: các cơ quan chồng lấn theo thời gian (minh hoạ)](/lessons/phonetics/10-coarticulation-timing-fig-vi.svg)
+*Lược đồ cử động cấu âm: các cơ quan chồng lấn theo thời gian (minh hoạ)*
+
 ## Hai hướng ảnh hưởng
 
 - **Báo trước** (*anticipatory*, hay *right-to-left*): một đặc trưng của âm sau xuất hiện sớm. Ví dụ: môi bắt đầu tròn **trước** khi tới nguyên âm `/uː/` trong *two* `/tuː/`, ngay trong lúc phát `/t/`.

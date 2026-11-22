@@ -18,6 +18,9 @@ function Parent() {
 
 Luồng dữ liệu của React luôn **đi xuống** (props), sự kiện **đi lên** (callback).
 
+![Nâng state lên component cha để chia sẻ](/lessons/react/07-lifting-todo-fig-vi.svg)
+*Nâng state lên component cha để chia sẻ*
+
 ## Quy trình xây một app React
 
 1. Chia giao diện thành các component.

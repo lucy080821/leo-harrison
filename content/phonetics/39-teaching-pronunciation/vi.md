@@ -6,6 +6,9 @@ Bài này dành cho **giáo viên**: dùng những gì đã học về ngữ âm
 
 Với hầu hết người học, mục tiêu thực tế là **được hiểu dễ dàng** và **tự tin khi nói** (xem bài về khả năng hiểu nhau), không phải xoá sạch giọng mẹ đẻ.
 
+![Quy trình dạy phát âm theo năm giai đoạn](/lessons/phonetics/39-teaching-pronunciation-fig-vi.svg)
+*Quy trình dạy phát âm theo năm giai đoạn*
+
 ## Bước 1: Chẩn đoán
 
 1. Thu một mẫu: **đọc một đoạn ngắn** và **nói tự do** vài phút.

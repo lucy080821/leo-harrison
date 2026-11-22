@@ -20,6 +20,9 @@ Một số ký tự có nghĩa riêng trong HTML (`<`, `>`, `&`). Muốn hiển 
 
 Bạn cũng có thể dùng mã số, ví dụ `&#169;` hoặc `&#x1F600;`. Với tài liệu UTF-8 bạn có thể gõ thẳng ký tự như `©` hay `é`.
 
+![Thực thể HTML để hiển thị ký tự đặc biệt](/lessons/html/12-entities-text-semantics-fig-vi.svg)
+*Thực thể HTML để hiển thị ký tự đặc biệt*
+
 ## Thẻ văn bản có ý nghĩa
 
 | Thẻ | Dùng cho |

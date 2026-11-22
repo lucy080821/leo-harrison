@@ -34,6 +34,9 @@ def forward(X, W1, b1, W2, b2):
 
 Checking **shapes** always helps: $(N,d)\cdot(d,h)\to(N,h)$, then $(N,h)\cdot(h,k)\to(N,k)$.
 
+![A multi-layer network: data flows from input through hidden layers to output](/lessons/deep-learning/02-mlp-forward-pass-fig-en.svg)
+*A multi-layer network: data flows from input through hidden layers to output*
+
 ## Solving the XOR problem
 
 A network with **exactly 2 hidden neurons** is enough for XOR, which a single perceptron can't do. Intuition: $\text{XOR}(a,b)=\text{AND}\big(\text{OR}(a,b),\ \text{NAND}(a,b)\big)$:

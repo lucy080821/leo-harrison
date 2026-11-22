@@ -8,6 +8,9 @@
 
 Further options: **central / lateral** (air over the middle or the sides of the tongue), **nasal / oral** (velum lowered or raised), **airstream** (see the previous lesson).
 
+![English consonants by place and manner of articulation](/lessons/phonetics/07-consonants-place-manner-fig-en.svg)
+*English consonants by place and manner of articulation*
+
 ## Place of articulation
 
 | Place | Main parts | English examples |

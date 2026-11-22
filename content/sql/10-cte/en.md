@@ -20,6 +20,9 @@ WHERE total > 5000000;
 - The main `SELECT` after it uses `name` as a table.
 - A CTE **exists only within that statement**, nothing is saved.
 
+![CTEs split a query into named steps](/lessons/sql/10-cte-fig-en.svg)
+*CTEs split a query into named steps*
+
 ## Several CTEs in sequence
 
 Separated by commas; a later CTE **may use** an earlier one:

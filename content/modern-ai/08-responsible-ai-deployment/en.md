@@ -15,6 +15,9 @@ A model with high accuracy in the lab can **cause harm** once deployed for real:
 
 **Dropping the sensitive column isn't enough** because other features still encode it (proxies).
 
+![Responsible AI lifecycle: data → per-group evaluation → monitoring](/lessons/modern-ai/08-responsible-ai-deployment-fig-en.svg)
+*Responsible AI lifecycle: data → per-group evaluation → monitoring*
+
 ## Measuring fairness
 
 Two common metrics, computed **per group** (e.g. gender, age band):

@@ -4,6 +4,9 @@
 
 A **tone** is a variation of **pitch** (F0) on a **syllable** that **distinguishes word meaning**. Hanoi Vietnamese has **6 tones**: ngang, huyền, sắc, hỏi, ngã, nặng (some accents, like Saigon, have fewer because hỏi and ngã merge).
 
+![Pitch contours of the six tones (schematic, not measured data)](/lessons/phonetics/36-vietnamese-tones-fig-en.svg)
+*Pitch contours of the six tones (schematic, not measured data)*
+
 ## Describing with Chao numerals
 
 A familiar way to describe them is **Chao numerals** (proposed by Y. R. Chao): numbers from 1 (lowest) to 5 (highest) record the **F0 contour** from the start to the end of the syllable. For example `33` is level at mid height, `35` is rising from mid to high, `21` is falling from low-mid to low.

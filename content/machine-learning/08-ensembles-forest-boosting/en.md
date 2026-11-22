@@ -38,6 +38,9 @@ rf = RandomForestClassifier(n_estimators=100, random_state=0).fit(X_train, y_tra
 
 **Pros**: effective "out of the box", little tuning, hard to overfit, gives **feature importances**, needs no scaling.
 
+![Random Forest: many trees vote, take the majority](/lessons/machine-learning/08-ensembles-forest-boosting-fig-en.svg)
+*Random Forest: many trees vote, take the majority*
+
 ## Boosting and Gradient Boosting
 
 Bagging trains trees **in parallel, independently**. **Boosting** trains **sequentially**: each new tree **fixes the errors** of the previous ones.

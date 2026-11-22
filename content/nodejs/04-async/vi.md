@@ -23,6 +23,9 @@ async function main() {
 }
 ```
 
+![Callback hell so với async/await](/lessons/nodejs/04-async-fig-vi.svg)
+*Callback hell so với async/await*
+
 ## Hẹn giờ
 
 ```javascript

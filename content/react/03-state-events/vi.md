@@ -12,6 +12,9 @@ const [count, setCount] = useState(0);
 - `setCount`: hàm để **đổi** giá trị. Khi gọi, React **vẽ lại** component.
 - `0`: giá trị khởi đầu.
 
+![Vòng: sự kiện → setState → render lại](/lessons/react/03-state-events-fig-vi.svg)
+*Vòng: sự kiện → setState → render lại*
+
 ## Sự kiện
 
 Gắn hàm vào thuộc tính `onClick`, `onChange`, `onSubmit`…

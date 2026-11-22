@@ -11,6 +11,9 @@ A **phoneme** is the smallest sound unit that **changes the meaning** of a word 
 
 A phoneme is an **abstract category**, realised by concrete sounds.
 
+![One phoneme, several allophones](/lessons/phonetics/31-phoneme-allophone-fig-en.svg)
+*One phoneme, several allophones*
+
 ## Allophones
 
 The concrete realisations of a phoneme are its **allophones**. They do not form minimal pairs with each other. There are two kinds of relation:

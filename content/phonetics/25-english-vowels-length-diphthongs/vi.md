@@ -10,6 +10,9 @@ Truyền thống mô tả RP chia nguyên âm đơn thành **ngắn** (`/ɪ e æ
 
 Ở GA, người ta thường phân loại **căng** (*tense*: `i u eɪ oʊ ɑ ɔ`) và **lơi** (*lax*: `ɪ ʊ ɛ ə æ`) thay vì ngắn-dài.
 
+![Nguyên âm đôi là sự lướt từ vị trí này sang vị trí khác (vị trí gần đúng)](/lessons/phonetics/25-english-vowels-length-diphthongs-fig-vi.svg)
+*Nguyên âm đôi là sự lướt từ vị trí này sang vị trí khác (vị trí gần đúng)*
+
 ## Nguyên âm đôi
 
 RP có 8 nguyên âm đôi: **đóng** (kết thúc ở vị trí cao, trượt về `/ɪ/` hoặc `/ʊ/`) và **trung tâm** (trượt về `/ə/`):

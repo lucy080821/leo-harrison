@@ -8,6 +8,9 @@
 
 Ngoài ra có thể thêm: **giữa / bên** (luồng hơi qua giữa hay hai bên lưỡi), **mũi / miệng** (vòm mềm hạ hay nâng), **luồng hơi** (xem bài trước).
 
+![Phụ âm tiếng Anh theo vị trí và phương thức cấu âm](/lessons/phonetics/07-consonants-place-manner-fig-vi.svg)
+*Phụ âm tiếng Anh theo vị trí và phương thức cấu âm*
+
 ## Vị trí cấu âm
 
 | Vị trí | Bộ phận chính | Ví dụ trong tiếng Anh |

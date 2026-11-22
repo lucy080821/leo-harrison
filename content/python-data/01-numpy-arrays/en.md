@@ -12,6 +12,9 @@
 | Whole-array maths | Needs a loop | `a * 2`, `a + b` directly |
 | Many dimensions | Nested lists | Standard support (matrices, tensors) |
 
+![NumPy 1-D and 2-D arrays and the shape attribute](/lessons/python-data/01-numpy-arrays-fig-en.svg)
+*NumPy 1-D and 2-D arrays and the shape attribute*
+
 ## Creating arrays
 
 ```python

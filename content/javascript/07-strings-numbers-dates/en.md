@@ -26,6 +26,9 @@ const name = "Lexi";
 const msg = `Hello ${name.toUpperCase()}, 2 + 3 = ${2 + 3}`;
 ```
 
+![String operations: slice cuts by index](/lessons/javascript/07-strings-numbers-dates-fig-en.svg)
+*String operations: slice cuts by index*
+
 ## Numbers
 
 JavaScript has **one number type**, `number` (a 64-bit float).

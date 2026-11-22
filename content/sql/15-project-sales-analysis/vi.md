@@ -10,6 +10,9 @@
 4. **Kiểm tra kết quả:** tổng các nhóm có bằng tổng toàn bộ không? Con số có hợp lý không?
 5. **Trình bày:** đặt tên cột dễ hiểu, sắp xếp hợp lý.
 
+![Quy trình phân tích bán hàng bằng SQL](/lessons/sql/15-project-sales-analysis-fig-vi.svg)
+*Quy trình phân tích bán hàng bằng SQL*
+
 ## Công thức doanh thu
 
 Mỗi dòng `order_items` đóng góp $\text{quantity} \times \text{price}$ vào doanh thu, nên

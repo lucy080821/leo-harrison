@@ -10,6 +10,9 @@
 - `loading="lazy"`: only load the image when the user scrolls near it.
 - `alt` is always needed; purely decorative images use `alt=""` (empty) so screen readers skip them.
 
+![The browser picks a suitable source in picture/audio/video](/lessons/html/08-images-audio-video-fig-en.svg)
+*The browser picks a suitable source in picture/audio/video*
+
 ## figure and figcaption
 
 Use them when an image (or chart, or code sample) has a **caption**:

@@ -8,6 +8,9 @@ Một **quy tắc âm vị** mô tả cách một âm vị được **thực hi�
 
 nghĩa là "A thành B khi đứng sau C và trước D". Gạch dưới `__` là vị trí của A. Dấu `#` là ranh giới từ; `∅` là "không có".
 
+![Cấu trúc một quy tắc âm vị: A → B / C _ D](/lessons/phonetics/33-phonological-rules-sound-change-fig-vi.svg)
+*Cấu trúc một quy tắc âm vị: A → B / C _ D*
+
 ## Ví dụ trong tiếng Anh
 
 | Quy tắc | Đọc | Ví dụ |

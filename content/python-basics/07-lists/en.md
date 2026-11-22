@@ -23,6 +23,9 @@ len(nums)      # 4
 
 Unlike strings, lists are **mutable**: `nums[0] = 99`.
 
+![Lists: indexes and slices](/lessons/python-basics/07-lists-fig-en.svg)
+*Lists: indexes and slices*
+
 ## Adding and removing
 
 | Method | Effect |

@@ -15,6 +15,9 @@ from datetime import date, timedelta
 - Tránh `from module import *` vì làm lẫn tên.
 - Gõ `dir(math)` để liệt kê nội dung, `help(math.sqrt)` để xem hướng dẫn.
 
+![Thư viện chuẩn: nhập module bằng import](/lessons/python-basics/12-modules-imports-fig-vi.svg)
+*Thư viện chuẩn: nhập module bằng import*
+
 ## math: toán học
 
 ```python

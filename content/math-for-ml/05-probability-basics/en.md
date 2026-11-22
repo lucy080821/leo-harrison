@@ -10,6 +10,9 @@ $P(A)\in[0,1]$ measures how likely event $A$ is. Basic rules:
 - $P(A\text{ or }B) = P(A) + P(B) - P(A\text{ and }B)$
 - Two **independent** events: $P(A\text{ and }B) = P(A)P(B)$
 
+![A probability tree for Bayes' theorem](/lessons/math-for-ml/05-probability-basics-fig-en.svg)
+*A probability tree for Bayes' theorem*
+
 ## Conditional probability
 
 $P(A\mid B)$ is the probability of $A$ **given that $B$ has occurred**:

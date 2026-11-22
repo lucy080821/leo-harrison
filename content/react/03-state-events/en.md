@@ -12,6 +12,9 @@ const [count, setCount] = useState(0);
 - `setCount`: the function that **changes** it. Calling it makes React **re-render** the component.
 - `0`: the initial value.
 
+![The loop: event → setState → re-render](/lessons/react/03-state-events-fig-en.svg)
+*The loop: event → setState → re-render*
+
 ## Events
 
 Attach a function to `onClick`, `onChange`, `onSubmit`…

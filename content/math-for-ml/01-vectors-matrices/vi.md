@@ -17,6 +17,9 @@ a + b          # [5 7 9]     cộng từng thành phần
 2 * a          # [2 4 6]     nhân với một số (vô hướng)
 ```
 
+![Cộng hai vector theo quy tắc hình bình hành](/lessons/math-for-ml/01-vectors-matrices-fig-vi.svg)
+*Cộng hai vector theo quy tắc hình bình hành*
+
 ## Tích vô hướng (dot product)
 
 $$

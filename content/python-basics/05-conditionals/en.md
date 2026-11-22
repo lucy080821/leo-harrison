@@ -21,6 +21,9 @@ Three things to remember:
 
 You can have many `elif`s (else if); `else` is optional.
 
+![Flowchart of if / elif / else](/lessons/python-basics/05-conditionals-fig-en.svg)
+*Flowchart of if / elif / else*
+
 ## Comparisons
 
 | Operator | Meaning |

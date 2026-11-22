@@ -15,6 +15,9 @@ CREATE TABLE reviews (
 
 Each column has a **name**, a **data type** and **constraints**.
 
+![A table with constraints and an index](/lessons/sql/13-create-table-constraints-fig-en.svg)
+*A table with constraints and an index*
+
 ## Data types
 
 SQLite typing is **flexible**; the main families:

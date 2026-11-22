@@ -10,6 +10,9 @@ Errors are **normal** in programming. This lesson teaches how to **handle** erro
 | **Runtime** (`TypeError`, `ReferenceError`...) | Calling a method on `undefined`, using an undeclared variable | While running |
 | **Logic** | A wrong result but no error | You must spot it yourself |
 
+![try / catch / finally: the error-handling flow](/lessons/javascript/12-errors-debugging-fig-en.svg)
+*try / catch / finally: the error-handling flow*
+
 ## try / catch / finally
 
 ```javascript

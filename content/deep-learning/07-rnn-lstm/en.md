@@ -26,6 +26,9 @@ for x_t in seq:
 
 You can take an **output at each step** (tagging every word) or only the **last step** $\mathbf h_T$ (classifying the whole sentence).
 
+![An RNN unrolled in time: the hidden state passes from step to step](/lessons/deep-learning/07-rnn-lstm-fig-en.svg)
+*An RNN unrolled in time: the hidden state passes from step to step*
+
 ## Training: BPTT
 
 Unroll the network over time into a **very deep** network (one layer per step, same weights) and backpropagate: **Backpropagation Through Time (BPTT)**. The gradient of $W_h$ is the **sum of contributions from every step**.

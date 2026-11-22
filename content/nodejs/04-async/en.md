@@ -23,6 +23,9 @@ async function main() {
 }
 ```
 
+![Callback pyramid vs async/await](/lessons/nodejs/04-async-fig-en.svg)
+*Callback pyramid vs async/await*
+
 ## Timers
 
 ```javascript

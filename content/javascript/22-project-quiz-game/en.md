@@ -15,6 +15,9 @@ const questions = [
 
 Then write **one function** that turns data into UI. Adding a new question is just adding an element to the array.
 
+![Quiz loop: show question → choose → grade → score](/lessons/javascript/22-project-quiz-game-fig-en.svg)
+*Quiz loop: show question → choose → grade → score*
+
 ## State
 
 The program needs to **remember** a few things:

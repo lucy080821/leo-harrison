@@ -22,6 +22,9 @@ print(r.area())           # 12
 - **`self`** is the very object being operated on, **always the first parameter** of a method. When you call `r.area()`, Python passes `r` into `self`.
 - Class names conventionally use `PascalCase`.
 
+![Classes and objects in Python](/lessons/python-basics/15-classes-oop-fig-en.svg)
+*Classes and objects in Python*
+
 ## Objects are independent
 
 ```python

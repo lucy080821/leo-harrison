@@ -4,6 +4,9 @@
 
 **Thanh điệu** (*tone*) là sự biến thiên **cao độ** (F0) trên một **âm tiết** có giá trị **phân biệt nghĩa từ**. Tiếng Việt Hà Nội có **6 thanh**: ngang, huyền, sắc, hỏi, ngã, nặng (một số giọng, như Sài Gòn, có ít thanh hơn vì hỏi và ngã nhập làm một).
 
+![Đường nét cao độ sáu thanh điệu (minh hoạ, không đo thật)](/lessons/phonetics/36-vietnamese-tones-fig-vi.svg)
+*Đường nét cao độ sáu thanh điệu (minh hoạ, không đo thật)*
+
 ## Mô tả bằng số Chao
 
 Cách quen thuộc để mô tả là **số Chao** (do Y. R. Chao đề xuất): dùng các số từ 1 (thấp nhất) đến 5 (cao nhất) để ghi **đường F0** từ đầu đến cuối âm tiết. Ví dụ `33` là bằng phẳng ở mức giữa, `35` là tăng từ giữa lên cao, `21` là giảm từ thấp-giữa xuống thấp.

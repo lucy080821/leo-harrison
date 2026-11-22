@@ -28,6 +28,9 @@ for fruit in ["apple", "orange", "mango"]:
     print(fruit)
 ```
 
+![for visits each item, while repeats on a condition](/lessons/python-basics/06-loops-fig-en.svg)
+*for visits each item, while repeats on a condition*
+
 ## The accumulator pattern
 
 ```python

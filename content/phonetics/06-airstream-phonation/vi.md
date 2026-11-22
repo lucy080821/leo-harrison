@@ -16,6 +16,9 @@
 - **Âm lưỡi tặc** (*clicks*, ví dụ `[ǀ] [ǃ] [ǁ]`): tạo hai chỗ đóng trong miệng rồi hạ thân lưỡi làm loãng khí giữa hai chỗ đó. Là âm bình thường trong các ngôn ngữ ở miền nam châu Phi. Tiếng Anh có tiếng "tsk tsk" `[ǀ]` nhưng chỉ dùng ngoài từ vựng.
 - Các tỉ lệ ngôn ngữ có từng loại âm (ejective khoảng 16%, implosive khoảng 13%, click dưới 2%) là ước lượng thống kê từ các khảo sát, nên chỉ nên xem là gần đúng.
 
+![Các kiểu phát thanh từ vô thanh đến thanh môn hoá](/lessons/phonetics/06-airstream-phonation-fig-vi.svg)
+*Các kiểu phát thanh từ vô thanh đến thanh môn hoá*
+
 ## Kiểu phát thanh (phonation types)
 
 **Phát thanh** là cách dây thanh (và các sụn phễu) hoạt động. Các kiểu chính:

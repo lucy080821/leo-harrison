@@ -18,6 +18,9 @@ set.delete(1);
 - Mẹo loại trùng khỏi mảng: `[...new Set(arr)]`.
 - Phép toán tập hợp: giao `[...a].filter(x => b.has(x))`, hợp `new Set([...a, ...b])`.
 
+![Set loại trùng, Map giữ khoá bất kỳ](/lessons/javascript/20-map-set-iterators-fig-vi.svg)
+*Set loại trùng, Map giữ khoá bất kỳ*
+
 ## Map: cặp khoá-giá trị với khoá bất kỳ
 
 ```javascript

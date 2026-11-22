@@ -14,6 +14,9 @@
 
 `display: none` khác `visibility: hidden`: cái sau ẩn nhưng **vẫn chiếm chỗ**.
 
+![position: absolute định vị theo tổ tiên có position](/lessons/css/04-display-position-fig-vi.svg)
+*position: absolute định vị theo tổ tiên có position*
+
 ## position
 
 | Giá trị | Ý nghĩa |

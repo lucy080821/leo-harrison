@@ -12,6 +12,9 @@ $$
 
 A language model only needs to learn $P(\text{next word}\mid\text{previous words})$. Generating text = **sampling one word at a time** from that distribution (**autoregressive**).
 
+![A language model predicts the next token as a probability distribution](/lessons/modern-ai/03-language-models-fig-en.svg)
+*A language model predicts the next token as a probability distribution*
+
 ## N-gram models
 
 Conditioning on the **entire history** is too hard, so we approximate with the last $n-1$ words (the **Markov assumption**). A **bigram** ($n=2$):

@@ -26,6 +26,9 @@ Handy `read_csv` options:
 
 There are also `pd.read_excel`, `pd.read_json`, `pd.read_sql`.
 
+![The inspection workflow after reading a CSV](/lessons/python-data/04-read-csv-inspect-fig-en.svg)
+*The inspection workflow after reading a CSV*
+
 ## The standard "exploration" routine: always do all 5 steps
 
 ```python

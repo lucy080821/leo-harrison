@@ -32,6 +32,9 @@ $$
 - **Stride**: the sliding step (stride 2 halves the size).
 - **Padding**: a border of zeros around the image. `same` keeps the size; `valid` (no padding) shrinks it.
 
+![A 3×3 filter slides over the image to build a feature map](/lessons/deep-learning/06-convolutional-networks-fig-en.svg)
+*A 3×3 filter slides over the image to build a feature map*
+
 ## Conv layers and channels
 
 - The input has **several channels** (an RGB image has 3).

@@ -18,6 +18,9 @@ mse = np.mean((y_true - y_pred) ** 2)
 mae = np.mean(np.abs(y_true - y_pred))
 ```
 
+![Hàm mất mát cross-entropy −log p: phạt nặng khi tin sai](/lessons/math-for-ml/07-loss-information-theory-fig-vi.svg)
+*Hàm mất mát cross-entropy −log p: phạt nặng khi tin sai*
+
 ## Entropy: đo độ "bất ngờ" trung bình
 
 Với phân phối $p$ trên các kết quả:

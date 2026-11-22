@@ -17,6 +17,9 @@ The basic IPA symbols record sounds only at a "broad" level. To record more **de
 
 Marks can sit above, below or to the right of a symbol.
 
+![Diacritics add detail to a basic symbol](/lessons/phonetics/09-diacritics-secondary-fig-en.svg)
+*Diacritics add detail to a basic symbol*
+
 ## Secondary articulation
 
 A sound can have **two simultaneous articulations**: a **primary** one (defining place and manner) and a lighter **secondary** one.

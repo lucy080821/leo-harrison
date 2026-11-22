@@ -12,6 +12,9 @@ You'll build a complete **to-do list** app with just HTML, CSS and JavaScript: a
 | Delete an item | `element.remove()` |
 | Works for items added later | **Event delegation** on the `<ul>` |
 
+![Todo app data flow: state → render → events](/lessons/javascript/21-project-todo-app-fig-en.svg)
+*Todo app data flow: state → render → events*
+
 ## The HTML structure of each item
 
 ```html

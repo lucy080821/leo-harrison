@@ -19,6 +19,9 @@ Bạn đã biết React (component, props, state, hooks) — tất cả **dùng 
 
 **Mọi chữ phải nằm trong `<Text>`** — viết chữ trần trong `<View>` sẽ lỗi.
 
+![Component RN được ánh xạ sang thành phần giao diện gốc](/lessons/react-native/01-core-components-fig-vi.svg)
+*Component RN được ánh xạ sang thành phần giao diện gốc*
+
 ## Style bằng JavaScript
 
 Không có file CSS. Dùng `StyleSheet.create` với tên thuộc tính **camelCase** và giá trị là số (đơn vị dp) hoặc chuỗi:

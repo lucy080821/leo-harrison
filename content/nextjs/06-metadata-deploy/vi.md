@@ -20,6 +20,9 @@ export async function generateMetadata({ params }) {
 }
 ```
 
+![Triển khai lên VPS: build → chạy node → Nginx → người dùng](/lessons/nextjs/06-metadata-deploy-fig-vi.svg)
+*Triển khai lên VPS: build → chạy node → Nginx → người dùng*
+
 ## Tối ưu có sẵn
 
 - `next/image`: tự đổi cỡ, nén, tải lười ảnh. `<Image src="/a.png" alt="…" width={600} height={400} />`

@@ -24,6 +24,9 @@ stats.norm.ppf(0.975)                       # 1.96: giá trị z cho khoảng ti
 
 Phân phối chuẩn xuất hiện khắp nơi, vì sao? Do **CLT** (xem dưới).
 
+![Nhị thức lớn dần xấp xỉ đường chuẩn](/lessons/math-for-ml/06-distributions-clt-fig-vi.svg)
+*Nhị thức lớn dần xấp xỉ đường chuẩn*
+
 ## Các phân phối thường gặp
 
 | Phân phối | Mô tả | Ví dụ |

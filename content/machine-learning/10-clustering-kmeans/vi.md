@@ -35,6 +35,9 @@ $$
 - Giả định cụm **hình cầu, cỡ gần bằng nhau**; kém với cụm dài, lệch tâm hoặc có hình dạng lạ.
 - Nhạy với ngoại lệ.
 
+![K-Means: gán điểm cho tâm cụm gần nhất rồi dời tâm](/lessons/machine-learning/10-clustering-kmeans-fig-vi.svg)
+*K-Means: gán điểm cho tâm cụm gần nhất rồi dời tâm*
+
 ## Chọn số cụm $K$
 
 ### Phương pháp khuỷu tay (elbow)

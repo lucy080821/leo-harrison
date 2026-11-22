@@ -16,6 +16,9 @@ age = 21;             // OK
 - Tránh `var` (cách cũ, dễ gây lỗi phạm vi).
 - Tên biến phân biệt hoa thường, thường viết theo kiểu `camelCase`: `userName`.
 
+![Biến là hộp có nhãn chứa giá trị; typeof cho biết kiểu](/lessons/javascript/01-variables-console-fig-vi.svg)
+*Biến là hộp có nhãn chứa giá trị; typeof cho biết kiểu*
+
 ## Các kiểu dữ liệu cơ bản
 
 | Kiểu | Ví dụ | Ghi chú |

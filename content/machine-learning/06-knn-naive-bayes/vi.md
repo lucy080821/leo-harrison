@@ -41,6 +41,9 @@ KNN dựa trên khoảng cách nên đặc trưng có **thang đo lớn lấn á
 - **Lời nguyền số chiều**: ở nhiều chiều, mọi điểm đều "xa nhau như nhau", khoảng cách mất ý nghĩa.
 - Tốn bộ nhớ.
 
+![K-NN: điểm mới lấy nhãn theo k láng giềng gần nhất](/lessons/machine-learning/06-knn-naive-bayes-fig-vi.svg)
+*K-NN: điểm mới lấy nhãn theo k láng giềng gần nhất*
+
 ## Naive Bayes
 
 Dựa trên **định lý Bayes** (bài Toán): với đặc trưng $\mathbf{x}=(x_1,\dots,x_d)$,

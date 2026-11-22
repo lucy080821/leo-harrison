@@ -14,6 +14,9 @@ By default flex items **don't wrap**; they shrink to fit one line. Enable wrappi
 
 `gap` replaces putting `margin` on every item: it is tidy and leaves no stray margin at the edges.
 
+![flex-grow shares leftover space proportionally](/lessons/css/06-flexbox-wrap-grow-fig-en.svg)
+*flex-grow shares leftover space proportionally*
+
 ## Properties on flex items
 
 ```css

@@ -20,6 +20,9 @@ fruits.at(-1);        // "mango" (shorter)
 | `slice(a, b)` | A copy from `a` up to (not incl.) `b` | **No** |
 | `concat`, `[...a, ...b]` | Join arrays | No |
 
+![Arrays: elements indexed from 0](/lessons/javascript/05-arrays-fig-en.svg)
+*Arrays: elements indexed from 0*
+
 ## Searching
 
 ```javascript

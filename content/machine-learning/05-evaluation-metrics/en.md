@@ -6,6 +6,9 @@
 
 A disease affects 1% of the population. A model that **always answers "healthy"** scores 99% accuracy while **finding no sick patients at all**. With **imbalanced** data, accuracy misleads.
 
+![The confusion matrix and the precision/recall formulas](/lessons/machine-learning/05-evaluation-metrics-fig-en.svg)
+*The confusion matrix and the precision/recall formulas*
+
 ## The confusion matrix
 
 For binary classification (the "positive" class is the one of interest, e.g. has the disease):

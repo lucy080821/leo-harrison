@@ -10,6 +10,9 @@ Good design keeps data **consistent, non-repeating and extensible**. Poor design
 4. Identify the **relationships** between tables and express them with **foreign keys**.
 5. **Normalize** to remove repeated data.
 
+![Entity diagram: customer 1–n orders n–n products](/lessons/sql/14-database-design-fig-en.svg)
+*Entity diagram: customer 1–n orders n–n products*
+
 ## The three kinds of relationship
 
 ### One-to-many (1-n): the most common

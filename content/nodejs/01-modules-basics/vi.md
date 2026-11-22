@@ -19,6 +19,9 @@ console.log(math.add(2, 3));
 
 (Node cũng hỗ trợ `import`/`export` kiểu ES module khi file là `.mjs` hoặc `"type": "module"`.)
 
+![require/import nạp module; module.exports xuất ra](/lessons/nodejs/01-modules-basics-fig-vi.svg)
+*require/import nạp module; module.exports xuất ra*
+
 ## Đối tượng toàn cục
 
 - `process`: thông tin tiến trình — `process.env` (biến môi trường), `process.argv` (tham số), `process.exit()`.

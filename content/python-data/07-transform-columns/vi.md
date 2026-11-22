@@ -30,6 +30,9 @@ df["date"].max() - df["date"].min()          # Timedelta
 
 Có thể đọc thẳng khi nạp: `pd.read_csv("sales.csv", parse_dates=["date"])`.
 
+![pd.cut chia tuổi thành các nhóm](/lessons/python-data/07-transform-columns-fig-vi.svg)
+*pd.cut chia tuổi thành các nhóm*
+
 ## Phép tính vector hoá giữa các cột
 
 ```python

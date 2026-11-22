@@ -18,6 +18,9 @@ Lấy cảm hứng (rất đơn giản hoá) từ nơ-ron sinh học. Một nơ-
 
 Đây chính là **hồi quy logistic** khi $\varphi=\sigma$ (sigmoid). Sức mạnh đến từ việc **xếp chồng hàng nghìn nơ-ron thành nhiều tầng**.
 
+![Một nơ-ron và các hàm kích hoạt thường gặp](/lessons/deep-learning/01-perceptron-activations-fig-vi.svg)
+*Một nơ-ron và các hàm kích hoạt thường gặp*
+
 ## Perceptron (1958)
 
 Nơ-ron với hàm kích hoạt **bậc thang**: $a=1$ nếu $z>0$, ngược lại $0$. **Luật học perceptron**: với mỗi mẫu $(\mathbf{x},t)$ và dự đoán $\hat y$,

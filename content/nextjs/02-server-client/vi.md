@@ -21,6 +21,9 @@ export default async function Posts() {
 }
 ```
 
+![Server Component chạy trên server, Client Component chạy trong trình duyệt](/lessons/nextjs/02-server-client-fig-vi.svg)
+*Server Component chạy trên server, Client Component chạy trong trình duyệt*
+
 ## Client Component: khi cần tương tác
 
 State, sự kiện (`onClick`), hook của trình duyệt (`useEffect`, `window`) chỉ chạy được ở client. Thêm dòng `"use client"` ở **đầu file**:

@@ -16,6 +16,9 @@ See the sample result in the right panel (the finished `style.css` is in the Fre
 └───────────────────────────────┘
 ```
 
+![Landing page wireframe: hero, features, pricing, footer](/lessons/css/16-project-landing-page-fig-en.svg)
+*Landing page wireframe: hero, features, pricing, footer*
+
 ## Step-by-step plan
 
 1. **Foundation:** `box-sizing: border-box`, remove the default `body` margin, system fonts, and declare **color variables** `--brand`, `--accent` on `:root`.

@@ -23,6 +23,9 @@ server.listen(3000);   // open port 3000
 | `req.url` | path + query, e.g. `/users?id=3` |
 | `req.headers` | the headers sent along |
 
+![Request → http.createServer → Response](/lessons/nodejs/05-http-fig-en.svg)
+*Request → http.createServer → Response*
+
 ## Response (`res`)
 
 - `res.writeHead(status, headers)`: set the status code and headers.

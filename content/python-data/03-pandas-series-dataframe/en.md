@@ -11,6 +11,9 @@
 | **Series** | One labelled **column** of data (with an index) | An Excel column |
 | **DataFrame** | A **table** of several Series sharing an index | An Excel sheet / SQL table |
 
+![DataFrame: index, columns and values](/lessons/python-data/03-pandas-series-dataframe-fig-en.svg)
+*DataFrame: index, columns and values*
+
 ## Series
 
 ```python

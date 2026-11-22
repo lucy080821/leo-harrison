@@ -18,6 +18,9 @@ set.delete(1);
 - Trick to dedupe an array: `[...new Set(arr)]`.
 - Set operations: intersection `[...a].filter(x => b.has(x))`, union `new Set([...a, ...b])`.
 
+![Set removes duplicates, Map keeps any key](/lessons/javascript/20-map-set-iterators-fig-en.svg)
+*Set removes duplicates, Map keeps any key*
+
 ## Map: key-value pairs with any key
 
 ```javascript

@@ -38,6 +38,9 @@ pca.components_                      # the directions (rows)
 pca.explained_variance_ratio_        # each component's variance proportion
 ```
 
+![PCA projects data onto the direction of greatest variance](/lessons/machine-learning/11-pca-dimensionality-fig-en.svg)
+*PCA projects data onto the direction of greatest variance*
+
 ## Explained variance ratio
 
 $$

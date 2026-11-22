@@ -10,6 +10,9 @@ This is a **capstone** lesson: you'll build a complete personal page with HTML a
 - **Lists, emphasised text, images** with `alt`.
 - **A contact form** with `label`, `required` and a `submit` button.
 
+![Wireframe of the profile page](/lessons/html/13-project-profile-page-fig-en.svg)
+*Wireframe of the profile page*
+
 ## Suggested workflow
 
 1. **Sketch the structure** on paper: which parts the page has and in what order.

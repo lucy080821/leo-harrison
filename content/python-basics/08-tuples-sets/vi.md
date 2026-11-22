@@ -29,6 +29,9 @@ def min_max(nums):
 lo, hi = min_max([3, 1, 4])
 ```
 
+![So sánh list, tuple, set](/lessons/python-basics/08-tuples-sets-fig-vi.svg)
+*So sánh list, tuple, set*
+
 ## Set: tập hợp không trùng
 
 ```python

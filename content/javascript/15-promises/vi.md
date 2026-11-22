@@ -12,6 +12,9 @@ pending ──┤
 
 Một Promise **chỉ đổi trạng thái một lần**, rồi giữ nguyên.
 
+![Ba trạng thái của Promise](/lessons/javascript/15-promises-fig-vi.svg)
+*Ba trạng thái của Promise*
+
 ## Tạo Promise
 
 ```javascript

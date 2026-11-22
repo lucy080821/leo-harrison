@@ -30,6 +30,9 @@ border: 2px solid #0b6fd6; /* width, style, color */
 margin: 16px auto;         /* auto on left-right centers a block that has a width */
 ```
 
+![The box model: content, padding, border, margin](/lessons/css/02-box-model-fig-en.svg)
+*The box model: content, padding, border, margin*
+
 ## The sizing problem and `box-sizing`
 
 By default (`content-box`), `width` only counts the **content**. So:

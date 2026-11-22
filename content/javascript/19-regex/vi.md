@@ -12,6 +12,9 @@ const re2 = new RegExp("abc");
 "say hello".match(/hello/);  // thông tin khớp
 ```
 
+![Regex: ký tự, lớp ký tự và lượng từ](/lessons/javascript/19-regex-fig-vi.svg)
+*Regex: ký tự, lớp ký tự và lượng từ*
+
 ## Cờ (flags)
 
 | Cờ | Ý nghĩa |

@@ -4,6 +4,9 @@
 
 Chữ viết của hầu hết ngôn ngữ không ghi âm một cách nhất quán. Các nhà ngữ âm cần một hệ ký hiệu **một ký hiệu ứng với một âm** để mô tả mọi ngôn ngữ. Đó là **Bảng phiên âm quốc tế** (*International Phonetic Alphabet*, IPA) do Hội Ngữ âm Quốc tế (*International Phonetic Association*) duy trì.
 
+![Phiên âm rộng và phiên âm hẹp cho từ pin](/lessons/phonetics/02-transcription-ipa-fig-vi.svg)
+*Phiên âm rộng và phiên âm hẹp cho từ pin*
+
 ## Các phần của bảng IPA
 
 Bảng IPA chính thức gồm bảy khối:

@@ -29,6 +29,9 @@ Huấn luyện tiếp trên **hàng chục nghìn cặp (yêu cầu → câu tr�
 
 Con người **so sánh các câu trả lời** (A tốt hơn B). Học một **mô hình phần thưởng** rồi dùng **học tăng cường** (hoặc **DPO**, trực tiếp hơn) để mô hình ưu tiên câu trả lời hữu ích, trung thực, an toàn.
 
+![Nhiệt độ làm phân phối nhọn hơn hoặc phẳng hơn](/lessons/modern-ai/04-llm-concepts-sampling-fig-vi.svg)
+*Nhiệt độ làm phân phối nhọn hơn hoặc phẳng hơn*
+
 ## Sinh văn bản: chọn token kế tiếp
 
 Mỗi bước mô hình cho **logit** $z_i$ cho mọi token trong từ vựng; $\text{softmax}$ biến thành xác suất. Cách **chọn** quyết định tính cách đầu ra.

@@ -4,6 +4,9 @@
 
 JavaScript runs **one thing at a time** (single-threaded). But many tasks are **slow**: fetching data from the network, reading files, waiting for a user click. Waiting around would freeze the whole page. The solution: **start the task, go do other work, and be called back when it's done**. That's **asynchronous** programming.
 
+![The event loop: call stack, Web APIs, callback queue](/lessons/javascript/14-timers-event-loop-fig-en.svg)
+*The event loop: call stack, Web APIs, callback queue*
+
 ## setTimeout and setInterval
 
 ```javascript

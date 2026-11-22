@@ -16,6 +16,9 @@ if (loading) return <p>Đang tải...</p>;
 return <List />;
 ```
 
+![Controlled input: giá trị lấy từ state](/lessons/react/04-conditional-forms-fig-vi.svg)
+*Controlled input: giá trị lấy từ state*
+
 ## Input được điều khiển
 
 Cho React giữ giá trị của ô nhập bằng state:

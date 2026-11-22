@@ -13,6 +13,9 @@
 - `action`: địa chỉ nhận dữ liệu.
 - `method`: `get` (dữ liệu hiện trên URL, dùng cho tìm kiếm) hoặc `post` (gửi trong thân yêu cầu, dùng khi đăng nhập hoặc thay đổi dữ liệu).
 
+![Form gửi dữ liệu: label, input, nút gửi, request tới server](/lessons/html/06-forms-basics-fig-vi.svg)
+*Form gửi dữ liệu: label, input, nút gửi, request tới server*
+
 ## `<input>` và thuộc tính `type`
 
 ```html

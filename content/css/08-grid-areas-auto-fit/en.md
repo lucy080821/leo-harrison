@@ -32,6 +32,9 @@ To change the layout on small screens, just rewrite these strings inside a media
 }
 ```
 
+![grid-template-areas describes the layout with named areas](/lessons/css/08-grid-areas-auto-fit-fig-en.svg)
+*grid-template-areas describes the layout with named areas*
+
 ## Self-adjusting grids: `auto-fit` and `minmax()`
 
 ```css

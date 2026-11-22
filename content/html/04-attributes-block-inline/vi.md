@@ -19,6 +19,9 @@ Một số thuộc tính dùng được trên **mọi** thẻ:
 
 `id` dùng làm đích của liên kết (`<a href="#intro">`) và để JavaScript tìm phần tử. `class` dùng để CSS nhắm vào nhiều phần tử cùng lúc.
 
+![Phần tử block xuống dòng, inline nằm cùng dòng](/lessons/html/04-attributes-block-inline-fig-vi.svg)
+*Phần tử block xuống dòng, inline nằm cùng dòng*
+
 ## Thuộc tính `data-*`
 
 Cho phép gắn dữ liệu tuỳ ý vào thẻ, JavaScript đọc được qua `element.dataset`:

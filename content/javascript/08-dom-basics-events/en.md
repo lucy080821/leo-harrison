@@ -15,6 +15,9 @@ document
 
 The `document` object is the entry point for everything.
 
+![Events: the user clicks → the browser calls the handler](/lessons/javascript/08-dom-basics-events-fig-en.svg)
+*Events: the user clicks → the browser calls the handler*
+
 ## Selecting elements
 
 ```javascript

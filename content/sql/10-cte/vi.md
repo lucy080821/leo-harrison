@@ -20,6 +20,9 @@ WHERE total > 5000000;
 - Câu `SELECT` chính phía sau dùng `tên` như một bảng.
 - CTE **chỉ tồn tại trong câu lệnh đó**, không lưu lại gì.
 
+![CTE chia truy vấn thành các bước đặt tên](/lessons/sql/10-cte-fig-vi.svg)
+*CTE chia truy vấn thành các bước đặt tên*
+
 ## Nhiều CTE nối tiếp
 
 Cách nhau bằng dấu phẩy; CTE sau **dùng được** CTE trước:

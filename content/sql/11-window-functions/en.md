@@ -11,6 +11,9 @@ function(...) OVER (
 )
 ```
 
+![Window functions keep every row and add a computed column](/lessons/sql/11-window-functions-fig-en.svg)
+*Window functions keep every row and add a computed column*
+
 ## Ranking
 
 ```sql

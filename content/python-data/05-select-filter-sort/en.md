@@ -11,6 +11,9 @@ df["product"]                      # one column -> Series
 df[["product", "units"]]           # several columns -> DataFrame
 ```
 
+![Filtering rows with a boolean mask](/lessons/python-data/05-select-filter-sort-fig-en.svg)
+*Filtering rows with a boolean mask*
+
 ## Selecting rows: loc and iloc
 
 | | Based on | Example |

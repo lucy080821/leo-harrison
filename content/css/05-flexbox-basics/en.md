@@ -10,6 +10,9 @@
 
 `.row` becomes a **flex container**; its direct children become **flex items** and line up in a horizontal row.
 
+![Flexbox: main axis and cross axis](/lessons/css/05-flexbox-basics-fig-en.svg)
+*Flexbox: main axis and cross axis*
+
 ## Two axes
 
 ```text

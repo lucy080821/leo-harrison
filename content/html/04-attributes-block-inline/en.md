@@ -19,6 +19,9 @@ Some attributes work on **every** tag:
 
 `id` is the target of links (`<a href="#intro">`) and how JavaScript finds an element. `class` lets CSS target many elements at once.
 
+![Block elements start a new line, inline elements flow in a line](/lessons/html/04-attributes-block-inline-fig-en.svg)
+*Block elements start a new line, inline elements flow in a line*
+
 ## The `data-*` attributes
 
 They attach arbitrary data to a tag, readable in JavaScript through `element.dataset`:

@@ -18,6 +18,9 @@ const { address: { city } } = user;         // lồng nhau
 function show({ name, age }) { return `${name} (${age})`; }
 ```
 
+![Cú pháp ES6+: destructuring, spread, template literal](/lessons/javascript/13-modern-javascript-fig-vi.svg)
+*Cú pháp ES6+: destructuring, spread, template literal*
+
 ## Spread (...) và Rest (...)
 
 Cùng ba dấu chấm nhưng hai vai trò:

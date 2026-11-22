@@ -4,6 +4,9 @@
 
 Một người nghe thật sự **hiểu** tiếng nói chứ không "đọc" phổ đồ. Họ phải tách tiếng nói khỏi tiếng ồn, chuẩn hoá giữa các người nói, và nhận ra từ trong dòng âm liên tục. **Tri nhận lời nói** (*speech perception*) nghiên cứu cách điều đó xảy ra.
 
+![Tri nhận phạm trù: nhận dạng chuyển đột ngột ở ranh giới (minh hoạ)](/lessons/phonetics/21-speech-perception-fig-vi.svg)
+*Tri nhận phạm trù: nhận dạng chuyển đột ngột ở ranh giới (minh hoạ)*
+
 ## Dấu hiệu âm học (cues)
 
 Một âm thường được nhận biết nhờ **nhiều dấu hiệu** cùng lúc. Ví dụ cho sự khác nhau giữa /b/ và /p/ đầu từ có thể là: **VOT**, độ bật hơi, **F1 ở đầu nguyên âm** và cao độ F0 ở đầu nguyên âm. Các dấu hiệu có thể **bù trừ** cho nhau (*trading relations*): VOT ngắn hơn một chút có thể được bù bằng F1 khác.

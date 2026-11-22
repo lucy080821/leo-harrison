@@ -12,6 +12,9 @@
 
 For incomes `[10, 12, 11, 13, 500]` million: the mean is 109, but the median is 12, which reflects the "typical" person far better. **Skewed data or outliers → prefer the median.**
 
+![The correlation coefficient r for three kinds of relationship](/lessons/python-data/13-statistics-correlation-fig-en.svg)
+*The correlation coefficient r for three kinds of relationship*
+
 ## Measuring spread
 
 | Measure | pandas | Meaning |

@@ -17,6 +17,9 @@ The final project of the **Python for Data Analysts** course. You'll do exactly 
 8. Conclude                  put it into words: what do the numbers say? what to recommend?
 ```
 
+![Report workflow: read → clean → aggregate → plot](/lessons/python-data/14-project-sales-report-fig-en.svg)
+*Report workflow: read → clean → aggregate → plot*
+
 ## Steps 1-3: load and transform
 
 ```python

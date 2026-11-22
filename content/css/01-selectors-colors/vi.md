@@ -15,6 +15,9 @@ selector {
 - **value (giá trị)**: thay đổi thành gì, ví dụ `tomato`.
 - Mỗi khai báo kết thúc bằng dấu `;`.
 
+![Cấu tạo một quy tắc CSS](/lessons/css/01-selectors-colors-fig-vi.svg)
+*Cấu tạo một quy tắc CSS*
+
 ## Ba bộ chọn cơ bản
 
 | Bộ chọn | Ví dụ | Chọn |

@@ -8,3 +8,7 @@
 
 1. **Phân tích giọng của chính bạn.** Ghi âm bạn đọc ba câu tiếng Anh. Phiên âm các từ khó (rộng), đánh dấu trọng âm, đo F0 của một câu hỏi và một câu trần thuật, và đo F1-F2 của hai nguyên âm. Viết nửa trang nêu **một** điểm bạn muốn cải thiện và vì sao.
 2. **Một nghiên cứu nhỏ.** Làm theo bài thiết kế nghiên cứu, ví dụ đo VOT của /t/ và /d/ ở ít nhất 3 người. Viết báo cáo ngắn với câu hỏi, cách đo, kết quả (có đơn vị) và giới hạn.
+
+![Bản đồ toàn khoá](/lessons/phonetics/41-capstone-final-fig-vi.svg)
+*Bản đồ toàn khoá*
+

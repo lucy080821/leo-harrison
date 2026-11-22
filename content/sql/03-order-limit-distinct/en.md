@@ -20,6 +20,9 @@ ORDER BY category ASC, price DESC;    -- by category A→Z, priciest first withi
 
 With `NULL`: in SQLite, `NULL` counts as the **smallest** value (first with `ASC`).
 
+![ORDER BY sorts, LIMIT takes a slice](/lessons/sql/03-order-limit-distinct-fig-en.svg)
+*ORDER BY sorts, LIMIT takes a slice*
+
 ## LIMIT and OFFSET: taking a slice
 
 ```sql

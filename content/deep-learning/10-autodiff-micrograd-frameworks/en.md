@@ -37,6 +37,9 @@ def __mul__(self, other):
 
 A node may be **used many times** (e.g. $a$ appears in two branches). The total gradient is the **sum of the contributions** (the multi-path chain rule). Overwriting with `=` would be wrong.
 
+![The computation graph of L = (a·b + c) with node gradients](/lessons/deep-learning/10-autodiff-micrograd-frameworks-fig-en.svg)
+*The computation graph of L = (a·b + c) with node gradients*
+
 ## Local derivatives to remember
 
 | Operation | Local derivative |

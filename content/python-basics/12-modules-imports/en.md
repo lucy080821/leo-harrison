@@ -15,6 +15,9 @@ from datetime import date, timedelta
 - Avoid `from module import *` since it muddles names.
 - Type `dir(math)` to list contents, `help(math.sqrt)` for guidance.
 
+![The standard library: bring in modules with import](/lessons/python-basics/12-modules-imports-fig-en.svg)
+*The standard library: bring in modules with import*
+
 ## math: mathematics
 
 ```python

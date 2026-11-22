@@ -15,6 +15,9 @@ selector {
 - **value**: what it changes to, e.g. `tomato`.
 - Each declaration ends with a `;`.
 
+![Anatomy of a CSS rule](/lessons/css/01-selectors-colors-fig-en.svg)
+*Anatomy of a CSS rule*
+
 ## Three basic selectors
 
 | Selector | Example | Selects |

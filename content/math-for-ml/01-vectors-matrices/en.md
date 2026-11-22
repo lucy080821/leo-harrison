@@ -17,6 +17,9 @@ a + b          # [5 7 9]     component-wise addition
 2 * a          # [2 4 6]     multiply by a number (scalar)
 ```
 
+![Adding two vectors by the parallelogram rule](/lessons/math-for-ml/01-vectors-matrices-fig-en.svg)
+*Adding two vectors by the parallelogram rule*
+
 ## The dot product
 
 $$

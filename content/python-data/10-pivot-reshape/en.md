@@ -39,6 +39,9 @@ df.pivot_table(index="region", columns="category", values="revenue",
 
 Several functions at once: `aggfunc=["sum", "mean"]`. Several row levels: `index=["region", "product"]`.
 
+![pivot: from long format to wide format](/lessons/python-data/10-pivot-reshape-fig-en.svg)
+*pivot: from long format to wide format*
+
 ## groupby + unstack: the second way
 
 ```python

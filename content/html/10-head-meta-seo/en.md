@@ -26,6 +26,9 @@ The `<head>` holds **information about the page** that users don't see directly 
 | `link rel="stylesheet"` | Loads a CSS file |
 | `script defer` | Loads JavaScript without blocking page rendering |
 
+![title and meta description appear in search results](/lessons/html/10-head-meta-seo-fig-en.svg)
+*title and meta description appear in search results*
+
 ## Open Graph: preview when sharing
 
 When you paste a link into Facebook, Slack, etc., they read these tags to build a preview card:

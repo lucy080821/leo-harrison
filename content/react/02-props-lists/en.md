@@ -14,6 +14,9 @@ function Badge({ text, color }) {
 
 Destructure `{ text, color }` for tidiness. Non-string values go in `{}`: `<Counter start={5} />`.
 
+![Props flow one way, from parent to child](/lessons/react/02-props-lists-fig-en.svg)
+*Props flow one way, from parent to child*
+
 ## children
 
 Content between the tags becomes the special prop `children`:

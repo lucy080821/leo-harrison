@@ -16,6 +16,9 @@ if (loading) return <p>Loading...</p>;
 return <List />;
 ```
 
+![Controlled input: the value comes from state](/lessons/react/04-conditional-forms-fig-en.svg)
+*Controlled input: the value comes from state*
+
 ## Controlled inputs
 
 Let React own the input's value through state:

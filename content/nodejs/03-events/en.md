@@ -27,3 +27,7 @@ class Downloader extends EventEmitter {
 ```
 
 This lets your objects "talk" to the rest of the program without depending on each other.
+
+![EventEmitter: emit calls every listener registered with on](/lessons/nodejs/03-events-fig-en.svg)
+*EventEmitter: emit calls every listener registered with on*
+

@@ -27,6 +27,9 @@ Với tiếng Việt, từ ghép nhiều âm tiết ("học sinh") nên cần c�
 - **Stemming/lemmatization**: đưa "running", "ran" về gốc "run".
 - Mô hình hiện đại (Transformer) thường **bỏ qua** các bước này và học trực tiếp từ văn bản thô.
 
+![Từ văn bản đến vector: tách token → mã số → túi từ](/lessons/modern-ai/01-nlp-text-representation-fig-vi.svg)
+*Từ văn bản đến vector: tách token → mã số → túi từ*
+
 ## Bước 2: Túi từ (Bag of Words, BoW)
 
 Mỗi tài liệu thành **vector đếm** theo từ vựng, **bỏ qua thứ tự**:

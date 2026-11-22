@@ -22,6 +22,9 @@ Phần trăm là **tiến độ** của một lượt chạy. Hai mốc đặc b
 .dot { animation: pulse 1.5s ease-in-out infinite; }
 ```
 
+![@keyframes định nghĩa các trạng thái theo phần trăm thời gian](/lessons/css/12-keyframe-animations-fig-vi.svg)
+*@keyframes định nghĩa các trạng thái theo phần trăm thời gian*
+
 ## Các thuộc tính animation
 
 | Thuộc tính | Ý nghĩa |

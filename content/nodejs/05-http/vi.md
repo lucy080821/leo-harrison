@@ -23,6 +23,9 @@ server.listen(3000);   // mở cổng 3000
 | `req.url` | đường dẫn + query, ví dụ `/users?id=3` |
 | `req.headers` | các header gửi kèm |
 
+![Request → http.createServer → Response](/lessons/nodejs/05-http-fig-vi.svg)
+*Request → http.createServer → Response*
+
 ## Response (`res`)
 
 - `res.writeHead(status, headers)`: đặt mã trạng thái và header.

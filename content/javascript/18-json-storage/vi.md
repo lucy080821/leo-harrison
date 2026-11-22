@@ -21,6 +21,9 @@ Khác với đối tượng JavaScript, JSON **nghiêm ngặt hơn**:
 - **Không** có dấu phẩy thừa, không có chú thích, không có hàm và `undefined`.
 - Kiểu cho phép: chuỗi, số, boolean, `null`, mảng, đối tượng.
 
+![JSON.stringify và JSON.parse chuyển đổi giữa đối tượng và chuỗi](/lessons/javascript/18-json-storage-fig-vi.svg)
+*JSON.stringify và JSON.parse chuyển đổi giữa đối tượng và chuỗi*
+
 ## stringify và parse
 
 ```javascript

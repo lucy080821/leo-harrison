@@ -5,3 +5,7 @@
 ## Một việc nhỏ
 
 Hãy tìm một cặp tối thiểu trong tiếng Việt chỉ khác nhau ở một âm đầu (ví dụ *tai/thai*) và nói bạn nghe thấy khác biệt thế nào.
+
+![Bản đồ Module 6: âm vị học](/lessons/phonetics/34-review-m6-fig-vi.svg)
+*Bản đồ Module 6: âm vị học*
+

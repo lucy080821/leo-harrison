@@ -11,6 +11,9 @@ A **syllable** consists of:
 
 For *strengths* `/streŋθs/`: onset `/str/`, nucleus `/e/`, coda `/ŋθs/` (many speakers say `/ŋkθs/`).
 
+![Syllable structure: onset and rhyme (nucleus + coda)](/lessons/phonetics/26-syllable-phonotactics-fig-en.svg)
+*Syllable structure: onset and rhyme (nucleus + coda)*
+
 ## The maximum structure
 
 English syllables can be summarised as **(C)³V(C)⁴**: at most **3** consonants at the start and **4** at the end.

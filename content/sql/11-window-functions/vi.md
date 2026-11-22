@@ -11,6 +11,9 @@ hàm(...) OVER (
 )
 ```
 
+![Hàm cửa sổ giữ nguyên từng dòng và thêm cột tính toán](/lessons/sql/11-window-functions-fig-vi.svg)
+*Hàm cửa sổ giữ nguyên từng dòng và thêm cột tính toán*
+
 ## Xếp hạng
 
 ```sql

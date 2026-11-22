@@ -26,6 +26,9 @@ Every function comes in three flavours:
 
 On a server prefer the **Promise** form so other requests aren't blocked.
 
+![path joins paths; fs reads and writes files](/lessons/nodejs/02-fs-path-fig-en.svg)
+*path joins paths; fs reads and writes files*
+
 ## path — build paths correctly
 
 Don't join strings by hand (`"a" + "/" + "b"`) because Windows uses `\`. Let `path` handle it:

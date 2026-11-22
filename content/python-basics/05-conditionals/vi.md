@@ -21,6 +21,9 @@ Ba điều cần nhớ:
 
 `elif` (else if) có thể có nhiều, `else` không bắt buộc.
 
+![Lưu đồ if / elif / else](/lessons/python-basics/05-conditionals-fig-vi.svg)
+*Lưu đồ if / elif / else*
+
 ## Phép so sánh
 
 | Toán tử | Ý nghĩa |

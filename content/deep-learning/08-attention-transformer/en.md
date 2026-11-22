@@ -14,6 +14,9 @@ Picture a **soft lookup** in a dictionary:
 
 Match the **query** against every **key** ⇒ weights ⇒ mix the **values** by those weights.
 
+![An illustrative attention matrix: each word attends to the others](/lessons/deep-learning/08-attention-transformer-fig-en.svg)
+*An illustrative attention matrix: each word attends to the others*
+
 ## Scaled dot-product attention
 
 $$

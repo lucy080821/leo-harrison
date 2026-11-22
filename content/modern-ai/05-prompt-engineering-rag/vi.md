@@ -15,6 +15,9 @@
 
 Nguyên tắc nền tảng: **cụ thể hơn thì tốt hơn** và **coi mô hình như một đồng nghiệp thông minh nhưng chưa biết gì về bối cảnh của bạn**.
 
+![RAG: tìm tài liệu liên quan rồi đưa vào prompt cho mô hình](/lessons/modern-ai/05-prompt-engineering-rag-fig-vi.svg)
+*RAG: tìm tài liệu liên quan rồi đưa vào prompt cho mô hình*
+
 ## Các kỹ thuật phổ biến
 
 ### Zero-shot và few-shot

@@ -27,3 +27,7 @@ class Downloader extends EventEmitter {
 ```
 
 Cách này cho đối tượng của bạn "nói chuyện" với phần còn lại của chương trình mà không phụ thuộc lẫn nhau.
+
+![EventEmitter: emit gọi mọi listener đã đăng ký bằng on](/lessons/nodejs/03-events-fig-vi.svg)
+*EventEmitter: emit gọi mọi listener đã đăng ký bằng on*
+

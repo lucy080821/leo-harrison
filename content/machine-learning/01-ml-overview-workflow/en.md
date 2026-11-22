@@ -15,6 +15,9 @@ Supervised learning splits in two:
 - **Classification**: predict a **discrete label** (spam or not, flower species).
 - **Regression**: predict a **continuous number** (house price, temperature).
 
+![The Machine Learning workflow from data to deployment](/lessons/machine-learning/01-ml-overview-workflow-fig-en.svg)
+*The Machine Learning workflow from data to deployment*
+
 ## Core concepts
 
 - **Sample**: one data row. **Features** $X$: the input columns. **Label/target** $y$: what we want to predict.

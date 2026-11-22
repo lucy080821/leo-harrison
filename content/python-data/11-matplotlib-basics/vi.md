@@ -22,6 +22,9 @@ plt.show()
 
 Mỗi biểu đồ tốt cần: **tiêu đề**, **nhãn trục** (có đơn vị), và dễ đọc.
 
+![Các thành phần của một biểu đồ matplotlib](/lessons/python-data/11-matplotlib-basics-fig-vi.svg)
+*Các thành phần của một biểu đồ matplotlib*
+
 ## Chọn loại biểu đồ
 
 | Muốn thể hiện | Biểu đồ | Hàm |

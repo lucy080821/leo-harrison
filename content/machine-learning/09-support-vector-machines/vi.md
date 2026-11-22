@@ -18,6 +18,9 @@ Có vô số đường thẳng tách hai lớp. SVM chọn đường **cách xa 
 
 Bài toán tối ưu (SVM lề cứng): $\min\ \tfrac12\|\mathbf{w}\|^2$ với ràng buộc $y_i(\mathbf{w}\cdot\mathbf{x}_i+b)\ge 1$.
 
+![SVM tìm đường phân cách có lề lớn nhất](/lessons/machine-learning/09-support-vector-machines-fig-vi.svg)
+*SVM tìm đường phân cách có lề lớn nhất*
+
 ## Lề mềm và tham số C
 
 Dữ liệu thực **lẫn nhiễu**, không tách hoàn hảo. **Lề mềm** cho phép một số điểm vi phạm với một mức phạt:

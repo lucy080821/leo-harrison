@@ -5,3 +5,7 @@
 ## Một việc nhỏ
 
 Chọn một khác biệt giữa tiếng Việt và tiếng Anh trong bài, đưa ra một dự đoán về lỗi mà nó gây ra, rồi nghĩ cách bạn sẽ kiểm tra dự đoán đó (ví dụ bằng ghi âm và đo).
+
+![Bản đồ Module 7: Việt–Anh](/lessons/phonetics/38-review-m7-fig-vi.svg)
+*Bản đồ Module 7: Việt–Anh*
+

@@ -16,6 +16,9 @@ age = 21;             // OK
 - Avoid `var` (the old way, prone to scoping bugs).
 - Names are case-sensitive and usually written in `camelCase`: `userName`.
 
+![A variable is a labelled box holding a value; typeof tells the type](/lessons/javascript/01-variables-console-fig-en.svg)
+*A variable is a labelled box holding a value; typeof tells the type*
+
 ## Basic data types
 
 | Type | Example | Notes |

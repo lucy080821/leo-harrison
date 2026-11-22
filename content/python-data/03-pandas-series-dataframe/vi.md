@@ -11,6 +11,9 @@
 | **Series** | Một **cột** dữ liệu có nhãn (chỉ mục) | Một cột Excel |
 | **DataFrame** | Một **bảng** gồm nhiều Series chung chỉ mục | Một sheet Excel / bảng SQL |
 
+![DataFrame: chỉ mục, cột và giá trị](/lessons/python-data/03-pandas-series-dataframe-fig-vi.svg)
+*DataFrame: chỉ mục, cột và giá trị*
+
 ## Series
 
 ```python

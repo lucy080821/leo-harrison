@@ -16,6 +16,9 @@ x = np.linalg.solve(A, b)        # [0.8, 1.4]
 
 Use `solve` rather than `inv(A) @ b`: **faster and numerically more stable**.
 
+![A network layer is a matrix product: (n×d)·(d×k) = (n×k)](/lessons/math-for-ml/02-linear-algebra-ml-fig-en.svg)
+*A network layer is a matrix product: (n×d)·(d×k) = (n×k)*
+
 ## Determinant and invertibility
 
 For a $2\times2$ matrix: $\det\begin{pmatrix}a&b\\c&d\end{pmatrix} = ad - bc$.

@@ -21,6 +21,9 @@ cat.speak();                     // "Cat makes a sound"
 - `constructor` khởi tạo đối tượng; `this` là đối tượng đang được tạo/đang gọi.
 - Phải dùng `new` để tạo đối tượng.
 
+![Lớp là bản thiết kế, đối tượng là thực thể tạo từ lớp](/lessons/javascript/17-classes-oop-fig-vi.svg)
+*Lớp là bản thiết kế, đối tượng là thực thể tạo từ lớp*
+
 ## Kế thừa với extends và super
 
 ```javascript

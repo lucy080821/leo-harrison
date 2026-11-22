@@ -28,6 +28,9 @@ delete person.email;       // xoá
 
 > `const` chỉ cấm **gán lại biến**, không cấm sửa **bên trong** đối tượng.
 
+![Đối tượng: tập các cặp khoá và giá trị](/lessons/javascript/06-objects-fig-vi.svg)
+*Đối tượng: tập các cặp khoá và giá trị*
+
 ## `this` trong phương thức
 
 Khi gọi `person.greet()`, `this` là `person`. Vì vậy `this.name` là `"Lexi"`. Hãy dùng cú pháp phương thức `greet() {}`, **không** dùng arrow function cho phương thức vì arrow không có `this` riêng.

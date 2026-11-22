@@ -4,6 +4,9 @@
 
 When we transcribe `/kæt/` we get three separate symbols. But in speech their articulatory movements **overlap** in time. This is called **coarticulation**: the articulation of one sound is influenced by neighbouring sounds.
 
+![A gestural score: articulators overlap in time (illustrative)](/lessons/phonetics/10-coarticulation-timing-fig-en.svg)
+*A gestural score: articulators overlap in time (illustrative)*
+
 ## Two directions of influence
 
 - **Anticipatory** (right-to-left): a feature of a later sound appears early. For example, the lips begin rounding **before** reaching the vowel `/uː/` in *two* `/tuː/`, already during the `/t/`.

@@ -10,6 +10,9 @@ Trình duyệt xét lần lượt:
 2. **Độ cụ thể (specificity)** của bộ chọn: cụ thể hơn thì thắng.
 3. **Thứ tự xuất hiện**: bằng nhau thì quy tắc **viết sau** thắng.
 
+![Thang độ ưu tiên: inline > id > class > thẻ](/lessons/css/15-cascade-specificity-fig-vi.svg)
+*Thang độ ưu tiên: inline > id > class > thẻ*
+
 ## Độ cụ thể (specificity)
 
 Mỗi bộ chọn được chấm điểm theo ba cột `(id, class, thẻ)`:

@@ -26,6 +26,9 @@ SELECT * FROM products WHERE price BETWEEN 1000000 AND 5000000;
 SELECT * FROM products WHERE category IN ('Furniture', 'Stationery');
 ```
 
+![WHERE filters rows](/lessons/sql/02-where-filtering-fig-en.svg)
+*WHERE filters rows*
+
 ## Combining conditions: AND, OR, NOT
 
 ```sql

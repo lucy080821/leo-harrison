@@ -18,6 +18,9 @@ There are infinitely many lines separating two classes. SVM picks the one **fart
 
 The optimization problem (hard-margin SVM): $\min\ \tfrac12\|\mathbf{w}\|^2$ subject to $y_i(\mathbf{w}\cdot\mathbf{x}_i+b)\ge 1$.
 
+![SVM finds the separating line with the largest margin](/lessons/machine-learning/09-support-vector-machines-fig-en.svg)
+*SVM finds the separating line with the largest margin*
+
 ## Soft margin and the parameter C
 
 Real data is **noisy** and can't be separated perfectly. The **soft margin** lets some points violate it at a cost:

@@ -14,6 +14,9 @@ Thử khớp dữ liệu $y = \sin x + \text{nhiễu}$ bằng đa thức bậc k
 
 Mô hình quá phức tạp **học thuộc nhiễu** của tập train thay vì quy luật thật.
 
+![Underfit, vừa khớp, overfit với đa thức bậc 1, 4, 15](/lessons/machine-learning/03-overfitting-regularization-fig-vi.svg)
+*Underfit, vừa khớp, overfit với đa thức bậc 1, 4, 15*
+
 ## Đặc trưng đa thức
 
 Biến hồi quy tuyến tính thành **phi tuyến** bằng cách thêm các luỹ thừa của đặc trưng:

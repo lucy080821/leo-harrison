@@ -21,6 +21,9 @@ for _ in range(50):
     x = x - 0.1 * 2 * (x - 3)     # cực tiểu hoá (x-3)^2, đạo hàm 2(x-3)
 ```
 
+![Tốc độ học: quá nhỏ, vừa, quá lớn](/lessons/math-for-ml/04-gradient-descent-fig-vi.svg)
+*Tốc độ học: quá nhỏ, vừa, quá lớn*
+
 ## Tốc độ học: tham số quan trọng nhất
 
 | Learning rate | Hiện tượng |

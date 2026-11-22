@@ -12,6 +12,9 @@ Stress, intonation, rhythm and tone all appear through three acoustic quantities
 
 Note: these are **measurable** quantities, while the "perception" is the listener's response and is not linearly related (see module 4).
 
+![F0, intensity and duration: three prosodic cues (illustrative)](/lessons/phonetics/17-prosodic-acoustics-fig-en.svg)
+*F0, intensity and duration: three prosodic cues (illustrative)*
+
 ## F0 of the voice
 
 Mean F0 **differs between speaker groups**: men are usually lower than women, children higher. For example the speaking F0 of adult men is often around **100 to 120 Hz** and of women around **190 to 220 Hz** (these are **approximate** values; for precise figures by age group see Titze 1989 and Baken and Orlikoff 2000). Another often-cited summary lists means of about 106 Hz (men) and 193 Hz (women) for a sustained /a/, which shows that measurements depend on the **speaking task**.

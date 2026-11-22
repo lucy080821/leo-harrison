@@ -19,6 +19,9 @@ customers.merge(orders, left_on="id", right_on="customer_id", how="inner")
 - If both tables **share the key column name**, just use `on="id"`.
 - `how=`: the kind of join (see below).
 
+![merge: join two tables on a shared key](/lessons/python-data/09-merge-concat-fig-en.svg)
+*merge: join two tables on a shared key*
+
 ## The join kinds (how)
 
 With left table `customers` (ids 1-4) and right table `orders` (customers 1, 1, 2, 3, 9):

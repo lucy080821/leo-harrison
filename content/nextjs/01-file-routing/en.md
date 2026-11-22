@@ -12,6 +12,9 @@ cd my-app
 npm run dev      # http://localhost:3000
 ```
 
+![The app/ folders map to URLs](/lessons/nextjs/01-file-routing-fig-en.svg)
+*The app/ folders map to URLs*
+
 ## App Router: folders = URLs
 
 Inside `app/`, each folder is a URL segment, and the special file `page.js` makes it **reachable**:

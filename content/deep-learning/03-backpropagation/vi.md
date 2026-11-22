@@ -12,6 +12,9 @@ Lan truyền xuôi là chuỗi các phép tính đơn giản:
 
 Để cập nhật bằng gradient descent ta cần $\dfrac{\partial L}{\partial W_1}$, $\dfrac{\partial L}{\partial b_1}$, $\dfrac{\partial L}{\partial W_2}$, $\dfrac{\partial L}{\partial b_2}$.
 
+![Lan truyền ngược: đạo hàm chảy ngược theo đồ thị tính toán](/lessons/deep-learning/03-backpropagation-fig-vi.svg)
+*Lan truyền ngược: đạo hàm chảy ngược theo đồ thị tính toán*
+
 ## Ý tưởng: đi ngược từ cuối về đầu
 
 Quy tắc chuỗi: gradient tại một nút = (gradient truyền về từ nút sau) × (đạo hàm **cục bộ** của nút đó). Đi ngược từ $L$ về, **tái sử dụng** các đạo hàm đã tính, nên chi phí chỉ **cỡ một lần lan truyền xuôi**, thay vì tính riêng cho từng tham số.

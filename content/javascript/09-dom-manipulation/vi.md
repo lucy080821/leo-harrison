@@ -19,6 +19,9 @@ list.appendChild(li);                       // 3. gắn vào cây DOM → hiện
 | `el.cloneNode(true)` | Sao chép (kèm con) |
 | `parent.replaceChildren()` | Xoá mọi con |
 
+![Cây DOM và thao tác tạo, thêm phần tử](/lessons/javascript/09-dom-manipulation-fig-vi.svg)
+*Cây DOM và thao tác tạo, thêm phần tử*
+
 ## classList: làm việc với class
 
 ```javascript

@@ -10,6 +10,9 @@ Choose a **specific, measurable** question, small enough to answer. For example:
 - **How far apart** are F1 of /ɪ/ and /iː/ in a group of learners?
 - **How do** the vowel durations in *bat* and *bad* differ?
 
+![The workflow of a small phonetic study](/lessons/phonetics/40-designing-a-study-fig-en.svg)
+*The workflow of a small phonetic study*
+
 ## 2. The hypothesis
 
 A prediction that can be **wrong**. For example: "The VOT of /t/ is at least 30 ms longer than that of /d/." The hypothesis tells you **what to measure** and **what to compare**.

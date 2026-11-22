@@ -16,6 +16,9 @@ x = np.linalg.solve(A, b)        # [0.8, 1.4]
 
 Dùng `solve` thay vì `inv(A) @ b`: **nhanh hơn và ổn định số học hơn**.
 
+![Một tầng mạng là phép nhân ma trận: (n×d)·(d×k) = (n×k)](/lessons/math-for-ml/02-linear-algebra-ml-fig-vi.svg)
+*Một tầng mạng là phép nhân ma trận: (n×d)·(d×k) = (n×k)*
+
 ## Định thức và khả nghịch
 
 Với ma trận $2\times2$: $\det\begin{pmatrix}a&b\\c&d\end{pmatrix} = ad - bc$.

@@ -18,6 +18,9 @@ function Parent() {
 
 React data flows **down** (props); events flow **up** (callbacks).
 
+![Lift state up to the parent to share it](/lessons/react/07-lifting-todo-fig-en.svg)
+*Lift state up to the parent to share it*
+
 ## How to build a React app
 
 1. Split the UI into components.

@@ -15,6 +15,9 @@ WHERE price > (SELECT AVG(price) FROM products);
 
 The database computes `AVG(price)` first (a single number), then uses it in `WHERE`. You **can't** write `WHERE price > AVG(price)` directly because `WHERE` runs before aggregates exist.
 
+![The subquery runs first and feeds the outer query](/lessons/sql/08-subqueries-fig-en.svg)
+*The subquery runs first and feeds the outer query*
+
 ## A subquery returning a list: IN
 
 ```sql

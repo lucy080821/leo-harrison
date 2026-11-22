@@ -15,6 +15,9 @@ input.addEventListener("keydown", (e) => {
 });
 ```
 
+![Sự kiện nổi bọt từ phần tử con lên cha](/lessons/javascript/10-events-forms-fig-vi.svg)
+*Sự kiện nổi bọt từ phần tử con lên cha*
+
 ## Xử lý form
 
 Khi form được gửi, trình duyệt mặc định **tải lại trang**. Với ứng dụng JavaScript, bạn muốn tự xử lý nên phải chặn hành vi mặc định:

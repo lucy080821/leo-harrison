@@ -20,6 +20,9 @@ fruits.at(-1);        // "xoài" (cách viết gọn)
 | `slice(a, b)` | Lấy bản sao từ `a` đến trước `b` | **Không** |
 | `concat`, `[...a, ...b]` | Nối mảng | Không |
 
+![Mảng: phần tử đánh chỉ số từ 0](/lessons/javascript/05-arrays-fig-vi.svg)
+*Mảng: phần tử đánh chỉ số từ 0*
+
 ## Tìm kiếm
 
 ```javascript

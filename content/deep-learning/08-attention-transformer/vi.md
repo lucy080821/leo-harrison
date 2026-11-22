@@ -14,6 +14,9 @@ Hình dung như **tra cứu mềm** trong từ điển:
 
 So khớp **query** với mọi **key** ⇒ trọng số ⇒ trộn các **value** theo trọng số.
 
+![Ma trận attention minh hoạ: mỗi từ chú ý tới các từ khác](/lessons/deep-learning/08-attention-transformer-fig-vi.svg)
+*Ma trận attention minh hoạ: mỗi từ chú ý tới các từ khác*
+
 ## Scaled dot-product attention
 
 $$

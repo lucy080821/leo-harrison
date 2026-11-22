@@ -6,6 +6,9 @@
 
 **2. Instrumental analysis**: using instruments to obtain objective, repeatable numbers. The two are often combined.
 
+![Three ways to study speech: articulatory, acoustic, auditory](/lessons/phonetics/03-studying-speech-fig-en.svg)
+*Three ways to study speech: articulatory, acoustic, auditory*
+
 ## The main instrumental techniques
 
 | Goal | Technique | Tells you |

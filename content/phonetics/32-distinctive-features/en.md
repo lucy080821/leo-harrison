@@ -4,6 +4,9 @@
 
 The phoneme `/p/` is not an indivisible "atom". It is a **bundle** of features: voiceless, bilabial, plosive... Breaking it down lets us **group** sounds that behave alike and write **rules** compactly.
 
+![A distinctive-feature matrix for /p b m/](/lessons/phonetics/32-distinctive-features-fig-en.svg)
+*A distinctive-feature matrix for /p b m/*
+
 ## Distinctive features
 
 A **distinctive feature** is the smallest property that **distinguishes** one sound from another in a language. **Roman Jakobson** (1941) proposed the theory of features; **Chomsky and Halle** (1968, *The Sound Pattern of English*) formalised them as **binary** features (+ or −).

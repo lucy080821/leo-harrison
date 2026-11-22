@@ -15,6 +15,9 @@ df["region"].unique()          # thấy ngay 'south', ' East '... lộn xộn
 df.describe()                  # giá trị lạ, ngoại lệ?
 ```
 
+![Dữ liệu thiếu (NaN): xoá dòng hay điền giá trị](/lessons/python-data/06-clean-missing-data-fig-vi.svg)
+*Dữ liệu thiếu (NaN): xoá dòng hay điền giá trị*
+
 ## Dữ liệu thiếu (NaN)
 
 pandas dùng `NaN` cho ô trống.

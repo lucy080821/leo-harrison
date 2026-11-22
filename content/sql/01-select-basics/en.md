@@ -19,6 +19,9 @@ Every lesson uses the same sample database (reloaded fresh on every run, so feel
 | `employees` | `id`, `name`, `department_id`, `salary`, `manager_id`, `hire_date` |
 
 
+![SELECT picks columns from a table](/lessons/sql/01-select-basics-fig-en.svg)
+*SELECT picks columns from a table*
+
 ## The SELECT statement
 
 ```sql

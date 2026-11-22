@@ -10,6 +10,9 @@
 - `loading="lazy"`: chỉ tải ảnh khi người dùng cuộn tới gần.
 - `alt` luôn cần; ảnh trang trí thuần tuý dùng `alt=""` (rỗng) để trình đọc màn hình bỏ qua.
 
+![Trình duyệt chọn nguồn phù hợp trong picture/audio/video](/lessons/html/08-images-audio-video-fig-vi.svg)
+*Trình duyệt chọn nguồn phù hợp trong picture/audio/video*
+
 ## figure và figcaption
 
 Dùng khi ảnh (hoặc biểu đồ, đoạn code) có **chú thích**:

@@ -13,6 +13,9 @@ except ValueError:                # runs IF a ValueError occurs
 
 If there's no error, the `except` block is skipped.
 
+![try / except / else / finally](/lessons/python-basics/14-exceptions-fig-en.svg)
+*try / except / else / finally*
+
 ## Common exceptions
 
 | Exception | When |

@@ -10,6 +10,9 @@ $P(A)\in[0,1]$ đo khả năng sự kiện $A$ xảy ra. Quy tắc cơ bản:
 - $P(A\text{ hoặc }B) = P(A) + P(B) - P(A\text{ và }B)$
 - Hai sự kiện **độc lập**: $P(A\text{ và }B) = P(A)P(B)$
 
+![Cây xác suất cho định lý Bayes](/lessons/math-for-ml/05-probability-basics-fig-vi.svg)
+*Cây xác suất cho định lý Bayes*
+
 ## Xác suất có điều kiện
 
 $P(A\mid B)$ là xác suất của $A$ **biết rằng $B$ đã xảy ra**:

@@ -43,6 +43,9 @@ lengths = [len(w) for w in ["a", "bb", "ccc"]]    # [1, 2, 3]
 pairs = [(x, y) for x in range(2) for y in range(2)]   # vòng lặp lồng
 ```
 
+![List comprehension: lọc rồi biến đổi từng phần tử](/lessons/python-basics/11-comprehensions-lambda-fig-vi.svg)
+*List comprehension: lọc rồi biến đổi từng phần tử*
+
 ## Dict và set comprehension
 
 ```python

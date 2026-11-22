@@ -31,6 +31,9 @@ Bảng dùng để hiển thị **dữ liệu dạng hàng và cột**. Đừng 
 
 Tuỳ chọn tạm thời `border="1"` ở ví dụ chỉ để thấy đường kẻ. Khi làm thật bạn sẽ kẻ viền bằng CSS.
 
+![Cấu tạo bảng: table, tr, th, td](/lessons/html/05-tables-fig-vi.svg)
+*Cấu tạo bảng: table, tr, th, td*
+
 ## Gộp ô
 
 ```html

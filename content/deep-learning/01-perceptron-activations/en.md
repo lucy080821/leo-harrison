@@ -18,6 +18,9 @@ Inspired (very loosely) by biological neurons. A neuron:
 
 This is exactly **logistic regression** when $\varphi=\sigma$ (sigmoid). The power comes from **stacking thousands of neurons into many layers**.
 
+![One neuron and common activation functions](/lessons/deep-learning/01-perceptron-activations-fig-en.svg)
+*One neuron and common activation functions*
+
 ## The perceptron (1958)
 
 A neuron with a **step** activation: $a=1$ if $z>0$, otherwise $0$. The **perceptron learning rule**: for each sample $(\mathbf{x},t)$ and prediction $\hat y$,

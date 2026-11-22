@@ -10,6 +10,9 @@ ref.current.focus();
 
 `ref.current` trỏ tới phần tử DOM thật. Đổi `ref.current` **không** làm component vẽ lại (khác state). Dùng khi cần focus, đo kích thước, hoặc nhớ một giá trị giữa các lần vẽ (như id của timer).
 
+![useMemo: chỉ tính lại khi phụ thuộc đổi](/lessons/react/06-refs-memo-hooks-fig-vi.svg)
+*useMemo: chỉ tính lại khi phụ thuộc đổi*
+
 ## useMemo — ghi nhớ kết quả tính nặng
 
 ```jsx

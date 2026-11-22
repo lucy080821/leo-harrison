@@ -12,6 +12,9 @@ cd my-app
 npm run dev      # http://localhost:3000
 ```
 
+![Thư mục app/ ánh xạ thành URL](/lessons/nextjs/01-file-routing-fig-vi.svg)
+*Thư mục app/ ánh xạ thành URL*
+
 ## App Router: thư mục = đường dẫn
 
 Trong thư mục `app/`, mỗi thư mục là một đoạn URL, và file đặc biệt `page.js` làm nó **truy cập được**:
