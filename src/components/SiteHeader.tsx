@@ -147,7 +147,12 @@ export function SiteHeader({ lang }: { lang: Locale }) {
                 <Image src="/leo-portrait.webp" alt="" width={72} height={72} className="h-full w-full object-cover object-top" />
               </span>
               <span className="leading-tight">
-                <span className="block text-base font-bold tracking-tight">{owner.nick}</span>
+                <span className="block text-base font-bold tracking-tight">
+                  <span className="lg:hidden">{owner.nick}</span>
+                  <span className="hidden lg:inline">
+                    {owner.name} ({owner.nick})
+                  </span>
+                </span>
                 <span className="hidden max-w-[15rem] truncate text-[0.72rem] italic text-muted lg:block xl:max-w-none" title={`${headerQuote[lang]} — La La Land`}>
                   {headerQuote[lang]}
                 </span>
