@@ -1,0 +1,56 @@
+{
+  "title": {
+    "vi": "Tương quan và hồi quy tuyến tính",
+    "en": "Correlation and linear regression"
+  },
+  "summary": {
+    "vi": "hệ số tương quan, bình phương tối thiểu, R², dự đoán",
+    "en": "correlation coefficient, least squares, R², prediction"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\n# Diện tích nhà (m2) và giá (tỷ đồng): số liệu minh hoạ\nx = np.array([40, 55, 60, 75, 80, 95, 110])\ny = np.array([1.5, 2.1, 2.3, 2.9, 3.2, 3.6, 4.4])\n\nr = np.corrcoef(x, y)[0, 1]\nslope = np.cov(x, y, ddof=1)[0, 1] / np.var(x, ddof=1)   # b = cov(x,y)/var(x)\nintercept = y.mean() - slope * x.mean()                   # a = ybar - b*xbar\nprint(\"r =\", round(r, 4), \" y = {:.4f} + {:.4f} x\".format(intercept, slope))\nprint(\"dự đoán nhà 70m2:\", round(intercept + slope * 70, 2), \"tỷ\")\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Cho x = [1, 2, 3, 4] và y = [3, 5, 7, 9] (đúng đường thẳng). Tính hệ số góc và hệ số chặn bằng công thức bình phương tối thiểu; in hệ số góc rồi hệ số chặn làm tròn 4 chữ số trên hai dòng.",
+        "en": "Given x = [1, 2, 3, 4] and y = [3, 5, 7, 9] (exactly linear). Compute the slope and intercept with the least-squares formulas; print slope then intercept rounded to 4 digits on two lines."
+      },
+      "hint": {
+        "vi": "slope = Σ(x−x̄)(y−ȳ) / Σ(x−x̄)²; intercept = ȳ − slope·x̄.",
+        "en": "slope = Σ(x−x̄)(y−ȳ) / Σ(x−x̄)²; intercept = ȳ − slope·x̄."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "x = [1, 2, 3, 4]\ny = [3, 5, 7, 9]\n# in slope, intercept\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "x = [1, 2, 3, 4]\ny = [3, 5, 7, 9]\nmx, my = sum(x) / len(x), sum(y) / len(y)\nb = sum((a - mx) * (c - my) for a, c in zip(x, y)) / sum((a - mx) ** 2 for a in x)\nprint(round(b, 4))\nprint(round(my - b * mx, 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 2.0 rồi 1.0",
+            "en": "Prints 2.0 then 1.0"
+          },
+          "test": "_out == '2.0\\n1.0'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

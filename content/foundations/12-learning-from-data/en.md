@@ -9,6 +9,9 @@ Tom Mitchell (*Machine Learning*, 1997) defines it: a program *learns* from expe
 
 > Spam filtering: T is classifying mail; E is thousands of labelled emails; P is the fraction classified correctly.
 
+![Traditional programming versus machine learning](/lessons/foundations/12-learning-from-data-ml-en.svg)
+*Machine learning reverses the flow: give data and answers, get the rules.*
+
 ## The components
 
 1. **Data**: pairs (input x, desired output y).

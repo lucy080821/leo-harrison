@@ -4,6 +4,9 @@
 
 Máy tính lưu mọi thứ bằng các linh kiện có hai trạng thái ổn định. Ta ghi hai trạng thái đó là `0` và `1`. Một **bit** (*binary digit*) là một chữ số nhị phân; một **byte** là nhóm 8 bit, biểu diễn được 2⁸ = 256 giá trị (0–255). Thuật ngữ *bit* do Claude Shannon dùng trong bài báo năm 1948 về lý thuyết thông tin.
 
+![Một byte gồm 8 bit với giá trị vị trí 128 đến 1](/lessons/foundations/02-binary-representation-bits-vi.svg)
+*Số 13 = 00001101 trong nhị phân: cộng các vị trí có bit 1.*
+
 ## Hệ nhị phân (cơ số 2)
 
 Hệ thập phân dùng 10 chữ số, mỗi vị trí có giá trị là luỹ thừa của **10**. Hệ nhị phân dùng 2 chữ số, mỗi vị trí là luỹ thừa của **2**:

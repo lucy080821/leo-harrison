@@ -4,6 +4,9 @@
 
 The web is a **client–server** system: the **client** (a browser) sends a **request**, the **server** returns a **response**. They talk using a shared **protocol**, **HTTP**.
 
+![A browser sending requests and the server returning responses](/lessons/foundations/09-how-the-web-works-http-en.svg)
+*A page needs several requests: HTML first, then CSS and JavaScript.*
+
 ## One page view, step by step
 
 1. You type a **URL**, e.g. `https://example.com/learning`.

@@ -1,0 +1,56 @@
+{
+  "title": {
+    "vi": "Mô tả dữ liệu: trung bình, trung vị, độ lệch chuẩn",
+    "en": "Describing data: mean, median, standard deviation"
+  },
+  "summary": {
+    "vi": "đo vị trí trung tâm và độ phân tán, ngoại lai, biểu đồ hộp",
+    "en": "centre and spread, outliers, the box plot"
+  },
+  "minutes": 20,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import statistics as st\nsalaries = [12, 14, 15, 15, 16, 18, 20, 22, 25, 120]   # triệu đồng/tháng, có 1 ngoại lai\n\nprint(\"mean   :\", st.mean(salaries))\nprint(\"median :\", st.median(salaries))\nprint(\"stdev  :\", round(st.stdev(salaries), 2))      # độ lệch chuẩn mẫu (n-1)\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết hàm iqr(xs) trả về khoảng tứ phân vị Q3 − Q1, với Q1 là trung vị nửa dưới và Q3 là trung vị nửa trên (loại phần tử giữa nếu n lẻ). In iqr([1, 2, 3, 4, 5, 6, 7, 8]).",
+        "en": "Write iqr(xs) returning Q3 − Q1, where Q1 is the median of the lower half and Q3 of the upper half (drop the middle element if n is odd). Print iqr([1, 2, 3, 4, 5, 6, 7, 8])."
+      },
+      "hint": {
+        "vi": "Sắp xếp, cắt đôi, dùng statistics.median cho mỗi nửa. Ở ví dụ: Q1 = 2.5, Q3 = 6.5.",
+        "en": "Sort, split in half, use statistics.median on each half. Here Q1 = 2.5, Q3 = 6.5."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import statistics as st\n\ndef iqr(xs):\n    pass\n\nprint(iqr([1, 2, 3, 4, 5, 6, 7, 8]))\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import statistics as st\n\ndef iqr(xs):\n    xs = sorted(xs)\n    n = len(xs)\n    lo = xs[: n // 2]\n    hi = xs[(n + 1) // 2 :]\n    return st.median(hi) - st.median(lo)\n\nprint(iqr([1, 2, 3, 4, 5, 6, 7, 8]))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In ra 4.0",
+            "en": "Prints 4.0"
+          },
+          "test": "_out == '4.0'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

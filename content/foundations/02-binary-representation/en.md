@@ -4,6 +4,9 @@
 
 A computer stores everything in components with two stable states. We write those states as `0` and `1`. A **bit** (*binary digit*) is one such digit; a **byte** is a group of 8 bits, able to represent 2⁸ = 256 values (0–255). The word *bit* was used by Claude Shannon in his 1948 paper on information theory.
 
+![One byte of 8 bits with place values 128 to 1](/lessons/foundations/02-binary-representation-bits-en.svg)
+*The number 13 = 00001101 in binary: add the places holding a 1.*
+
 ## Binary (base 2)
 
 Decimal uses 10 digits, and each place is a power of **10**. Binary uses 2 digits, and each place is a power of **2**:

@@ -8,6 +8,9 @@
 
 The word "bug" is associated with a 1947 incident on the Harvard Mark II (a real moth stuck in a relay), though "bug" for a technical defect predates it.
 
+![The debugging cycle: reproduce, hypothesise, experiment, fix](/lessons/foundations/11-testing-debugging-cycle-en.svg)
+*After fixing, add a test so the bug cannot return.*
+
 ## Testing
 
 Dijkstra wrote: *testing shows the presence, not the absence, of bugs*. Even so, testing is the most important practical tool.

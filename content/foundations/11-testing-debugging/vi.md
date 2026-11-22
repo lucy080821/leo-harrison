@@ -8,6 +8,9 @@
 
 Từ "bug" được gắn với sự cố máy tính Harvard Mark II năm 1947 (một con bướm đêm thật kẹt trong rơ-le), nhưng cách dùng "bug" cho lỗi kỹ thuật còn có từ trước đó.
 
+![Vòng gỡ lỗi: tái hiện, giả thuyết, thử nghiệm, sửa](/lessons/foundations/11-testing-debugging-cycle-vi.svg)
+*Sửa xong thì viết kiểm thử để lỗi không quay lại.*
+
 ## Kiểm thử
 
 Dijkstra viết: *kiểm thử chỉ cho thấy sự hiện diện của lỗi, không chứng minh sự vắng mặt của chúng*. Dù vậy, kiểm thử là công cụ thực tế quan trọng nhất.

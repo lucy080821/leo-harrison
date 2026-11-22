@@ -10,6 +10,9 @@ Tài liệu tham chiếu Python (*Data model*) nêu: **đối tượng (object)*
 
 Đối tượng có giá trị **không đổi được** gọi là **bất biến (immutable)**: số, chuỗi, `tuple`. Đối tượng đổi được gọi là **khả biến (mutable)**: `list`, `dict`, `set`.
 
+![Hai tên cùng trỏ vào một danh sách so với hai danh sách riêng](/lessons/foundations/03-values-types-names-names-vi.svg)
+*Gán b = a chỉ thêm một tên; a.copy() mới tạo đối tượng thứ hai.*
+
 ## Biến thực chất là một cái tên
 
 Trong Python, câu lệnh `x = 5` không "đặt 5 vào hộp x". Nó **gắn tên `x` vào đối tượng 5** (*name binding*). Nhiều tên có thể cùng chỉ vào một đối tượng:

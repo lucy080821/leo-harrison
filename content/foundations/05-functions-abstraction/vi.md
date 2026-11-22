@@ -7,6 +7,9 @@ Hàm là công cụ chính của **trừu tượng hoá (abstraction)**: đặt 
 - **Phân rã (decomposition)**: chia bài toán lớn thành các bài toán con.
 - **Trừu tượng (abstraction)**: che giấu chi tiết; người dùng hàm chỉ cần biết *nó làm gì* (hợp đồng), không cần biết *làm thế nào*.
 
+![Ngăn xếp lời gọi của factorial(3)](/lessons/foundations/05-functions-abstraction-stack-vi.svg)
+*Mỗi lần gọi thêm một khung lên đỉnh; khi trả về thì khung bị gỡ.*
+
 ## Thuật ngữ
 
 - **Tham số (parameter)**: tên trong định nghĩa hàm (`w`, `h`).

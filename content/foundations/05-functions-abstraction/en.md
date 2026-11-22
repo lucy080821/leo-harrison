@@ -7,6 +7,9 @@ Functions are the main tool of **abstraction**: give a name to a piece of proces
 - **Decomposition**: split a big problem into sub-problems.
 - **Abstraction**: hide detail; the user of a function needs to know *what it does* (the contract), not *how it does it*.
 
+![The call stack of factorial(3)](/lessons/foundations/05-functions-abstraction-stack-en.svg)
+*Each call pushes a frame on top; returning pops it.*
+
 ## Terminology
 
 - **Parameter**: the name in the function definition (`w`, `h`).

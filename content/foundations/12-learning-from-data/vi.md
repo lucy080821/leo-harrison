@@ -9,6 +9,9 @@ Tom Mitchell (*Machine Learning*, 1997) định nghĩa: một chương trình *h
 
 > Ví dụ lọc thư rác: T là phân loại thư; E là hàng nghìn thư đã gắn nhãn; P là tỷ lệ phân loại đúng.
 
+![So sánh lập trình truyền thống với học máy](/lessons/foundations/12-learning-from-data-ml-vi.svg)
+*Học máy đảo chiều: đưa dữ liệu và đáp án để máy tìm ra quy tắc.*
+
 ## Các thành phần
 
 1. **Dữ liệu**: các cặp (đầu vào x, đầu ra mong muốn y).

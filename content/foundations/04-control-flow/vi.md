@@ -5,6 +5,9 @@
 - **Biểu thức (expression)** *có giá trị*: `3 + 4`, `x > 3`, `len("abc")`.
 - **Câu lệnh (statement)** *làm một việc*: `x = 5`, `print(x)`, `if ...`, `for ...`.
 
+![Ba cấu trúc điều khiển: tuần tự, rẽ nhánh, lặp](/lessons/foundations/04-control-flow-flow-vi.svg)
+*Mọi thuật toán tính được có thể viết bằng ba cấu trúc này.*
+
 ## Logic Boolean
 
 George Boole (1854) xây dựng đại số của hai giá trị chân lý. Ba phép cơ bản là `and`, `or`, `not`, và chúng được định nghĩa bằng **bảng chân trị**:

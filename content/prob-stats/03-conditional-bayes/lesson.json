@@ -1,0 +1,56 @@
+{
+  "title": {
+    "vi": "Xác suất có điều kiện và định lý Bayes",
+    "en": "Conditional probability and Bayes' theorem"
+  },
+  "summary": {
+    "vi": "xác suất có điều kiện, độc lập, Bayes, xét nghiệm y tế, lọc thư rác",
+    "en": "conditional probability, independence, Bayes, medical tests, spam filtering"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "# Xét nghiệm bệnh hiếm (số liệu minh hoạ)\nprevalence = 0.01     # P(bệnh)\nsens = 0.90           # P(dương | bệnh)      độ nhạy\nfpr = 0.09            # P(dương | không bệnh)\n\np_pos = sens * prevalence + fpr * (1 - prevalence)     # công thức xác suất toàn phần\nposterior = sens * prevalence / p_pos                  # Bayes\nprint(round(p_pos, 4), round(posterior, 4))            # chỉ ~9% bị bệnh dù dương tính!\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Một bộ lọc thư rác: 40% thư là spam; từ 'khuyến mãi' xuất hiện trong 50% spam và 5% thư thường. Tính P(spam | có từ 'khuyến mãi') bằng Bayes, in làm tròn 4 chữ số.",
+        "en": "A spam filter: 40% of mail is spam; the word 'sale' appears in 50% of spam and 5% of normal mail. Compute P(spam | contains 'sale') with Bayes and print it rounded to 4 digits."
+      },
+      "hint": {
+        "vi": "P = 0.5*0.4 / (0.5*0.4 + 0.05*0.6) = 0.2/0.23.",
+        "en": "P = 0.5*0.4 / (0.5*0.4 + 0.05*0.6) = 0.2/0.23."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "p_spam, p_w_spam, p_w_ham = 0.4, 0.5, 0.05\n# tính và in posterior\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "p_spam, p_w_spam, p_w_ham = 0.4, 0.5, 0.05\nnum = p_w_spam * p_spam\nden = num + p_w_ham * (1 - p_spam)\nprint(round(num / den, 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In ra 0.8696",
+            "en": "Prints 0.8696"
+          },
+          "test": "_out == '0.8696'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

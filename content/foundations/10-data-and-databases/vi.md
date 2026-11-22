@@ -10,6 +10,9 @@ Phần lớn dữ liệu thực tế là **bảng**: mỗi **hàng** là một b
 
 Dữ liệu sạch theo quy tắc này dễ lọc, gom nhóm và vẽ biểu đồ hơn.
 
+![Hai bảng liên kết bằng khoá chính và khoá ngoại](/lessons/foundations/10-data-and-databases-tables-vi.svg)
+*orders.customer_id tham chiếu customers.id, nên tên khách chỉ lưu một lần.*
+
 ## Mô hình quan hệ
 
 Năm 1970, Edgar F. Codd (IBM) đề xuất **mô hình quan hệ** trong bài *A Relational Model of Data for Large Shared Data Banks*: dữ liệu là các **quan hệ** (bảng) liên kết bằng *giá trị*, không phải bằng con trỏ vật lý. Nhờ đó người dùng chỉ nói **muốn gì**, hệ quản trị CSDL lo **làm thế nào**.

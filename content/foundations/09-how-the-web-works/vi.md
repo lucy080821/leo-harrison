@@ -4,6 +4,9 @@
 
 Web là hệ thống **khách–chủ (client–server)**: **client** (trình duyệt) gửi **yêu cầu (request)**, **server** (máy chủ) trả **phản hồi (response)**. Hai bên giao tiếp theo một **giao thức** chung là **HTTP**.
 
+![Trình duyệt gửi request và máy chủ trả response](/lessons/foundations/09-how-the-web-works-http-vi.svg)
+*Một trang web cần vài lượt request: HTML trước, rồi CSS và JavaScript.*
+
 ## Một lượt truy cập, từng bước
 
 1. Bạn gõ một **URL**, ví dụ `https://example.com/learning`.

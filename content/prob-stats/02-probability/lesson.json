@@ -1,0 +1,56 @@
+{
+  "title": {
+    "vi": "Xác suất: không gian mẫu và các tiên đề",
+    "en": "Probability: sample spaces and axioms"
+  },
+  "summary": {
+    "vi": "không gian mẫu, biến cố, tiên đề Kolmogorov, mô phỏng Monte Carlo",
+    "en": "sample space, events, Kolmogorov axioms, Monte Carlo simulation"
+  },
+  "minutes": 20,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import random\nrandom.seed(1)\n\n# Tung 2 xúc xắc: không gian mẫu có 36 kết quả đồng khả năng\nspace = [(a, b) for a in range(1, 7) for b in range(1, 7)]\nevent = [(a, b) for a, b in space if a + b == 7]\nprint(len(event), \"/\", len(space), \"=\", round(len(event) / len(space), 4))\n\n# Mô phỏng Monte Carlo\nn = 100000\nhits = sum(1 for _ in range(n) if random.randint(1, 6) + random.randint(1, 6) == 7)\nprint(\"simulated:\", round(hits / n, 3))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tính chính xác xác suất để tổng hai xúc xắc là 8 bằng cách liệt kê không gian mẫu. In kết quả làm tròn 4 chữ số.",
+        "en": "Compute exactly the probability that two dice sum to 8 by listing the sample space. Print it rounded to 4 digits."
+      },
+      "hint": {
+        "vi": "Đếm các cặp (a, b) có a + b == 8 rồi chia cho 36. Có 5 cặp.",
+        "en": "Count the pairs (a, b) with a + b == 8 and divide by 36. There are 5."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "space = [(a, b) for a in range(1, 7) for b in range(1, 7)]\n# in P(tổng = 8)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "space = [(a, b) for a in range(1, 7) for b in range(1, 7)]\nev = [s for s in space if s[0] + s[1] == 8]\nprint(round(len(ev) / len(space), 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In ra 0.1389",
+            "en": "Prints 0.1389"
+          },
+          "test": "_out == '0.1389'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

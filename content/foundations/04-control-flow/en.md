@@ -5,6 +5,9 @@
 - An **expression** *has a value*: `3 + 4`, `x > 3`, `len("abc")`.
 - A **statement** *does something*: `x = 5`, `print(x)`, `if ...`, `for ...`.
 
+![The three control structures: sequence, selection, iteration](/lessons/foundations/04-control-flow-flow-en.svg)
+*Every computable algorithm can be written with these three.*
+
 ## Boolean logic
 
 George Boole (1854) built an algebra of two truth values. The three basic operations are `and`, `or`, `not`, defined by **truth tables**:

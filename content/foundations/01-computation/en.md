@@ -8,6 +8,9 @@ A **program** is an algorithm written in a **programming language** for a machin
 
 > In plain words: a recipe is an algorithm; the recipe book written in English is the "program" that the reader (the machine) follows.
 
+![Diagram of input, program, output](/lessons/foundations/01-computation-io-en.svg)
+*Every program takes input, processes it and produces output.*
+
 ## What does a computer really do?
 
 In 1936 Alan Turing described an abstract machine (now called a **Turing machine**) and showed that it can carry out any calculation a person following mechanical rules could. The Church–Turing thesis states that every "effectively computable" function is computable by a Turing machine. It is a **thesis**, not a theorem, because "effective" is an intuitive notion.

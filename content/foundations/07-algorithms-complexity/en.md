@@ -4,6 +4,9 @@
 
 A *correct* algorithm is not enough; we also ask **how many resources** (time, memory) it uses as data grows. **Analysis of algorithms** (Knuth) counts steps as a function of input size n, ignoring machine-dependent constants.
 
+![Growth curves of common complexity classes](/lessons/foundations/07-algorithms-complexity-bigo-en.svg)
+*As n grows, O(n²) shoots up while O(log n) stays nearly flat.*
+
 ## Big-O notation
 
 **O(f(n))** is an *asymptotic upper bound*: running time grows no faster than f(n) (up to a constant factor) for large n. Common classes, fast to slow:

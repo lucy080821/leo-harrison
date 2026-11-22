@@ -21,8 +21,8 @@ export const categories: Category[] = [
     id: "foundations",
     name: { vi: "Nền tảng", en: "Foundations" },
     desc: {
-      vi: "Khái niệm cốt lõi của khoa học máy tính, trình bày học thuật nhưng giải thích đơn giản: tính toán, nhị phân, thuật toán, web, dữ liệu, kiểm thử, học máy.",
-      en: "Core computer-science concepts, presented academically but explained simply: computation, binary, algorithms, the web, data, testing, machine learning.",
+      vi: "Khái niệm cốt lõi của khoa học máy tính, trình bày học thuật nhưng giải thích đơn giản: tính toán, nhị phân, thuật toán, web, dữ liệu, kiểm thử, học máy, cùng Git và GitHub.",
+      en: "Core computer-science concepts, presented academically but explained simply: computation, binary, algorithms, the web, data, testing, machine learning, plus Git and GitHub.",
     },
   },
   {
@@ -69,6 +69,16 @@ export const courses: Course[] = [
     desc: {
       vi: "12 bài khái niệm cơ bản dựa trên CS2023, CS50, MIT 6.0001, RFC và các bài báo gốc; mỗi bài có nguồn tham khảo.",
       en: "12 lessons on basic concepts based on CS2023, CS50, MIT 6.0001, RFCs and original papers; every lesson lists its sources.",
+    },
+  },
+  {
+    id: "git-github",
+    category: "foundations",
+    badge: "Git",
+    name: { vi: "Git và GitHub", en: "Git and GitHub" },
+    desc: {
+      vi: "14 bài dùng Git trên terminal và GitHub trên website: commit, nhánh, pull request, Actions, bảo mật. Có trình mô phỏng Git chạy ngay trong trình duyệt.",
+      en: "14 lessons on using Git in the terminal and GitHub on the website: commits, branches, pull requests, Actions, security. Includes an in-browser Git simulator.",
     },
   },
   // Frontend
@@ -143,6 +153,16 @@ export const courses: Course[] = [
     badge: "SQL",
     name: { vi: "SQL", en: "SQL" },
     desc: { vi: "Truy vấn và quản lý dữ liệu quan hệ.", en: "Query and manage relational data." },
+  },
+  {
+    id: "prob-stats",
+    category: "data",
+    badge: "σ",
+    name: { vi: "Xác suất, thống kê và toán cao cấp", en: "Probability, Statistics and Advanced Math" },
+    desc: {
+      vi: "16 bài từ khái niệm cơ bản đến nâng cao: xác suất, Bayes, phân phối, kiểm định, hồi quy, vi tích phân, đại số tuyến tính, PCA; ví dụ thực tế và hình minh hoạ.",
+      en: "16 lessons from basics to advanced: probability, Bayes, distributions, testing, regression, calculus, linear algebra, PCA; real-world examples and illustrations.",
+    },
   },
   // AI
   {

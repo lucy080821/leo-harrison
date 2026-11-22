@@ -10,6 +10,9 @@ The Python Language Reference (*Data model*) says: **objects** are Python's abst
 
 An object whose value **cannot change** is **immutable**: numbers, strings, `tuple`. One that can change is **mutable**: `list`, `dict`, `set`.
 
+![Two names on one list versus two separate lists](/lessons/foundations/03-values-types-names-names-en.svg)
+*b = a only adds a name; a.copy() makes a second object.*
+
 ## A variable is really a name
 
 In Python the statement `x = 5` does not "put 5 in a box called x". It **binds the name `x` to the object 5** (*name binding*). Several names can refer to the same object:

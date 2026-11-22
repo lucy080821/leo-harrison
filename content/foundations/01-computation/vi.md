@@ -8,6 +8,9 @@
 
 > Hiểu đơn giản: công thức nấu ăn là thuật toán; cuốn sổ công thức viết bằng tiếng Việt là "chương trình" mà người đọc (máy) làm theo.
 
+![Sơ đồ đầu vào, chương trình, đầu ra](/lessons/foundations/01-computation-io-vi.svg)
+*Mọi chương trình đều nhận dữ liệu vào, xử lý rồi trả kết quả ra.*
+
 ## Máy tính thực sự làm gì?
 
 Năm 1936, Alan Turing mô tả một máy trừu tượng (nay gọi là **máy Turing**) và chứng minh nó có thể thực hiện bất kỳ phép tính nào mà một người làm theo quy tắc cơ học có thể làm. Luận đề Church–Turing phát biểu: mọi hàm "tính được một cách hiệu quả" đều tính được bằng máy Turing. Đây là **luận đề**, không phải định lý, vì "hiệu quả" là một khái niệm trực giác.

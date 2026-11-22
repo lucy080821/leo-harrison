@@ -4,6 +4,9 @@
 
 Một thuật toán *đúng* thôi chưa đủ; ta còn hỏi nó **tốn bao nhiêu tài nguyên** (thời gian, bộ nhớ) khi dữ liệu lớn dần. **Phân tích thuật toán** (Knuth) đếm số bước theo cỡ đầu vào n, bỏ qua hằng số phụ thuộc máy.
 
+![Đường tăng của các lớp độ phức tạp thường gặp](/lessons/foundations/07-algorithms-complexity-bigo-vi.svg)
+*n lớn dần thì O(n²) tăng vọt, O(log n) gần như phẳng.*
+
 ## Ký hiệu Big-O
 
 **O(f(n))** là *cận trên tiệm cận*: thời gian tăng không nhanh hơn f(n) (nhân một hằng số) khi n đủ lớn. Các lớp thường gặp, từ nhanh đến chậm:

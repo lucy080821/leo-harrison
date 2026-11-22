@@ -4,6 +4,9 @@
 
 Liskov and Zilles (1974) introduced the **abstract data type (ADT)**: a type defined by its *operations*, not by how it is stored inside. One ADT can be implemented by several different **data structures**.
 
+![Stack (last in, first out) and queue (first in, first out)](/lessons/foundations/06-data-structures-stackq-en.svg)
+*Both are sequences with different rules for removal.*
+
 ## Basic structures in Python
 
 | Structure | Features | Use when |

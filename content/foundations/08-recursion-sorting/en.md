@@ -11,6 +11,9 @@ Factorial example: n! = n · (n−1)!, with 0! = 1. Without a base case the func
 
 > Way of thinking: trust that the smaller call is correct (inductive hypothesis), then only prove that the current step is correct. This is **mathematical induction** turned into code.
 
+![The split-and-merge tree of merge sort on [5, 2, 9, 1]](/lessons/foundations/08-recursion-sorting-msort-en.svg)
+*Split in half recursively down to single items, then merge back up.*
+
 ## Sorting
 
 Sorting is the classic problem for comparing algorithms:

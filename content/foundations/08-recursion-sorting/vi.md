@@ -11,6 +11,9 @@ Ví dụ giai thừa: n! = n · (n−1)!, với 0! = 1. Thiếu trường hợp 
 
 > Cách nghĩ: tin rằng lời gọi nhỏ hơn đã đúng (giả thiết quy nạp), rồi chỉ cần chứng minh bước hiện tại đúng. Đây chính là **quy nạp toán học** chuyển thành code.
 
+![Cây chia và trộn của sắp xếp trộn trên [5, 2, 9, 1]](/lessons/foundations/08-recursion-sorting-msort-vi.svg)
+*Chia đôi đệ quy đến khi còn 1 phần tử, rồi trộn ngược lên.*
+
 ## Sắp xếp
 
 Sắp xếp là bài toán kinh điển để so sánh thuật toán:

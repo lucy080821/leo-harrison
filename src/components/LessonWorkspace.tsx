@@ -48,7 +48,8 @@ export function LessonWorkspace(p: Props) {
   const [filesByMode, setFilesByMode] = useState<Record<string, SandboxFile[]>>({
     play: clone(p.files),
   });
-  const [activeFile, setActiveFile] = useState(0);
+  const firstVisible = (list: SandboxFile[]) => Math.max(0, list.findIndex((f) => !f.hidden));
+  const [activeFile, setActiveFile] = useState(() => firstVisible(p.files));
   const [outTab, setOutTab] = useState<"preview" | "console">(p.preview === "console" ? "console" : "preview");
   const [logs, setLogs] = useState<LogLine[]>([]);
   const [results, setResults] = useState<Record<string, boolean[]>>({});
@@ -187,12 +188,12 @@ export function LessonWorkspace(p: Props) {
       if (ex) setFilesByMode((m) => ({ ...m, [id]: clone(ex.starter) }));
     }
     setMode(id);
-    setActiveFile(0);
+    setActiveFile(firstVisible(id === "play" ? p.files : (p.exercises.find((e) => e.id === id)?.starter ?? p.files)));
   }
 
   function reset() {
     setFiles(clone(exercise ? exercise.starter : p.files));
-    setActiveFile(0);
+    setActiveFile(firstVisible(exercise ? exercise.starter : p.files));
     if (exercise) setResults((r) => ({ ...r, [exercise.id]: [] }));
   }
 
@@ -301,7 +302,7 @@ export function LessonWorkspace(p: Props) {
                                 type="button"
                                 onClick={() => {
                                   setFiles(clone(ex.solution));
-                                  setActiveFile(0);
+                                  setActiveFile(firstVisible(ex.solution));
                                 }}
                                 className="rounded-lg border border-line bg-surface px-3 py-1.5 text-sm hover:bg-surface2"
                               >

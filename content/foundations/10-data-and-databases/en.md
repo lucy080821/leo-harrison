@@ -10,6 +10,9 @@ Most real-world data is a **table**: each **row** is a record (a person, an orde
 
 Data that follows these rules is easier to filter, group and plot.
 
+![Two tables linked by a primary key and a foreign key](/lessons/foundations/10-data-and-databases-tables-en.svg)
+*orders.customer_id references customers.id, so each name is stored once.*
+
 ## The relational model
 
 In 1970 Edgar F. Codd (IBM) proposed the **relational model** in *A Relational Model of Data for Large Shared Data Banks*: data are **relations** (tables) linked by *values*, not physical pointers. So users say **what** they want and the database system decides **how**.

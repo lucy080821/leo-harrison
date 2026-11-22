@@ -4,6 +4,9 @@
 
 Liskov và Zilles (1974) giới thiệu **kiểu dữ liệu trừu tượng (abstract data type, ADT)**: một kiểu được định nghĩa bằng *các thao tác* của nó, không phải cách lưu bên trong. Cùng một ADT có thể được cài đặt bằng nhiều **cấu trúc dữ liệu** khác nhau.
 
+![Ngăn xếp (vào sau ra trước) và hàng đợi (vào trước ra trước)](/lessons/foundations/06-data-structures-stackq-vi.svg)
+*Cùng là dãy phần tử nhưng khác quy tắc lấy ra.*
+
 ## Các cấu trúc cơ bản trong Python
 
 | Cấu trúc | Đặc điểm | Dùng khi |

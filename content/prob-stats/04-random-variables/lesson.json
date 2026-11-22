@@ -1,0 +1,56 @@
+{
+  "title": {
+    "vi": "Biến ngẫu nhiên, kỳ vọng và phương sai",
+    "en": "Random variables, expectation and variance"
+  },
+  "summary": {
+    "vi": "hàm khối xác suất, kỳ vọng, phương sai, tính tuyến tính của kỳ vọng",
+    "en": "probability mass function, expectation, variance, linearity of expectation"
+  },
+  "minutes": 20,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "# Xổ số mini: vé 10.000đ, trúng 1 triệu với xác suất 1/200, trúng 100k với 1/20\noutcomes = [(1_000_000, 1/200), (100_000, 1/20), (0, 1 - 1/200 - 1/20)]\nmean = sum(x * p for x, p in outcomes)\nvar = sum((x - mean) ** 2 * p for x, p in outcomes)\nprint(\"E[X] =\", round(mean), \"  Var =\", round(var), \"  SD =\", round(var ** 0.5))\nprint(\"lãi kỳ vọng mỗi vé:\", round(mean - 10_000))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Một xúc xắc cân: E[X] = 3,5 và Var = 35/12. Tính kỳ vọng và phương sai của tổng hai lần tung độc lập. In E rồi Var (làm tròn 4 chữ số) trên hai dòng.",
+        "en": "A fair die: E[X] = 3.5 and Var = 35/12. Compute the expectation and variance of the sum of two independent rolls. Print E then Var (rounded to 4 digits) on two lines."
+      },
+      "hint": {
+        "vi": "E cộng được luôn; với biến độc lập Var cũng cộng: 2·35/12.",
+        "en": "E always adds; for independent variables Var adds too: 2·35/12."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "e1, v1 = 3.5, 35 / 12\n# tổng 2 lần tung độc lập\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "e1, v1 = 3.5, 35 / 12\nprint(round(2 * e1, 4))\nprint(round(2 * v1, 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 7.0 rồi 5.8333",
+            "en": "Prints 7.0 then 5.8333"
+          },
+          "test": "_out == '7.0\\n5.8333'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}
