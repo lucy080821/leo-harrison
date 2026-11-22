@@ -12,7 +12,7 @@ export const owner = {
 
 export const nav: { href: string; label: L10n }[] = [
   { href: "projects", label: { vi: "Dự án", en: "Projects" } },
-  { href: "learning", label: { vi: "Học", en: "Learning" } },
+  { href: "learning", label: { vi: "Học cùng Leo", en: "Learn with Leo" } },
   { href: "about", label: { vi: "Giới thiệu", en: "About" } },
 ];
 
@@ -21,8 +21,8 @@ export const headerNav: { id: string; kind: "hash" | "page"; target: string; lab
   { id: "about", kind: "hash", target: "about", label: { vi: "Giới thiệu", en: "About" } },
   { id: "experience", kind: "hash", target: "experience", label: { vi: "Kinh nghiệm", en: "Experience" } },
   { id: "skills", kind: "hash", target: "skills", label: { vi: "Kỹ năng", en: "Skills" } },
-  { id: "projects", kind: "page", target: "projects", label: { vi: "Dự án", en: "Projects" } },
-  { id: "learning", kind: "page", target: "learning", label: { vi: "Học", en: "Learning" } },
+  { id: "projects", kind: "hash", target: "projects", label: { vi: "Dự án", en: "Projects" } },
+  { id: "learning", kind: "hash", target: "learning", label: { vi: "Học cùng Leo", en: "Learn with Leo" } },
   { id: "contact", kind: "hash", target: "contact", label: { vi: "Liên hệ", en: "Contact" } },
 ];
 
@@ -253,7 +253,7 @@ export const t = {
     en: "The products and channels I'm working on.",
   } as L10n,
   openProduct: { vi: "Mở", en: "Open" } as L10n,
-  learningTitle: { vi: "Học cùng mình", en: "Learn with me" } as L10n,
+  learningTitle: { vi: "Học cùng Leo", en: "Learn with Leo" } as L10n,
   learningIntro: {
     vi: "Những gì mình học rồi viết lại thành bài, song ngữ và có bài tập để bạn tự thử.",
     en: "What I learn, written up as lessons in two languages, with exercises you can try yourself.",

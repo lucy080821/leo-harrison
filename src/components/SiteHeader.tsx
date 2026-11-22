@@ -27,33 +27,38 @@ export function SiteHeader({ lang }: { lang: Locale }) {
   // Mục đang sáng: trang riêng theo đường dẫn, mục trên trang chủ theo vị trí cuộn.
   const activeId = (() => {
     for (const n of headerNav) {
-      if (n.kind === "page" && (path === `/${lang}/${n.target}` || path.startsWith(`/${lang}/${n.target}/`))) return n.id;
+      if ((path === `/${lang}/${n.target}` || path.startsWith(`/${lang}/${n.target}/`))) return n.id;
     }
     if (path.startsWith(`/${lang}/about`)) return "about";
     return home ? spy : null;
   })();
 
-  // Theo dõi mục nào đang nằm giữa màn hình (chỉ trên trang chủ).
+  // Mục nào đang ở vùng đọc (khoảng 40% chiều cao màn hình tính từ trên xuống) thì sáng lên; chỉ trên trang chủ.
   useEffect(() => {
     if (!home) return;
     const ids = headerNav.filter((n) => n.kind === "hash").map((n) => n.target);
-    const els = ids.map((id) => document.getElementById(id)).filter((e): e is HTMLElement => !!e);
-    if (!els.length) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        const vis = entries.filter((e) => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (vis) setSpy(vis.target.id);
-      },
-      { rootMargin: "-35% 0px -55% 0px", threshold: [0, 0.01, 0.5] },
-    );
-    els.forEach((e) => io.observe(e));
-    const onTop = () => {
-      if (window.scrollY < 120) setSpy(null);
+    let raf = 0;
+    const compute = () => {
+      raf = 0;
+      const els = ids.map((id) => document.getElementById(id));
+      let cur: string | null = null;
+      els.forEach((el, i) => {
+        if (el && el.getBoundingClientRect().top <= window.innerHeight * 0.4) cur = ids[i];
+      });
+      if (window.scrollY < 120) cur = null;
+      else if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 4) cur = ids[ids.length - 1];
+      setSpy(cur);
     };
-    window.addEventListener("scroll", onTop, { passive: true });
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(compute);
+    };
+    compute();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
     return () => {
-      io.disconnect();
-      window.removeEventListener("scroll", onTop);
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
     };
   }, [home]);
 
