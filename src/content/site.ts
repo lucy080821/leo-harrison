@@ -190,7 +190,13 @@ export const experience: Job[] = [
   },
 ];
 
-export const skills: string[] = ["SQL", "Python (Pandas, Matplotlib, Seaborn)", "Excel", "Power BI", "Data cleaning", "Data visualization", "English"];
+export const skillGroups: { name: L10n; items: string[] }[] = [
+  { name: { vi: "Phân tích dữ liệu", en: "Data analysis" }, items: ["SQL", "Python (Pandas, Matplotlib, Seaborn)", "Power BI", "Data cleaning", "Data visualization"] },
+  { name: { vi: "Văn phòng", en: "Office" }, items: ["Microsoft Excel", "Microsoft PowerPoint", "Microsoft Word"] },
+  { name: { vi: "Kinh doanh", en: "Sales" }, items: ["Modern Trade", "KPI", "Planogram / POSM", "FIFO / FEFO", "Team training"] },
+  { name: { vi: "Ngôn ngữ", en: "Languages" }, items: ["English", "Tiếng Việt"] },
+];
+export const skills: string[] = skillGroups.flatMap((g) => g.items);
 
 export const t = {
   hello: { vi: "Xin chào, mình là", en: "Hi, I'm" } as L10n,
@@ -228,6 +234,21 @@ export const t = {
     vi: "Muốn hợp tác, góp ý cho một dự án hay chỉ chào một tiếng, cứ gửi email cho mình.",
     en: "If you'd like to work together, give feedback on a project, or just say hi, send me an email.",
   } as L10n,
+  heroRole: { vi: "Data Analyst", en: "Data Analyst" } as L10n,
+  heroSummary: {
+    vi: "Hơn 10 năm làm kinh doanh ngành hàng tiêu dùng và xuất nhập khẩu. Mình dùng SQL, Python và Power BI để đọc dữ liệu bán hàng, và xây công cụ học tập: Lucy Tutor, Cerno, Lexi Learn.",
+    en: "Over 10 years in consumer-goods sales and import–export. I use SQL, Python and Power BI to read sales data, and I build learning tools: Lucy Tutor, Cerno and Lexi Learn.",
+  } as L10n,
+  objectiveTitle: { vi: "Mục tiêu nghề nghiệp", en: "Career objective" } as L10n,
+  objective: {
+    vi: "Chuyên gia phân tích dữ liệu đam mê tối ưu hóa vận hành. Mục tiêu sử dụng tư duy phân tích chuyên sâu để nhận diện rủi ro biên lợi nhuận và đóng góp vào kế hoạch chiến lược dài hạn của công ty.",
+    en: "A data analyst passionate about optimising operations. My goal is to apply deep analytical thinking to spot margin risks and contribute to the company's long-term strategic plans.",
+  } as L10n,
+  statSince: { vi: "Làm việc từ", en: "Working since" } as L10n,
+  statJobs: { vi: "Vị trí đã làm", en: "Roles held" } as L10n,
+  statProjects: { vi: "Sản phẩm tự xây", en: "Products I built" } as L10n,
+  statLessons: { vi: "Bài học đã viết", en: "Lessons written" } as L10n,
+  contactCv: { vi: "Liên hệ ngay", en: "Get in touch" } as L10n,
   aboutTitle: { vi: "Giới thiệu", en: "About" } as L10n,
   experienceTitle: { vi: "Kinh nghiệm làm việc", en: "Work experience" } as L10n,
   skillsTitle: { vi: "Kỹ năng", en: "Skills" } as L10n,
@@ -263,10 +284,10 @@ export const t = {
 /** Tiêu đề và mô tả dùng cho SEO. Tiêu đề khoảng 60 ký tự, mô tả khoảng 150 ký tự. */
 export const seo: Record<"home" | "projects" | "learning" | "about" | "english", { title: L10n; description: L10n }> = {
   home: {
-    title: { vi: "Leo – Tạ Hoàng Anh Tuấn | Lập trình, tiếng Anh, dữ liệu", en: "Leo – Tạ Hoàng Anh Tuấn | Code, English learning, data" },
+    title: { vi: "Tạ Hoàng Anh Tuấn (Leo) – Data Analyst | CV online, dự án, học lập trình", en: "Tạ Hoàng Anh Tuấn (Leo) – Data Analyst | Online CV, projects, learn to code" },
     description: {
-      vi: "Mình là Leo. Mình làm Lucy Tutor (học tiếng Anh cùng AI), Cerno (dashboard từ Google Sheets) và Lexi Learn (học lập trình song ngữ, có bài tập tự chấm).",
-      en: "I'm Leo. I build Lucy Tutor (learn English with AI), Cerno (dashboards from Google Sheets) and Lexi Learn (a bilingual programming course with auto-checked exercises).",
+      vi: "CV online của Tạ Hoàng Anh Tuấn (Leo): Data Analyst, hơn 10 năm kinh doanh và xuất nhập khẩu. Kỹ năng SQL, Python, Power BI; dự án Lucy Tutor, Cerno và khoá học lập trình Lexi Learn.",
+      en: "Online CV of Tạ Hoàng Anh Tuấn (Leo): Data Analyst with 10+ years in sales and import–export. SQL, Python and Power BI skills; projects Lucy Tutor, Cerno and the Lexi Learn programming course.",
     },
   },
   projects: {

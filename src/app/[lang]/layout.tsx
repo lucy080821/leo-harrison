@@ -12,6 +12,7 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { owner, t as site } from "@/content/site";
 import { siteUrl } from "@/lib/seo";
 import { ThemeScript } from "@/components/ThemeScript";
+import { ThemeSync } from "@/components/ThemeSync";
 import { isLocale, locales } from "@/lib/i18n";
 
 
@@ -51,6 +52,7 @@ export default async function LangLayout({
         <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-brand focus:px-4 focus:py-2 focus:text-white">
           {site.skip[lang]}
         </a>
+        <ThemeSync lang={lang} />
         <SiteHeader lang={lang} />
         <main id="main">{children}</main>
         <SiteFooter lang={lang} />

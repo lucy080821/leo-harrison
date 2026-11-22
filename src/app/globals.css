@@ -159,3 +159,13 @@ body {
 
 /* Đường dẫn dài trong bài viết được phép ngắt dòng để không làm tràn trang trên điện thoại. */
 .prose-lesson a, .prose-lesson li { overflow-wrap: anywhere; }
+
+/* ---------- Hiện dần khi cuộn (xem components/Reveal.tsx) ---------- */
+.reveal-hidden { opacity: 0; transform: translateY(18px); }
+.reveal-shown { opacity: 1; transform: none; transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1); }
+@media (prefers-reduced-motion: reduce) {
+  .reveal-hidden, .reveal-shown { opacity: 1; transform: none; transition: none; }
+}
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+section[id] { scroll-margin-top: 5rem; }
