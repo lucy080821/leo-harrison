@@ -7,7 +7,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react
 import { LangSwitch } from "@/components/LangSwitch";
 import { Logo } from "@/components/Logo";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { headerNav, owner, t as site } from "@/content/site";
+import { headerNav, headerQuote, owner } from "@/content/site";
 import { dict, type Locale } from "@/lib/i18n";
 
 export function SiteHeader({ lang }: { lang: Locale }) {
@@ -148,7 +148,9 @@ export function SiteHeader({ lang }: { lang: Locale }) {
               </span>
               <span className="leading-tight">
                 <span className="block text-base font-bold tracking-tight">{owner.nick}</span>
-                <span className="hidden text-[0.7rem] font-medium uppercase tracking-wider text-muted sm:block">{site.heroRole[lang]}</span>
+                <span className="hidden max-w-[15rem] truncate text-[0.72rem] italic text-muted lg:block xl:max-w-none" title={`${headerQuote[lang]} — La La Land`}>
+                  {headerQuote[lang]}
+                </span>
               </span>
             </Link>
           )}

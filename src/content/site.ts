@@ -16,6 +16,12 @@ export const nav: { href: string; label: L10n }[] = [
   { href: "about", label: { vi: "Giới thiệu", en: "About" } },
 ];
 
+/** Câu dưới tên ở thanh menu: lời bài "Audition (The Fools Who Dream)" trong phim La La Land. */
+export const headerQuote: L10n = {
+  vi: "Một chút điên rồ là chìa khóa để ta thấy những sắc màu mới",
+  en: "A bit of madness is key to give us new colors to see",
+};
+
 /** Thanh menu trên cùng. "hash" = cuộn tới mục trên trang chủ; "page" = sang trang riêng. */
 export const headerNav: { id: string; kind: "hash" | "page"; target: string; label: L10n }[] = [
   { id: "about", kind: "hash", target: "about", label: { vi: "Giới thiệu", en: "About" } },
