@@ -1,0 +1,104 @@
+{
+  "title": {
+    "vi": "Thiết kế component: composition, children và compound components",
+    "en": "Component design: composition, children and compound components"
+  },
+  "summary": {
+    "vi": "children, slot qua props, compound components, render props, tránh prop drilling",
+    "en": "children, slots via props, compound components, render props, avoiding prop drilling"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { useState, createContext, useContext } from \"react\";\n\n// Compound components: Tabs + Tabs.Tab + Tabs.Panel chia sẻ state qua Context\nconst TabsCtx = createContext(null);\n\nfunction Tabs({ children, defaultValue }) {\n  const [value, setValue] = useState(defaultValue);\n  return <TabsCtx.Provider value={{ value, setValue }}><div>{children}</div></TabsCtx.Provider>;\n}\nTabs.Tab = function Tab({ value, children }) {\n  const { value: cur, setValue } = useContext(TabsCtx);\n  return <button aria-selected={cur === value} onClick={() => setValue(value)}>{children}</button>;\n};\nTabs.Panel = function Panel({ value, children }) {\n  const { value: cur } = useContext(TabsCtx);\n  return cur === value ? <div>{children}</div> : null;\n};\n\nexport default function App() {\n  return (\n    <Tabs defaultValue=\"a\">\n      <Tabs.Tab value=\"a\">Một</Tabs.Tab>\n      <Tabs.Tab value=\"b\">Hai</Tabs.Tab>\n      <Tabs.Panel value=\"a\"><p id=\"pa\">Nội dung một</p></Tabs.Panel>\n      <Tabs.Panel value=\"b\"><p id=\"pb\">Nội dung hai</p></Tabs.Panel>\n    </Tabs>\n  );\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết Card nhận children và một prop title. Card render <div class=\"card\"><h3>{title}</h3>{children}</div>. Trong App dùng <Card title=\"Xin chào\"><p id=\"body\">Nội dung</p></Card>.",
+        "en": "Write Card taking children and a title prop. Card renders <div class=\"card\"><h3>{title}</h3>{children}</div>. In App use <Card title=\"Xin chào\"><p id=\"body\">Nội dung</p></Card>."
+      },
+      "hint": {
+        "vi": "function Card({ title, children }) { return <div className=\"card\">...</div>; }",
+        "en": "function Card({ title, children }) { return <div className=\"card\">...</div>; }"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "function Card() {\n  return null;\n}\n\nexport default function App() {\n  return (\n    <Card title=\"Xin chào\">\n      <p id=\"body\">Nội dung</p>\n    </Card>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "function Card({ title, children }) {\n  return (\n    <div className=\"card\">\n      <h3>{title}</h3>\n      {children}\n    </div>\n  );\n}\n\nexport default function App() {\n  return (\n    <Card title=\"Xin chào\">\n      <p id=\"body\">Nội dung</p>\n    </Card>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Tiêu đề hiện đúng",
+            "en": "The title shows"
+          },
+          "test": "document.querySelector('.card h3')?.textContent==='Xin chào'"
+        },
+        {
+          "label": {
+            "vi": "children nằm trong card",
+            "en": "children sit inside the card"
+          },
+          "test": "!!document.querySelector('.card #body')"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Dùng render prop: Toggle nhận prop render là hàm (on, toggle) => JSX. Trong App: <Toggle render={(on, toggle) => <button id=\"b\" onClick={toggle}>{on ? 'Mở' : 'Đóng'}</button>} />. Ban đầu nút ghi 'Đóng', bấm thì 'Mở'.",
+        "en": "Use a render prop: Toggle takes a render prop that is a function (on, toggle) => JSX. In App: <Toggle render={(on, toggle) => <button id=\"b\" onClick={toggle}>{on ? 'Open' : 'Closed'}</button>} />. Initially the button says 'Closed', after a click 'Open'."
+      },
+      "hint": {
+        "vi": "return render(on, () => setOn(!on)).",
+        "en": "return render(on, () => setOn(!on))."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\n\nfunction Toggle({ render }) {\n  const [on, setOn] = useState(false);\n  return null;\n}\n\nexport default function App() {\n  return <Toggle render={(on, toggle) => <button id=\"b\" onClick={toggle}>{on ? \"Open\" : \"Closed\"}</button>} />;\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\n\nfunction Toggle({ render }) {\n  const [on, setOn] = useState(false);\n  return render(on, () => setOn(!on));\n}\n\nexport default function App() {\n  return <Toggle render={(on, toggle) => <button id=\"b\" onClick={toggle}>{on ? \"Open\" : \"Closed\"}</button>} />;\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Ban đầu Closed",
+            "en": "Starts Closed"
+          },
+          "test": "document.getElementById('b')?.textContent==='Closed'"
+        },
+        {
+          "label": {
+            "vi": "Bấm thì Open",
+            "en": "Click gives Open"
+          },
+          "test": "(async()=>{document.getElementById('b').click();await new Promise(r=>setTimeout(r,60));return document.getElementById('b').textContent==='Open'})()"
+        }
+      ]
+    }
+  ],
+  "runtime": "react"
+}

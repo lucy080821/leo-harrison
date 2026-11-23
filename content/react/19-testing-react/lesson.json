@@ -1,0 +1,97 @@
+{
+  "title": {
+    "vi": "Kiểm thử component React: viết để dễ kiểm thử",
+    "en": "Testing React components: writing code that is easy to test"
+  },
+  "summary": {
+    "vi": "kim tự tháp kiểm thử, kiểm thử theo hành vi người dùng, Testing Library, tách logic thuần, mock mạng",
+    "en": "the testing pyramid, behaviour-based tests, Testing Library, extracting pure logic, mocking the network"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { useState } from \"react\";\n\n// Logic THUẦN tách khỏi giao diện: kiểm thử cực dễ, không cần render\nexport function applyDiscount(total, code) {\n  if (code === \"SALE10\") return Math.round(total * 0.9);\n  return total;\n}\n\nexport default function App() {\n  const [total] = useState(200);\n  const [code, setCode] = useState(\"\");\n  return (\n    <div>\n      <input id=\"code\" aria-label=\"Mã giảm giá\" value={code} onChange={(e) => setCode(e.target.value)} />\n      <p id=\"total\" data-testid=\"total\">{applyDiscount(total, code)}</p>\n    </div>\n  );\n}\n\n// Kiểm thử (Vitest + Testing Library) mô tả HÀNH VI người dùng:\n//   render(<App />)\n//   await userEvent.type(screen.getByLabelText(\"Mã giảm giá\"), \"SALE10\")\n//   expect(screen.getByTestId(\"total\")).toHaveTextContent(\"180\")\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tách logic thuần: viết hàm sum(items) trả tổng price của mảng, rồi dùng nó trong App để <p id=\"total\"> hiện tổng của [{price:10},{price:25},{price:5}] (= 40).",
+        "en": "Extract pure logic: write a function sum(items) returning the total price of an array, then use it in App so <p id=\"total\"> shows the total of [{price:10},{price:25},{price:5}] (= 40)."
+      },
+      "hint": {
+        "vi": "const sum = (items) => items.reduce((s, x) => s + x.price, 0).",
+        "en": "const sum = (items) => items.reduce((s, x) => s + x.price, 0)."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "const items = [{ price: 10 }, { price: 25 }, { price: 5 }];\n\nfunction sum(items) {\n  return 0;\n}\n\nexport default function App() {\n  return <p id=\"total\">{sum(items)}</p>;\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "const items = [{ price: 10 }, { price: 25 }, { price: 5 }];\n\nfunction sum(items) {\n  return items.reduce((s, x) => s + x.price, 0);\n}\n\nexport default function App() {\n  return <p id=\"total\">{sum(items)}</p>;\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Tổng bằng 40",
+            "en": "The total is 40"
+          },
+          "test": "document.getElementById('total')?.textContent==='40'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Làm component dễ kiểm thử theo hành vi: ô nhập có aria-label=\"Mã giảm giá\", và <p data-testid=\"total\"> hiện 180 khi nhập 'SALE10' (tổng gốc 200, giảm 10%), còn không có mã thì 200.",
+        "en": "Make the component testable by behaviour: the input has aria-label=\"Mã giảm giá\", and <p data-testid=\"total\"> shows 180 when 'SALE10' is entered (base 200, 10% off), else 200."
+      },
+      "hint": {
+        "vi": "applyDiscount(200, code); aria-label và data-testid.",
+        "en": "applyDiscount(200, code); aria-label and data-testid."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\n\nconst applyDiscount = (total, code) => total;\n\nexport default function App() {\n  const [code, setCode] = useState(\"\");\n  return (\n    <div>\n      <input value={code} onChange={(e) => setCode(e.target.value)} />\n      <p>{applyDiscount(200, code)}</p>\n    </div>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\n\nconst applyDiscount = (total, code) => (code === \"SALE10\" ? Math.round(total * 0.9) : total);\n\nexport default function App() {\n  const [code, setCode] = useState(\"\");\n  return (\n    <div>\n      <input aria-label=\"Mã giảm giá\" value={code} onChange={(e) => setCode(e.target.value)} />\n      <p data-testid=\"total\">{applyDiscount(200, code)}</p>\n    </div>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Không mã thì 200",
+            "en": "Without a code it's 200"
+          },
+          "test": "document.querySelector('[data-testid=\"total\"]')?.textContent==='200'&&!!document.querySelector('input[aria-label=\"Mã giảm giá\"]')"
+        },
+        {
+          "label": {
+            "vi": "Nhập SALE10 thì 180",
+            "en": "Entering SALE10 gives 180"
+          },
+          "test": "(async()=>{const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;const i=document.querySelector('input[aria-label=\"Mã giảm giá\"]');set.call(i,'SALE10');i.dispatchEvent(new Event('input',{bubbles:true}));await new Promise(r=>setTimeout(r,80));return document.querySelector('[data-testid=\"total\"]')?.textContent==='180'})()"
+        }
+      ]
+    }
+  ],
+  "runtime": "react"
+}

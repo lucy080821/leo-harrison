@@ -1,0 +1,104 @@
+{
+  "title": {
+    "vi": "Hook tự viết thực dụng: useLocalStorage và useDebounce",
+    "en": "Practical custom hooks: useLocalStorage and useDebounce"
+  },
+  "summary": {
+    "vi": "tái sử dụng logic có state, useLocalStorage, useDebounce, quy tắc của hooks",
+    "en": "reusing stateful logic, useLocalStorage, useDebounce, the rules of hooks"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { useState, useEffect } from \"react\";\n\nfunction useLocalStorage(key, initial) {\n  const [value, setValue] = useState(() => {\n    try { const raw = localStorage.getItem(key); return raw !== null ? JSON.parse(raw) : initial; }\n    catch { return initial; }\n  });\n  useEffect(() => {\n    try { localStorage.setItem(key, JSON.stringify(value)); } catch {}\n  }, [key, value]);\n  return [value, setValue];\n}\n\nfunction useDebounce(value, ms) {\n  const [v, setV] = useState(value);\n  useEffect(() => {\n    const t = setTimeout(() => setV(value), ms);\n    return () => clearTimeout(t);                 // gõ tiếp thì huỷ lần chờ cũ\n  }, [value, ms]);\n  return v;\n}\n\nexport default function App() {\n  const [name, setName] = useLocalStorage(\"demo-name\", \"\");\n  const debounced = useDebounce(name, 200);\n  return (\n    <div>\n      <input id=\"name\" value={name} onChange={(e) => setName(e.target.value)} />\n      <p id=\"live\">{name}</p>\n      <p id=\"deb\">{debounced}</p>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết hook useToggle(initial) trả về [on, toggle]. Dùng nó trong App: nút #t bật/tắt, <p id=\"s\"> hiện 'ON' hoặc 'OFF' (ban đầu OFF).",
+        "en": "Write a useToggle(initial) hook returning [on, toggle]. Use it in App: button #t toggles, <p id=\"s\"> shows 'ON' or 'OFF' (initially OFF)."
+      },
+      "hint": {
+        "vi": "const toggle = () => setOn((v) => !v); return [on, toggle].",
+        "en": "const toggle = () => setOn((v) => !v); return [on, toggle]."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\n\nfunction useToggle(initial = false) {\n  // viết hook ở đây\n}\n\nexport default function App() {\n  const [on, toggle] = useToggle();\n  return (\n    <div>\n      <button id=\"t\" onClick={toggle}>Đổi</button>\n      <p id=\"s\">{on ? \"ON\" : \"OFF\"}</p>\n    </div>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\n\nfunction useToggle(initial = false) {\n  const [on, setOn] = useState(initial);\n  const toggle = () => setOn((v) => !v);\n  return [on, toggle];\n}\n\nexport default function App() {\n  const [on, toggle] = useToggle();\n  return (\n    <div>\n      <button id=\"t\" onClick={toggle}>Đổi</button>\n      <p id=\"s\">{on ? \"ON\" : \"OFF\"}</p>\n    </div>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Ban đầu OFF",
+            "en": "Starts OFF"
+          },
+          "test": "document.getElementById('s')?.textContent==='OFF'"
+        },
+        {
+          "label": {
+            "vi": "Bấm thì ON, bấm lần nữa lại OFF",
+            "en": "Click gives ON, again gives OFF"
+          },
+          "test": "(async()=>{const b=document.getElementById('t');b.click();await new Promise(r=>setTimeout(r,60));const a=document.getElementById('s').textContent==='ON';b.click();await new Promise(r=>setTimeout(r,60));return a&&document.getElementById('s').textContent==='OFF'})()"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Viết useDebounce(value, ms) trả về giá trị chỉ cập nhật sau khi value ngừng đổi trong ms mili giây. <p id=\"deb\"> hiện giá trị đã debounce (ms = 150). Ngay sau khi gõ, #deb vẫn rỗng; sau 400 ms phải bằng chữ đã gõ.",
+        "en": "Write useDebounce(value, ms) returning a value that updates only after value stops changing for ms milliseconds. <p id=\"deb\"> shows the debounced value (ms = 150). Right after typing, #deb is still empty; after 400 ms it must equal the typed text."
+      },
+      "hint": {
+        "vi": "useEffect với setTimeout và return () => clearTimeout(t).",
+        "en": "useEffect with setTimeout and return () => clearTimeout(t)."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, useEffect } from \"react\";\n\nfunction useDebounce(value, ms) {\n  return value;                       // chưa debounce\n}\n\nexport default function App() {\n  const [q, setQ] = useState(\"\");\n  const deb = useDebounce(q, 150);\n  return (\n    <div>\n      <input id=\"q\" value={q} onChange={(e) => setQ(e.target.value)} />\n      <p id=\"deb\">{deb}</p>\n    </div>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, useEffect } from \"react\";\n\nfunction useDebounce(value, ms) {\n  const [v, setV] = useState(value);\n  useEffect(() => {\n    const t = setTimeout(() => setV(value), ms);\n    return () => clearTimeout(t);\n  }, [value, ms]);\n  return v;\n}\n\nexport default function App() {\n  const [q, setQ] = useState(\"\");\n  const deb = useDebounce(q, 150);\n  return (\n    <div>\n      <input id=\"q\" value={q} onChange={(e) => setQ(e.target.value)} />\n      <p id=\"deb\">{deb}</p>\n    </div>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Ngay sau khi gõ, giá trị debounce chưa đổi",
+            "en": "Right after typing the debounced value hasn't changed"
+          },
+          "test": "(async()=>{const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;const i=document.getElementById('q');set.call(i,'react');i.dispatchEvent(new Event('input',{bubbles:true}));await new Promise(r=>setTimeout(r,30));return document.getElementById('deb').textContent===''})()"
+        },
+        {
+          "label": {
+            "vi": "Sau khi chờ thì bằng chữ đã gõ",
+            "en": "After waiting it equals the typed text"
+          },
+          "test": "(async()=>{await new Promise(r=>setTimeout(r,400));return document.getElementById('deb').textContent==='react'})()"
+        }
+      ]
+    }
+  ],
+  "runtime": "react"
+}

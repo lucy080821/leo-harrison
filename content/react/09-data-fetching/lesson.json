@@ -1,0 +1,104 @@
+{
+  "title": {
+    "vi": "Lấy dữ liệu: loading, lỗi và race condition",
+    "en": "Data fetching: loading, errors and race conditions"
+  },
+  "summary": {
+    "vi": "ba trạng thái loading/error/success, huỷ yêu cầu cũ, useEffect + fetch",
+    "en": "three states loading/error/success, ignoring stale requests, useEffect + fetch"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { useState, useEffect } from \"react\";\n\n// API giả lập: trả Promise sau 30 ms; id = 0 thì lỗi\nconst fetchUser = (id) =>\n  new Promise((resolve, reject) =>\n    setTimeout(() => (id === 0 ? reject(new Error(\"Không tìm thấy\")) : resolve({ id, name: \"User \" + id })), 30)\n  );\n\nexport default function App() {\n  const [id, setId] = useState(1);\n  const [state, setState] = useState({ status: \"loading\" });\n\n  useEffect(() => {\n    let ignore = false;                       // chặn kết quả của yêu cầu CŨ (race condition)\n    setState({ status: \"loading\" });\n    fetchUser(id)\n      .then((user) => !ignore && setState({ status: \"success\", user }))\n      .catch((e) => !ignore && setState({ status: \"error\", message: e.message }));\n    return () => { ignore = true; };\n  }, [id]);\n\n  return (\n    <div>\n      <button id=\"next\" onClick={() => setId(id + 1)}>Tiếp</button>\n      {state.status === \"loading\" && <p id=\"loading\">Đang tải…</p>}\n      {state.status === \"error\" && <p id=\"err\">{state.message}</p>}\n      {state.status === \"success\" && <p id=\"name\">{state.user.name}</p>}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Component có sẵn fetchUser(id). Hiển thị <p id=\"loading\"> khi đang tải và <p id=\"name\"> với tên người dùng khi xong. Chỉ cần hai trạng thái (loading, success).",
+        "en": "The component has fetchUser(id). Render <p id=\"loading\"> while loading and <p id=\"name\"> with the user's name when done. Two states are enough (loading, success)."
+      },
+      "hint": {
+        "vi": "Dùng useState cho user và useEffect([]) gọi fetchUser(1).then(setUser).",
+        "en": "Use useState for user and useEffect([]) calling fetchUser(1).then(setUser)."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, useEffect } from \"react\";\nconst fetchUser = (id) => new Promise((res) => setTimeout(() => res({ id, name: \"User \" + id }), 30));\n\nexport default function App() {\n  return <p id=\"loading\">Đang tải…</p>;\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, useEffect } from \"react\";\nconst fetchUser = (id) => new Promise((res) => setTimeout(() => res({ id, name: \"User \" + id }), 30));\n\nexport default function App() {\n  const [user, setUser] = useState(null);\n  useEffect(() => { fetchUser(1).then(setUser); }, []);\n  if (!user) return <p id=\"loading\">Đang tải…</p>;\n  return <p id=\"name\">{user.name}</p>;\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Sau khi tải xong hiện tên người dùng",
+            "en": "Shows the user's name once loaded"
+          },
+          "test": "(async()=>{await new Promise(r=>setTimeout(r,200));return document.getElementById('name')?.textContent==='User 1'})()"
+        },
+        {
+          "label": {
+            "vi": "Hết trạng thái loading",
+            "en": "The loading state is gone"
+          },
+          "test": "(async()=>{await new Promise(r=>setTimeout(r,200));return !document.getElementById('loading')})()"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Thêm xử lý lỗi: fetchUser(0) bị từ chối. Hiển thị <p id=\"err\"> với thông báo lỗi khi bị từ chối, và nút #retry đổi sang id = 1 để tải lại thành công.",
+        "en": "Add error handling: fetchUser(0) is rejected. Render <p id=\"err\"> with the error message on rejection, and a #retry button that switches to id = 1 to load successfully."
+      },
+      "hint": {
+        "vi": "Lưu status trong state; .catch((e) => setState({status:'error', message:e.message})).",
+        "en": "Keep a status in state; .catch((e) => setState({status:'error', message:e.message}))."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, useEffect } from \"react\";\nconst fetchUser = (id) =>\n  new Promise((res, rej) => setTimeout(() => (id === 0 ? rej(new Error(\"Không tìm thấy\")) : res({ name: \"User \" + id })), 30));\n\nexport default function App() {\n  const [id, setId] = useState(0);\n  const [user, setUser] = useState(null);\n  useEffect(() => { fetchUser(id).then(setUser); }, [id]);\n  return (\n    <div>\n      {user && <p id=\"name\">{user.name}</p>}\n      <button id=\"retry\" onClick={() => setId(1)}>Thử lại</button>\n    </div>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, useEffect } from \"react\";\nconst fetchUser = (id) =>\n  new Promise((res, rej) => setTimeout(() => (id === 0 ? rej(new Error(\"Không tìm thấy\")) : res({ name: \"User \" + id })), 30));\n\nexport default function App() {\n  const [id, setId] = useState(0);\n  const [s, setS] = useState({ status: \"loading\" });\n  useEffect(() => {\n    let ignore = false;\n    setS({ status: \"loading\" });\n    fetchUser(id)\n      .then((user) => !ignore && setS({ status: \"success\", user }))\n      .catch((e) => !ignore && setS({ status: \"error\", message: e.message }));\n    return () => { ignore = true; };\n  }, [id]);\n  return (\n    <div>\n      {s.status === \"error\" && <p id=\"err\">{s.message}</p>}\n      {s.status === \"success\" && <p id=\"name\">{s.user.name}</p>}\n      <button id=\"retry\" onClick={() => setId(1)}>Thử lại</button>\n    </div>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Hiện lỗi khi bị từ chối",
+            "en": "Shows the error when rejected"
+          },
+          "test": "(async()=>{await new Promise(r=>setTimeout(r,200));return document.getElementById('err')?.textContent==='Không tìm thấy'})()"
+        },
+        {
+          "label": {
+            "vi": "Thử lại thì tải thành công và hết lỗi",
+            "en": "Retry loads successfully and clears the error"
+          },
+          "test": "(async()=>{await new Promise(r=>setTimeout(r,150));document.getElementById('retry').click();await new Promise(r=>setTimeout(r,200));return document.getElementById('name')?.textContent==='User 1'&&!document.getElementById('err')})()"
+        }
+      ]
+    }
+  ],
+  "runtime": "react"
+}

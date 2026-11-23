@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "State toàn cục: tự viết store với useSyncExternalStore",
+    "en": "Global state: writing a store with useSyncExternalStore"
+  },
+  "summary": {
+    "vi": "chọn nơi đặt state, store ngoài React, subscribe/getSnapshot, selector, Zustand/Redux",
+    "en": "choosing where state lives, a store outside React, subscribe/getSnapshot, selectors, Zustand/Redux"
+  },
+  "minutes": 35,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { useSyncExternalStore } from \"react\";\n\n// Store tối giản: state nằm NGOÀI React\nfunction createStore(initial) {\n  let state = initial;\n  const listeners = new Set();\n  return {\n    getState: () => state,\n    setState: (patch) => { state = { ...state, ...patch }; listeners.forEach((l) => l()); },\n    subscribe: (l) => { listeners.add(l); return () => listeners.delete(l); },\n  };\n}\n\nconst store = createStore({ count: 0, theme: \"light\" });\n\n// Hook chọn một phần state; chỉ render lại khi phần đó đổi\nfunction useStore(selector) {\n  return useSyncExternalStore(store.subscribe, () => selector(store.getState()));\n}\n\nfunction Counter() {\n  const count = useStore((s) => s.count);\n  return <button id=\"inc\" onClick={() => store.setState({ count: store.getState().count + 1 })}>Đếm: {count}</button>;\n}\nfunction Total() {\n  const count = useStore((s) => s.count);\n  return <p id=\"total\">Tổng: {count}</p>;\n}\n\nexport default function App() {\n  return <div><Counter /><Total /></div>;\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Hoàn thành createStore: getState trả state hiện tại, setState(patch) gộp patch vào state rồi gọi mọi listener, subscribe(l) thêm listener và trả hàm huỷ. Hai component dùng chung store phải cùng cập nhật khi bấm #inc.",
+        "en": "Complete createStore: getState returns the current state, setState(patch) merges the patch then calls every listener, subscribe(l) adds a listener and returns an unsubscribe function. Two components sharing the store must both update on clicking #inc."
+      },
+      "hint": {
+        "vi": "state = { ...state, ...patch }; listeners.forEach((l) => l()).",
+        "en": "state = { ...state, ...patch }; listeners.forEach((l) => l())."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useSyncExternalStore } from \"react\";\n\nfunction createStore(initial) {\n  let state = initial;\n  const listeners = new Set();\n  return {\n    getState: () => state,\n    setState: (patch) => {\n      // gộp patch vào state rồi báo cho listener\n    },\n    subscribe: (l) => { listeners.add(l); return () => listeners.delete(l); },\n  };\n}\n\nconst store = createStore({ count: 0 });\nconst useCount = () => useSyncExternalStore(store.subscribe, () => store.getState().count);\n\nfunction A() { return <button id=\"inc\" onClick={() => store.setState({ count: store.getState().count + 1 })}>+</button>; }\nfunction B() { return <p id=\"a\">{useCount()}</p>; }\nfunction C() { return <p id=\"b\">{useCount()}</p>; }\n\nexport default function App() { return <div><A /><B /><C /></div>; }\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useSyncExternalStore } from \"react\";\n\nfunction createStore(initial) {\n  let state = initial;\n  const listeners = new Set();\n  return {\n    getState: () => state,\n    setState: (patch) => {\n      state = { ...state, ...patch };\n      listeners.forEach((l) => l());\n    },\n    subscribe: (l) => { listeners.add(l); return () => listeners.delete(l); },\n  };\n}\n\nconst store = createStore({ count: 0 });\nconst useCount = () => useSyncExternalStore(store.subscribe, () => store.getState().count);\n\nfunction A() { return <button id=\"inc\" onClick={() => store.setState({ count: store.getState().count + 1 })}>+</button>; }\nfunction B() { return <p id=\"a\">{useCount()}</p>; }\nfunction C() { return <p id=\"b\">{useCount()}</p>; }\n\nexport default function App() { return <div><A /><B /><C /></div>; }\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Bấm hai lần: cả hai ô cùng bằng 2",
+            "en": "After two clicks both cells equal 2"
+          },
+          "test": "(async()=>{const b=document.getElementById('inc');b.click();await new Promise(r=>setTimeout(r,60));b.click();await new Promise(r=>setTimeout(r,60));return document.getElementById('a').textContent==='2'&&document.getElementById('b').textContent==='2'})()"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Thêm hành động reset vào store: nút #reset gọi store.setState({ count: 0 }). Sau khi bấm #inc ba lần rồi #reset, ô #a phải về 0.",
+        "en": "Add a reset action: the #reset button calls store.setState({ count: 0 }). After clicking #inc three times then #reset, cell #a must return to 0."
+      },
+      "hint": {
+        "vi": "<button id=\"reset\" onClick={() => store.setState({ count: 0 })}>",
+        "en": "<button id=\"reset\" onClick={() => store.setState({ count: 0 })}>"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useSyncExternalStore } from \"react\";\n\nconst listeners = new Set();\nlet state = { count: 0 };\nconst store = {\n  getState: () => state,\n  setState: (p) => { state = { ...state, ...p }; listeners.forEach((l) => l()); },\n  subscribe: (l) => { listeners.add(l); return () => listeners.delete(l); },\n};\nconst useCount = () => useSyncExternalStore(store.subscribe, () => store.getState().count);\n\nexport default function App() {\n  const count = useCount();\n  return (\n    <div>\n      <button id=\"inc\" onClick={() => store.setState({ count: count + 1 })}>+</button>\n      <p id=\"a\">{count}</p>\n    </div>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useSyncExternalStore } from \"react\";\n\nconst listeners = new Set();\nlet state = { count: 0 };\nconst store = {\n  getState: () => state,\n  setState: (p) => { state = { ...state, ...p }; listeners.forEach((l) => l()); },\n  subscribe: (l) => { listeners.add(l); return () => listeners.delete(l); },\n};\nconst useCount = () => useSyncExternalStore(store.subscribe, () => store.getState().count);\n\nexport default function App() {\n  const count = useCount();\n  return (\n    <div>\n      <button id=\"inc\" onClick={() => store.setState({ count: count + 1 })}>+</button>\n      <button id=\"reset\" onClick={() => store.setState({ count: 0 })}>Reset</button>\n      <p id=\"a\">{count}</p>\n    </div>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Tăng ba lần rồi reset thì về 0",
+            "en": "Three increments then reset returns to 0"
+          },
+          "test": "(async()=>{const i=document.getElementById('inc');for(let k=0;k<3;k++){i.click();await new Promise(r=>setTimeout(r,40));}const a=document.getElementById('a').textContent==='3';document.getElementById('reset')?.click();await new Promise(r=>setTimeout(r,60));return a&&document.getElementById('a').textContent==='0'})()"
+        }
+      ]
+    }
+  ],
+  "runtime": "react"
+}

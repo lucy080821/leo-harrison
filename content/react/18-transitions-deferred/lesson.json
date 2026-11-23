@@ -1,0 +1,97 @@
+{
+  "title": {
+    "vi": "Render đồng thời: useTransition và useDeferredValue",
+    "en": "Concurrent rendering: useTransition and useDeferredValue"
+  },
+  "summary": {
+    "vi": "cập nhật khẩn cấp vs không khẩn cấp, startTransition, useDeferredValue, giữ ô nhập mượt",
+    "en": "urgent vs non-urgent updates, startTransition, useDeferredValue, keeping inputs smooth"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { useState, useTransition, useDeferredValue, memo } from \"react\";\n\nconst ITEMS = Array.from({ length: 2000 }, (_, i) => \"Mục \" + i);\n\n// Danh sách đắt: chỉ render lại khi `query` (đã trì hoãn) đổi\nconst List = memo(function List({ query }) {\n  const shown = ITEMS.filter((x) => x.includes(query)).slice(0, 50);\n  return <ul>{shown.map((x) => <li key={x}>{x}</li>)}</ul>;\n});\n\nexport default function App() {\n  const [text, setText] = useState(\"\");\n  const deferred = useDeferredValue(text);      // phiên bản \"chậm hơn\" của text\n  const [isPending, startTransition] = useTransition();\n  const [tab, setTab] = useState(\"a\");\n\n  return (\n    <div>\n      <input id=\"q\" value={text} onChange={(e) => setText(e.target.value)} />   {/* cập nhật KHẨN CẤP: ô nhập luôn mượt */}\n      <List query={deferred} />                                                {/* cập nhật HOÃN được */}\n      <button id=\"tab\" onClick={() => startTransition(() => setTab(tab === \"a\" ? \"b\" : \"a\"))}>Tab {tab}</button>\n      {isPending && <span id=\"pending\">…</span>}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Dùng useDeferredValue: <input id=\"q\"> cập nhật tức thì, còn danh sách đếm <p id=\"count\"> dùng giá trị đã trì hoãn của q. Sau khi gõ 'Mục 1', #count phải hiện số mục chứa 'Mục 1' trong ITEMS (sau một lúc chờ).",
+        "en": "Use useDeferredValue: <input id=\"q\"> updates immediately while the count <p id=\"count\"> uses the deferred value of q. After typing 'Mục 1', #count must show the number of ITEMS containing 'Mục 1' (after a short wait)."
+      },
+      "hint": {
+        "vi": "const deferred = useDeferredValue(q); ITEMS.filter(x => x.includes(deferred)).length.",
+        "en": "const deferred = useDeferredValue(q); ITEMS.filter(x => x.includes(deferred)).length."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\n\nconst ITEMS = Array.from({ length: 200 }, (_, i) => \"Mục \" + i);\n\nexport default function App() {\n  const [q, setQ] = useState(\"\");\n  return (\n    <div>\n      <input id=\"q\" value={q} onChange={(e) => setQ(e.target.value)} />\n      <p id=\"count\">0</p>\n    </div>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, useDeferredValue } from \"react\";\n\nconst ITEMS = Array.from({ length: 200 }, (_, i) => \"Mục \" + i);\n\nexport default function App() {\n  const [q, setQ] = useState(\"\");\n  const deferred = useDeferredValue(q);\n  const count = ITEMS.filter((x) => x.includes(deferred)).length;\n  return (\n    <div>\n      <input id=\"q\" value={q} onChange={(e) => setQ(e.target.value)} />\n      <p id=\"count\">{q === \"\" ? 0 : count}</p>\n    </div>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Gõ 'Mục 1' thì đếm đúng",
+            "en": "Typing 'Mục 1' gives the right count"
+          },
+          "test": "(async()=>{const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;const i=document.getElementById('q');set.call(i,'Mục 1');i.dispatchEvent(new Event('input',{bubbles:true}));await new Promise(r=>setTimeout(r,300));const n=Array.from({length:200},(_,k)=>'Mục '+k).filter(x=>x.includes('Mục 1')).length;return document.getElementById('count').textContent===String(n)&&i.value==='Mục 1'})()"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Dùng useTransition: nút #go gọi startTransition(() => setPage(2)). <p id=\"page\"> hiện 'Trang ' + page (ban đầu Trang 1). Sau khi bấm và chờ, phải hiện 'Trang 2'.",
+        "en": "Use useTransition: the #go button calls startTransition(() => setPage(2)). <p id=\"page\"> shows 'Trang ' + page (initially Trang 1). After clicking and waiting it must show 'Trang 2'."
+      },
+      "hint": {
+        "vi": "const [isPending, startTransition] = useTransition(); onClick={() => startTransition(() => setPage(2))}.",
+        "en": "const [isPending, startTransition] = useTransition(); onClick={() => startTransition(() => setPage(2))}."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\n\nexport default function App() {\n  const [page, setPage] = useState(1);\n  return (\n    <div>\n      <button id=\"go\" onClick={() => {}}>Sang trang 2</button>\n      <p id=\"page\">Trang {page}</p>\n    </div>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, useTransition } from \"react\";\n\nexport default function App() {\n  const [page, setPage] = useState(1);\n  const [isPending, startTransition] = useTransition();\n  return (\n    <div>\n      <button id=\"go\" onClick={() => startTransition(() => setPage(2))}>Sang trang 2</button>\n      <p id=\"page\">Trang {page}</p>\n      {isPending && <span>…</span>}\n    </div>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Ban đầu là Trang 1",
+            "en": "Starts at Trang 1"
+          },
+          "test": "document.getElementById('page')?.textContent==='Trang 1'"
+        },
+        {
+          "label": {
+            "vi": "Bấm thì chuyển sang Trang 2",
+            "en": "Clicking moves to Trang 2"
+          },
+          "test": "(async()=>{document.getElementById('go').click();await new Promise(r=>setTimeout(r,150));return document.getElementById('page').textContent==='Trang 2'})()"
+        }
+      ]
+    }
+  ],
+  "runtime": "react"
+}

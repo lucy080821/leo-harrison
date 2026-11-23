@@ -1,0 +1,104 @@
+{
+  "title": {
+    "vi": "Form thực tế: kiểm tra hợp lệ và lỗi từng trường",
+    "en": "Real-world forms: validation and per-field errors"
+  },
+  "summary": {
+    "vi": "state object cho form, validate, touched, vô hiệu hoá nút gửi, onSubmit",
+    "en": "form state object, validate, touched, disabling submit, onSubmit"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { useState } from \"react\";\n\nconst validate = (v) => {\n  const e = {};\n  if (!v.email.includes(\"@\")) e.email = \"Email không hợp lệ\";\n  if (v.password.length < 8) e.password = \"Mật khẩu tối thiểu 8 ký tự\";\n  return e;\n};\n\nexport default function App() {\n  const [values, setValues] = useState({ email: \"\", password: \"\" });\n  const [touched, setTouched] = useState({});\n  const [done, setDone] = useState(false);\n  const errors = validate(values);                 // DẪN XUẤT từ state, không lưu riêng\n  const valid = Object.keys(errors).length === 0;\n\n  const bind = (name) => ({\n    value: values[name],\n    onChange: (e) => setValues({ ...values, [name]: e.target.value }),\n    onBlur: () => setTouched({ ...touched, [name]: true }),\n  });\n\n  return (\n    <form onSubmit={(e) => { e.preventDefault(); if (valid) setDone(true); }}>\n      <input id=\"email\" placeholder=\"Email\" {...bind(\"email\")} />\n      {touched.email && errors.email && <p id=\"email-err\">{errors.email}</p>}\n      <input id=\"pw\" type=\"password\" placeholder=\"Mật khẩu\" {...bind(\"password\")} />\n      {touched.password && errors.password && <p id=\"pw-err\">{errors.password}</p>}\n      <button id=\"go\" disabled={!valid}>Đăng ký</button>\n      {done && <p id=\"ok\">Đã gửi!</p>}\n    </form>\n  );\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Nút #go phải bị vô hiệu hoá (disabled) khi tên (#name) rỗng hoặc ngắn hơn 3 ký tự, và được bật khi tên đủ 3 ký tự trở lên.",
+        "en": "The #go button must be disabled when the name (#name) is empty or shorter than 3 characters, and enabled once it has 3 or more."
+      },
+      "hint": {
+        "vi": "const valid = name.length >= 3; <button disabled={!valid}>.",
+        "en": "const valid = name.length >= 3; <button disabled={!valid}>."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\n\nexport default function App() {\n  const [name, setName] = useState(\"\");\n  return (\n    <div>\n      <input id=\"name\" value={name} onChange={(e) => setName(e.target.value)} />\n      <button id=\"go\">Gửi</button>\n    </div>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\n\nexport default function App() {\n  const [name, setName] = useState(\"\");\n  const valid = name.length >= 3;\n  return (\n    <div>\n      <input id=\"name\" value={name} onChange={(e) => setName(e.target.value)} />\n      <button id=\"go\" disabled={!valid}>Gửi</button>\n    </div>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Ban đầu nút bị vô hiệu hoá",
+            "en": "Initially the button is disabled"
+          },
+          "test": "document.getElementById('go').disabled===true"
+        },
+        {
+          "label": {
+            "vi": "Gõ 3 ký tự thì được bật",
+            "en": "Typing 3 characters enables it"
+          },
+          "test": "(async()=>{const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;const i=document.getElementById('name');set.call(i,'Leo');i.dispatchEvent(new Event('input',{bubbles:true}));await new Promise(r=>setTimeout(r,60));return document.getElementById('go').disabled===false})()"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Chỉ hiện lỗi <p id=\"err\">Email không hợp lệ</p> SAU KHI người dùng rời khỏi ô email (blur) mà email không chứa '@'. Chưa blur thì không hiện lỗi.",
+        "en": "Show the error <p id=\"err\">Email không hợp lệ</p> only AFTER the user leaves the email field (blur) with an email that has no '@'. Before blur, show no error."
+      },
+      "hint": {
+        "vi": "Thêm state touched; onBlur={() => setTouched(true)}; hiện lỗi khi touched && !email.includes('@').",
+        "en": "Add a touched state; onBlur={() => setTouched(true)}; show the error when touched && !email.includes('@')."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\n\nexport default function App() {\n  const [email, setEmail] = useState(\"\");\n  return (\n    <div>\n      <input id=\"email\" value={email} onChange={(e) => setEmail(e.target.value)} />\n    </div>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\n\nexport default function App() {\n  const [email, setEmail] = useState(\"\");\n  const [touched, setTouched] = useState(false);\n  return (\n    <div>\n      <input id=\"email\" value={email} onChange={(e) => setEmail(e.target.value)} onBlur={() => setTouched(true)} />\n      {touched && !email.includes(\"@\") && <p id=\"err\">Email không hợp lệ</p>}\n    </div>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Chưa blur thì chưa có lỗi",
+            "en": "No error before blur"
+          },
+          "test": "(async()=>{const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;const i=document.getElementById('email');set.call(i,'abc');i.dispatchEvent(new Event('input',{bubbles:true}));await new Promise(r=>setTimeout(r,60));return !document.getElementById('err')})()"
+        },
+        {
+          "label": {
+            "vi": "Blur với email sai thì hiện lỗi",
+            "en": "Blur with a bad email shows the error"
+          },
+          "test": "(async()=>{const i=document.getElementById('email');i.dispatchEvent(new FocusEvent('focusout',{bubbles:true}));await new Promise(r=>setTimeout(r,60));return document.getElementById('err')?.textContent==='Email không hợp lệ'})()"
+        }
+      ]
+    }
+  ],
+  "runtime": "react"
+}

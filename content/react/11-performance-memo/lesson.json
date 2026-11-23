@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Hiệu năng: React.memo, useCallback và key",
+    "en": "Performance: React.memo, useCallback and keys"
+  },
+  "summary": {
+    "vi": "khi nào render lại, React.memo, useCallback, key ổn định, đo trước khi tối ưu",
+    "en": "when re-renders happen, React.memo, useCallback, stable keys, measure before optimising"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { useState, useCallback, memo, useRef } from \"react\";\n\n// memo: chỉ render lại khi props thay đổi (so sánh nông)\nconst Row = memo(function Row({ label, onPick }) {\n  const renders = useRef(0);\n  renders.current += 1;                                  // đếm số lần render để quan sát\n  return <li><button onClick={() => onPick(label)}>{label}</button> <small>render #{renders.current}</small></li>;\n});\n\nexport default function App() {\n  const [count, setCount] = useState(0);\n  const [picked, setPicked] = useState(\"\");\n  const onPick = useCallback((label) => setPicked(label), []);    // tham chiếu hàm ổn định\n\n  return (\n    <div>\n      <button id=\"inc\" onClick={() => setCount(count + 1)}>Đếm: {count}</button>\n      <p id=\"picked\">{picked}</p>\n      <ul><Row label=\"A\" onPick={onPick} /><Row label=\"B\" onPick={onPick} /></ul>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Component Child hiện đang render lại mỗi khi App đổi state. Bọc Child bằng memo để nó chỉ render lại khi props đổi. Child ghi số lần render vào window.__renders; sau 3 lần bấm #inc, window.__renders phải vẫn là 1.",
+        "en": "Child currently re-renders whenever App changes state. Wrap Child in memo so it re-renders only when its props change. Child writes its render count to window.__renders; after 3 clicks on #inc, window.__renders must still be 1."
+      },
+      "hint": {
+        "vi": "const Child = memo(function Child() {...}).",
+        "en": "const Child = memo(function Child() {...})."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\n\nfunction Child() {\n  window.__renders = (window.__renders || 0) + 1;\n  return <p>Tôi là Child</p>;\n}\n\nexport default function App() {\n  const [n, setN] = useState(0);\n  return (\n    <div>\n      <button id=\"inc\" onClick={() => setN(n + 1)}>{n}</button>\n      <Child />\n    </div>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, memo } from \"react\";\n\nconst Child = memo(function Child() {\n  window.__renders = (window.__renders || 0) + 1;\n  return <p>Tôi là Child</p>;\n});\n\nexport default function App() {\n  const [n, setN] = useState(0);\n  return (\n    <div>\n      <button id=\"inc\" onClick={() => setN(n + 1)}>{n}</button>\n      <Child />\n    </div>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Child chỉ render 1 lần dù App đổi state",
+            "en": "Child renders once even as App changes state"
+          },
+          "test": "(async()=>{window.__renders=0;const b=document.getElementById('inc');for(let i=0;i<3;i++){b.click();await new Promise(r=>setTimeout(r,40));}return document.getElementById('inc').textContent==='3'&&window.__renders<=1})()"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Danh sách dưới dùng key={index}, gây lỗi khi xoá phần tử đầu (ô nhập bị lệch). Dùng key ổn định là item.id. Sau khi bấm #del-first, ô nhập có giá trị 'B-text' phải thuộc về mục B.",
+        "en": "The list below uses key={index}, which breaks when removing the first item (input values shift). Use the stable key item.id. After clicking #del-first, the input holding 'B-text' must belong to item B."
+      },
+      "hint": {
+        "vi": "<li key={item.id}>.",
+        "en": "<li key={item.id}>."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\n\nexport default function App() {\n  const [items, setItems] = useState([{ id: \"a\", name: \"A\" }, { id: \"b\", name: \"B\" }]);\n  return (\n    <div>\n      <button id=\"del-first\" onClick={() => setItems(items.slice(1))}>Xoá đầu</button>\n      <ul>\n        {items.map((item, i) => (\n          <li key={i} data-name={item.name}><input defaultValue={item.name + \"-text\"} /></li>\n        ))}\n      </ul>\n    </div>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\n\nexport default function App() {\n  const [items, setItems] = useState([{ id: \"a\", name: \"A\" }, { id: \"b\", name: \"B\" }]);\n  return (\n    <div>\n      <button id=\"del-first\" onClick={() => setItems(items.slice(1))}>Xoá đầu</button>\n      <ul>\n        {items.map((item) => (\n          <li key={item.id} data-name={item.name}><input defaultValue={item.name + \"-text\"} /></li>\n        ))}\n      </ul>\n    </div>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Sau khi xoá mục A, ô 'B-text' nằm trong mục B",
+            "en": "After deleting A, the 'B-text' input sits in item B"
+          },
+          "test": "(async()=>{document.getElementById('del-first').click();await new Promise(r=>setTimeout(r,80));const li=document.querySelector('li');return li?.getAttribute('data-name')==='B'&&li.querySelector('input').value==='B-text'})()"
+        }
+      ]
+    }
+  ],
+  "runtime": "react"
+}

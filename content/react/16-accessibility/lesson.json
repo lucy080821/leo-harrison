@@ -1,0 +1,104 @@
+{
+  "title": {
+    "vi": "Trợ năng (a11y): HTML ngữ nghĩa, nhãn, bàn phím và focus",
+    "en": "Accessibility (a11y): semantic HTML, labels, keyboard and focus"
+  },
+  "summary": {
+    "vi": "thẻ ngữ nghĩa, label gắn input, aria, điều hướng bàn phím, quản lý focus, kiểm tra",
+    "en": "semantic tags, labels tied to inputs, aria, keyboard navigation, focus management, auditing"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { useState, useRef, useEffect } from \"react\";\n\nexport default function App() {\n  const [open, setOpen] = useState(false);\n  const closeRef = useRef(null);\n  useEffect(() => { if (open) closeRef.current?.focus(); }, [open]);   // chuyển focus vào hộp thoại\n\n  return (\n    <main>\n      <h1>Cửa hàng</h1>\n      {/* label gắn với input bằng htmlFor/id: bấm nhãn thì focus ô nhập, trình đọc màn hình đọc nhãn */}\n      <label htmlFor=\"email\">Email</label>\n      <input id=\"email\" type=\"email\" autoComplete=\"email\" />\n\n      {/* dùng <button>, không phải <div onClick>: có sẵn bàn phím, focus, vai trò */}\n      <button id=\"open\" onClick={() => setOpen(true)}>Mở hộp thoại</button>\n\n      {open && (\n        <div role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"t\" onKeyDown={(e) => e.key === \"Escape\" && setOpen(false)}>\n          <h2 id=\"t\">Xác nhận</h2>\n          <button id=\"close\" ref={closeRef} onClick={() => setOpen(false)}>Đóng</button>\n        </div>\n      )}\n    </main>\n  );\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Ô nhập chưa có nhãn. Thêm <label htmlFor=\"name\">Họ tên</label> gắn với <input id=\"name\"> để trình đọc màn hình và việc bấm nhãn hoạt động.",
+        "en": "The input has no label. Add <label htmlFor=\"name\">Họ tên</label> tied to <input id=\"name\"> so screen readers and clicking the label work."
+      },
+      "hint": {
+        "vi": "<label htmlFor=\"name\">Họ tên</label> đi kèm <input id=\"name\" />.",
+        "en": "<label htmlFor=\"name\">Họ tên</label> next to <input id=\"name\" />."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "export default function App() {\n  return (\n    <form>\n      <input id=\"name\" />\n    </form>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "export default function App() {\n  return (\n    <form>\n      <label htmlFor=\"name\">Họ tên</label>\n      <input id=\"name\" />\n    </form>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có label gắn đúng với #name",
+            "en": "A label is tied to #name"
+          },
+          "test": "document.querySelector('label[for=\"name\"]')?.textContent==='Họ tên'"
+        },
+        {
+          "label": {
+            "vi": "Input có nhãn truy cập được",
+            "en": "The input has an accessible label"
+          },
+          "test": "document.getElementById('name')?.labels?.length===1"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Bấm #open mở hộp thoại (role=\"dialog\"). Khi mở, focus phải được chuyển vào nút #close (dùng useRef + useEffect), và nhấn Escape đóng hộp thoại.",
+        "en": "Clicking #open opens a dialog (role=\"dialog\"). When open, focus must move to the #close button (useRef + useEffect), and pressing Escape closes the dialog."
+      },
+      "hint": {
+        "vi": "useEffect(() => { if (open) closeRef.current.focus(); }, [open]); onKeyDown Escape.",
+        "en": "useEffect(() => { if (open) closeRef.current.focus(); }, [open]); onKeyDown for Escape."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\n\nexport default function App() {\n  const [open, setOpen] = useState(false);\n  return (\n    <div>\n      <button id=\"open\" onClick={() => setOpen(true)}>Mở</button>\n      {open && (\n        <div role=\"dialog\" aria-modal=\"true\">\n          <button id=\"close\" onClick={() => setOpen(false)}>Đóng</button>\n        </div>\n      )}\n    </div>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, useRef, useEffect } from \"react\";\n\nexport default function App() {\n  const [open, setOpen] = useState(false);\n  const closeRef = useRef(null);\n  useEffect(() => { if (open) closeRef.current?.focus(); }, [open]);\n  return (\n    <div>\n      <button id=\"open\" onClick={() => setOpen(true)}>Mở</button>\n      {open && (\n        <div role=\"dialog\" aria-modal=\"true\" onKeyDown={(e) => e.key === \"Escape\" && setOpen(false)}>\n          <button id=\"close\" ref={closeRef} onClick={() => setOpen(false)}>Đóng</button>\n        </div>\n      )}\n    </div>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Mở hộp thoại thì focus vào #close",
+            "en": "Opening the dialog focuses #close"
+          },
+          "test": "(async()=>{document.getElementById('open').click();await new Promise(r=>setTimeout(r,80));return document.activeElement===document.getElementById('close')})()"
+        },
+        {
+          "label": {
+            "vi": "Nhấn Escape thì hộp thoại đóng",
+            "en": "Pressing Escape closes the dialog"
+          },
+          "test": "(async()=>{const c=document.getElementById('close');c&&c.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true}));await new Promise(r=>setTimeout(r,80));return !document.querySelector('[role=dialog]')})()"
+        }
+      ]
+    }
+  ],
+  "runtime": "react"
+}

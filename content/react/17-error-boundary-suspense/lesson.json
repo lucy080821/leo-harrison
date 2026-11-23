@@ -1,0 +1,104 @@
+{
+  "title": {
+    "vi": "Error Boundary, Suspense và lazy loading",
+    "en": "Error boundaries, Suspense and lazy loading"
+  },
+  "summary": {
+    "vi": "bắt lỗi render, giao diện dự phòng, Suspense fallback, React.lazy tách mã",
+    "en": "catching render errors, fallback UI, Suspense fallbacks, React.lazy code splitting"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { Component, Suspense, lazy } from \"react\";\n\n// Error Boundary: bắt lỗi khi RENDER của cây con (phải là class)\nclass ErrorBoundary extends Component {\n  state = { error: null };\n  static getDerivedStateFromError(error) { return { error }; }\n  componentDidCatch(error, info) { console.error(\"Bắt lỗi:\", error.message); }   // gửi tới Sentry ở sản xuất\n  render() {\n    return this.state.error ? <p id=\"fallback\">Có lỗi xảy ra, vui lòng thử lại.</p> : this.props.children;\n  }\n}\n\nfunction Bomb() { throw new Error(\"nổ!\"); }\n\n// lazy: tải mã của component khi cần (ở đây giả lập)\nconst Heavy = lazy(() => new Promise((res) => setTimeout(() => res({ default: () => <p id=\"heavy\">Đã tải xong</p> }), 50)));\n\nexport default function App() {\n  return (\n    <div>\n      <ErrorBoundary><Bomb /></ErrorBoundary>\n      <Suspense fallback={<p id=\"wait\">Đang tải…</p>}><Heavy /></Suspense>\n    </div>\n  );\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Component Bomb luôn ném lỗi khi render và làm sập cả trang. Bọc Bomb trong ErrorBoundary (đã có sẵn) để hiện <p id=\"fallback\"> thay vì sập, trong khi <p id=\"ok\"> bên ngoài vẫn hiển thị.",
+        "en": "The Bomb component always throws while rendering and crashes the whole page. Wrap Bomb in ErrorBoundary (already provided) to show <p id=\"fallback\"> instead of crashing, while <p id=\"ok\"> outside still renders."
+      },
+      "hint": {
+        "vi": "<ErrorBoundary><Bomb /></ErrorBoundary>.",
+        "en": "<ErrorBoundary><Bomb /></ErrorBoundary>."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { Component } from \"react\";\n\nclass ErrorBoundary extends Component {\n  state = { error: null };\n  static getDerivedStateFromError(error) { return { error }; }\n  render() {\n    return this.state.error ? <p id=\"fallback\">Có lỗi</p> : this.props.children;\n  }\n}\n\nfunction Bomb() { throw new Error(\"nổ\"); }\n\nexport default function App() {\n  return (\n    <div>\n      <p id=\"ok\">Phần còn lại vẫn chạy</p>\n      <Bomb />\n    </div>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { Component } from \"react\";\n\nclass ErrorBoundary extends Component {\n  state = { error: null };\n  static getDerivedStateFromError(error) { return { error }; }\n  render() {\n    return this.state.error ? <p id=\"fallback\">Có lỗi</p> : this.props.children;\n  }\n}\n\nfunction Bomb() { throw new Error(\"nổ\"); }\n\nexport default function App() {\n  return (\n    <div>\n      <p id=\"ok\">Phần còn lại vẫn chạy</p>\n      <ErrorBoundary><Bomb /></ErrorBoundary>\n    </div>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Hiện giao diện dự phòng",
+            "en": "Shows the fallback"
+          },
+          "test": "!!document.getElementById('fallback')"
+        },
+        {
+          "label": {
+            "vi": "Phần còn lại của trang vẫn hiển thị",
+            "en": "The rest of the page still renders"
+          },
+          "test": "!!document.getElementById('ok')"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Bọc component lazy Heavy trong <Suspense fallback={<p id=\"wait\">Đang tải…</p>}>. Ban đầu hiện #wait, sau khi tải xong hiện <p id=\"heavy\"> và #wait biến mất.",
+        "en": "Wrap the lazy Heavy component in <Suspense fallback={<p id=\"wait\">Loading…</p>}>. Initially #wait shows, and once loaded <p id=\"heavy\"> appears and #wait disappears."
+      },
+      "hint": {
+        "vi": "<Suspense fallback={...}><Heavy /></Suspense>.",
+        "en": "<Suspense fallback={...}><Heavy /></Suspense>."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { lazy } from \"react\";\n\nconst Heavy = lazy(() => new Promise((res) => setTimeout(() => res({ default: () => <p id=\"heavy\">Đã tải</p> }), 1500)));\n\nexport default function App() {\n  return <div><Heavy /></div>;\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { lazy, Suspense } from \"react\";\n\nconst Heavy = lazy(() => new Promise((res) => setTimeout(() => res({ default: () => <p id=\"heavy\">Đã tải</p> }), 1500)));\n\nexport default function App() {\n  return (\n    <div>\n      <Suspense fallback={<p id=\"wait\">Đang tải…</p>}><Heavy /></Suspense>\n    </div>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Trong lúc chờ hiện #wait",
+            "en": "While waiting, #wait shows"
+          },
+          "test": "!!document.getElementById('wait')&&!document.getElementById('heavy')"
+        },
+        {
+          "label": {
+            "vi": "Tải xong thì hiện nội dung và hết #wait",
+            "en": "Once loaded, the content shows and #wait is gone"
+          },
+          "test": "(async()=>{await new Promise(r=>setTimeout(r,2200));return !document.getElementById('wait')&&!!document.getElementById('heavy')})()"
+        }
+      ]
+    }
+  ],
+  "runtime": "react"
+}

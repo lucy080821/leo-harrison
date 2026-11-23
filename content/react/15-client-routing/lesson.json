@@ -1,0 +1,97 @@
+{
+  "title": {
+    "vi": "Định tuyến phía client: tự viết router bằng hash",
+    "en": "Client-side routing: writing a hash router"
+  },
+  "summary": {
+    "vi": "SPA và URL, hash router, đọc/ghi location, tham số đường dẫn, thư viện router",
+    "en": "SPAs and URLs, a hash router, reading/writing location, path parameters, router libraries"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { useState, useEffect } from \"react\";\n\n// Router tối giản dựa trên location.hash (#/trang)\nfunction useHashRoute() {\n  const read = () => window.location.hash.slice(1) || \"/\";\n  const [path, setPath] = useState(read);\n  useEffect(() => {\n    const on = () => setPath(read());\n    window.addEventListener(\"hashchange\", on);\n    return () => window.removeEventListener(\"hashchange\", on);\n  }, []);\n  return path;\n}\n\nfunction Link({ to, children }) {\n  return <a href={\"#\" + to}>{children}</a>;\n}\n\nexport default function App() {\n  const path = useHashRoute();\n  let page = <p id=\"page\">Trang chủ</p>;\n  if (path === \"/about\") page = <p id=\"page\">Giới thiệu</p>;\n  else if (path.startsWith(\"/user/\")) page = <p id=\"page\">Người dùng {path.split(\"/\")[2]}</p>;\n  return (\n    <div>\n      <nav><Link to=\"/\">Home</Link> <Link to=\"/about\">About</Link> <Link to=\"/user/7\">User 7</Link></nav>\n      {page}\n    </div>\n  );\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Thêm tuyến /contact: khi hash là #/contact thì <p id=\"page\"> hiện 'Liên hệ'. Link tới /contact có id=\"go-contact\".",
+        "en": "Add a /contact route: when the hash is #/contact, <p id=\"page\"> shows 'Liên hệ'. The link to /contact has id=\"go-contact\"."
+      },
+      "hint": {
+        "vi": "else if (path === '/contact') page = ...; <a id=\"go-contact\" href=\"#/contact\">.",
+        "en": "else if (path === '/contact') page = ...; <a id=\"go-contact\" href=\"#/contact\">."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, useEffect } from \"react\";\n\nfunction useHashRoute() {\n  const read = () => window.location.hash.slice(1) || \"/\";\n  const [path, setPath] = useState(read);\n  useEffect(() => {\n    const on = () => setPath(read());\n    window.addEventListener(\"hashchange\", on);\n    return () => window.removeEventListener(\"hashchange\", on);\n  }, []);\n  return path;\n}\n\nexport default function App() {\n  const path = useHashRoute();\n  let page = <p id=\"page\">Trang chủ</p>;\n  return (\n    <div>\n      <a href=\"#/\">Home</a>\n      {page}\n    </div>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, useEffect } from \"react\";\n\nfunction useHashRoute() {\n  const read = () => window.location.hash.slice(1) || \"/\";\n  const [path, setPath] = useState(read);\n  useEffect(() => {\n    const on = () => setPath(read());\n    window.addEventListener(\"hashchange\", on);\n    return () => window.removeEventListener(\"hashchange\", on);\n  }, []);\n  return path;\n}\n\nexport default function App() {\n  const path = useHashRoute();\n  let page = <p id=\"page\">Trang chủ</p>;\n  if (path === \"/contact\") page = <p id=\"page\">Liên hệ</p>;\n  return (\n    <div>\n      <a href=\"#/\">Home</a> <a id=\"go-contact\" href=\"#/contact\">Contact</a>\n      {page}\n    </div>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Ban đầu là Trang chủ",
+            "en": "Starts at the home page"
+          },
+          "test": "document.getElementById('page')?.textContent==='Trang chủ'"
+        },
+        {
+          "label": {
+            "vi": "Vào #/contact thì hiện Liên hệ",
+            "en": "Going to #/contact shows Liên hệ"
+          },
+          "test": "(async()=>{window.location.hash='#/contact';await new Promise(r=>setTimeout(r,120));const ok=document.getElementById('page')?.textContent==='Liên hệ'&&!!document.getElementById('go-contact');window.location.hash='';return ok})()"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Tuyến có tham số: khi hash là #/user/42 thì <p id=\"page\"> hiện 'User 42' (lấy 42 từ đường dẫn). Với #/user/7 thì 'User 7'.",
+        "en": "A route with a parameter: when the hash is #/user/42, <p id=\"page\"> shows 'User 42' (take 42 from the path). With #/user/7 it shows 'User 7'."
+      },
+      "hint": {
+        "vi": "path.split('/')[2].",
+        "en": "path.split('/')[2]."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, useEffect } from \"react\";\n\nexport default function App() {\n  const read = () => window.location.hash.slice(1) || \"/\";\n  const [path, setPath] = useState(read);\n  useEffect(() => {\n    const on = () => setPath(read());\n    window.addEventListener(\"hashchange\", on);\n    return () => window.removeEventListener(\"hashchange\", on);\n  }, []);\n  return <p id=\"page\">Trang chủ</p>;\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, useEffect } from \"react\";\n\nexport default function App() {\n  const read = () => window.location.hash.slice(1) || \"/\";\n  const [path, setPath] = useState(read);\n  useEffect(() => {\n    const on = () => setPath(read());\n    window.addEventListener(\"hashchange\", on);\n    return () => window.removeEventListener(\"hashchange\", on);\n  }, []);\n  if (path.startsWith(\"/user/\")) return <p id=\"page\">User {path.split(\"/\")[2]}</p>;\n  return <p id=\"page\">Trang chủ</p>;\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "#/user/42 hiện User 42",
+            "en": "#/user/42 shows User 42"
+          },
+          "test": "(async()=>{window.location.hash='#/user/42';await new Promise(r=>setTimeout(r,120));const a=document.getElementById('page')?.textContent==='User 42';window.location.hash='#/user/7';await new Promise(r=>setTimeout(r,120));const b=document.getElementById('page')?.textContent==='User 7';window.location.hash='';return a&&b})()"
+        }
+      ]
+    }
+  ],
+  "runtime": "react"
+}

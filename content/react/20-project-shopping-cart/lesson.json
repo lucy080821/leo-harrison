@@ -1,0 +1,104 @@
+{
+  "title": {
+    "vi": "Dự án: giỏ hàng với useReducer, Context và state dẫn xuất",
+    "en": "Project: a shopping cart with useReducer, Context and derived state"
+  },
+  "summary": {
+    "vi": "reducer thuần, Context, tổng tiền dẫn xuất, thiết kế state, hướng mở rộng",
+    "en": "a pure reducer, Context, a derived total, state design, ways to extend"
+  },
+  "minutes": 40,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { createContext, useContext, useReducer } from \"react\";\n\nconst PRODUCTS = [\n  { id: 1, name: \"Áo\", price: 100 },\n  { id: 2, name: \"Quần\", price: 250 },\n];\n\nfunction reducer(state, action) {\n  switch (action.type) {\n    case \"add\": {\n      const found = state.find((l) => l.id === action.id);\n      return found\n        ? state.map((l) => (l.id === action.id ? { ...l, qty: l.qty + 1 } : l))\n        : [...state, { id: action.id, qty: 1 }];\n    }\n    case \"remove\":\n      return state.filter((l) => l.id !== action.id);\n    default:\n      return state;\n  }\n}\n\nconst CartCtx = createContext(null);\nconst useCart = () => useContext(CartCtx);\n\nfunction CartProvider({ children }) {\n  const [lines, dispatch] = useReducer(reducer, []);\n  return <CartCtx.Provider value={{ lines, dispatch }}>{children}</CartCtx.Provider>;\n}\n\nfunction Shop() {\n  const { dispatch } = useCart();\n  return (\n    <ul>\n      {PRODUCTS.map((p) => (\n        <li key={p.id}>\n          {p.name} - {p.price}\n          <button id={\"add\" + p.id} onClick={() => dispatch({ type: \"add\", id: p.id })}>Thêm</button>\n        </li>\n      ))}\n    </ul>\n  );\n}\n\nfunction Cart() {\n  const { lines, dispatch } = useCart();\n  const total = lines.reduce((s, l) => s + PRODUCTS.find((p) => p.id === l.id).price * l.qty, 0);   // DẪN XUẤT\n  const count = lines.reduce((s, l) => s + l.qty, 0);\n  return (\n    <div>\n      <p id=\"count\">{count}</p>\n      <p id=\"total\">{total}</p>\n      {lines.map((l) => (\n        <button key={l.id} id={\"rm\" + l.id} onClick={() => dispatch({ type: \"remove\", id: l.id })}>Xoá {l.id}</button>\n      ))}\n    </div>\n  );\n}\n\nexport default function App() {\n  return (\n    <CartProvider>\n      <Shop />\n      <Cart />\n    </CartProvider>\n  );\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Hoàn thành hành động 'add' trong reducer: nếu sản phẩm đã có trong giỏ thì tăng qty thêm 1, nếu chưa thì thêm { id, qty: 1 }. Thêm Áo (100) hai lần và Quần (250) một lần: #count = 3, #total = 450.",
+        "en": "Finish the 'add' action in the reducer: if the product is already in the cart increase its qty by 1, otherwise append { id, qty: 1 }. Add the shirt (100) twice and the trousers (250) once: #count = 3, #total = 450."
+      },
+      "hint": {
+        "vi": "state.map(l => l.id === action.id ? {...l, qty: l.qty + 1} : l) hoặc [...state, {id, qty: 1}].",
+        "en": "state.map(l => l.id === action.id ? {...l, qty: l.qty + 1} : l) or [...state, {id, qty: 1}]."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { createContext, useContext, useReducer } from \"react\";\n\nconst PRODUCTS = [\n  { id: 1, name: \"Áo\", price: 100 },\n  { id: 2, name: \"Quần\", price: 250 },\n];\n\nfunction reducer(state, action) {\n  switch (action.type) {\n    case \"add\": {\n      // TODO: nếu đã có dòng này thì tăng qty, chưa có thì thêm { id, qty: 1 }\n      return state;\n    }\n    case \"remove\":\n      return state.filter((l) => l.id !== action.id);\n    default:\n      return state;\n  }\n}\n\nconst CartCtx = createContext(null);\nconst useCart = () => useContext(CartCtx);\n\nfunction CartProvider({ children }) {\n  const [lines, dispatch] = useReducer(reducer, []);\n  return <CartCtx.Provider value={{ lines, dispatch }}>{children}</CartCtx.Provider>;\n}\n\nfunction Shop() {\n  const { dispatch } = useCart();\n  return (\n    <ul>\n      {PRODUCTS.map((p) => (\n        <li key={p.id}>\n          {p.name} - {p.price}\n          <button id={\"add\" + p.id} onClick={() => dispatch({ type: \"add\", id: p.id })}>Thêm</button>\n        </li>\n      ))}\n    </ul>\n  );\n}\n\nfunction Cart() {\n  const { lines, dispatch } = useCart();\n  const total = lines.reduce((s, l) => s + PRODUCTS.find((p) => p.id === l.id).price * l.qty, 0);   // DẪN XUẤT\n  const count = lines.reduce((s, l) => s + l.qty, 0);\n  return (\n    <div>\n      <p id=\"count\">{count}</p>\n      <p id=\"total\">{total}</p>\n      {lines.map((l) => (\n        <button key={l.id} id={\"rm\" + l.id} onClick={() => dispatch({ type: \"remove\", id: l.id })}>Xoá {l.id}</button>\n      ))}\n    </div>\n  );\n}\n\nexport default function App() {\n  return (\n    <CartProvider>\n      <Shop />\n      <Cart />\n    </CartProvider>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { createContext, useContext, useReducer } from \"react\";\n\nconst PRODUCTS = [\n  { id: 1, name: \"Áo\", price: 100 },\n  { id: 2, name: \"Quần\", price: 250 },\n];\n\nfunction reducer(state, action) {\n  switch (action.type) {\n    case \"add\": {\n      const found = state.find((l) => l.id === action.id);\n      return found\n        ? state.map((l) => (l.id === action.id ? { ...l, qty: l.qty + 1 } : l))\n        : [...state, { id: action.id, qty: 1 }];\n    }\n    case \"remove\":\n      return state.filter((l) => l.id !== action.id);\n    default:\n      return state;\n  }\n}\n\nconst CartCtx = createContext(null);\nconst useCart = () => useContext(CartCtx);\n\nfunction CartProvider({ children }) {\n  const [lines, dispatch] = useReducer(reducer, []);\n  return <CartCtx.Provider value={{ lines, dispatch }}>{children}</CartCtx.Provider>;\n}\n\nfunction Shop() {\n  const { dispatch } = useCart();\n  return (\n    <ul>\n      {PRODUCTS.map((p) => (\n        <li key={p.id}>\n          {p.name} - {p.price}\n          <button id={\"add\" + p.id} onClick={() => dispatch({ type: \"add\", id: p.id })}>Thêm</button>\n        </li>\n      ))}\n    </ul>\n  );\n}\n\nfunction Cart() {\n  const { lines, dispatch } = useCart();\n  const total = lines.reduce((s, l) => s + PRODUCTS.find((p) => p.id === l.id).price * l.qty, 0);   // DẪN XUẤT\n  const count = lines.reduce((s, l) => s + l.qty, 0);\n  return (\n    <div>\n      <p id=\"count\">{count}</p>\n      <p id=\"total\">{total}</p>\n      {lines.map((l) => (\n        <button key={l.id} id={\"rm\" + l.id} onClick={() => dispatch({ type: \"remove\", id: l.id })}>Xoá {l.id}</button>\n      ))}\n    </div>\n  );\n}\n\nexport default function App() {\n  return (\n    <CartProvider>\n      <Shop />\n      <Cart />\n    </CartProvider>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Thêm 3 sản phẩm: count = 3",
+            "en": "After adding 3 items: count = 3"
+          },
+          "test": "(async()=>{for(const id of ['add1','add1','add2']){document.getElementById(id).click();await new Promise(r=>setTimeout(r,50));}return document.getElementById('count').textContent==='3'})()"
+        },
+        {
+          "label": {
+            "vi": "Tổng tiền = 450",
+            "en": "Total = 450"
+          },
+          "test": "document.getElementById('total')?.textContent==='450'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Hoàn thành hành động 'remove': bỏ hẳn dòng có id đó khỏi giỏ. Thêm Áo hai lần, thêm Quần, rồi bấm #rm1: #count = 1 và #total = 250.",
+        "en": "Finish the 'remove' action: drop the line with that id from the cart. Add the shirt twice, add the trousers, then click #rm1: #count = 1 and #total = 250."
+      },
+      "hint": {
+        "vi": "state.filter((l) => l.id !== action.id).",
+        "en": "state.filter((l) => l.id !== action.id)."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { createContext, useContext, useReducer } from \"react\";\n\nconst PRODUCTS = [\n  { id: 1, name: \"Áo\", price: 100 },\n  { id: 2, name: \"Quần\", price: 250 },\n];\n\nfunction reducer(state, action) {\n  switch (action.type) {\n    case \"add\": {\n      const found = state.find((l) => l.id === action.id);\n      return found\n        ? state.map((l) => (l.id === action.id ? { ...l, qty: l.qty + 1 } : l))\n        : [...state, { id: action.id, qty: 1 }];\n    }\n    case \"remove\":\n      // TODO: bỏ dòng có id này\n      return state;\n    default:\n      return state;\n  }\n}\n\nconst CartCtx = createContext(null);\nconst useCart = () => useContext(CartCtx);\n\nfunction CartProvider({ children }) {\n  const [lines, dispatch] = useReducer(reducer, []);\n  return <CartCtx.Provider value={{ lines, dispatch }}>{children}</CartCtx.Provider>;\n}\n\nfunction Shop() {\n  const { dispatch } = useCart();\n  return (\n    <ul>\n      {PRODUCTS.map((p) => (\n        <li key={p.id}>\n          {p.name} - {p.price}\n          <button id={\"add\" + p.id} onClick={() => dispatch({ type: \"add\", id: p.id })}>Thêm</button>\n        </li>\n      ))}\n    </ul>\n  );\n}\n\nfunction Cart() {\n  const { lines, dispatch } = useCart();\n  const total = lines.reduce((s, l) => s + PRODUCTS.find((p) => p.id === l.id).price * l.qty, 0);   // DẪN XUẤT\n  const count = lines.reduce((s, l) => s + l.qty, 0);\n  return (\n    <div>\n      <p id=\"count\">{count}</p>\n      <p id=\"total\">{total}</p>\n      {lines.map((l) => (\n        <button key={l.id} id={\"rm\" + l.id} onClick={() => dispatch({ type: \"remove\", id: l.id })}>Xoá {l.id}</button>\n      ))}\n    </div>\n  );\n}\n\nexport default function App() {\n  return (\n    <CartProvider>\n      <Shop />\n      <Cart />\n    </CartProvider>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { createContext, useContext, useReducer } from \"react\";\n\nconst PRODUCTS = [\n  { id: 1, name: \"Áo\", price: 100 },\n  { id: 2, name: \"Quần\", price: 250 },\n];\n\nfunction reducer(state, action) {\n  switch (action.type) {\n    case \"add\": {\n      const found = state.find((l) => l.id === action.id);\n      return found\n        ? state.map((l) => (l.id === action.id ? { ...l, qty: l.qty + 1 } : l))\n        : [...state, { id: action.id, qty: 1 }];\n    }\n    case \"remove\":\n      return state.filter((l) => l.id !== action.id);\n    default:\n      return state;\n  }\n}\n\nconst CartCtx = createContext(null);\nconst useCart = () => useContext(CartCtx);\n\nfunction CartProvider({ children }) {\n  const [lines, dispatch] = useReducer(reducer, []);\n  return <CartCtx.Provider value={{ lines, dispatch }}>{children}</CartCtx.Provider>;\n}\n\nfunction Shop() {\n  const { dispatch } = useCart();\n  return (\n    <ul>\n      {PRODUCTS.map((p) => (\n        <li key={p.id}>\n          {p.name} - {p.price}\n          <button id={\"add\" + p.id} onClick={() => dispatch({ type: \"add\", id: p.id })}>Thêm</button>\n        </li>\n      ))}\n    </ul>\n  );\n}\n\nfunction Cart() {\n  const { lines, dispatch } = useCart();\n  const total = lines.reduce((s, l) => s + PRODUCTS.find((p) => p.id === l.id).price * l.qty, 0);   // DẪN XUẤT\n  const count = lines.reduce((s, l) => s + l.qty, 0);\n  return (\n    <div>\n      <p id=\"count\">{count}</p>\n      <p id=\"total\">{total}</p>\n      {lines.map((l) => (\n        <button key={l.id} id={\"rm\" + l.id} onClick={() => dispatch({ type: \"remove\", id: l.id })}>Xoá {l.id}</button>\n      ))}\n    </div>\n  );\n}\n\nexport default function App() {\n  return (\n    <CartProvider>\n      <Shop />\n      <Cart />\n    </CartProvider>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Sau khi xoá Áo: count = 1",
+            "en": "After removing the shirt: count = 1"
+          },
+          "test": "(async()=>{for(const id of ['add1','add1','add2']){document.getElementById(id).click();await new Promise(r=>setTimeout(r,50));}document.getElementById('rm1')?.click();await new Promise(r=>setTimeout(r,80));return document.getElementById('count').textContent==='1'})()"
+        },
+        {
+          "label": {
+            "vi": "Tổng tiền còn 250",
+            "en": "Total drops to 250"
+          },
+          "test": "document.getElementById('total')?.textContent==='250'"
+        }
+      ]
+    }
+  ],
+  "runtime": "react"
+}
