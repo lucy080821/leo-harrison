@@ -1,0 +1,91 @@
+{
+  "title": {
+    "vi": "Phân phối đồng thời, hiệp phương sai và danh mục đầu tư",
+    "en": "Joint distributions, covariance and portfolios"
+  },
+  "summary": {
+    "vi": "phân phối đồng thời, hiệp phương sai, tương quan, phương sai của tổng",
+    "en": "joint distributions, covariance, correlation, the variance of a sum"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\n# Phân phối đồng thời của X (số khách) và Y (đơn hàng): p(x, y)\nxs, ys = [0, 1, 2], [0, 1]\nP = np.array([[0.30, 0.05],     # hàng = x, cột = y\n              [0.15, 0.20],\n              [0.05, 0.25]])\npx, py = P.sum(axis=1), P.sum(axis=0)           # phân phối biên\nex_, ey_ = (np.array(xs) * px).sum(), (np.array(ys) * py).sum()\nexy = sum(x * y * P[i, j] for i, x in enumerate(xs) for j, y in enumerate(ys))\ncov = exy - ex_ * ey_\nprint(\"E[X] =\", round(ex_, 3), \" E[Y] =\", round(ey_, 3), \" Cov =\", round(cov, 4))\n\n# Danh mục đầu tư 50/50: Var = w1^2 s1^2 + w2^2 s2^2 + 2 w1 w2 rho s1 s2\ns1, s2, rho = 0.20, 0.30, 0.4\nvar = 0.25 * s1**2 + 0.25 * s2**2 + 2 * 0.25 * rho * s1 * s2\nprint(\"độ lệch chuẩn danh mục:\", round(var ** 0.5, 4))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Hai tài sản có độ lệch chuẩn 10% và 20%, tương quan −0,5. Danh mục chia 50/50. Tính độ lệch chuẩn của danh mục, làm tròn 4 chữ số.",
+        "en": "Two assets have standard deviations 10% and 20% and correlation −0.5. The portfolio is split 50/50. Compute the portfolio's standard deviation, rounded to 4 digits."
+      },
+      "hint": {
+        "vi": "Var = w₁²σ₁² + w₂²σ₂² + 2w₁w₂ρσ₁σ₂.",
+        "en": "Var = w₁²σ₁² + w₂²σ₂² + 2w₁w₂ρσ₁σ₂."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "s1, s2, rho = 0.10, 0.20, -0.5\n# in độ lệch chuẩn danh mục 50/50\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "s1, s2, rho = 0.10, 0.20, -0.5\nvar = 0.25 * s1**2 + 0.25 * s2**2 + 2 * 0.25 * rho * s1 * s2\nprint(round(var ** 0.5, 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '0.0866'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Cho dữ liệu x = [1, 2, 3, 4] và y = [2, 4, 5, 9]. Tính hệ số tương quan Pearson bằng numpy, làm tròn 4 chữ số.",
+        "en": "Given x = [1, 2, 3, 4] and y = [2, 4, 5, 9]. Compute the Pearson correlation with numpy, rounded to 4 digits."
+      },
+      "hint": {
+        "vi": "np.corrcoef(x, y)[0, 1].",
+        "en": "np.corrcoef(x, y)[0, 1]."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nx = [1, 2, 3, 4]\ny = [2, 4, 5, 9]\n# in hệ số tương quan\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nx = [1, 2, 3, 4]\ny = [2, 4, 5, 9]\nprint(round(np.corrcoef(x, y)[0, 1], 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '0.9648'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "module": "m1"
+}

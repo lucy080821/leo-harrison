@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { JsonLd } from "@/components/JsonLd";
 import { CourseProgress, LessonStatus } from "@/components/LessonStatus";
-import { statisticsCourse as co } from "@/content/registry";
+import { statisticsCourse as co, statisticsModules } from "@/content/registry";
 import { t as site } from "@/content/site";
 import { getLessons } from "@/lib/content";
 import { dict, isLocale, locales } from "@/lib/i18n";
@@ -51,26 +51,37 @@ export default async function StatisticsPage({ params }: { params: Promise<{ lan
       <p className="mt-2 text-lg text-muted">{co.desc[lang]}</p>
 
       <CourseProgress course={co.id} lessons={lessons.map((l) => l.slug)} label={t.progress} />
-      <h2 className="mb-3 mt-8 text-lg font-bold">{t.lessonList}</h2>
-      <ol className="space-y-3">
-        {lessons.map((l, i) => (
-          <li key={l.slug}>
-            <Link
-              href={`${base}/${l.slug}`}
-              className="flex items-center gap-4 rounded-xl border border-line bg-surface p-4 transition hover:border-brand hover:shadow"
-            >
-              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brandsoft text-sm font-bold text-brand">{i + 1}</span>
-              <span className="min-w-0 flex-1">
-                <span className="block font-semibold">{l.title[lang]}</span>
-                <span className="block text-sm text-muted">
-                  {l.summary[lang]} · {l.minutes} {t.minutes}
-                </span>
-              </span>
-              <LessonStatus course={co.id} lesson={l.slug} label={t.done} />
-            </Link>
-          </li>
-        ))}
-      </ol>
+      {statisticsModules.map((m) => {
+        const items = lessons.map((l, i) => ({ l, i })).filter(({ l }) => l.module === m.id);
+        if (items.length === 0) return null;
+        return (
+          <section key={m.id} className="mt-10" aria-labelledby={`h-${m.id}`}>
+            <h2 id={`h-${m.id}`} className="text-xl font-bold">
+              {m.title[lang]}
+            </h2>
+            <p className="mt-1 text-sm text-muted">{m.desc[lang]}</p>
+            <ol className="mt-4 space-y-3">
+              {items.map(({ l, i }) => (
+                <li key={l.slug}>
+                  <Link
+                    href={`${base}/${l.slug}`}
+                    className="flex items-center gap-4 rounded-xl border border-line bg-surface p-4 transition hover:border-brand hover:shadow"
+                  >
+                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brandsoft text-sm font-bold text-brand">{i + 1}</span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block font-semibold">{l.title[lang]}</span>
+                      <span className="block text-sm text-muted">
+                        {l.summary[lang]} · {l.minutes} {t.minutes}
+                      </span>
+                    </span>
+                    <LessonStatus course={co.id} lesson={l.slug} label={t.done} />
+                  </Link>
+                </li>
+              ))}
+            </ol>
+          </section>
+        );
+      })}
     </div>
   );
 }

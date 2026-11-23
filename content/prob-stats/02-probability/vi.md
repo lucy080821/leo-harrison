@@ -26,7 +26,7 @@ Khi các kết quả **đồng khả năng**: P(A) = |A| / |Ω|. Vậy P(tổng 
 ## Hai cách hiểu xác suất
 
 - **Tần suất**: P là giới hạn của tần suất tương đối khi lặp lại vô số lần.
-- **Bayes (độ tin)**: P đo mức độ tin vào một mệnh đề, cập nhật khi có dữ liệu (bài sau).
+- **Bayes (độ tin)**: P đo mức độ tin vào một mệnh đề, cập nhật khi có dữ liệu (bài 4).
 
 Cả hai cùng dùng chung các tiên đề.
 

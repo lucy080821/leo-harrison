@@ -1,0 +1,91 @@
+{
+  "title": {
+    "vi": "Hồi quy logistic: dự đoán xác suất cho kết quả có/không",
+    "en": "Logistic regression: predicting probabilities of yes/no outcomes"
+  },
+  "summary": {
+    "vi": "odds, logit, hàm sigmoid, ước lượng bằng MLE, tỷ số odds",
+    "en": "odds, the logit, the sigmoid, MLE fitting, odds ratios"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\n# Số giờ học -> đỗ (1) hay trượt (0)\nhours = np.array([0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5], dtype=float)\npassed = np.array([0, 0, 0, 1, 0, 1, 0, 1, 1, 1], dtype=float)\n\nX = np.column_stack([np.ones(len(hours)), hours])\nw = np.zeros(2)\nfor _ in range(25):                           # Newton-Raphson (IRLS) tối đa hợp lý\n    p = 1 / (1 + np.exp(-X @ w))\n    W = p * (1 - p)\n    w += np.linalg.solve(X.T @ (X * W[:, None]), X.T @ (passed - p))\nprint(\"hệ số (chặn, giờ học):\", np.round(w, 4))\nprint(\"tỷ số odds cho +1 giờ:\", round(float(np.exp(w[1])), 3))\nprint(\"P(đỗ | 3 giờ) =\", round(1 / (1 + np.exp(-(w[0] + w[1] * 3))), 4))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Mô hình logistic có hệ số chặn −3 và hệ số 0,05 cho x. In xác suất dự đoán tại x = 80, làm tròn 4 chữ số (p = 1/(1 + e^(−(b₀ + b₁x)))).",
+        "en": "A logistic model has intercept −3 and slope 0.05 for x. Print the predicted probability at x = 80, rounded to 4 digits (p = 1/(1 + e^(−(b₀ + b₁x))))."
+      },
+      "hint": {
+        "vi": "z = −3 + 0.05·80 = 1.",
+        "en": "z = −3 + 0.05·80 = 1."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nb0, b1, x = -3, 0.05, 80\n# in xác suất\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nb0, b1, x = -3, 0.05, 80\nprint(round(1 / (1 + np.exp(-(b0 + b1 * x))), 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '0.7311'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Một khách hàng có xác suất rời bỏ 0,2. In odds = p/(1 − p) rồi log-odds (logit) làm tròn 4 chữ số, mỗi giá trị một dòng.",
+        "en": "A customer has a 0.2 probability of churning. Print the odds = p/(1 − p) then the log-odds (logit) rounded to 4 digits, one per line."
+      },
+      "hint": {
+        "vi": "np.log(odds).",
+        "en": "np.log(odds)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\np = 0.2\n# in odds rồi logit\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\np = 0.2\nodds = p / (1 - p)\nprint(round(odds, 4))\nprint(round(float(np.log(odds)), 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '0.25\\n-1.3863'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "module": "m3"
+}

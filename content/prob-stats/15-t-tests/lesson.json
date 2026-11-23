@@ -1,0 +1,91 @@
+{
+  "title": {
+    "vi": "Kiểm định t: so sánh trung bình",
+    "en": "t-tests: comparing means"
+  },
+  "summary": {
+    "vi": "phân phối t, kiểm định một mẫu, hai mẫu độc lập (Welch) và mẫu ghép cặp",
+    "en": "the t distribution; one-sample, two-sample (Welch) and paired tests"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\nfrom scipy import stats\n\n# Thời gian tải trang (giây) trước và sau khi tối ưu, mỗi nhóm 8 phiên\na = np.array([3.1, 2.8, 3.4, 3.0, 3.3, 2.9, 3.2, 3.5])   # cũ\nb = np.array([2.7, 2.6, 3.0, 2.8, 2.9, 2.5, 3.1, 2.7])   # mới\n\nt, p = stats.ttest_ind(a, b, equal_var=False)            # Welch: không giả định phương sai bằng nhau\nprint(\"Welch t =\", round(t, 3), \" p =\", round(p, 4))\n\n# Thống kê t một mẫu viết tay: t = (xbar - mu0) / (s / sqrt(n))\nmu0 = 3.0\nt1 = (a.mean() - mu0) / (a.std(ddof=1) / np.sqrt(len(a)))\nprint(\"t một mẫu =\", round(t1, 3), \" p =\", round(stats.ttest_1samp(a, mu0).pvalue, 4))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Mẫu x = [5.1, 4.9, 5.6, 5.8, 6.0] có trung bình thật sự bằng 5 không? Tính thống kê t một mẫu t = (x̄ − 5)/(s/√n) với s là độ lệch chuẩn mẫu (n−1). In t làm tròn 4 chữ số.",
+        "en": "Is the true mean of x = [5.1, 4.9, 5.6, 5.8, 6.0] equal to 5? Compute the one-sample statistic t = (x̄ − 5)/(s/√n) with s the sample standard deviation (n−1). Print t rounded to 4 digits."
+      },
+      "hint": {
+        "vi": "np.std(x, ddof=1).",
+        "en": "np.std(x, ddof=1)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nx = np.array([5.1, 4.9, 5.6, 5.8, 6.0])\n# in t\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nx = np.array([5.1, 4.9, 5.6, 5.8, 6.0])\nprint(round((x.mean() - 5) / (x.std(ddof=1) / np.sqrt(len(x))), 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '2.3041'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Điểm trước và sau khoá đào tạo của 6 nhân viên: before = [60, 65, 70, 55, 80, 75], after = [66, 70, 74, 60, 85, 77]. Kiểm định ghép cặp: tính hiệu d = after − before rồi in t = d̄/(s_d/√n) làm tròn 4 chữ số.",
+        "en": "Scores before and after training for 6 employees: before = [60, 65, 70, 55, 80, 75], after = [66, 70, 74, 60, 85, 77]. Paired test: compute d = after − before then print t = d̄/(s_d/√n) rounded to 4 digits."
+      },
+      "hint": {
+        "vi": "Ghép cặp = kiểm định một mẫu trên hiệu d với μ₀ = 0.",
+        "en": "Paired = a one-sample test on d with μ₀ = 0."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nbefore = np.array([60, 65, 70, 55, 80, 75])\nafter = np.array([66, 70, 74, 60, 85, 77])\n# in t ghép cặp\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nbefore = np.array([60, 65, 70, 55, 80, 75])\nafter = np.array([66, 70, 74, 60, 85, 77])\nd = after - before\nprint(round(d.mean() / (d.std(ddof=1) / np.sqrt(len(d))), 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '7.9967'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "module": "m2"
+}

@@ -1,0 +1,91 @@
+{
+  "title": {
+    "vi": "Phương trình vi phân: mô hình hoá sự thay đổi theo thời gian",
+    "en": "Differential equations: modelling change over time"
+  },
+  "summary": {
+    "vi": "tăng trưởng mũ, bán rã, logistic, phương pháp Euler",
+    "en": "exponential growth, decay, the logistic model, Euler's method"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "from math import exp, log\n\n# Phương trình vi phân: dy/dt = -k y  (nồng độ thuốc giảm theo thời gian)\nk, y0, T, dt = 0.3, 100.0, 5.0, 0.1\n\n# Phương pháp Euler: y_{n+1} = y_n + dt * f(y_n)\ny = y0\nfor _ in range(int(T / dt)):\n    y += dt * (-k * y)\nprint(\"Euler    :\", round(y, 3))\nprint(\"Chính xác:\", round(y0 * exp(-k * T), 3), \" (y = y0 e^{-kt})\")\nprint(\"chu kỳ bán rã:\", round(log(2) / k, 3))\n\n# Logistic: dP/dt = r P (1 - P/K): tăng trưởng bị chặn bởi sức chứa K\nr, K, P = 0.5, 1000.0, 10.0\nfor _ in range(int(20 / 0.1)):\n    P += 0.1 * r * P * (1 - P / K)\nprint(\"quần thể sau 20 đơn vị thời gian:\", round(P, 1))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Giải dy/dt = y với y(0) = 1 bằng phương pháp Euler, bước h = 0,1, trong 10 bước (đến t = 1). In y làm tròn 4 chữ số (chính xác là e ≈ 2,7183).",
+        "en": "Solve dy/dt = y with y(0) = 1 by Euler's method, step h = 0.1, 10 steps (to t = 1). Print y rounded to 4 digits (the exact value is e ≈ 2.7183)."
+      },
+      "hint": {
+        "vi": "y += h * y.",
+        "en": "y += h * y."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "y, h = 1.0, 0.1\n# 10 bước Euler rồi in y\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "y, h = 1.0, 0.1\nfor _ in range(10):\n    y += h * y\nprint(round(y, 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '2.5937'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Một loại thuốc có chu kỳ bán rã 6 giờ. Tìm hằng số k = ln 2 / 6 rồi in nồng độ còn lại sau 12 giờ từ 100 mg/L, làm tròn 2 chữ số, theo y = 100·e^(−kt).",
+        "en": "A drug has a half-life of 6 hours. Find k = ln 2 / 6 then print the concentration left after 12 hours from 100 mg/L, rounded to 2 digits, using y = 100·e^(−kt)."
+      },
+      "hint": {
+        "vi": "Sau 2 chu kỳ bán rã còn 1/4.",
+        "en": "After 2 half-lives a quarter remains."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from math import exp, log\nk = log(2) / 6\n# in nồng độ sau 12 giờ\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from math import exp, log\nk = log(2) / 6\nprint(round(100 * exp(-k * 12), 2))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '25.0'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "module": "m4"
+}

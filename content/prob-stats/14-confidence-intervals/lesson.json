@@ -1,0 +1,57 @@
+{
+  "title": {
+    "vi": "Ước lượng và khoảng tin cậy",
+    "en": "Estimation and confidence intervals"
+  },
+  "summary": {
+    "vi": "ước lượng điểm, sai số chuẩn, khoảng tin cậy, thăm dò dư luận",
+    "en": "point estimates, standard error, confidence intervals, opinion polls"
+  },
+  "minutes": 20,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "from math import sqrt\n\n# Thăm dò: 520/1000 người ủng hộ phương án A\nn, k = 1000, 520\np_hat = k / n\nse = sqrt(p_hat * (1 - p_hat) / n)\nlo, hi = p_hat - 1.96 * se, p_hat + 1.96 * se\nprint(f\"p_hat={p_hat:.3f}  95% CI: [{lo:.3f}, {hi:.3f}]  biên sai số ±{1.96*se:.3f}\")\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Khảo sát 400 khách: 88 người hài lòng. Tính khoảng tin cậy 95% cho tỷ lệ hài lòng (p̂ ± 1,96·√(p̂(1−p̂)/n)). In cận dưới rồi cận trên, mỗi cái làm tròn 3 chữ số, trên hai dòng.",
+        "en": "Survey of 400 customers: 88 were satisfied. Compute the 95% confidence interval for the satisfaction proportion (p̂ ± 1.96·√(p̂(1−p̂)/n)). Print the lower then upper bound, each rounded to 3 digits, on two lines."
+      },
+      "hint": {
+        "vi": "p̂ = 0.22; se = sqrt(0.22·0.78/400).",
+        "en": "p̂ = 0.22; se = sqrt(0.22·0.78/400)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from math import sqrt\nn, k = 400, 88\n# in cận dưới, cận trên\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from math import sqrt\nn, k = 400, 88\np = k / n\nse = sqrt(p * (1 - p) / n)\nprint(round(p - 1.96 * se, 3))\nprint(round(p + 1.96 * se, 3))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In 0.179 rồi 0.261",
+            "en": "Prints 0.179 then 0.261"
+          },
+          "test": "_out == '0.179\\n0.261'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "module": "m2"
+}

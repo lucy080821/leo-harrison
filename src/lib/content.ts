@@ -27,6 +27,8 @@ export type Exercise = {
 
 export type LessonMeta = {
   slug: string;
+  /** Nhóm module trong khoá (dùng cho trang tổng hợp có chia module), ví dụ Toán và Thống kê. */
+  module?: string;
   title: L10n;
   summary: L10n;
   minutes: number;

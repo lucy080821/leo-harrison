@@ -1,0 +1,91 @@
+{
+  "title": {
+    "vi": "Thiết kế thực nghiệm và các cạm bẫy của A/B test",
+    "en": "Experimental design and the pitfalls of A/B testing"
+  },
+  "summary": {
+    "vi": "ngẫu nhiên hoá, nhiễu, sai lệch tỷ lệ mẫu (SRM), hiệu ứng mới lạ, khoảng tin cậy cho hiệu",
+    "en": "randomisation, confounding, sample ratio mismatch, novelty effects, confidence interval for a difference"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "from math import sqrt\nfrom scipy.stats import chisquare, norm\n\n# Sample Ratio Mismatch: thiết kế chia 50/50 nhưng thực tế?\ncounts = [50500, 49500]\nchi2, p = chisquare(counts)           # kỳ vọng mặc định bằng nhau\nprint(\"SRM: chi2 =\", round(chi2, 3), \" p =\", round(p, 5), \"-> có vấn đề!\" if p < 0.001 else \"-> ổn\")\n\n# Khoảng tin cậy 95% cho HIỆU hai tỷ lệ\nn1 = n2 = 2000\np1, p2 = 0.10, 0.12\nse = sqrt(p1 * (1 - p1) / n1 + p2 * (1 - p2) / n2)\nd = p2 - p1\nz = norm.ppf(0.975)\nprint(\"hiệu =\", round(d, 4), \" KTC 95% = [\", round(d - z * se, 4), \",\", round(d + z * se, 4), \"]\")\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Thử nghiệm thiết kế chia 50/50 nhưng nhận 10200 và 9800 người dùng. Tính χ² kiểm tra SRM = Σ (O − E)²/E với E = 10000 mỗi nhóm. In χ².",
+        "en": "An experiment designed as 50/50 received 10200 and 9800 users. Compute the SRM χ² = Σ (O − E)²/E with E = 10000 per group. Print χ²."
+      },
+      "hint": {
+        "vi": "(200²/10000)·2.",
+        "en": "(200²/10000)·2."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "obs = [10200, 9800]\n# in chi2\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "obs = [10200, 9800]\nprint(sum((o - 10000) ** 2 / 10000 for o in obs))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '8.0'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Nhóm A: 480/4000 chuyển đổi; nhóm B: 540/4000. Tính hiệu p_B − p_A và khoảng tin cậy 95% của nó (sai số chuẩn = √(p_A(1−p_A)/n + p_B(1−p_B)/n), z = 1,96). In cận dưới rồi cận trên, mỗi cái làm tròn 4 chữ số, trên hai dòng.",
+        "en": "Group A: 480/4000 conversions; group B: 540/4000. Compute the difference p_B − p_A and its 95% confidence interval (standard error = √(p_A(1−p_A)/n + p_B(1−p_B)/n), z = 1.96). Print the lower then upper bound, each rounded to 4 digits, on two lines."
+      },
+      "hint": {
+        "vi": "d ± 1.96·se.",
+        "en": "d ± 1.96·se."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from math import sqrt\nn = 4000\npa, pb = 480 / n, 540 / n\n# in cận dưới, cận trên\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from math import sqrt\nn = 4000\npa, pb = 480 / n, 540 / n\nse = sqrt(pa * (1 - pa) / n + pb * (1 - pb) / n)\nd = pb - pa\nprint(round(d - 1.96 * se, 4))\nprint(round(d + 1.96 * se, 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '0.0004\\n0.0296'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "module": "m3"
+}

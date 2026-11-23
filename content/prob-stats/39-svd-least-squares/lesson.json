@@ -1,0 +1,91 @@
+{
+  "title": {
+    "vi": "SVD, xấp xỉ hạng thấp và bình phương tối thiểu",
+    "en": "SVD, low-rank approximation and least squares"
+  },
+  "summary": {
+    "vi": "phân tích giá trị kỳ dị, nén dữ liệu, hệ gợi ý, giả nghịch đảo",
+    "en": "singular value decomposition, data compression, recommenders, the pseudoinverse"
+  },
+  "minutes": 35,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\n# Ma trận đánh giá: 4 người dùng x 4 phim (dữ liệu minh hoạ có cấu trúc \"gu\" rõ ràng)\nR = np.array([[5, 5, 1, 1],\n              [4, 5, 1, 2],\n              [1, 1, 5, 4],\n              [2, 1, 4, 5]], dtype=float)\n\nU, s, Vt = np.linalg.svd(R)\nprint(\"giá trị kỳ dị:\", np.round(s, 3))\n\nk = 2                                           # giữ 2 \"gu\" chính\nR2 = U[:, :k] @ np.diag(s[:k]) @ Vt[:k]\nerr = np.linalg.norm(R - R2)\nprint(\"sai số xấp xỉ hạng 2 (chuẩn Frobenius):\", round(err, 4))\nprint(\"= căn tổng bình phương giá trị kỳ dị bị bỏ:\", round(float(np.sqrt((s[k:] ** 2).sum())), 4))\n\n# Bình phương tối thiểu bằng giả nghịch đảo\nX = np.column_stack([np.ones(4), [1, 2, 3, 4]])\ny = np.array([2.0, 4.1, 5.9, 8.2])\nprint(\"hệ số:\", np.round(np.linalg.pinv(X) @ y, 4))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Ma trận A = [[3, 0], [0, 2]]. Dùng np.linalg.svd để in các giá trị kỳ dị làm tròn 4 chữ số (.tolist()).",
+        "en": "The matrix A = [[3, 0], [0, 2]]. Use np.linalg.svd to print the singular values rounded to 4 digits (.tolist())."
+      },
+      "hint": {
+        "vi": "U, s, Vt = np.linalg.svd(A).",
+        "en": "U, s, Vt = np.linalg.svd(A)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nA = np.array([[3.0, 0.0], [0.0, 2.0]])\n# in giá trị kỳ dị\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nA = np.array([[3.0, 0.0], [0.0, 2.0]])\nU, s, Vt = np.linalg.svd(A)\nprint(np.round(s, 4).tolist())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '[3.0, 2.0]'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Với R = [[2, 0], [0, 1]], xấp xỉ hạng 1 (giữ giá trị kỳ dị lớn nhất) cho sai số Frobenius bằng giá trị kỳ dị bị bỏ. Tính R₁ = σ₁·u₁·v₁ᵀ bằng SVD rồi in ‖R − R₁‖ (np.linalg.norm) làm tròn 4 chữ số.",
+        "en": "For R = [[2, 0], [0, 1]], a rank-1 approximation (keeping the largest singular value) has a Frobenius error equal to the dropped singular value. Compute R₁ = σ₁·u₁·v₁ᵀ via SVD then print ‖R − R₁‖ (np.linalg.norm) rounded to 4 digits."
+      },
+      "hint": {
+        "vi": "R1 = s[0] * np.outer(U[:, 0], Vt[0]).",
+        "en": "R1 = s[0] * np.outer(U[:, 0], Vt[0])."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nR = np.array([[2.0, 0.0], [0.0, 1.0]])\n# in sai số của xấp xỉ hạng 1\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nR = np.array([[2.0, 0.0], [0.0, 1.0]])\nU, s, Vt = np.linalg.svd(R)\nR1 = s[0] * np.outer(U[:, 0], Vt[0])\nprint(round(float(np.linalg.norm(R - R1)), 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '1.0'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "module": "m4"
+}

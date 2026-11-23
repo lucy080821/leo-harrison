@@ -1,0 +1,91 @@
+{
+  "title": {
+    "vi": "Hệ phương trình tuyến tính: khử Gauss, hạng và điều kiện",
+    "en": "Linear systems: Gaussian elimination, rank and conditioning"
+  },
+  "summary": {
+    "vi": "giải Ax = b, hạng, nghiệm duy nhất/vô số/vô nghiệm, số điều kiện",
+    "en": "solving Ax = b, rank, unique/infinite/no solutions, the condition number"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\n# Bài toán pha trộn: 3x + y = 9 ; x + 2y = 8\nA = np.array([[3.0, 1.0],\n              [1.0, 2.0]])\nb = np.array([9.0, 8.0])\nprint(\"nghiệm:\", np.linalg.solve(A, b))\nprint(\"hạng:\", np.linalg.matrix_rank(A), \" định thức:\", round(np.linalg.det(A), 3))\n\n# Ma trận suy biến: hàng 2 = 2 x hàng 1 -> hạng 1, không còn nghiệm duy nhất\nS = np.array([[1.0, 2.0], [2.0, 4.0]])\nprint(\"hạng ma trận suy biến:\", np.linalg.matrix_rank(S))\n\n# Số điều kiện: hệ gần suy biến rất nhạy với sai số nhỏ\nB = np.array([[1.0, 1.0], [1.0, 1.0001]])\nprint(\"số điều kiện:\", f\"{np.linalg.cond(B):.2e}\")\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Giải hệ 2x + y = 11 và x + 3y = 18 bằng np.linalg.solve và in nghiệm [x, y] làm tròn 4 chữ số (.tolist()).",
+        "en": "Solve the system 2x + y = 11 and x + 3y = 18 with np.linalg.solve and print the solution [x, y] rounded to 4 digits (.tolist())."
+      },
+      "hint": {
+        "vi": "A = [[2, 1], [1, 3]], b = [11, 18].",
+        "en": "A = [[2, 1], [1, 3]], b = [11, 18]."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n# giải hệ và in nghiệm\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nA = np.array([[2.0, 1.0], [1.0, 3.0]])\nb = np.array([11.0, 18.0])\nprint(np.round(np.linalg.solve(A, b), 4).tolist())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '[3.0, 5.0]'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Tính hạng của ma trận M = [[1, 2, 3], [2, 4, 6], [1, 0, 1]] và in hạng.",
+        "en": "Compute the rank of the matrix M = [[1, 2, 3], [2, 4, 6], [1, 0, 1]] and print it."
+      },
+      "hint": {
+        "vi": "np.linalg.matrix_rank(M).",
+        "en": "np.linalg.matrix_rank(M)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nM = np.array([[1, 2, 3], [2, 4, 6], [1, 0, 1]])\n# in hạng\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nM = np.array([[1, 2, 3], [2, 4, 6], [1, 0, 1]])\nprint(int(np.linalg.matrix_rank(M)))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '2'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "module": "m4"
+}

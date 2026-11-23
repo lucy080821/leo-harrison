@@ -1,0 +1,91 @@
+{
+  "title": {
+    "vi": "Kiểm định chi-bình phương cho dữ liệu phân loại",
+    "en": "Chi-square tests for categorical data"
+  },
+  "summary": {
+    "vi": "kiểm định độ phù hợp và kiểm định tính độc lập trên bảng chéo",
+    "en": "goodness-of-fit and independence tests on contingency tables"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\nfrom scipy.stats import chi2_contingency, chisquare\n\n# Bảng chéo: loại thiết bị x có mua hay không\nobs = np.array([[30, 70],\n                [45, 55]])\nexp = obs.sum(axis=1, keepdims=True) * obs.sum(axis=0) / obs.sum()\nchi2 = ((obs - exp) ** 2 / exp).sum()\nprint(\"kỳ vọng:\\n\", exp)\nprint(\"chi2 =\", round(chi2, 4))\nprint(\"scipy (không hiệu chỉnh Yates):\", round(chi2_contingency(obs, correction=False)[0], 4))\n\n# Độ phù hợp: xúc xắc có cân đối không?\ncounts = [18, 22, 16, 25, 19, 20]\nprint(\"chi2 xúc xắc =\", round(chisquare(counts)[0], 4))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Bảng chéo [[20, 80], [35, 65]] (hàng = nhóm quảng cáo, cột = mua/không mua). Tính thống kê chi-bình phương χ² = Σ (O − E)²/E với E = (tổng hàng × tổng cột)/tổng. In χ² làm tròn 4 chữ số.",
+        "en": "Contingency table [[20, 80], [35, 65]] (rows = ad group, columns = bought / did not buy). Compute χ² = Σ (O − E)²/E with E = (row total × column total)/grand total. Print χ² rounded to 4 digits."
+      },
+      "hint": {
+        "vi": "Tính E rồi cộng (O − E)²/E.",
+        "en": "Compute E then sum (O − E)²/E."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nobs = np.array([[20, 80], [35, 65]])\n# in chi2\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nobs = np.array([[20, 80], [35, 65]])\nexp = obs.sum(axis=1, keepdims=True) * obs.sum(axis=0) / obs.sum()\nprint(round(((obs - exp) ** 2 / exp).sum(), 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '5.6426'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Số lần mỗi mặt của xúc xắc trong 60 lần tung: [8, 12, 9, 11, 10, 10]. Giả thuyết: xúc xắc cân đối. In χ² làm tròn 4 chữ số (E = 10 cho mỗi mặt).",
+        "en": "Counts of each die face in 60 rolls: [8, 12, 9, 11, 10, 10]. Hypothesis: the die is fair. Print χ² rounded to 4 digits (E = 10 for each face)."
+      },
+      "hint": {
+        "vi": "Σ (O − 10)² / 10.",
+        "en": "Σ (O − 10)² / 10."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "counts = [8, 12, 9, 11, 10, 10]\n# in chi2\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "counts = [8, 12, 9, 11, 10, 10]\nprint(round(sum((o - 10) ** 2 / 10 for o in counts), 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '1.0'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "module": "m2"
+}

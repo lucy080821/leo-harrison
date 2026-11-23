@@ -26,7 +26,7 @@ When outcomes are **equally likely**: P(A) = |A| / |Ω|. So P(sum = 7) = 6/36 = 
 ## Two readings of probability
 
 - **Frequentist**: P is the limit of relative frequency over endless repetitions.
-- **Bayesian (degree of belief)**: P measures confidence in a proposition, updated by data (next lesson).
+- **Bayesian (degree of belief)**: P measures confidence in a proposition, updated by data (lesson 4).
 
 Both obey the same axioms.
 

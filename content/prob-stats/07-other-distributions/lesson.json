@@ -1,0 +1,91 @@
+{
+  "title": {
+    "vi": "Phân phối đều, hình học và mũ: thời gian chờ",
+    "en": "Uniform, geometric and exponential: waiting times"
+  },
+  "summary": {
+    "vi": "mô hình hoá lần thử đầu tiên thành công và thời gian giữa các sự kiện",
+    "en": "modelling the first success and the time between events"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "from math import exp\n\n# Hình học: số lần thử cho tới lần thành công đầu tiên (xác suất mỗi lần p)\np = 0.2\nfor k in (1, 2, 3, 5):\n    print(\"P(thành công đầu tiên ở lần\", k, \") =\", round((1 - p) ** (k - 1) * p, 4))\nprint(\"kỳ vọng số lần thử:\", 1 / p)\n\n# Mũ: thời gian chờ giữa các cuộc gọi, tốc độ lam = 2 cuộc/phút\nlam = 2\nprint(\"P(chờ hơn 1 phút) =\", round(exp(-lam * 1), 4))\nprint(\"thời gian chờ trung bình:\", 1 / lam, \"phút\")\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tổng đài nhận trung bình 3 cuộc gọi mỗi phút (thời gian giữa hai cuộc gọi theo phân phối mũ). In xác suất phải chờ hơn 30 giây (0,5 phút) cho cuộc gọi tiếp theo, làm tròn 4 chữ số.",
+        "en": "A call centre receives 3 calls per minute on average (time between calls is exponential). Print the probability of waiting more than 30 seconds (0.5 min) for the next call, rounded to 4 digits."
+      },
+      "hint": {
+        "vi": "P(T > t) = e^(−λt) với λ = 3.",
+        "en": "P(T > t) = e^(−λt) with λ = 3."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from math import exp\nlam = 3\n# in P(T > 0.5)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from math import exp\nlam = 3\nprint(round(exp(-lam * 0.5), 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '0.2231'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Mỗi lần gọi khách hàng có xác suất chốt đơn 0,2. Tính xác suất lần chốt đơn đầu tiên xảy ra đúng ở cuộc gọi thứ 3, làm tròn 4 chữ số.",
+        "en": "Each call closes a sale with probability 0.2. Compute the probability the first sale happens exactly on the 3rd call, rounded to 4 digits."
+      },
+      "hint": {
+        "vi": "(1 − p)² · p.",
+        "en": "(1 − p)² · p."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "p = 0.2\n# in P(lần đầu thành công ở lần thứ 3)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "p = 0.2\nprint(round((1 - p) ** 2 * p, 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '0.128'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "module": "m1"
+}

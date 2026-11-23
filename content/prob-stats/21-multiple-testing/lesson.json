@@ -1,0 +1,91 @@
+{
+  "title": {
+    "vi": "So sánh bội: khi chạy nhiều kiểm định",
+    "en": "Multiple comparisons: when you run many tests"
+  },
+  "summary": {
+    "vi": "sai số cả họ (FWER), Bonferroni, tỷ lệ phát hiện sai (FDR), Benjamini–Hochberg",
+    "en": "family-wise error, Bonferroni, false discovery rate, Benjamini–Hochberg"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "# Xác suất có ÍT NHẤT MỘT dương tính giả khi chạy m kiểm định ở mức 5%\nfor m in (1, 5, 20, 100):\n    print(\"m =\", m, \" P(>=1 sai dương) =\", round(1 - 0.95 ** m, 4))\n\npvals = [0.001, 0.008, 0.039, 0.041, 0.042, 0.06, 0.074, 0.205, 0.212, 0.216]\nm, q = len(pvals), 0.05\nbonf = [p for p in pvals if p <= q / m]\nprint(\"Bonferroni bác bỏ\", len(bonf), \"giả thuyết\")\n\n# Benjamini-Hochberg: bác bỏ tất cả p_(i) <= (i/m) q cho i lớn nhất thoả điều kiện\nsrt = sorted(pvals)\nk = max([i for i, p in enumerate(srt, 1) if p <= i / m * q], default=0)\nprint(\"Benjamini-Hochberg bác bỏ\", k, \"giả thuyết\")\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết bh(pvals, q) trả về số giả thuyết bị bác bỏ bởi Benjamini–Hochberg. In bh([0.001, 0.01, 0.02, 0.03, 0.5], 0.05).",
+        "en": "Write bh(pvals, q) returning how many hypotheses Benjamini–Hochberg rejects. Print bh([0.001, 0.01, 0.02, 0.03, 0.5], 0.05)."
+      },
+      "hint": {
+        "vi": "Sắp xếp p; tìm i lớn nhất sao cho p_(i) ≤ (i/m)·q.",
+        "en": "Sort p; find the largest i with p_(i) ≤ (i/m)·q."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def bh(pvals, q):\n    pass\n\nprint(bh([0.001, 0.01, 0.02, 0.03, 0.5], 0.05))\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def bh(pvals, q):\n    srt = sorted(pvals)\n    m = len(srt)\n    return max([i for i, p in enumerate(srt, 1) if p <= i / m * q], default=0)\n\nprint(bh([0.001, 0.01, 0.02, 0.03, 0.5], 0.05))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '4'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Chạy 50 kiểm định độc lập, mỗi kiểm định ở mức α = 0,05 và mọi H₀ đều đúng. In xác suất có ít nhất một dương tính giả, làm tròn 4 chữ số.",
+        "en": "You run 50 independent tests, each at α = 0.05, and every H₀ is true. Print the probability of at least one false positive, rounded to 4 digits."
+      },
+      "hint": {
+        "vi": "1 − (1 − α)^m.",
+        "en": "1 − (1 − α)^m."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "alpha, m = 0.05, 50\n# in P(ít nhất một dương tính giả)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "alpha, m = 0.05, 50\nprint(round(1 - (1 - alpha) ** m, 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '0.9231'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "module": "m2"
+}

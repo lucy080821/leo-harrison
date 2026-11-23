@@ -1,0 +1,91 @@
+{
+  "title": {
+    "vi": "Chuỗi Taylor: xấp xỉ hàm phức tạp bằng đa thức",
+    "en": "Taylor series: approximating complicated functions with polynomials"
+  },
+  "summary": {
+    "vi": "xấp xỉ bậc một và bậc hai, chuỗi Maclaurin, sai số, ứng dụng trong tài chính và học máy",
+    "en": "first- and second-order approximations, Maclaurin series, error, uses in finance and ML"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "from math import exp, factorial, sin, log\n\ndef exp_taylor(x, terms):                      # e^x = sum x^k / k!\n    return sum(x ** k / factorial(k) for k in range(terms))\n\nfor terms in (2, 3, 5, 10):\n    approx = exp_taylor(1, terms)\n    print(terms, \"số hạng:\", round(approx, 6), \" sai số:\", f\"{abs(exp(1) - approx):.2e}\")\n\n# Xấp xỉ bậc nhất: log(1 + x) ~ x khi x nhỏ (lợi suất log ~ lợi suất đơn)\nfor r in (0.01, 0.05, 0.20):\n    print(\"r =\", r, \" log(1+r) =\", round(log(1 + r), 5))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tính sin(0,5) bằng 3 số hạng đầu của chuỗi Maclaurin: x − x³/3! + x⁵/5!. In kết quả làm tròn 6 chữ số.",
+        "en": "Compute sin(0.5) with the first 3 terms of the Maclaurin series: x − x³/3! + x⁵/5!. Print the result rounded to 6 digits."
+      },
+      "hint": {
+        "vi": "0.5 − 0.5**3/6 + 0.5**5/120.",
+        "en": "0.5 − 0.5**3/6 + 0.5**5/120."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "x = 0.5\n# in xấp xỉ sin(x) với 3 số hạng\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from math import factorial\nx = 0.5\nprint(round(x - x ** 3 / factorial(3) + x ** 5 / factorial(5), 6))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '0.479427'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Dùng xấp xỉ bậc hai của e^x quanh 0: 1 + x + x²/2. In giá trị xấp xỉ e^0,3 và sai số tuyệt đối so với math.exp(0.3), mỗi giá trị làm tròn 6 chữ số, trên hai dòng.",
+        "en": "Use the second-order approximation of e^x around 0: 1 + x + x²/2. Print the approximate e^0.3 and its absolute error against math.exp(0.3), each rounded to 6 digits, on two lines."
+      },
+      "hint": {
+        "vi": "abs(approx − exp(0.3)).",
+        "en": "abs(approx − exp(0.3))."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from math import exp\nx = 0.3\n# in xấp xỉ và sai số\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from math import exp\nx = 0.3\napprox = 1 + x + x ** 2 / 2\nprint(round(approx, 6))\nprint(round(abs(approx - exp(x)), 6))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '1.345\\n0.004859'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "module": "m4"
+}

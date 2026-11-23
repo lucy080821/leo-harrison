@@ -1,0 +1,91 @@
+{
+  "title": {
+    "vi": "Suy luận Bayes: cập nhật niềm tin từ dữ liệu",
+    "en": "Bayesian inference: updating beliefs with data"
+  },
+  "summary": {
+    "vi": "tiên nghiệm, hậu nghiệm, mô hình Beta–nhị thức, khoảng tin cậy Bayes",
+    "en": "priors, posteriors, the Beta–binomial model, credible intervals"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "from scipy.stats import beta\n\n# Tiên nghiệm Beta(1, 1) = đều. Quan sát 7 thành công / 10 lần thử -> hậu nghiệm Beta(1+7, 1+3)\na0, b0, k, n = 1, 1, 7, 10\na, b = a0 + k, b0 + n - k\nprint(\"hậu nghiệm Beta(\", a, \",\", b, \")  trung bình =\", round(a / (a + b), 4))\nprint(\"khoảng tin cậy Bayes 95%:\", [round(beta.ppf(q, a, b), 4) for q in (0.025, 0.975)])\nprint(\"P(p > 0.5 | dữ liệu) =\", round(beta.sf(0.5, a, b), 4))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Thử nghiệm A/B: phiên bản B có 30 chuyển đổi trong 200 lượt. Với tiên nghiệm Beta(1, 1), tính hậu nghiệm Beta(1 + k, 1 + n − k). In trung bình hậu nghiệm làm tròn 4 chữ số.",
+        "en": "A/B test: variant B has 30 conversions in 200 visits. With a Beta(1, 1) prior compute the posterior Beta(1 + k, 1 + n − k). Print the posterior mean rounded to 4 digits."
+      },
+      "hint": {
+        "vi": "a / (a + b).",
+        "en": "a / (a + b)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "k, n = 30, 200\n# in trung bình hậu nghiệm\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "k, n = 30, 200\na, b = 1 + k, 1 + n - k\nprint(round(a / (a + b), 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '0.1535'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Với cùng dữ liệu (30/200, tiên nghiệm Beta(1, 1)), in xác suất hậu nghiệm để tỷ lệ chuyển đổi thật lớn hơn 12%, dùng beta.sf(0.12, a, b), làm tròn 4 chữ số.",
+        "en": "With the same data (30/200, Beta(1, 1) prior), print the posterior probability that the true conversion rate exceeds 12% using beta.sf(0.12, a, b), rounded to 4 digits."
+      },
+      "hint": {
+        "vi": "from scipy.stats import beta.",
+        "en": "from scipy.stats import beta."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from scipy.stats import beta\nk, n = 30, 200\n# in P(p > 0.12 | dữ liệu)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from scipy.stats import beta\nk, n = 30, 200\na, b = 1 + k, 1 + n - k\nprint(round(beta.sf(0.12, a, b), 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '0.9136'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "module": "m2"
+}

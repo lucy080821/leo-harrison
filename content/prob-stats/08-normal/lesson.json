@@ -1,0 +1,57 @@
+{
+  "title": {
+    "vi": "Phân phối chuẩn và điểm z",
+    "en": "The normal distribution and z-scores"
+  },
+  "summary": {
+    "vi": "đường cong hình chuông, quy tắc 68–95–99,7, chuẩn hoá",
+    "en": "the bell curve, the 68–95–99.7 rule, standardisation"
+  },
+  "minutes": 20,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "from math import erf, sqrt\n\ndef cdf(x, mu=0, sigma=1):                 # P(X <= x)\n    return 0.5 * (1 + erf((x - mu) / (sigma * sqrt(2))))\n\n# Chiều cao nam ~ N(mu=170, sigma=7) cm (số liệu minh hoạ)\nmu, sigma = 170, 7\nprint(\"P(cao > 184)       =\", round(1 - cdf(184, mu, sigma), 4))   # 2 sigma\nprint(\"P(163 < cao < 177) =\", round(cdf(177, mu, sigma) - cdf(163, mu, sigma), 4))   # 1 sigma\nz = (184 - mu) / sigma\nprint(\"z =\", z)\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Điểm thi ~ N(70, 10). Tính xác suất một người đạt từ 60 đến 90 điểm, in làm tròn 4 chữ số.",
+        "en": "Exam scores ~ N(70, 10). Compute the probability a person scores between 60 and 90, rounded to 4 digits."
+      },
+      "hint": {
+        "vi": "cdf(90) − cdf(60) với z = 2 và z = −1.",
+        "en": "cdf(90) − cdf(60) with z = 2 and z = −1."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from math import erf, sqrt\ndef cdf(x, mu=0, sigma=1):\n    return 0.5 * (1 + erf((x - mu) / (sigma * sqrt(2))))\n# in P(60 < X < 90)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from math import erf, sqrt\ndef cdf(x, mu=0, sigma=1):\n    return 0.5 * (1 + erf((x - mu) / (sigma * sqrt(2))))\nprint(round(cdf(90, 70, 10) - cdf(60, 70, 10), 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In ra 0.8186",
+            "en": "Prints 0.8186"
+          },
+          "test": "_out == '0.8186'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "module": "m1"
+}

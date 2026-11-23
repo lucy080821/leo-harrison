@@ -1,0 +1,91 @@
+{
+  "title": {
+    "vi": "ANOVA: so sánh nhiều nhóm cùng lúc",
+    "en": "ANOVA: comparing many groups at once"
+  },
+  "summary": {
+    "vi": "phân tích phương sai một yếu tố, thống kê F, so sánh sau ANOVA",
+    "en": "one-way analysis of variance, the F statistic, post-hoc comparisons"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\nfrom scipy.stats import f_oneway\n\n# Năng suất (đơn/giờ) của 3 phương pháp làm việc\ngroups = [np.array([5, 6, 7]), np.array([8, 9, 10]), np.array([11, 12, 13])]\nall_x = np.concatenate(groups)\ngrand = all_x.mean()\n\nssb = sum(len(g) * (g.mean() - grand) ** 2 for g in groups)     # biến thiên giữa các nhóm\nssw = sum(((g - g.mean()) ** 2).sum() for g in groups)          # biến thiên trong nhóm\ndfb, dfw = len(groups) - 1, len(all_x) - len(groups)\nF = (ssb / dfb) / (ssw / dfw)\nprint(\"SSB =\", ssb, \" SSW =\", ssw, \" F =\", round(F, 3))\nprint(\"scipy F =\", round(f_oneway(*groups).statistic, 3))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Ba nhóm: A = [4, 5, 6], B = [7, 8, 9], C = [1, 2, 3]. Tính thống kê F của ANOVA một yếu tố bằng SSB, SSW như ví dụ. In F làm tròn 4 chữ số.",
+        "en": "Three groups: A = [4, 5, 6], B = [7, 8, 9], C = [1, 2, 3]. Compute the one-way ANOVA F statistic from SSB and SSW as in the example. Print F rounded to 4 digits."
+      },
+      "hint": {
+        "vi": "F = (SSB/(k−1)) / (SSW/(N−k)).",
+        "en": "F = (SSB/(k−1)) / (SSW/(N−k))."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\ngroups = [np.array([4, 5, 6]), np.array([7, 8, 9]), np.array([1, 2, 3])]\n# in F\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\ngroups = [np.array([4, 5, 6]), np.array([7, 8, 9]), np.array([1, 2, 3])]\nall_x = np.concatenate(groups)\ngrand = all_x.mean()\nssb = sum(len(g) * (g.mean() - grand) ** 2 for g in groups)\nssw = sum(((g - g.mean()) ** 2).sum() for g in groups)\nprint(round((ssb / (len(groups) - 1)) / (ssw / (len(all_x) - len(groups))), 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '27.0'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Với cùng ba nhóm, in tỷ lệ biến thiên được giải thích η² = SSB / (SSB + SSW), làm tròn 4 chữ số.",
+        "en": "For the same three groups, print the proportion of variation explained η² = SSB / (SSB + SSW), rounded to 4 digits."
+      },
+      "hint": {
+        "vi": "η² = SSB / SST.",
+        "en": "η² = SSB / SST."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\ngroups = [np.array([4, 5, 6]), np.array([7, 8, 9]), np.array([1, 2, 3])]\n# in eta^2\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\ngroups = [np.array([4, 5, 6]), np.array([7, 8, 9]), np.array([1, 2, 3])]\nall_x = np.concatenate(groups)\ngrand = all_x.mean()\nssb = sum(len(g) * (g.mean() - grand) ** 2 for g in groups)\nssw = sum(((g - g.mean()) ** 2).sum() for g in groups)\nprint(round(ssb / (ssb + ssw), 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '0.9'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "module": "m2"
+}

@@ -1,0 +1,91 @@
+{
+  "title": {
+    "vi": "Đếm: hoán vị, tổ hợp và bài toán sinh nhật",
+    "en": "Counting: permutations, combinations and the birthday problem"
+  },
+  "summary": {
+    "vi": "quy tắc nhân, hoán vị, tổ hợp, xổ số, mật khẩu, nghịch lý sinh nhật",
+    "en": "multiplication rule, permutations, combinations, lotteries, passwords, the birthday paradox"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "from math import comb, perm, factorial\n\nprint(\"số mật khẩu 8 ký tự (a-z, A-Z, 0-9):\", 62 ** 8)\nprint(\"xếp 5 người vào 5 ghế:\", factorial(5))\nprint(\"chọn 3 trong 10 người, có thứ tự:\", perm(10, 3), \" không thứ tự:\", comb(10, 3))\n\ndef birthday(n):                       # xác suất có ít nhất 2 người trùng sinh nhật\n    p_all_different = 1.0\n    for i in range(n):\n        p_all_different *= (365 - i) / 365\n    return 1 - p_all_different\n\nprint(\"23 người:\", round(birthday(23), 4))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Xổ số chọn 6 số khác nhau từ 45 số (không phân biệt thứ tự). In số tổ hợp có thể có, rồi in xác suất trúng giải độc đắc khi mua 1 vé, viết dạng thập phân với 10 chữ số sau dấu phẩy (f'{x:.10f}').",
+        "en": "A lottery picks 6 distinct numbers out of 45 (order does not matter). Print the number of possible combinations, then the jackpot probability for one ticket written as a decimal with 10 digits after the point (f'{x:.10f}')."
+      },
+      "hint": {
+        "vi": "comb(45, 6) rồi 1 / comb(45, 6).",
+        "en": "comb(45, 6) then 1 / comb(45, 6)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from math import comb\n# in số tổ hợp và xác suất\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from math import comb\nn = comb(45, 6)\nprint(n)\nprint(f'{1 / n:.10f}')\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '8145060\\n0.0000001228'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Dùng công thức sinh nhật: in xác suất có ít nhất hai người trùng sinh nhật trong lớp 30 người, làm tròn 4 chữ số.",
+        "en": "Use the birthday formula: print the probability that at least two people share a birthday in a class of 30, rounded to 4 digits."
+      },
+      "hint": {
+        "vi": "1 − (365/365)(364/365)…(336/365).",
+        "en": "1 − (365/365)(364/365)…(336/365)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def birthday(n):\n    pass\n\nprint(round(birthday(30), 4))\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def birthday(n):\n    p = 1.0\n    for i in range(n):\n        p *= (365 - i) / 365\n    return 1 - p\n\nprint(round(birthday(30), 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '0.7063'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "module": "m1"
+}

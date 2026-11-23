@@ -1,0 +1,91 @@
+{
+  "title": {
+    "vi": "Chẩn đoán hồi quy: phần dư, đòn bẩy và bộ tứ Anscombe",
+    "en": "Regression diagnostics: residuals, leverage and Anscombe's quartet"
+  },
+  "summary": {
+    "vi": "kiểm tra giả định, đồ thị phần dư, điểm ảnh hưởng, phương sai không đổi",
+    "en": "checking assumptions, residual plots, influential points, constant variance"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\n# Hai bộ dữ liệu của Anscombe (1973): cùng trung bình, phương sai, tương quan, đường hồi quy...\nx  = np.array([10, 8, 13, 9, 11, 14, 6, 4, 12, 7, 5], dtype=float)\ny1 = np.array([8.04, 6.95, 7.58, 8.81, 8.33, 9.96, 7.24, 4.26, 10.84, 4.82, 5.68])\ny2 = np.array([9.14, 8.14, 8.74, 8.77, 9.26, 8.10, 6.13, 3.10, 9.13, 7.26, 4.74])\nfor name, y in ((\"I (tuyến tính)\", y1), (\"II (đường cong)\", y2)):\n    b, a = np.polyfit(x, y, 1)\n    print(name, \" r =\", round(np.corrcoef(x, y)[0, 1], 3), \" y =\", round(a, 2), \"+\", round(b, 3), \"x\")\n# ...nhưng chỉ nhìn BIỂU ĐỒ mới thấy bộ II không hề tuyến tính.\n\n# Đòn bẩy (hồi quy đơn): h_i = 1/n + (x_i - xbar)^2 / Sxx\nxs = np.array([1.0, 2, 3, 4, 10])\nh = 1 / len(xs) + (xs - xs.mean()) ** 2 / ((xs - xs.mean()) ** 2).sum()\nprint(\"đòn bẩy:\", np.round(h, 3))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Với x = [1, 2, 3, 4, 10], tính đòn bẩy hᵢ = 1/n + (xᵢ − x̄)²/Sxx. In đòn bẩy của điểm cuối (x = 10), làm tròn 4 chữ số.",
+        "en": "For x = [1, 2, 3, 4, 10], compute leverage hᵢ = 1/n + (xᵢ − x̄)²/Sxx. Print the leverage of the last point (x = 10), rounded to 4 digits."
+      },
+      "hint": {
+        "vi": "Sxx = Σ(x − x̄)².",
+        "en": "Sxx = Σ(x − x̄)²."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nx = np.array([1.0, 2, 3, 4, 10])\n# in đòn bẩy điểm cuối\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nx = np.array([1.0, 2, 3, 4, 10])\nh = 1 / len(x) + (x - x.mean()) ** 2 / ((x - x.mean()) ** 2).sum()\nprint(round(h[-1], 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '0.92'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Với x = [1, 2, 3, 4, 5] và y = [2, 4, 5, 4, 5], hồi quy đơn bằng np.polyfit rồi tính sai số chuẩn phần dư RSE = √(Σ phần dư²/(n − 2)). In RSE làm tròn 4 chữ số.",
+        "en": "For x = [1, 2, 3, 4, 5] and y = [2, 4, 5, 4, 5], fit a simple regression with np.polyfit then compute the residual standard error RSE = √(Σ residuals²/(n − 2)). Print RSE rounded to 4 digits."
+      },
+      "hint": {
+        "vi": "phần dư = y − (a + b·x).",
+        "en": "residuals = y − (a + b·x)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nx = np.array([1, 2, 3, 4, 5])\ny = np.array([2, 4, 5, 4, 5])\n# in RSE\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nx = np.array([1, 2, 3, 4, 5])\ny = np.array([2, 4, 5, 4, 5])\nb, a = np.polyfit(x, y, 1)\nres = y - (a + b * x)\nprint(round(np.sqrt((res ** 2).sum() / (len(x) - 2)), 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '0.8944'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "module": "m3"
+}

@@ -1,0 +1,57 @@
+{
+  "title": {
+    "vi": "Bẫy thống kê: Simpson, nhân quả, thiên lệch",
+    "en": "Statistical pitfalls: Simpson, causation, bias"
+  },
+  "summary": {
+    "vi": "nghịch lý Simpson, tương quan ≠ nhân quả, thiên lệch chọn mẫu",
+    "en": "Simpson's paradox, correlation ≠ causation, selection bias"
+  },
+  "minutes": 20,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "# Số liệu minh hoạ: 2 loại điều trị, 2 nhóm bệnh nhân (nhẹ / nặng)\n#              (khỏi, tổng)\nA = {\"nhẹ\": (81, 87),  \"nặng\": (192, 263)}\nB = {\"nhẹ\": (234, 270), \"nặng\": (55, 80)}\n\ndef rate(d): return sum(k for k, n in d.values()) / sum(n for k, n in d.values())\n\nfor g in (\"nhẹ\", \"nặng\"):\n    a, b = A[g], B[g]\n    print(g, \"A:\", round(a[0]/a[1], 3), \" B:\", round(b[0]/b[1], 3))\nprint(\"gộp  A:\", round(rate(A), 3), \" B:\", round(rate(B), 3))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Dùng số liệu A và B ở ví dụ. In 'A tốt hơn trong mọi nhóm' nếu tỷ lệ khỏi của A cao hơn B ở CẢ HAI nhóm, ngược lại in 'khác'. Rồi in 'B tốt hơn khi gộp' nếu tỷ lệ gộp của B cao hơn A, ngược lại 'khác'.",
+        "en": "Use the A and B data from the example. Print 'A better in every group' if A's recovery rate beats B's in BOTH groups, else 'other'. Then print 'B better overall' if B's pooled rate beats A's, else 'other'."
+      },
+      "hint": {
+        "vi": "So sánh từng nhóm rồi so sánh tỷ lệ gộp; đó chính là nghịch lý Simpson.",
+        "en": "Compare each group, then the pooled rates; that is Simpson's paradox."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "A = {'nhe': (81, 87), 'nang': (192, 263)}\nB = {'nhe': (234, 270), 'nang': (55, 80)}\n# in hai dòng\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "A = {'nhe': (81, 87), 'nang': (192, 263)}\nB = {'nhe': (234, 270), 'nang': (55, 80)}\nr = lambda t: t[0] / t[1]\nrate = lambda d: sum(k for k, n in d.values()) / sum(n for k, n in d.values())\nprint('A better in every group' if all(r(A[g]) > r(B[g]) for g in A) else 'other')\nprint('B better overall' if rate(B) > rate(A) else 'other')\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == 'A better in every group\\nB better overall'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "module": "m3"
+}

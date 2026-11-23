@@ -1,0 +1,91 @@
+{
+  "title": {
+    "vi": "Năng lực kiểm định và cỡ mẫu cho thử nghiệm A/B",
+    "en": "Statistical power and sample size for A/B tests"
+  },
+  "summary": {
+    "vi": "sai lầm loại II, power, hiệu ứng nhỏ nhất đáng phát hiện, tính cỡ mẫu",
+    "en": "type II error, power, minimum detectable effect, sample-size calculation"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "from math import ceil, sqrt\nfrom scipy.stats import norm\n\ndef n_per_group(p1, p2, alpha=0.05, power=0.80):\n    z_a, z_b = norm.ppf(1 - alpha / 2), norm.ppf(power)\n    pbar = (p1 + p2) / 2\n    return ceil(2 * (z_a + z_b) ** 2 * pbar * (1 - pbar) / (p2 - p1) ** 2)\n\n# Tỷ lệ chuyển đổi 10% muốn phát hiện được mức tăng lên 12%\nprint(\"cỡ mẫu mỗi nhóm:\", n_per_group(0.10, 0.12))\nprint(\"nếu muốn phát hiện 11% (hiệu ứng nhỏ hơn):\", n_per_group(0.10, 0.11))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tính cỡ mẫu mỗi nhóm để phát hiện chuyển đổi tăng từ 20% lên 25% (α = 0,05 hai phía, power 80%) bằng công thức ở ví dụ. In kết quả.",
+        "en": "Compute the sample size per group to detect conversion rising from 20% to 25% (α = 0.05 two-sided, power 80%) with the example's formula. Print the result."
+      },
+      "hint": {
+        "vi": "Dùng lại hàm n_per_group.",
+        "en": "Reuse the n_per_group function."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from math import ceil\nfrom scipy.stats import norm\n\ndef n_per_group(p1, p2, alpha=0.05, power=0.80):\n    pass\n\nprint(n_per_group(0.20, 0.25))\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from math import ceil\nfrom scipy.stats import norm\n\ndef n_per_group(p1, p2, alpha=0.05, power=0.80):\n    z_a, z_b = norm.ppf(1 - alpha / 2), norm.ppf(power)\n    pbar = (p1 + p2) / 2\n    return ceil(2 * (z_a + z_b) ** 2 * pbar * (1 - pbar) / (p2 - p1) ** 2)\n\nprint(n_per_group(0.20, 0.25))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '1095'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Với cỡ mẫu 1000 mỗi nhóm, tỷ lệ 10% so với 12%, α = 0,05 hai phía, power xấp xỉ = Φ(|δ|/SE − z_{α/2}) với SE = √(2·p̄(1−p̄)/n) và p̄ = 0,11. In power làm tròn 4 chữ số.",
+        "en": "With 1000 per group, rates 10% vs 12%, α = 0.05 two-sided, power ≈ Φ(|δ|/SE − z_{α/2}) with SE = √(2·p̄(1−p̄)/n) and p̄ = 0.11. Print the power rounded to 4 digits."
+      },
+      "hint": {
+        "vi": "norm.cdf(delta / se − norm.ppf(0.975)).",
+        "en": "norm.cdf(delta / se − norm.ppf(0.975))."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from math import sqrt\nfrom scipy.stats import norm\nn, delta, pbar = 1000, 0.02, 0.11\n# in power\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from math import sqrt\nfrom scipy.stats import norm\nn, delta, pbar = 1000, 0.02, 0.11\nse = sqrt(2 * pbar * (1 - pbar) / n)\nprint(round(norm.cdf(delta / se - norm.ppf(0.975)), 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '0.2978'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "module": "m2"
+}

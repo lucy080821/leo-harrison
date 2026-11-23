@@ -1,0 +1,91 @@
+{
+  "title": {
+    "vi": "Ước lượng điểm và cực đại hợp lý (MLE)",
+    "en": "Point estimation and maximum likelihood (MLE)"
+  },
+  "summary": {
+    "vi": "độ chệch, phương sai, sai số bình phương trung bình, hàm hợp lý",
+    "en": "bias, variance, mean squared error, the likelihood function"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\n# Tung đồng xu 10 lần được 7 ngửa: hàm hợp lý L(p) = p^7 (1-p)^3\np = np.linspace(0.01, 0.99, 99)\nloglik = 7 * np.log(p) + 3 * np.log(1 - p)\nprint(\"MLE của p ≈\", round(p[np.argmax(loglik)], 2), \" (= 7/10)\")\n\n# Phương sai: MLE chia cho n (chệch), ước lượng không chệch chia n-1\nx = np.array([2.0, 4.0, 6.0])\nprint(\"MLE (n)    :\", round(x.var(ddof=0), 4))\nprint(\"không chệch:\", round(x.var(ddof=1), 4))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Thời gian giữa các lỗi hệ thống (giờ) là 2, 4, 6, 8. Với mô hình mũ, MLE của tốc độ λ là 1/(trung bình). In λ̂ làm tròn 4 chữ số.",
+        "en": "Times between system failures (hours) are 2, 4, 6, 8. For an exponential model the MLE of the rate λ is 1/(mean). Print λ̂ rounded to 4 digits."
+      },
+      "hint": {
+        "vi": "1 / np.mean(x).",
+        "en": "1 / np.mean(x)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nx = [2, 4, 6, 8]\n# in lam_hat\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nx = [2, 4, 6, 8]\nprint(round(1 / np.mean(x), 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '0.2'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Với mẫu [10, 12, 14, 16, 18], in phương sai MLE (chia n) rồi phương sai không chệch (chia n−1), mỗi giá trị một dòng.",
+        "en": "For the sample [10, 12, 14, 16, 18], print the MLE variance (divide by n) then the unbiased variance (divide by n−1), one per line."
+      },
+      "hint": {
+        "vi": "np.var(x, ddof=0) và np.var(x, ddof=1).",
+        "en": "np.var(x, ddof=0) and np.var(x, ddof=1)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nx = [10, 12, 14, 16, 18]\n# in hai phương sai\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nx = [10, 12, 14, 16, 18]\nprint(np.var(x, ddof=0))\nprint(np.var(x, ddof=1))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '8.0\\n10.0'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "module": "m2"
+}

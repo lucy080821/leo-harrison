@@ -1,0 +1,91 @@
+{
+  "title": {
+    "vi": "Bootstrap, kiểm định hoán vị và phi tham số",
+    "en": "Bootstrap, permutation tests and non-parametric methods"
+  },
+  "summary": {
+    "vi": "suy luận không cần giả định phân phối: bootstrap, hoán vị, Mann–Whitney",
+    "en": "inference without distributional assumptions: bootstrap, permutation, Mann–Whitney"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\nimport itertools\n\nrng = np.random.default_rng(0)\ndata = np.array([12, 15, 14, 10, 40, 13, 11, 16])       # có một ngoại lai\n\n# Bootstrap: lấy mẫu LẠI có hoàn lại từ chính dữ liệu để thấy độ dao động của trung vị\nmeds = [np.median(rng.choice(data, size=len(data), replace=True)) for _ in range(5000)]\nprint(\"trung vị mẫu:\", np.median(data), \" khoảng 95% bootstrap:\", np.percentile(meds, [2.5, 97.5]))\n\n# Kiểm định hoán vị chính xác cho hai nhóm nhỏ\nx, y = [1, 2, 3], [4, 5, 6]\npooled = x + y\nobs = abs(np.mean(x) - np.mean(y))\ncount = total = 0\nfor idx in itertools.combinations(range(6), 3):\n    g1 = [pooled[i] for i in idx]\n    g2 = [pooled[i] for i in range(6) if i not in idx]\n    count += abs(np.mean(g1) - np.mean(g2)) >= obs\n    total += 1\nprint(\"p hoán vị =\", count / total)\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Kiểm định hoán vị chính xác hai phía cho x = [2, 3, 4] và y = [6, 7, 8]: liệt kê mọi cách chia 6 giá trị thành hai nhóm 3, đếm các cách có |hiệu trung bình| ≥ giá trị quan sát. In p = số đếm / tổng, làm tròn 4 chữ số.",
+        "en": "Exact two-sided permutation test for x = [2, 3, 4] and y = [6, 7, 8]: enumerate all splits of the 6 values into two groups of 3, count those with |mean difference| ≥ the observed one. Print p = count / total, rounded to 4 digits."
+      },
+      "hint": {
+        "vi": "itertools.combinations(range(6), 3).",
+        "en": "itertools.combinations(range(6), 3)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import itertools\nimport numpy as np\nx, y = [2, 3, 4], [6, 7, 8]\n# in p hoán vị\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import itertools\nimport numpy as np\nx, y = [2, 3, 4], [6, 7, 8]\npooled = x + y\nobs = abs(np.mean(x) - np.mean(y))\ncount = total = 0\nfor idx in itertools.combinations(range(6), 3):\n    g1 = [pooled[i] for i in idx]\n    g2 = [pooled[i] for i in range(6) if i not in idx]\n    count += abs(np.mean(g1) - np.mean(g2)) >= obs\n    total += 1\nprint(round(count / total, 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '0.1'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Thống kê Mann–Whitney U: với x = [3, 5, 7] và y = [2, 4, 6], U = số cặp (xᵢ, yⱼ) có xᵢ > yⱼ (không có giá trị bằng nhau). In U.",
+        "en": "The Mann–Whitney U statistic: for x = [3, 5, 7] and y = [2, 4, 6], U = the number of pairs (xᵢ, yⱼ) with xᵢ > yⱼ (no ties). Print U."
+      },
+      "hint": {
+        "vi": "sum(a > b for a in x for b in y).",
+        "en": "sum(a > b for a in x for b in y)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "x, y = [3, 5, 7], [2, 4, 6]\n# in U\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "x, y = [3, 5, 7], [2, 4, 6]\nprint(sum(a > b for a in x for b in y))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '6'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "module": "m2"
+}

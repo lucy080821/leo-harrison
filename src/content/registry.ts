@@ -196,12 +196,35 @@ export function coursesOf(category: CategoryId) {
 }
 
 /** Khoá Xác suất, thống kê và toán cao cấp: một hướng học riêng (/learning/statistics), không nằm trong Lập trình. */
+export const statisticsModules: { id: string; title: L10n; desc: L10n }[] = [
+  {
+    id: "m1",
+    title: { vi: "Module 1. Nền tảng xác suất", en: "Module 1. Probability foundations" },
+    desc: { vi: "Mô tả dữ liệu, đếm, Bayes, biến ngẫu nhiên, các phân phối chính, CLT và chuỗi Markov.", en: "Describing data, counting, Bayes, random variables, the key distributions, the CLT and Markov chains." },
+  },
+  {
+    id: "m2",
+    title: { vi: "Module 2. Suy luận thống kê", en: "Module 2. Statistical inference" },
+    desc: { vi: "Thiết kế mẫu, ước lượng, khoảng tin cậy, kiểm định (t, chi-bình phương, ANOVA), power, bootstrap, so sánh bội và Bayes.", en: "Sampling design, estimation, confidence intervals, tests (t, chi-square, ANOVA), power, the bootstrap, multiple comparisons and Bayes." },
+  },
+  {
+    id: "m3",
+    title: { vi: "Module 3. Mô hình hoá và thực nghiệm", en: "Module 3. Modelling and experiments" },
+    desc: { vi: "Hồi quy đơn và bội, chẩn đoán, hồi quy logistic, chuỗi thời gian, thiết kế thực nghiệm A/B và các bẫy thống kê.", en: "Simple and multiple regression, diagnostics, logistic regression, time series, A/B experiment design and statistical pitfalls." },
+  },
+  {
+    id: "m4",
+    title: { vi: "Module 4. Toán cao cấp cho phân tích dữ liệu", en: "Module 4. Advanced math for data analysis" },
+    desc: { vi: "Vi tích phân, chuỗi Taylor, giải tích nhiều biến, phương trình vi phân, đại số tuyến tính, PCA và SVD.", en: "Calculus, Taylor series, multivariable calculus, differential equations, linear algebra, PCA and SVD." },
+  },
+];
+
 export const statisticsCourse = {
   id: "prob-stats",
   badge: "σ",
   name: { vi: "Xác suất, thống kê và toán cao cấp", en: "Probability, Statistics and Advanced Math" } as L10n,
   desc: {
-    vi: "16 bài từ khái niệm cơ bản đến nâng cao: xác suất, Bayes, phân phối, kiểm định, hồi quy, vi tích phân, đại số tuyến tính, PCA; ví dụ thực tế và hình minh hoạ.",
-    en: "16 lessons from basics to advanced: probability, Bayes, distributions, testing, regression, calculus, linear algebra, PCA; real-world examples and illustrations.",
+    vi: "39 bài, 4 module, từ khái niệm cơ bản đến nâng cao ở mức làm nghề: xác suất, suy luận, kiểm định, hồi quy, chuỗi thời gian, thực nghiệm A/B, vi tích phân, đại số tuyến tính, SVD; ví dụ thực tế và hình minh hoạ.",
+    en: "39 lessons in 4 modules, from basics to professional depth: probability, inference, testing, regression, time series, A/B experiments, calculus, linear algebra, SVD; real-world examples and illustrations.",
   } as L10n,
 };

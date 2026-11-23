@@ -1,0 +1,91 @@
+{
+  "title": {
+    "vi": "Hồi quy bội: nhiều biến giải thích",
+    "en": "Multiple regression: several explanatory variables"
+  },
+  "summary": {
+    "vi": "dạng ma trận, ý nghĩa hệ số, R² hiệu chỉnh, đa cộng tuyến, biến giả",
+    "en": "matrix form, coefficient meaning, adjusted R², multicollinearity, dummy variables"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\n# Giá nhà (tỷ) theo diện tích (m2) và số phòng ngủ: dữ liệu minh hoạ\narea = np.array([40, 55, 60, 75, 80, 95, 110, 120])\nrooms = np.array([1, 2, 2, 3, 2, 3, 4, 3])\ny = np.array([1.5, 2.1, 2.3, 3.0, 3.1, 3.7, 4.5, 4.4])\n\nX = np.column_stack([np.ones(len(y)), area, rooms])      # cột 1 = hệ số chặn\nbeta, *_ = np.linalg.lstsq(X, y, rcond=None)             # tương đương (X'X)^-1 X'y\npred = X @ beta\nr2 = 1 - ((y - pred) ** 2).sum() / ((y - y.mean()) ** 2).sum()\nn, p = X.shape[0], X.shape[1] - 1\nadj = 1 - (1 - r2) * (n - 1) / (n - p - 1)\nprint(\"hệ số:\", np.round(beta, 4))\nprint(\"R2 =\", round(r2, 4), \" R2 hiệu chỉnh =\", round(adj, 4))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Dữ liệu được tạo đúng theo y = 1 + 2·x₁ + 3·x₂ (không nhiễu). Dùng np.linalg.lstsq tìm [hệ số chặn, β₁, β₂] và in danh sách làm tròn 4 chữ số (.tolist()).",
+        "en": "The data are generated exactly as y = 1 + 2·x₁ + 3·x₂ (no noise). Use np.linalg.lstsq to find [intercept, β₁, β₂] and print the list rounded to 4 digits (.tolist())."
+      },
+      "hint": {
+        "vi": "X = np.column_stack([np.ones(n), x1, x2]).",
+        "en": "X = np.column_stack([np.ones(n), x1, x2])."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nx1 = np.array([1, 2, 3, 4, 5, 6])\nx2 = np.array([2, 1, 4, 3, 6, 5])\ny = 1 + 2 * x1 + 3 * x2\n# tìm hệ số và in\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nx1 = np.array([1, 2, 3, 4, 5, 6])\nx2 = np.array([2, 1, 4, 3, 6, 5])\ny = 1 + 2 * x1 + 3 * x2\nX = np.column_stack([np.ones(len(y)), x1, x2])\nbeta, *_ = np.linalg.lstsq(X, y, rcond=None)\nprint(np.round(beta, 4).tolist())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '[1.0, 2.0, 3.0]'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Một mô hình có R² = 0,80 với n = 50 quan sát và p = 3 biến. In R² hiệu chỉnh = 1 − (1 − R²)(n − 1)/(n − p − 1), làm tròn 4 chữ số.",
+        "en": "A model has R² = 0.80 with n = 50 observations and p = 3 predictors. Print adjusted R² = 1 − (1 − R²)(n − 1)/(n − p − 1), rounded to 4 digits."
+      },
+      "hint": {
+        "vi": "n − p − 1 = 46.",
+        "en": "n − p − 1 = 46."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "r2, n, p = 0.80, 50, 3\n# in R2 hiệu chỉnh\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "r2, n, p = 0.80, 50, 3\nprint(round(1 - (1 - r2) * (n - 1) / (n - p - 1), 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '0.787'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "module": "m3"
+}

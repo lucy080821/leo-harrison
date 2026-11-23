@@ -52,5 +52,6 @@
       ]
     }
   ],
-  "engine": "python"
+  "engine": "python",
+  "module": "m1"
 }

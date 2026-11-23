@@ -1,0 +1,91 @@
+{
+  "title": {
+    "vi": "Thiết kế mẫu: chọn ai để hỏi và sai lệch nào cần tránh",
+    "en": "Sampling design: who to ask and which biases to avoid"
+  },
+  "summary": {
+    "vi": "mẫu ngẫu nhiên, phân tầng, chùm, sai lệch chọn mẫu, cỡ mẫu khảo sát",
+    "en": "random, stratified and cluster samples, selection bias, survey sample size"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "from math import ceil\n\n# Cỡ mẫu cho khảo sát tỷ lệ: n = z^2 * p(1-p) / e^2   (xấu nhất p = 0.5)\nz, p, e = 1.96, 0.5, 0.03\nprint(\"cỡ mẫu cần:\", ceil(z**2 * p * (1 - p) / e**2))\n\n# Ước lượng phân tầng: trung bình có trọng số theo cỡ từng tầng\nN = [600, 300, 100]            # số khách ở mỗi tầng\nmeans = [20, 50, 120]          # trung bình mẫu ở mỗi tầng (triệu/năm)\nest = sum(n * m for n, m in zip(N, means)) / sum(N)\nprint(\"ước lượng phân tầng:\", est)\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Khảo sát tỷ lệ với biên sai số ±2% ở độ tin cậy 95% (z = 1,96, p = 0,5). In cỡ mẫu cần thiết (làm tròn lên số nguyên).",
+        "en": "A proportion survey with a ±2% margin of error at 95% confidence (z = 1.96, p = 0.5). Print the required sample size (rounded up to an integer)."
+      },
+      "hint": {
+        "vi": "ceil(z**2 * p * (1 - p) / e**2).",
+        "en": "ceil(z**2 * p * (1 - p) / e**2)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from math import ceil\nz, p, e = 1.96, 0.5, 0.02\n# in cỡ mẫu\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from math import ceil\nz, p, e = 1.96, 0.5, 0.02\nprint(ceil(z**2 * p * (1 - p) / e**2))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '2401'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Công ty có ba tầng khách: 800, 150 và 50 người; trung bình mẫu chi tiêu là 10, 40 và 200. Tính ước lượng phân tầng của trung bình toàn công ty.",
+        "en": "A company has three customer strata of 800, 150 and 50 people; sample mean spend is 10, 40 and 200. Compute the stratified estimate of the company-wide mean."
+      },
+      "hint": {
+        "vi": "Trung bình có trọng số theo cỡ tầng.",
+        "en": "A weighted mean using stratum sizes."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "N = [800, 150, 50]\nmeans = [10, 40, 200]\n# in ước lượng phân tầng\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "N = [800, 150, 50]\nmeans = [10, 40, 200]\nprint(sum(n * m for n, m in zip(N, means)) / sum(N))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '24.0'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "module": "m2"
+}

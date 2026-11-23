@@ -1,0 +1,91 @@
+{
+  "title": {
+    "vi": "Chuỗi Markov: mô hình hệ thống thay đổi trạng thái",
+    "en": "Markov chains: modelling systems that change state"
+  },
+  "summary": {
+    "vi": "ma trận chuyển, phân phối dừng, PageRank, mô hình khách hàng",
+    "en": "transition matrices, the stationary distribution, PageRank, customer models"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\n# Thời tiết: 0 = nắng, 1 = mưa. Hàng i = trạng thái hôm nay, cột j = ngày mai\nP = np.array([[0.9, 0.1],\n              [0.5, 0.5]])\n\nstate = np.array([1.0, 0.0])        # hôm nay chắc chắn nắng\nfor day in range(1, 4):\n    state = state @ P\n    print(\"ngày\", day, np.round(state, 4))\n\ndist = np.array([0.0, 1.0])\nfor _ in range(200):                # lặp nhiều bước: hội tụ về phân phối dừng\n    dist = dist @ P\nprint(\"phân phối dừng ≈\", np.round(dist, 4))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Một chuỗi Markov hai trạng thái (khách hàng 'dùng' / 'bỏ') có ma trận chuyển P = [[0.8, 0.2], [0.4, 0.6]]. Bắt đầu từ phân phối [1, 0] và nhân với P 200 lần. In phân phối dừng làm tròn 4 chữ số (dưới dạng danh sách .tolist()).",
+        "en": "A two-state Markov chain (customer 'active' / 'churned') has transition matrix P = [[0.8, 0.2], [0.4, 0.6]]. Start from [1, 0] and multiply by P 200 times. Print the stationary distribution rounded to 4 digits (as a list with .tolist())."
+      },
+      "hint": {
+        "vi": "dist = dist @ P trong vòng lặp; np.round(dist, 4).tolist().",
+        "en": "dist = dist @ P in a loop; np.round(dist, 4).tolist()."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nP = np.array([[0.8, 0.2], [0.4, 0.6]])\ndist = np.array([1.0, 0.0])\n# lặp rồi in\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nP = np.array([[0.8, 0.2], [0.4, 0.6]])\ndist = np.array([1.0, 0.0])\nfor _ in range(200):\n    dist = dist @ P\nprint(np.round(dist, 4).tolist())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '[0.6667, 0.3333]'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Với cùng P, tính xác suất sau đúng 2 bước đi từ 'dùng' sang 'bỏ' bằng P @ P, in phần tử [0, 1] làm tròn 4 chữ số.",
+        "en": "With the same P, compute the probability of going from 'active' to 'churned' in exactly 2 steps using P @ P and print entry [0, 1] rounded to 4 digits."
+      },
+      "hint": {
+        "vi": "np.linalg.matrix_power(P, 2) hoặc P @ P.",
+        "en": "np.linalg.matrix_power(P, 2) or P @ P."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nP = np.array([[0.8, 0.2], [0.4, 0.6]])\n# in (P @ P)[0, 1]\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nP = np.array([[0.8, 0.2], [0.4, 0.6]])\nprint(round((P @ P)[0, 1], 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "Output is correct"
+          },
+          "test": "_out == '0.28'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "module": "m1"
+}

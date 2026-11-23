@@ -1,0 +1,57 @@
+{
+  "title": {
+    "vi": "Luật số lớn và định lý giới hạn trung tâm",
+    "en": "Law of large numbers and the central limit theorem"
+  },
+  "summary": {
+    "vi": "vì sao trung bình mẫu ổn định, vì sao đường chuông xuất hiện khắp nơi",
+    "en": "why sample means stabilise, why the bell curve shows up everywhere"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import random, statistics as st\nrandom.seed(7)\n\n# Luật số lớn: tần suất mặt ngửa tiến về 0.5\nfor n in (10, 100, 10000, 100000):\n    heads = sum(random.random() < 0.5 for _ in range(n))\n    print(n, round(heads / n, 4))\n\n# CLT: trung bình của 30 lần tung xúc xắc xấp xỉ chuẩn\nmeans = [st.mean(random.randint(1, 6) for _ in range(30)) for _ in range(5000)]\nprint(\"mean of means:\", round(st.mean(means), 3), \"  sd:\", round(st.stdev(means), 3))\nprint(\"lý thuyết sd :\", round((35 / 12) ** 0.5 / 30 ** 0.5, 3))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Độ lệch chuẩn của trung bình mẫu (sai số chuẩn) là σ/√n. Một nhà máy có σ = 12 g cho mỗi gói; tính sai số chuẩn của trung bình 36 gói và in làm tròn 2 chữ số.",
+        "en": "The standard deviation of a sample mean (standard error) is σ/√n. A factory has σ = 12 g per pack; compute the standard error of the mean of 36 packs and print it rounded to 2 digits."
+      },
+      "hint": {
+        "vi": "12 / sqrt(36) = 2.",
+        "en": "12 / sqrt(36) = 2."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from math import sqrt\nsigma, n = 12, 36\n# in sai số chuẩn\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from math import sqrt\nsigma, n = 12, 36\nprint(round(sigma / sqrt(n), 2))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "In ra 2.0",
+            "en": "Prints 2.0"
+          },
+          "test": "_out == '2.0'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "module": "m1"
+}
