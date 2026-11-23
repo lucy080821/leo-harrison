@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Đánh giá LLM: exact match, F1, pass@k và LLM-as-judge",
+    "en": "Evaluating LLMs: exact match, F1, pass@k and LLM-as-judge"
+  },
+  "summary": {
+    "vi": "bộ đánh giá, exact match, F1 mức token, pass@k, thiên lệch của giám khảo LLM, quy trình",
+    "en": "eval sets, exact match, token-level F1, pass@k, LLM-judge bias, workflow"
+  },
+  "minutes": 35,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import re\nfrom collections import Counter\nfrom math import comb\n\ndef norm(s):\n    return re.sub(r\"[^a-z0-9 ]\", \"\", s.lower()).strip()\n\ndef exact_match(pred, gold):\n    return norm(pred) == norm(gold)\n\ndef token_f1(pred, gold):\n    p, g = norm(pred).split(), norm(gold).split()\n    common = sum((Counter(p) & Counter(g)).values())\n    if common == 0:\n        return 0.0\n    prec, rec = common / len(p), common / len(g)\n    return 2 * prec * rec / (prec + rec)\n\nprint(exact_match(\"The Eiffel Tower!\", \"the eiffel tower\"))\nprint(round(token_f1(\"the tower in Paris\", \"the Eiffel tower\"), 3))\n\n# pass@k (Chen et al. 2021): xác suất ÍT NHẤT một trong k mẫu đúng, ước lượng không chệch từ n mẫu, c đúng\ndef pass_at_k(n, c, k):\n    if n - c < k:\n        return 1.0\n    return 1.0 - comb(n - c, k) / comb(n, k)\n\nprint([round(pass_at_k(10, 3, k), 3) for k in (1, 5, 10)])\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Dùng token_f1 như ví dụ (chuẩn hoá chữ thường, bỏ dấu câu). In F1 giữa 'a small black cat' và 'the black cat sat' làm tròn 3 chữ số.",
+        "en": "Use token_f1 as in the example (lowercase, strip punctuation). Print the F1 between 'a small black cat' and 'the black cat sat' rounded to 3 digits."
+      },
+      "hint": {
+        "vi": "giao = {black, cat}; prec = 2/4; rec = 2/4.",
+        "en": "overlap = {black, cat}; prec = 2/4; rec = 2/4."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import re\nfrom collections import Counter\ndef token_f1(pred, gold):\n    pass\n\nprint(round(token_f1('a small black cat', 'the black cat sat'), 3))\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import re\nfrom collections import Counter\ndef norm(s):\n    return re.sub(r'[^a-z0-9 ]', '', s.lower()).strip()\ndef token_f1(pred, gold):\n    p, g = norm(pred).split(), norm(gold).split()\n    c = sum((Counter(p) & Counter(g)).values())\n    if c == 0:\n        return 0.0\n    pr, rc = c / len(p), c / len(g)\n    return 2 * pr * rc / (pr + rc)\n\nprint(round(token_f1('a small black cat', 'the black cat sat'), 3))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '0.5'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Một mô hình sinh n = 20 lời giải cho một bài toán, c = 4 lời giải đúng. Tính pass@1 và pass@5 theo công thức không chệch 1 − C(n−c, k)/C(n, k), làm tròn 3 chữ số, mỗi số một dòng.",
+        "en": "A model generates n = 20 solutions to a problem, c = 4 of them correct. Compute pass@1 and pass@5 with the unbiased formula 1 − C(n−c, k)/C(n, k), rounded to 3 digits, one per line."
+      },
+      "hint": {
+        "vi": "from math import comb.",
+        "en": "from math import comb."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from math import comb\n# in pass@1 và pass@5\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from math import comb\ndef p(n, c, k):\n    return 1.0 if n - c < k else 1 - comb(n - c, k) / comb(n, k)\nprint(round(p(20, 4, 1), 3))\nprint(round(p(20, 4, 5), 3))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '0.2\\n0.718'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

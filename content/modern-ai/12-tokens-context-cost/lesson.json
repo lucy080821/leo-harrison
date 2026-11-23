@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Token, cửa sổ ngữ cảnh và tính chi phí",
+    "en": "Tokens, context windows and cost estimation"
+  },
+  "summary": {
+    "vi": "ước lượng token, ngân sách ngữ cảnh, đơn giá vào/ra, bộ nhớ đệm prompt, tối ưu chi phí",
+    "en": "estimating tokens, context budgeting, input/output prices, prompt caching, cost optimisation"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "def estimate_tokens(text):\n    # Quy tắc ngón tay cái cho tiếng Anh: ~4 ký tự mỗi token (≈ 0.75 từ). Tiếng Việt thường tốn HƠN.\n    return max(1, round(len(text) / 4))\n\ndef cost(in_tok, out_tok, price_in, price_out):\n    # đơn giá tính theo 1 TRIỆU token (USD)\n    return in_tok / 1e6 * price_in + out_tok / 1e6 * price_out\n\nsystem, docs, question = \"x\" * 2000, \"y\" * 40000, \"z\" * 200\nin_tok = sum(estimate_tokens(t) for t in (system, docs, question))\nout_tok = 500\nprint(\"token vào:\", in_tok, \"| ra:\", out_tok)\n\n# Giả định đơn giá minh hoạ: $3 / triệu token vào, $15 / triệu token ra\nper_call = cost(in_tok, out_tok, 3.0, 15.0)\nprint(\"mỗi lần gọi: $\", round(per_call, 4), \"| 100.000 lần/tháng: $\", round(per_call * 100_000))\n\n# Nếu 10.000 token đầu (system + tài liệu cố định) được đệm (cache) với giá đọc bằng 10% giá thường\ncached = 10_000\nsaving = cached / 1e6 * 3.0 * 0.9\nprint(\"tiết kiệm mỗi lần khi cache:\", round(saving, 4), \"(\", round(100 * saving / per_call), \"%)\")\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Với đơn giá $2 / triệu token vào và $10 / triệu token ra, một lần gọi dùng 8000 token vào và 1000 token ra. In chi phí mỗi lần gọi làm tròn 4 chữ số, rồi chi phí cho 50.000 lần gọi làm tròn 2 chữ số, mỗi số một dòng.",
+        "en": "With prices of $2 per million input tokens and $10 per million output tokens, a call uses 8000 input and 1000 output tokens. Print the cost per call rounded to 4 digits, then the cost for 50,000 calls rounded to 2 digits, one per line."
+      },
+      "hint": {
+        "vi": "in/1e6*2 + out/1e6*10.",
+        "en": "in/1e6*2 + out/1e6*10."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "# in chi phí mỗi lần và cho 50.000 lần\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "c = 8000 / 1e6 * 2 + 1000 / 1e6 * 10\nprint(round(c, 4))\nprint(round(c * 50000, 2))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '0.026\\n1300.0'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Cửa sổ ngữ cảnh là 8000 token. Prompt hệ thống 500 token, câu hỏi 200 token, và dành 1000 token cho câu trả lời. Mỗi đoạn truy xuất dài 600 token. Tối đa bao nhiêu đoạn nhét vừa (số nguyên)? In số đó.",
+        "en": "The context window is 8000 tokens. The system prompt takes 500 tokens, the question 200, and 1000 are reserved for the answer. Each retrieved chunk is 600 tokens. How many chunks fit at most (an integer)? Print it."
+      },
+      "hint": {
+        "vi": "(8000 − 500 − 200 − 1000) // 600.",
+        "en": "(8000 − 500 − 200 − 1000) // 600."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "# in số đoạn tối đa\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "print((8000 - 500 - 200 - 1000) // 600)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '10'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

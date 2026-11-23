@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Căn chỉnh mô hình: RLHF, mô hình thưởng Bradley–Terry và DPO",
+    "en": "Aligning models: RLHF, the Bradley–Terry reward model and DPO"
+  },
+  "summary": {
+    "vi": "cặp ưa thích, P(a ≻ b) = σ(r_a − r_b), huấn luyện mô hình thưởng, KL, DPO ở mức ý tưởng",
+    "en": "preference pairs, P(a ≻ b) = σ(r_a − r_b), training a reward model, KL, DPO at the idea level"
+  },
+  "minutes": 40,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\nsigmoid = lambda z: 1 / (1 + np.exp(-z))\n\n# Mô hình Bradley–Terry: xác suất người chọn A hơn B = sigmoid(r_A - r_B)\nprint(round(float(sigmoid(2.0 - 0.5)), 3))\n\n# Huấn luyện mô hình thưởng tuyến tính r(x) = w·x từ các cặp (thắng, thua)\nrng = np.random.default_rng(0)\nw_true = np.array([2.0, -1.0, 0.5])\nX = rng.normal(size=(400, 3))\npairs = rng.integers(0, 400, size=(600, 2))\na, b = X[pairs[:, 0]], X[pairs[:, 1]]\np_true = sigmoid((a - b) @ w_true)\nwin = rng.random(600) < p_true                         # nhãn ưa thích có nhiễu\nchosen, rejected = np.where(win[:, None], a, b), np.where(win[:, None], b, a)\n\nw = np.zeros(3)\nfor _ in range(300):\n    d = chosen - rejected\n    p = sigmoid(d @ w)\n    w += 0.5 * (d * (1 - p)[:, None]).mean(axis=0)     # tối đa hoá log sigmoid(r_chosen - r_rejected)\n\nprint(\"hướng học được gần w_true:\", round(float(w @ w_true / (np.linalg.norm(w) * np.linalg.norm(w_true))), 2))\nacc = (((chosen - rejected) @ w) > 0).mean()\nprint(\"độ chính xác xếp hạng trên cặp huấn luyện:\", round(float(acc), 2))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Với điểm thưởng r_A = 1.2 và r_B = 0.2, tính P(A ≻ B) = sigmoid(r_A − r_B) và in làm tròn 4 chữ số. Rồi in P(B ≻ A), mỗi số một dòng (hai số cộng lại bằng 1).",
+        "en": "With rewards r_A = 1.2 and r_B = 0.2, compute P(A ≻ B) = sigmoid(r_A − r_B) and print it rounded to 4 digits. Then print P(B ≻ A), one per line (the two sum to 1)."
+      },
+      "hint": {
+        "vi": "1 / (1 + exp(-(1.2 - 0.2))).",
+        "en": "1 / (1 + exp(-(1.2 - 0.2)))."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n# in P(A>B) rồi P(B>A)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\np = 1 / (1 + np.exp(-(1.2 - 0.2)))\nprint(round(float(p), 4))\nprint(round(float(1 - p), 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '0.7311\\n0.2689'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Mất mát mô hình thưởng cho một cặp là −log sigmoid(r_chosen − r_rejected). Với r_chosen = 2.0, r_rejected = 0.0, in mất mát làm tròn 4 chữ số; rồi in mất mát khi mô hình xếp SAI (r_chosen = 0.0, r_rejected = 2.0), mỗi số một dòng.",
+        "en": "The reward-model loss for a pair is −log sigmoid(r_chosen − r_rejected). With r_chosen = 2.0, r_rejected = 0.0 print the loss rounded to 4 digits; then print the loss when the model ranks them WRONG (r_chosen = 0.0, r_rejected = 2.0), one per line."
+      },
+      "hint": {
+        "vi": "-np.log(1 / (1 + np.exp(-(rc - rr)))).",
+        "en": "-np.log(1 / (1 + np.exp(-(rc - rr))))."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\ndef loss(rc, rr):\n    pass\n\n# in loss(2, 0) rồi loss(0, 2)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\ndef loss(rc, rr):\n    return -np.log(1 / (1 + np.exp(-(rc - rr))))\n\nprint(round(float(loss(2.0, 0.0)), 4))\nprint(round(float(loss(0.0, 2.0)), 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '0.1269\\n2.1269'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

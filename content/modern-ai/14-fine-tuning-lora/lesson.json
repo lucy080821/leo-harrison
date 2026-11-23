@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Tinh chỉnh mô hình: SFT, LoRA và khi nào nên dùng",
+    "en": "Fine-tuning models: SFT, LoRA and when to use it"
+  },
+  "summary": {
+    "vi": "prompt vs RAG vs tinh chỉnh, SFT, LoRA W + (α/r)BA, đếm tham số, dữ liệu và rủi ro",
+    "en": "prompting vs RAG vs fine-tuning, SFT, LoRA W + (α/r)BA, parameter counts, data and risks"
+  },
+  "minutes": 35,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\nd_in, d_out, r = 4096, 4096, 8\n\nfull = d_in * d_out                       # cập nhật toàn bộ ma trận W\nlora = r * (d_in + d_out)                 # chỉ huấn luyện A (r x d_in) và B (d_out x r)\nprint(\"toàn bộ:\", full, \"| LoRA:\", lora, \"| tỷ lệ:\", round(lora / full * 100, 2), \"%\")\n\nrng = np.random.default_rng(0)\nW = rng.normal(size=(6, 6))               # trọng số gốc (đóng băng)\nA = rng.normal(size=(2, 6)) * 0.1         # r = 2\nB = np.zeros((6, 2))                      # B khởi tạo 0 => ban đầu mô hình y hệt bản gốc\nalpha = 4\n\ndef forward(x, W, A, B):\n    return x @ (W + (alpha / 2) * B @ A).T\n\nx = rng.normal(size=(3, 6))\nprint(\"ban đầu giống bản gốc:\", bool(np.allclose(forward(x, W, A, B), x @ W.T)))\nB = rng.normal(size=(6, 2)) * 0.1         # sau huấn luyện B khác 0\nprint(\"hạng của phần cập nhật ≤ r:\", int(np.linalg.matrix_rank(B @ A)))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Một ma trận trọng số 1024 × 1024 được thích ứng bằng LoRA hạng r = 16. In số tham số khi cập nhật toàn bộ, số tham số LoRA r·(d_in + d_out), và phần trăm (làm tròn 2 chữ số), mỗi số một dòng.",
+        "en": "A 1024 × 1024 weight matrix is adapted with LoRA of rank r = 16. Print the parameters for a full update, the LoRA parameters r·(d_in + d_out), and the percentage (rounded to 2 digits), one per line."
+      },
+      "hint": {
+        "vi": "full = d*d; lora = r*(d+d).",
+        "en": "full = d*d; lora = r*(d+d)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "d, r = 1024, 16\n# in full, lora, phần trăm\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "d, r = 1024, 16\nf = d * d\nl = r * (d + d)\nprint(f)\nprint(l)\nprint(round(l / f * 100, 2))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '1048576\\n32768\\n3.12'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Với B (6×2) và A (2×6) là các ma trận ngẫu nhiên (default_rng(1), normal), in hạng của tích B @ A (np.linalg.matrix_rank).",
+        "en": "With B (6×2) and A (2×6) being random matrices (default_rng(1), normal), print the rank of the product B @ A (np.linalg.matrix_rank)."
+      },
+      "hint": {
+        "vi": "hạng ≤ min(hạng B, hạng A) = 2.",
+        "en": "rank ≤ min(rank B, rank A) = 2."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nrng = np.random.default_rng(1)\nB = rng.normal(size=(6, 2))\nA = rng.normal(size=(2, 6))\n# in hạng của B @ A\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nrng = np.random.default_rng(1)\nB = rng.normal(size=(6, 2))\nA = rng.normal(size=(2, 6))\nprint(int(np.linalg.matrix_rank(B @ A)))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '2'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

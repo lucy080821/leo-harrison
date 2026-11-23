@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Đầu ra có cấu trúc: JSON schema, kiểm tra và thử lại",
+    "en": "Structured output: JSON schema, validation and retries"
+  },
+  "summary": {
+    "vi": "ép JSON, kiểm tra schema thủ công, sửa lỗi phổ biến, vòng lặp thử lại, function calling",
+    "en": "forcing JSON, manual schema checks, repairing common errors, retry loops, function calling"
+  },
+  "minutes": 35,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import json\n\nschema = {\"name\": str, \"age\": int, \"tags\": list}\n\ndef validate(obj, schema):\n    errors = []\n    for key, typ in schema.items():\n        if key not in obj:\n            errors.append(f\"thiếu '{key}'\")\n        elif not isinstance(obj[key], typ):\n            errors.append(f\"'{key}' phải là {typ.__name__}\")\n    return errors\n\ndef parse_llm_json(text):\n    # Mô hình hay bọc JSON trong ```json ... ``` hoặc thêm lời dẫn\n    start, end = text.find(\"{\"), text.rfind(\"}\")\n    if start == -1 or end == -1:\n        raise ValueError(\"không có JSON\")\n    return json.loads(text[start:end + 1])\n\nraw = 'Đây là kết quả:\\n```json\\n{\"name\": \"An\", \"age\": \"20\", \"tags\": [\"a\"]}\\n```'\nobj = parse_llm_json(raw)\nprint(validate(obj, schema))                       # tuổi là chuỗi, sai kiểu\n\n# Vòng thử lại: gửi lỗi trả cho mô hình (mô phỏng)\nattempts = [raw, '{\"name\": \"An\", \"age\": 20, \"tags\": [\"a\"]}']\nfor i, a in enumerate(attempts, 1):\n    errs = validate(parse_llm_json(a), schema)\n    print(\"lần\", i, \"->\", \"OK\" if not errs else errs)\n    if not errs:\n        break\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Cài parse_llm_json(text): lấy đoạn từ dấu '{' đầu tiên đến dấu '}' cuối cùng rồi json.loads. Với text = 'Kết quả: {\"x\": 1, \"y\": [2, 3]} xong', in dict kết quả.",
+        "en": "Implement parse_llm_json(text): take the span from the first '{' to the last '}' then json.loads. With text = 'Result: {\"x\": 1, \"y\": [2, 3]} done', print the resulting dict."
+      },
+      "hint": {
+        "vi": "text[text.find('{'): text.rfind('}') + 1].",
+        "en": "text[text.find('{'): text.rfind('}') + 1]."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import json\ndef parse_llm_json(text):\n    pass\n\nprint(parse_llm_json('Kết quả: {\"x\": 1, \"y\": [2, 3]} xong'))\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import json\ndef parse_llm_json(text):\n    return json.loads(text[text.find('{'): text.rfind('}') + 1])\n\nprint(parse_llm_json('Kết quả: {\"x\": 1, \"y\": [2, 3]} xong'))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == \"{'x': 1, 'y': [2, 3]}\""
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Cài validate(obj, schema) trả list lỗi ('thiếu k' nếu thiếu khoá, 'k sai kiểu' nếu sai kiểu). Với schema {'a': int, 'b': str} và obj {'a': '1'}, in list lỗi.",
+        "en": "Implement validate(obj, schema) returning a list of errors ('missing k' if a key is absent, 'k wrong type' if the type is wrong). With schema {'a': int, 'b': str} and obj {'a': '1'}, print the error list."
+      },
+      "hint": {
+        "vi": "duyệt schema.items(): 'in obj' rồi isinstance.",
+        "en": "iterate schema.items(): 'in obj' then isinstance."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def validate(obj, schema):\n    pass\n\nprint(validate({'a': '1'}, {'a': int, 'b': str}))\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def validate(obj, schema):\n    e = []\n    for k, t in schema.items():\n        if k not in obj:\n            e.append(f'missing {k}')\n        elif not isinstance(obj[k], t):\n            e.append(f'{k} wrong type')\n    return e\n\nprint(validate({'a': '1'}, {'a': int, 'b': str}))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == \"['a wrong type', 'missing b']\""
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

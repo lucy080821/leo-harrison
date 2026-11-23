@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Suy luận hiệu quả: KV-cache, lượng tử hoá và bộ nhớ GPU",
+    "en": "Efficient inference: KV-cache, quantisation and GPU memory"
+  },
+  "summary": {
+    "vi": "vì sao sinh token chậm, KV-cache, tính bộ nhớ mô hình và cache, lượng tử hoá int8/int4, batching",
+    "en": "why generation is slow, the KV-cache, computing model and cache memory, int8/int4 quantisation, batching"
+  },
+  "minutes": 35,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\ndef model_memory_gb(params_billion, bytes_per_param):\n    return params_billion * 1e9 * bytes_per_param / 1e9          # GB\n\ndef kv_cache_gb(layers, heads, head_dim, seq_len, batch, bytes_per=2):\n    # mỗi token, mỗi tầng lưu K và V: 2 * heads * head_dim\n    return 2 * layers * heads * head_dim * seq_len * batch * bytes_per / 1e9\n\n# Mô hình 7B tham số\nfor name, b in [(\"fp16\", 2), (\"int8\", 1), (\"int4\", 0.5)]:\n    print(name, \"->\", model_memory_gb(7, b), \"GB\")\n\nprint(\"KV-cache 4k ngữ cảnh, batch 1:\", round(kv_cache_gb(32, 32, 128, 4096, 1), 2), \"GB\")\nprint(\"KV-cache 32k ngữ cảnh, batch 8:\", round(kv_cache_gb(32, 32, 128, 32768, 8), 1), \"GB\")\n\n# Lượng tử hoá int8 đối xứng cho một vector trọng số\nw = np.array([0.12, -0.5, 0.33, 0.9, -0.77])\nscale = np.abs(w).max() / 127\nq = np.round(w / scale).astype(np.int8)\nprint(\"int8:\", q.tolist(), \"| sai số tối đa:\", round(float(np.abs(q * scale - w).max()), 4))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Một mô hình 13 tỷ tham số lưu ở fp16 (2 byte/tham số), int8 (1 byte) và int4 (0.5 byte). In bộ nhớ (GB) cho ba trường hợp, mỗi số một dòng.",
+        "en": "A 13-billion-parameter model stored in fp16 (2 bytes/param), int8 (1 byte) and int4 (0.5 byte). Print the memory (GB) for the three cases, one per line."
+      },
+      "hint": {
+        "vi": "params × byte / 1e9.",
+        "en": "params × bytes / 1e9."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "# in GB cho fp16, int8, int4\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "for b in (2, 1, 0.5):\n    print(13e9 * b / 1e9)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '26.0\\n13.0\\n6.5'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Lượng tử hoá đối xứng int8: scale = max(|w|)/127, q = round(w/scale). Với w = [0.2, -0.4, 0.8, -1.0], in list q (số nguyên).",
+        "en": "Symmetric int8 quantisation: scale = max(|w|)/127, q = round(w/scale). With w = [0.2, -0.4, 0.8, -1.0], print the list q (integers)."
+      },
+      "hint": {
+        "vi": "scale = 1.0/127; q = np.round(w / scale).astype(int).",
+        "en": "scale = 1.0/127; q = np.round(w / scale).astype(int)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nw = np.array([0.2, -0.4, 0.8, -1.0])\n# in q\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nw = np.array([0.2, -0.4, 0.8, -1.0])\ns = np.abs(w).max() / 127\nprint(np.round(w / s).astype(int).tolist())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '[25, -51, 102, -127]'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

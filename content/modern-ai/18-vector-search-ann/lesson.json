@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Tìm kiếm vector ở quy mô lớn: brute-force, LSH và recall",
+    "en": "Vector search at scale: brute force, LSH and recall"
+  },
+  "summary": {
+    "vi": "tìm láng giềng gần nhất chính xác, chuẩn hoá cosine = tích vô hướng, LSH siêu phẳng ngẫu nhiên, recall@k, HNSW/IVF",
+    "en": "exact nearest neighbours, normalised cosine = dot product, random-hyperplane LSH, recall@k, HNSW/IVF"
+  },
+  "minutes": 40,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\nrng = np.random.default_rng(0)\nn, d = 2000, 32\nX = rng.normal(size=(n, d))\nX /= np.linalg.norm(X, axis=1, keepdims=True)               # chuẩn hoá: cosine = tích vô hướng\n\nq = X[0] + 0.1 * rng.normal(size=d)\nq /= np.linalg.norm(q)\n\n# Chính xác (brute force): O(n·d) mỗi truy vấn\nexact = np.argsort(-(X @ q))[:5]\nprint(\"top-5 chính xác:\", exact.tolist())\n\n# LSH siêu phẳng ngẫu nhiên: băm mỗi vector thành chuỗi bit theo dấu của tích với các hướng ngẫu nhiên\ndef signatures(X, planes):\n    return (X @ planes.T > 0)\n\ndef lsh_search(q, X, bits, tables, k=5, seed=1):\n    r = np.random.default_rng(seed)\n    cand = set()\n    for _ in range(tables):\n        planes = r.normal(size=(bits, X.shape[1]))\n        sig = signatures(X, planes)\n        qs = signatures(q[None, :], planes)[0]\n        match = np.where((sig == qs).all(axis=1))[0]        # cùng bucket\n        cand.update(match.tolist())\n    cand = np.array(sorted(cand))\n    if len(cand) == 0:\n        return [], 0\n    best = cand[np.argsort(-(X[cand] @ q))[:k]]\n    return best.tolist(), len(cand)\n\napprox, scanned = lsh_search(q, X, bits=8, tables=10)\nrecall = len(set(approx) & set(exact.tolist())) / 5\nprint(\"ứng viên đã quét:\", scanned, \"/\", n, \"| recall@5:\", recall)\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tạo X ~ N(0,1) kích thước (500, 16) bằng default_rng(0), chuẩn hoá từng hàng về độ dài 1, và truy vấn q = X[7]. In chỉ số láng giềng gần nhất theo cosine (tích vô hướng lớn nhất).",
+        "en": "Create X ~ N(0,1) of shape (500, 16) with default_rng(0), normalise each row to length 1, and query q = X[7]. Print the index of the nearest neighbour by cosine (largest dot product)."
+      },
+      "hint": {
+        "vi": "np.argmax(X @ q) (chính nó có tích = 1).",
+        "en": "np.argmax(X @ q) (it matches itself with product 1)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nrng = np.random.default_rng(0)\nX = rng.normal(size=(500, 16))\n# chuẩn hoá hàng, truy vấn X[7], in chỉ số gần nhất\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nrng = np.random.default_rng(0)\nX = rng.normal(size=(500, 16))\nX /= np.linalg.norm(X, axis=1, keepdims=True)\nprint(int(np.argmax(X @ X[7])))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '7'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Với 1000 vector và băm siêu phẳng dùng 10 bit, số bucket tối đa có thể là 2^10. In số bucket tối đa, rồi số vector trung bình mỗi bucket nếu phân bố đều (làm tròn 2 chữ số), mỗi số một dòng.",
+        "en": "With 1000 vectors and hyperplane hashing using 10 bits, the maximum number of buckets is 2^10. Print the maximum bucket count, then the mean vectors per bucket if evenly spread (rounded to 2 digits), one per line."
+      },
+      "hint": {
+        "vi": "2 ** 10; 1000 / 2 ** 10.",
+        "en": "2 ** 10; 1000 / 2 ** 10."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "# in số bucket và số vector mỗi bucket\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "print(2 ** 10)\nprint(round(1000 / 2 ** 10, 2))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '1024\\n0.98'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Xây vòng lặp agent: lập kế hoạch, bộ nhớ và giới hạn",
+    "en": "Building an agent loop: planning, memory and limits"
+  },
+  "summary": {
+    "vi": "ReAct, vòng lặp có giới hạn bước, bộ nhớ làm việc, xử lý lỗi công cụ, điều kiện dừng",
+    "en": "ReAct, a step-limited loop, working memory, tool-error handling, stop conditions"
+  },
+  "minutes": 40,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import json\n\n# Công cụ thật (hàm Python thường)\ndef get_price(item):\n    prices = {\"apple\": 1.2, \"pear\": 2.0}\n    if item not in prices:\n        raise KeyError(f\"không có {item}\")\n    return prices[item]\n\nTOOLS = {\"get_price\": get_price}\n\n# \"Mô hình\" giả lập: kịch bản hành động theo từng bước (thay bằng LLM thật ở sản xuất)\nscript = [\n    {\"tool\": \"get_price\", \"args\": {\"item\": \"apple\"}},\n    {\"tool\": \"get_price\", \"args\": {\"item\": \"kiwi\"}},          # lỗi: sẽ được phản hồi lại\n    {\"tool\": \"get_price\", \"args\": {\"item\": \"pear\"}},\n    {\"final\": \"apple 1.2 và pear 2.0\"},\n]\n\ndef run_agent(script, max_steps=5):\n    memory, cost = [], 0\n    for step, action in enumerate(script):\n        if step >= max_steps:\n            return \"dừng: quá số bước\", memory\n        if \"final\" in action:\n            return action[\"final\"], memory\n        try:\n            obs = TOOLS[action[\"tool\"]](**action[\"args\"])\n        except Exception as e:                      # lỗi công cụ -> quan sát, để mô hình tự sửa\n            obs = f\"LỖI: {e}\"\n        memory.append((action[\"tool\"], action[\"args\"], obs))\n    return \"dừng: hết kịch bản\", memory\n\nanswer, mem = run_agent(script)\nprint(answer)\nprint([m[2] for m in mem])\nprint(run_agent(script, max_steps=2)[0])\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Cài run_agent(script, max_steps) trả về số bước đã thực thi (số hành động công cụ) trước khi gặp 'final' hoặc chạm max_steps. Với script gồm 3 hành động công cụ rồi 'final', in kết quả khi max_steps=10 và khi max_steps=2, mỗi số một dòng.",
+        "en": "Implement run_agent(script, max_steps) returning the number of executed steps (tool actions) before reaching 'final' or hitting max_steps. With a script of 3 tool actions then 'final', print the result for max_steps=10 and for max_steps=2, one per line."
+      },
+      "hint": {
+        "vi": "đếm hành động không phải 'final', dừng khi count == max_steps.",
+        "en": "count non-'final' actions, stop when count == max_steps."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def run_agent(script, max_steps):\n    pass\n\nscript = [{'tool': 'a'}, {'tool': 'b'}, {'tool': 'c'}, {'final': 'ok'}]\nprint(run_agent(script, 10))\nprint(run_agent(script, 2))\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def run_agent(script, max_steps):\n    n = 0\n    for a in script:\n        if 'final' in a or n >= max_steps:\n            break\n        n += 1\n    return n\n\nscript = [{'tool': 'a'}, {'tool': 'b'}, {'tool': 'c'}, {'final': 'ok'}]\nprint(run_agent(script, 10))\nprint(run_agent(script, 2))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '3\\n2'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Một công cụ ném KeyError khi thiếu khoá. Viết safe_call(fn, **kw) trả 'ERR: ...' (chuỗi bắt đầu bằng 'ERR: ') khi hàm ném ngoại lệ, ngược lại trả kết quả. Với fn là lambda k: {'a': 1}[k], in safe_call(fn, k='a') rồi safe_call(fn, k='z') (chỉ in 5 ký tự đầu của kết quả thứ hai bằng [:5]), mỗi giá trị một dòng.",
+        "en": "A tool raises KeyError for a missing key. Write safe_call(fn, **kw) returning 'ERR: ...' (a string beginning with 'ERR: ') when the function raises, else the result. With fn = lambda k: {'a': 1}[k], print safe_call(fn, k='a') then safe_call(fn, k='z') (print only the first 5 characters of the second with [:5]), one value per line."
+      },
+      "hint": {
+        "vi": "try / except Exception as e.",
+        "en": "try / except Exception as e."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def safe_call(fn, **kw):\n    pass\n\nfn = lambda k: {'a': 1}[k]\n# in kết quả\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def safe_call(fn, **kw):\n    try:\n        return fn(**kw)\n    except Exception as e:\n        return f'ERR: {e}'\n\nfn = lambda k: {'a': 1}[k]\nprint(safe_call(fn, k='a'))\nprint(safe_call(fn, k='z')[:5])\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '1\\nERR: '"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}
