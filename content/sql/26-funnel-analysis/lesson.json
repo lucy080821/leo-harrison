@@ -1,0 +1,105 @@
+{
+  "title": {
+    "vi": "Phễu chuyển đổi (funnel analysis)",
+    "en": "Funnel analysis"
+  },
+  "summary": {
+    "vi": "đếm người dùng qua từng bước, tỷ lệ rơi rụng, so sánh theo kênh",
+    "en": "counting users at each step, drop-off rates, comparing by channel"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "-- Số người dùng DISTINCT đạt từng bước của phễu\nSELECT event_type, COUNT(DISTINCT user_id) AS users\nFROM events\nWHERE event_type IN ('view','cart','checkout','purchase')\nGROUP BY event_type\nORDER BY CASE event_type WHEN 'view' THEN 1 WHEN 'cart' THEN 2 WHEN 'checkout' THEN 3 ELSE 4 END;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Trả về phễu theo từng bước (event_type, users = số người dùng DISTINCT) cho bốn bước view, cart, checkout, purchase theo đúng thứ tự phễu.",
+        "en": "Return the funnel by step (event_type, users = DISTINCT users) for the four steps view, cart, checkout, purchase in funnel order."
+      },
+      "hint": {
+        "vi": "ORDER BY CASE event_type WHEN 'view' THEN 1 … END.",
+        "en": "ORDER BY CASE event_type WHEN 'view' THEN 1 … END."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT event_type, COUNT(*) FROM events GROUP BY event_type;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT event_type, COUNT(DISTINCT user_id) AS users\nFROM events\nWHERE event_type IN ('view','cart','checkout','purchase')\nGROUP BY event_type\nORDER BY CASE event_type WHEN 'view' THEN 1 WHEN 'cart' THEN 2 WHEN 'checkout' THEN 3 ELSE 4 END;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 2 cột",
+            "en": "Has 2 columns"
+          },
+          "test": "columns.length===2"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[\\\"view\\\",193],[\\\"cart\\\",155],[\\\"checkout\\\",120],[\\\"purchase\\\",83]]\""
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Tỷ lệ chuyển đổi từ 'cart' sang 'purchase' theo từng channel: cột channel và cart_to_purchase_pct = 100.0 * (người có purchase) / (người có cart), làm tròn 1 chữ số, chỉ tính người có cart. Sắp xếp theo channel.",
+        "en": "The conversion rate from 'cart' to 'purchase' per channel: columns channel and cart_to_purchase_pct = 100.0 * (users with purchase) / (users with cart), rounded to 1 digit, only counting users who have a cart. Sorted by channel."
+      },
+      "hint": {
+        "vi": "Dùng COUNT(DISTINCT CASE WHEN e.event_type = 'cart' THEN u.id END) và tương tự cho purchase.",
+        "en": "Use COUNT(DISTINCT CASE WHEN e.event_type = 'cart' THEN u.id END) and likewise for purchase."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT channel FROM users GROUP BY channel;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "WITH s AS (\n  SELECT u.channel, u.id,\n    MAX(CASE WHEN e.event_type = 'cart' THEN 1 ELSE 0 END) AS has_cart,\n    MAX(CASE WHEN e.event_type = 'purchase' THEN 1 ELSE 0 END) AS has_purchase\n  FROM users u JOIN events e ON e.user_id = u.id\n  GROUP BY u.channel, u.id\n)\nSELECT channel,\n       ROUND(100.0 * SUM(has_purchase) / SUM(has_cart), 1) AS cart_to_purchase_pct\nFROM s\nWHERE has_cart = 1\nGROUP BY channel\nORDER BY channel;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 2 cột",
+            "en": "Has 2 columns"
+          },
+          "test": "columns.length===2"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[\\\"ads\\\",57.1],[\\\"organic\\\",62.7],[\\\"referral\\\",35.5],[\\\"social\\\",47.1]]\""
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "analytics"
+}

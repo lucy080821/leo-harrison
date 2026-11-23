@@ -1,0 +1,105 @@
+{
+  "title": {
+    "vi": "Các phương ngữ SQL: chuyển kỹ năng giữa các hệ thống",
+    "en": "SQL dialects: carrying your skills between systems"
+  },
+  "summary": {
+    "vi": "khác biệt về LIMIT, ngày giờ, chuỗi, NULL, kiểu dữ liệu và hàm cửa sổ",
+    "en": "differences in LIMIT, dates, strings, NULLs, data types and window functions"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "-- Cùng một việc, cú pháp khác nhau tuỳ hệ thống:\n-- Nối chuỗi:     SQLite/PostgreSQL: a || b      MySQL: CONCAT(a, b)      BigQuery: a || b hoặc CONCAT\n-- Thay NULL:     COALESCE(x, 0) (chuẩn)         MySQL cũng có IFNULL(x, 0)\n-- Giới hạn dòng: LIMIT n OFFSET m               SQL Server: TOP n / OFFSET ... FETCH\nSELECT name || ' (' || COALESCE(city, 'n/a') || ')' AS label\nFROM customers\nORDER BY name\nLIMIT 3;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết bằng cú pháp CHUẨN, chạy được ở hầu hết hệ thống: trả về name và COALESCE(email, 'no-email') AS contact cho khách hàng, sắp xếp theo name, lấy 3 dòng bỏ qua 2 dòng đầu (LIMIT … OFFSET …).",
+        "en": "Write in STANDARD syntax that runs on most systems: return name and COALESCE(email, 'no-email') AS contact for customers, sorted by name, take 3 rows skipping the first 2 (LIMIT … OFFSET …)."
+      },
+      "hint": {
+        "vi": "LIMIT 3 OFFSET 2.",
+        "en": "LIMIT 3 OFFSET 2."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name, email FROM customers;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name, COALESCE(email, 'no-email') AS contact\nFROM customers\nORDER BY name\nLIMIT 3 OFFSET 2;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 2 cột",
+            "en": "Has 2 columns"
+          },
+          "test": "columns.length===2"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[\\\"Chi Le\\\",\\\"chi@example.com\\\"],[\\\"Dung Pham\\\",\\\"dung@example.com\\\"],[\\\"Em Hoang\\\",\\\"no-email\\\"]]\""
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Phép chia số nguyên khác nhau theo hệ thống. Trả về 7/2 viết sao cho ra 3.5 trong mọi hệ thống: ép một vế thành số thực (7 * 1.0 / 2), cột ratio.",
+        "en": "Integer division differs across systems. Return 7/2 written so it yields 3.5 everywhere: force one side to be a real number (7 * 1.0 / 2), column ratio."
+      },
+      "hint": {
+        "vi": "7 * 1.0 / 2.",
+        "en": "7 * 1.0 / 2."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT 7 / 2 AS ratio;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT 7 * 1.0 / 2 AS ratio;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 1 cột",
+            "en": "Has 1 columns"
+          },
+          "test": "columns.length===1"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[3.5]]\""
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "all"
+}

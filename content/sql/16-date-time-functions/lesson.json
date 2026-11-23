@@ -1,0 +1,105 @@
+{
+  "title": {
+    "vi": "Ngày giờ: gom theo tháng, tuần và tính khoảng cách",
+    "en": "Dates and times: grouping by month, week and measuring gaps"
+  },
+  "summary": {
+    "vi": "strftime, date(), julianday, cộng trừ ngày, gom theo kỳ",
+    "en": "strftime, date(), julianday, date arithmetic, grouping by period"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "-- Doanh thu theo tháng (ngày lưu dạng văn bản 'YYYY-MM-DD')\nSELECT strftime('%Y-%m', purchase_date) AS month,\n       COUNT(*)    AS orders,\n       SUM(amount) AS revenue\nFROM purchases\nGROUP BY month\nORDER BY month\nLIMIT 6;\n\n-- Số ngày từ lúc đăng ký đến đơn đầu tiên\nSELECT u.id,\n       CAST(julianday(MIN(p.purchase_date)) - julianday(u.signup_date) AS INTEGER) AS days_to_first_purchase\nFROM users u JOIN purchases p ON p.user_id = u.id\nGROUP BY u.id\nORDER BY days_to_first_purchase, u.id\nLIMIT 5;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Đếm số đơn mua theo THÁNG (cột month dạng YYYY-MM và cột orders), chỉ các tháng của năm 2024, sắp xếp theo tháng.",
+        "en": "Count purchases per MONTH (a month column as YYYY-MM and an orders column), only months of 2024, sorted by month."
+      },
+      "hint": {
+        "vi": "strftime('%Y-%m', purchase_date) và WHERE purchase_date >= '2024-01-01'.",
+        "en": "strftime('%Y-%m', purchase_date) and WHERE purchase_date >= '2024-01-01'."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT purchase_date FROM purchases LIMIT 5;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT strftime('%Y-%m', purchase_date) AS month, COUNT(*) AS orders\nFROM purchases\nWHERE purchase_date >= '2024-01-01'\nGROUP BY month\nORDER BY month;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 2 cột",
+            "en": "Has 2 columns"
+          },
+          "test": "columns.length===2"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[\\\"2024-01\\\",6],[\\\"2024-02\\\",3],[\\\"2024-03\\\",3]]\""
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Tính SỐ NGÀY TRUNG BÌNH từ đăng ký đến lần mua đầu tiên theo từng channel (cột channel, avg_days làm tròn 1 chữ số), sắp xếp theo channel. Gợi ý: CTE tính khoảng cách từng người rồi AVG theo channel.",
+        "en": "Compute the AVERAGE DAYS from signup to first purchase per channel (columns channel, avg_days rounded to 1 digit), sorted by channel. Hint: a CTE computes each user's gap then AVG per channel."
+      },
+      "hint": {
+        "vi": "WITH fp AS (SELECT … MIN(purchase_date) …) SELECT channel, ROUND(AVG(d), 1) …",
+        "en": "WITH fp AS (SELECT … MIN(purchase_date) …) SELECT channel, ROUND(AVG(d), 1) …"
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT channel, COUNT(*) FROM users GROUP BY channel;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "WITH fp AS (\n  SELECT u.id, u.channel,\n         julianday(MIN(p.purchase_date)) - julianday(u.signup_date) AS d\n  FROM users u JOIN purchases p ON p.user_id = u.id\n  GROUP BY u.id\n)\nSELECT channel, ROUND(AVG(d), 1) AS avg_days\nFROM fp\nGROUP BY channel\nORDER BY channel;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 2 cột",
+            "en": "Has 2 columns"
+          },
+          "test": "columns.length===2"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[\\\"ads\\\",24],[\\\"organic\\\",29.3],[\\\"referral\\\",13.2],[\\\"social\\\",13.9]]\""
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "analytics"
+}

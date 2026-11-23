@@ -1,0 +1,105 @@
+{
+  "title": {
+    "vi": "Chuỗi liên tiếp: gaps and islands",
+    "en": "Streaks: gaps and islands"
+  },
+  "summary": {
+    "vi": "tìm chuỗi ngày hoạt động liên tục, khoảng trống, kỹ thuật ngày trừ ROW_NUMBER",
+    "en": "finding runs of consecutive active days, gaps, the date-minus-ROW_NUMBER technique"
+  },
+  "minutes": 35,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "WITH days AS (                              -- mỗi người chỉ một dòng cho mỗi ngày có hoạt động\n  SELECT DISTINCT user_id, event_date AS d FROM events WHERE user_id = 1\n),\nnumbered AS (\n  SELECT user_id, d,\n         julianday(d) - ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY d) AS grp\n  FROM days\n)\nSELECT user_id, MIN(d) AS streak_start, MAX(d) AS streak_end, COUNT(*) AS days\nFROM numbered\nGROUP BY user_id, grp\nORDER BY streak_start;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tìm chuỗi ngày hoạt động liên tiếp DÀI NHẤT của người dùng có id nhỏ hơn 40 (mỗi người một dòng trả về: user_id, longest_streak). Chỉ giữ người có chuỗi dài từ 2 ngày trở lên, sắp xếp theo longest_streak giảm dần rồi user_id; lấy 5 dòng.",
+        "en": "Find each user's LONGEST streak of consecutive active days for users with id below 40 (one row each: user_id, longest_streak). Keep only streaks of 2 days or more, sorted by longest_streak descending then user_id; take 5 rows."
+      },
+      "hint": {
+        "vi": "Hiệu số: julianday(d) − ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY d) giống nhau trong cùng một chuỗi.",
+        "en": "The difference julianday(d) − ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY d) is constant within a streak."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT user_id, COUNT(DISTINCT event_date) AS longest_streak FROM events WHERE user_id < 40 GROUP BY user_id LIMIT 5;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "WITH days AS (\n  SELECT DISTINCT user_id, event_date AS d FROM events WHERE user_id < 40\n),\nnumbered AS (\n  SELECT user_id, d,\n         julianday(d) - ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY d) AS grp\n  FROM days\n),\nstreaks AS (\n  SELECT user_id, COUNT(*) AS len FROM numbered GROUP BY user_id, grp\n)\nSELECT user_id, MAX(len) AS longest_streak\nFROM streaks\nGROUP BY user_id\nHAVING MAX(len) >= 2\nORDER BY longest_streak DESC, user_id\nLIMIT 5;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 2 cột",
+            "en": "Has 2 columns"
+          },
+          "test": "columns.length===2"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[6,3],[15,3],[21,3],[31,3],[3,2]]\""
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Với người dùng id = 155, liệt kê các KHOẢNG TRỐNG giữa hai ngày hoạt động liên tiếp: trả về prev_day, next_day và gap_days (số ngày giữa hai ngày), chỉ khi gap_days > 1, sắp xếp theo prev_day. Dùng LAG.",
+        "en": "For user id = 155 list the GAPS between consecutive active days: return prev_day, next_day and gap_days (days between), only when gap_days > 1, sorted by prev_day. Use LAG."
+      },
+      "hint": {
+        "vi": "LAG(d) OVER (ORDER BY d) rồi julianday(d) − julianday(prev).",
+        "en": "LAG(d) OVER (ORDER BY d) then julianday(d) − julianday(prev)."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT DISTINCT event_date FROM events WHERE user_id = 155 ORDER BY event_date;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "WITH days AS (\n  SELECT DISTINCT event_date AS d FROM events WHERE user_id = 155\n),\nl AS (\n  SELECT d AS next_day, LAG(d) OVER (ORDER BY d) AS prev_day FROM days\n)\nSELECT prev_day, next_day,\n       CAST(julianday(next_day) - julianday(prev_day) AS INTEGER) AS gap_days\nFROM l\nWHERE prev_day IS NOT NULL AND julianday(next_day) - julianday(prev_day) > 1\nORDER BY prev_day;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 3 cột",
+            "en": "Has 3 columns"
+          },
+          "test": "columns.length===3"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[\\\"2023-02-24\\\",\\\"2023-03-24\\\",28],[\\\"2023-03-24\\\",\\\"2023-03-26\\\",2],[\\\"2023-03-26\\\",\\\"2023-03-31\\\",5],[\\\"2023-04-01\\\",\\\"2023-04-11\\\",10],[\\\"2023-04-12\\\",\\\"2023-04-14\\\",2],[\\\"2023-04-15\\\",\\\"2023-04-26\\\",11],[\\\"2023-04-26\\\",\\\"2023-04-30\\\",4],[\\\"2023-04-30\\\",\\\"2023-05-05\\\",5],[\\\"2023-05-05\\\",\\\"2023-05-07\\\",2]]\""
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "analytics"
+}

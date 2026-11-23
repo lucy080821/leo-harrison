@@ -32,7 +32,7 @@ Build production (để deploy VPS): `npm run build && npm start`.
 
 - [x] Giai đoạn 1: khung app, dark mode, EN/VI, bài tập, tiến độ (lưu trên trình duyệt)
 - [x] Giai đoạn 2: HTML (13 bài), CSS (16 bài), JavaScript (22 bài) — song ngữ, 102 bài tập tự chấm
-- [x] Giai đoạn 3: Python cơ bản (16 bài), Python Data Analyst (14 bài), SQL (15 bài) — chạy bằng Pyodide và SQLite WASM
+- [x] Giai đoạn 3: Python cơ bản (16 bài), Python Data Analyst (14 bài), SQL (40 bài, đã mở rộng chuyên sâu: cửa sổ nâng cao, cohort, funnel, RFM, hiệu năng, giao dịch, lược đồ sao…) — chạy bằng Pyodide và SQLite WASM
 - [x] Giai đoạn 4: Toán cho ML (7 bài), Machine Learning (13), Deep Learning (10), AI hiện đại (8) — scikit-learn chạy trong trình duyệt, mạng nơ-ron tự cài bằng NumPy
 - [x] Giai đoạn 5: React (8 bài), Node.js (9), Next.js (6), React Native (5) — React/JSX chạy bằng Babel + esm.sh, Node chạy bằng bản mô phỏng trong trình duyệt
 - [x] Nền tảng lập trình (12 bài khái niệm cơ bản, có nguồn học thuật): `content/foundations`

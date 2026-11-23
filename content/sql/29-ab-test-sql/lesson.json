@@ -1,0 +1,105 @@
+{
+  "title": {
+    "vi": "Phân tích A/B test bằng SQL",
+    "en": "Analysing A/B tests with SQL"
+  },
+  "summary": {
+    "vi": "tỷ lệ chuyển đổi theo nhóm, hiệu, sai số chuẩn, điểm z và khoảng tin cậy",
+    "en": "conversion rate by group, the difference, standard error, z-score and confidence interval"
+  },
+  "minutes": 35,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "-- Giả lập A/B: nhóm A = id chẵn, nhóm B = id lẻ; 'chuyển đổi' = có ít nhất một đơn mua\nWITH g AS (\n  SELECT u.id,\n         CASE WHEN u.id % 2 = 0 THEN 'A' ELSE 'B' END AS grp,\n         CASE WHEN EXISTS (SELECT 1 FROM purchases p WHERE p.user_id = u.id) THEN 1 ELSE 0 END AS converted\n  FROM users u\n)\nSELECT grp, COUNT(*) AS n, SUM(converted) AS conv,\n       ROUND(1.0 * SUM(converted) / COUNT(*), 4) AS rate\nFROM g GROUP BY grp ORDER BY grp;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Theo nhóm A (id chẵn) và B (id lẻ), trả về grp, n (số người dùng), conv (số người có ít nhất một đơn mua) và rate = conv/n làm tròn 4 chữ số, sắp xếp theo grp.",
+        "en": "For group A (even id) and B (odd id), return grp, n (users), conv (users with at least one purchase) and rate = conv/n rounded to 4 digits, sorted by grp."
+      },
+      "hint": {
+        "vi": "CASE WHEN id % 2 = 0 THEN 'A' ELSE 'B' END và EXISTS đơn mua.",
+        "en": "CASE WHEN id % 2 = 0 THEN 'A' ELSE 'B' END and an EXISTS over purchases."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT id FROM users LIMIT 3;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "WITH g AS (\n  SELECT u.id,\n         CASE WHEN u.id % 2 = 0 THEN 'A' ELSE 'B' END AS grp,\n         CASE WHEN EXISTS (SELECT 1 FROM purchases p WHERE p.user_id = u.id) THEN 1 ELSE 0 END AS converted\n  FROM users u\n)\nSELECT grp, COUNT(*) AS n, SUM(converted) AS conv,\n       ROUND(1.0 * SUM(converted) / COUNT(*), 4) AS rate\nFROM g\nGROUP BY grp\nORDER BY grp;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 4 cột",
+            "en": "Has 4 columns"
+          },
+          "test": "columns.length===4"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[\\\"A\\\",100,43,0.43],[\\\"B\\\",100,42,0.42]]\""
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Với hai nhóm như trên, tính điểm z của kiểm định hai tỷ lệ: z = (pB − pA) / sqrt(p*(1−p)*(1/nA + 1/nB)) với p là tỷ lệ gộp. Trả về một giá trị z làm tròn 3 chữ số. (SQLite có hàm sqrt khi dùng bản mới; nếu thiếu, dùng POWER(x, 0.5).)",
+        "en": "For the same two groups, compute the two-proportion z-score: z = (pB − pA) / sqrt(p*(1−p)*(1/nA + 1/nB)) with p the pooled rate. Return one z value rounded to 3 digits. (Use POWER(x, 0.5) as the square root.)"
+      },
+      "hint": {
+        "vi": "Tính nA, cA, nB, cB trong CTE rồi z = … POWER(…, 0.5).",
+        "en": "Compute nA, cA, nB, cB in a CTE then z = … POWER(…, 0.5)."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT 0.0 AS z;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "WITH g AS (\n  SELECT u.id,\n         CASE WHEN u.id % 2 = 0 THEN 'A' ELSE 'B' END AS grp,\n         CASE WHEN EXISTS (SELECT 1 FROM purchases p WHERE p.user_id = u.id) THEN 1 ELSE 0 END AS converted\n  FROM users u\n),\ns AS (\n  SELECT SUM(grp = 'A') AS na, SUM(CASE WHEN grp = 'A' THEN converted END) AS ca,\n         SUM(grp = 'B') AS nb, SUM(CASE WHEN grp = 'B' THEN converted END) AS cb\n  FROM g\n),\nr AS (\n  SELECT 1.0 * ca / na AS pa, 1.0 * cb / nb AS pb, 1.0 * (ca + cb) / (na + nb) AS p, na, nb FROM s\n)\nSELECT ROUND((pb - pa) / POWER(p * (1 - p) * (1.0 / na + 1.0 / nb), 0.5), 3) AS z\nFROM r;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 1 cột",
+            "en": "Has 1 columns"
+          },
+          "test": "columns.length===1"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[-0.143]]\""
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "analytics"
+}

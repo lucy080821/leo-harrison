@@ -1,0 +1,64 @@
+{
+  "title": {
+    "vi": "Chuẩn hoá cơ sở dữ liệu: 1NF, 2NF, 3NF",
+    "en": "Database normalisation: 1NF, 2NF, 3NF"
+  },
+  "summary": {
+    "vi": "phụ thuộc hàm, dị thường cập nhật, tách bảng, khi nào phi chuẩn hoá",
+    "en": "functional dependencies, update anomalies, splitting tables, when to denormalise"
+  },
+  "minutes": 35,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "-- Bảng \"phẳng\" xấu: tên và thành phố khách lặp ở mỗi dòng đơn hàng\nCREATE TABLE orders_flat (\n  order_id INTEGER, customer_name TEXT, customer_city TEXT, product TEXT, qty INTEGER\n);\n-- Thiết kế đã chuẩn hoá: mỗi sự thật chỉ lưu MỘT lần\nCREATE TABLE customer_dim (customer_id INTEGER PRIMARY KEY, name TEXT NOT NULL, city TEXT);\nCREATE TABLE order_fact (order_id INTEGER PRIMARY KEY, customer_id INTEGER REFERENCES customer_dim(customer_id));\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Chuẩn hoá bảng phẳng bên dưới: tạo bảng suppliers(id INTEGER PRIMARY KEY, name TEXT NOT NULL, city TEXT) và bảng parts(id INTEGER PRIMARY KEY, name TEXT NOT NULL, supplier_id INTEGER REFERENCES suppliers(id)).",
+        "en": "Normalise the flat table below: create suppliers(id INTEGER PRIMARY KEY, name TEXT NOT NULL, city TEXT) and parts(id INTEGER PRIMARY KEY, name TEXT NOT NULL, supplier_id INTEGER REFERENCES suppliers(id))."
+      },
+      "hint": {
+        "vi": "Mỗi nhà cung cấp chỉ lưu một lần trong suppliers; parts tham chiếu bằng supplier_id.",
+        "en": "Each supplier is stored once in suppliers; parts references it by supplier_id."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "-- Bảng phẳng cũ: parts_flat(part_name, supplier_name, supplier_city)\n-- Hãy tạo suppliers và parts\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "CREATE TABLE suppliers (id INTEGER PRIMARY KEY, name TEXT NOT NULL, city TEXT);\nCREATE TABLE parts (id INTEGER PRIMARY KEY, name TEXT NOT NULL, supplier_id INTEGER REFERENCES suppliers(id));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có hai bảng suppliers và parts",
+            "en": "Tables suppliers and parts exist"
+          },
+          "test": "q(\"SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name IN ('suppliers','parts')\")[0][0]===2"
+        },
+        {
+          "label": {
+            "vi": "parts có cột supplier_id là khoá ngoại",
+            "en": "parts.supplier_id is a foreign key"
+          },
+          "test": "q(\"SELECT COUNT(*) FROM pragma_foreign_key_list('parts') WHERE \\\"table\\\"='suppliers'\")[0][0]===1"
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "all"
+}

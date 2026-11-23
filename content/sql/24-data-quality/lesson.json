@@ -1,0 +1,105 @@
+{
+  "title": {
+    "vi": "Kiểm tra chất lượng dữ liệu bằng SQL",
+    "en": "Checking data quality with SQL"
+  },
+  "summary": {
+    "vi": "đếm NULL, tìm bản ghi trùng, mồ côi, ngoài phạm vi, COALESCE/NULLIF",
+    "en": "counting NULLs, finding duplicates, orphans, out-of-range values, COALESCE/NULLIF"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "-- 1) Tỷ lệ NULL của từng cột\nSELECT COUNT(*) AS total,\n       SUM(CASE WHEN country IS NULL THEN 1 ELSE 0 END) AS null_country\nFROM users;\n\n-- 2) Bản ghi mồ côi: sự kiện của người dùng không tồn tại\nSELECT COUNT(*) AS orphan_events\nFROM events e LEFT JOIN users u ON u.id = e.user_id\nWHERE u.id IS NULL;\n\n-- 3) Giá trị bất thường: đơn mua có ngày TRƯỚC ngày đăng ký\nSELECT COUNT(*) AS bad_dates\nFROM purchases p JOIN users u ON u.id = p.user_id\nWHERE p.purchase_date < u.signup_date;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tìm người dùng có NHIỀU HƠN 1 đơn mua trong cùng một ngày: trả về user_id, purchase_date, số đơn (cột n), chỉ các nhóm có n > 1; sắp xếp theo user_id rồi purchase_date.",
+        "en": "Find users with MORE THAN 1 purchase on the same day: return user_id, purchase_date and the number of purchases (column n), only groups with n > 1; sorted by user_id then purchase_date."
+      },
+      "hint": {
+        "vi": "GROUP BY user_id, purchase_date HAVING COUNT(*) > 1.",
+        "en": "GROUP BY user_id, purchase_date HAVING COUNT(*) > 1."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT user_id, purchase_date FROM purchases LIMIT 5;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT user_id, purchase_date, COUNT(*) AS n\nFROM purchases\nGROUP BY user_id, purchase_date\nHAVING COUNT(*) > 1\nORDER BY user_id, purchase_date;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 3 cột",
+            "en": "Has 3 columns"
+          },
+          "test": "columns.length===3"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[6,\\\"2024-03-01\\\",2],[31,\\\"2023-03-28\\\",2],[65,\\\"2023-09-09\\\",2],[104,\\\"2023-06-14\\\",2],[151,\\\"2023-06-20\\\",2]]\""
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Đếm số đơn mua có ngày TRƯỚC ngày đăng ký của chính người đó (dữ liệu phi lý). Trả về một giá trị, cột bad_dates.",
+        "en": "Count purchases dated BEFORE the same user's signup date (absurd data). Return one value, column bad_dates."
+      },
+      "hint": {
+        "vi": "JOIN users u ON u.id = p.user_id WHERE p.purchase_date < u.signup_date.",
+        "en": "JOIN users u ON u.id = p.user_id WHERE p.purchase_date < u.signup_date."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT COUNT(*) AS bad_dates FROM purchases;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT COUNT(*) AS bad_dates\nFROM purchases p\nJOIN users u ON u.id = p.user_id\nWHERE p.purchase_date < u.signup_date;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 1 cột",
+            "en": "Has 1 columns"
+          },
+          "test": "columns.length===1"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[3]]\""
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "analytics"
+}

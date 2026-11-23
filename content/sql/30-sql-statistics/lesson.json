@@ -1,0 +1,105 @@
+{
+  "title": {
+    "vi": "Thống kê mô tả trong SQL: trung vị, phân vị, độ lệch chuẩn",
+    "en": "Descriptive statistics in SQL: median, percentiles, standard deviation"
+  },
+  "summary": {
+    "vi": "AVG, trung vị bằng ROW_NUMBER, phân vị, phương sai, tương quan",
+    "en": "AVG, the median via ROW_NUMBER, percentiles, variance, correlation"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "WITH ranked AS (\n  SELECT amount,\n         ROW_NUMBER() OVER (ORDER BY amount) AS rn,\n         COUNT(*)     OVER ()                 AS cnt\n  FROM purchases\n)\nSELECT\n  ROUND(AVG(amount), 2) AS mean,\n  -- trung vị: giá trị giữa (hoặc trung bình hai giá trị giữa)\n  (SELECT AVG(amount) FROM ranked WHERE rn IN ((cnt + 1) / 2, (cnt + 2) / 2) LIMIT 1) AS median\nFROM purchases;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tính TRUNG VỊ của cột amount trong purchases bằng ROW_NUMBER và COUNT() OVER (): trung bình của giá trị hoặc hai giá trị ở giữa. Trả về một cột median.",
+        "en": "Compute the MEDIAN of amount in purchases with ROW_NUMBER and COUNT() OVER (): the middle value or the mean of the two middle values. Return one column median."
+      },
+      "hint": {
+        "vi": "WHERE rn IN ((cnt + 1) / 2, (cnt + 2) / 2).",
+        "en": "WHERE rn IN ((cnt + 1) / 2, (cnt + 2) / 2)."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT AVG(amount) AS median FROM purchases;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "WITH r AS (\n  SELECT amount,\n         ROW_NUMBER() OVER (ORDER BY amount) AS rn,\n         COUNT(*) OVER () AS cnt\n  FROM purchases\n)\nSELECT AVG(amount) AS median\nFROM r\nWHERE rn IN ((cnt + 1) / 2, (cnt + 2) / 2);\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 1 cột",
+            "en": "Has 1 columns"
+          },
+          "test": "columns.length===1"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[75]]\""
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Tính độ lệch chuẩn MẪU của amount (chia n − 1) bằng công thức √[(Σx² − (Σx)²/n)/(n − 1)], làm tròn 2 chữ số, một cột sd. Dùng POWER(…, 0.5).",
+        "en": "Compute the SAMPLE standard deviation of amount (divide by n − 1) with √[(Σx² − (Σx)²/n)/(n − 1)], rounded to 2 digits, one column sd. Use POWER(…, 0.5)."
+      },
+      "hint": {
+        "vi": "SUM(amount*amount), SUM(amount), COUNT(*).",
+        "en": "SUM(amount*amount), SUM(amount), COUNT(*)."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT 0 AS sd;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT ROUND(POWER((SUM(1.0 * amount * amount) - SUM(1.0 * amount) * SUM(1.0 * amount) / COUNT(*)) / (COUNT(*) - 1), 0.5), 2) AS sd\nFROM purchases;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 1 cột",
+            "en": "Has 1 columns"
+          },
+          "test": "columns.length===1"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[95.59]]\""
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "analytics"
+}

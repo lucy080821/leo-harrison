@@ -1,0 +1,105 @@
+{
+  "title": {
+    "vi": "Hàm chuỗi: làm sạch và tách văn bản",
+    "en": "String functions: cleaning and splitting text"
+  },
+  "summary": {
+    "vi": "UPPER, LENGTH, SUBSTR, INSTR, REPLACE, TRIM, nối chuỗi, LIKE",
+    "en": "UPPER, LENGTH, SUBSTR, INSTR, REPLACE, TRIM, concatenation, LIKE"
+  },
+  "minutes": 20,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "SELECT\n  name,\n  UPPER(name)                                  AS upper_name,\n  LENGTH(name)                                 AS len,\n  SUBSTR(email, INSTR(email, '@') + 1)         AS email_domain,\n  REPLACE(city, ' ', '_')                      AS city_slug,\n  name || ' <' || COALESCE(email, 'n/a') || '>' AS label\nFROM customers\nORDER BY name;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Với bảng customers có email, trả về name và domain (phần sau dấu @), sắp xếp theo name. Bỏ qua khách không có email.",
+        "en": "From customers that have an email, return name and domain (the part after @), sorted by name. Skip customers without an email."
+      },
+      "hint": {
+        "vi": "SUBSTR(email, INSTR(email, '@') + 1) và WHERE email IS NOT NULL.",
+        "en": "SUBSTR(email, INSTR(email, '@') + 1) and WHERE email IS NOT NULL."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name, email FROM customers;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name, SUBSTR(email, INSTR(email, '@') + 1) AS domain\nFROM customers\nWHERE email IS NOT NULL\nORDER BY name;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 2 cột",
+            "en": "Has 2 columns"
+          },
+          "test": "columns.length===2"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[\\\"An Nguyen\\\",\\\"example.com\\\"],[\\\"Binh Tran\\\",\\\"example.com\\\"],[\\\"Chi Le\\\",\\\"example.com\\\"],[\\\"Dung Pham\\\",\\\"example.com\\\"],[\\\"Giang Do\\\",\\\"example.com\\\"],[\\\"Hoa Bui\\\",\\\"example.com\\\"],[\\\"Phuong Vu\\\",\\\"example.com\\\"]]\""
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Từ bảng products, trả về UPPER(name) và LENGTH(name) cho các sản phẩm có tên dài hơn 5 ký tự, sắp xếp theo name.",
+        "en": "From products, return UPPER(name) and LENGTH(name) for products whose name is longer than 5 characters, sorted by name."
+      },
+      "hint": {
+        "vi": "WHERE LENGTH(name) > 5 ORDER BY name.",
+        "en": "WHERE LENGTH(name) > 5 ORDER BY name."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name FROM products;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT UPPER(name), LENGTH(name)\nFROM products\nWHERE LENGTH(name) > 5\nORDER BY name;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 2 cột",
+            "en": "Has 2 columns"
+          },
+          "test": "columns.length===2"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[\\\"BACKPACK\\\",8],[\\\"HEADPHONES\\\",10],[\\\"LAPTOP\\\",6],[\\\"MONITOR\\\",7],[\\\"NOTEBOOK\\\",8]]\""
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "all"
+}

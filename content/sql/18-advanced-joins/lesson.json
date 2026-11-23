@@ -1,0 +1,105 @@
+{
+  "title": {
+    "vi": "JOIN nâng cao: anti-join, semi-join, cross join và self-join",
+    "en": "Advanced joins: anti-join, semi-join, cross join and self-join"
+  },
+  "summary": {
+    "vi": "LEFT JOIN … IS NULL, EXISTS, CROSS JOIN, tự nối bảng, nối theo khoảng",
+    "en": "LEFT JOIN … IS NULL, EXISTS, CROSS JOIN, self-joins, range joins"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "-- Anti-join: sản phẩm chưa bán lần nào\nSELECT p.name\nFROM products p\nLEFT JOIN order_items oi ON oi.product_id = p.id\nWHERE oi.id IS NULL\nORDER BY p.name;\n\n-- Self-join: cặp khách hàng ở CÙNG thành phố (a.id < b.id để không lặp)\nSELECT a.name, b.name, a.city\nFROM customers a\nJOIN customers b ON a.city = b.city AND a.id < b.id\nORDER BY a.city, a.name;\n\n-- Cross join: mọi tổ hợp thành phố x loại (dùng để dựng \"khung\" đủ dòng)\nSELECT c.city, g.category\nFROM (SELECT DISTINCT city FROM customers) c\nCROSS JOIN (SELECT DISTINCT category FROM products) g\nLIMIT 5;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tìm cặp khách hàng ở cùng một thành phố bằng self-join (a.id < b.id): trả về tên thứ nhất, tên thứ hai, thành phố; sắp xếp theo thành phố rồi tên thứ nhất, tên thứ hai.",
+        "en": "Find pairs of customers in the same city with a self-join (a.id < b.id): return the first name, the second name and the city; sort by city then first name then second name."
+      },
+      "hint": {
+        "vi": "JOIN customers b ON a.city = b.city AND a.id < b.id.",
+        "en": "JOIN customers b ON a.city = b.city AND a.id < b.id."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name, city FROM customers ORDER BY city;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT a.name, b.name, a.city\nFROM customers a\nJOIN customers b ON a.city = b.city AND a.id < b.id\nORDER BY a.city, a.name, b.name;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 3 cột",
+            "en": "Has 3 columns"
+          },
+          "test": "columns.length===3"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[\\\"An Nguyen\\\",\\\"Dung Pham\\\",\\\"Hanoi\\\"],[\\\"An Nguyen\\\",\\\"Giang Do\\\",\\\"Hanoi\\\"],[\\\"Dung Pham\\\",\\\"Giang Do\\\",\\\"Hanoi\\\"],[\\\"Binh Tran\\\",\\\"Phuong Vu\\\",\\\"Ho Chi Minh\\\"]]\""
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Anti-join: liệt kê tên khách hàng KHÔNG có đơn nào (dùng LEFT JOIN orders … WHERE o.id IS NULL), sắp xếp theo tên.",
+        "en": "Anti-join: list the names of customers with NO orders (use LEFT JOIN orders … WHERE o.id IS NULL), sorted by name."
+      },
+      "hint": {
+        "vi": "LEFT JOIN orders o ON o.customer_id = c.id.",
+        "en": "LEFT JOIN orders o ON o.customer_id = c.id."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name FROM customers;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT c.name\nFROM customers c\nLEFT JOIN orders o ON o.customer_id = c.id\nWHERE o.id IS NULL\nORDER BY c.name;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 1 cột",
+            "en": "Has 1 columns"
+          },
+          "test": "columns.length===1"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[\\\"Em Hoang\\\"],[\\\"Hoa Bui\\\"]]\""
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "all"
+}

@@ -1,0 +1,98 @@
+{
+  "title": {
+    "vi": "View, trigger và ràng buộc ở mức CSDL",
+    "en": "Views, triggers and database-level rules"
+  },
+  "summary": {
+    "vi": "CREATE VIEW, CREATE TRIGGER, ràng buộc CHECK, kiểm toán thay đổi",
+    "en": "CREATE VIEW, CREATE TRIGGER, CHECK constraints, audit logging"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "-- VIEW: câu truy vấn được đặt tên, dùng lại như bảng\nCREATE VIEW v_customer_revenue AS\nSELECT c.id, c.name, COUNT(DISTINCT o.id) AS orders\nFROM customers c LEFT JOIN orders o ON o.customer_id = c.id\nGROUP BY c.id;\n\n-- TRIGGER: ghi nhật ký mỗi khi giá sản phẩm thay đổi\nCREATE TABLE price_log (product_id INTEGER, old_price INTEGER, new_price INTEGER);\nCREATE TRIGGER trg_price_change AFTER UPDATE OF price ON products\nBEGIN\n  INSERT INTO price_log VALUES (OLD.id, OLD.price, NEW.price);\nEND;\n\nUPDATE products SET price = price + 1000 WHERE id = 6;\nSELECT * FROM price_log;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tạo view tên v_expensive là các sản phẩm (id, name, price) có price >= 4000000.",
+        "en": "Create a view named v_expensive holding the products (id, name, price) with price >= 4000000."
+      },
+      "hint": {
+        "vi": "CREATE VIEW ten AS SELECT … WHERE …;",
+        "en": "CREATE VIEW name AS SELECT … WHERE …;"
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "-- tạo view v_expensive\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "CREATE VIEW v_expensive AS\nSELECT id, name, price FROM products WHERE price >= 4000000;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "v_expensive có 3 sản phẩm",
+            "en": "v_expensive has 3 products"
+          },
+          "test": "q('SELECT COUNT(*) FROM v_expensive')[0][0]===3"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Tạo bảng stock_log(product_id, old_stock, new_stock) và trigger AFTER UPDATE OF stock ON products tự ghi dòng vào stock_log. Sau đó chạy UPDATE giảm stock sản phẩm 1 đi 2. stock_log phải có đúng 1 dòng.",
+        "en": "Create a table stock_log(product_id, old_stock, new_stock) and a trigger AFTER UPDATE OF stock ON products that writes a row to stock_log. Then run an UPDATE reducing product 1's stock by 2. stock_log must have exactly 1 row."
+      },
+      "hint": {
+        "vi": "Trong trigger, OLD.stock và NEW.stock là giá trị trước/sau.",
+        "en": "Inside the trigger, OLD.stock and NEW.stock are the before/after values."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "UPDATE products SET stock = stock - 2 WHERE id = 1;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "CREATE TABLE stock_log (product_id INTEGER, old_stock INTEGER, new_stock INTEGER);\nCREATE TRIGGER trg_stock AFTER UPDATE OF stock ON products\nBEGIN\n  INSERT INTO stock_log VALUES (OLD.id, OLD.stock, NEW.stock);\nEND;\nUPDATE products SET stock = stock - 2 WHERE id = 1;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "stock_log có đúng 1 dòng",
+            "en": "stock_log has exactly 1 row"
+          },
+          "test": "q('SELECT COUNT(*) FROM stock_log')[0][0]===1"
+        },
+        {
+          "label": {
+            "vi": "Ghi đúng giá trị cũ/mới",
+            "en": "Records the old/new values"
+          },
+          "test": "(function(){var r=q('SELECT old_stock,new_stock FROM stock_log')[0];return r[0]===12&&r[1]===10})()"
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "all"
+}

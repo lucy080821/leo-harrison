@@ -1,0 +1,105 @@
+{
+  "title": {
+    "vi": "CTE đệ quy: cây phân cấp và dãy sinh ra",
+    "en": "Recursive CTEs: hierarchies and generated series"
+  },
+  "summary": {
+    "vi": "WITH RECURSIVE, cây quản lý, sinh dãy ngày, điều kiện dừng",
+    "en": "WITH RECURSIVE, org charts, date series, stopping conditions"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "-- Dãy số 1..5 sinh ra từ không có gì\nWITH RECURSIVE n(i) AS (\n  SELECT 1\n  UNION ALL\n  SELECT i + 1 FROM n WHERE i < 5\n)\nSELECT i FROM n;\n\n-- Cây quản lý: cấp bậc của mỗi nhân viên (0 = không có quản lý)\nWITH RECURSIVE tree(id, name, level) AS (\n  SELECT id, name, 0 FROM employees WHERE manager_id IS NULL\n  UNION ALL\n  SELECT e.id, e.name, t.level + 1\n  FROM employees e JOIN tree t ON e.manager_id = t.id\n)\nSELECT name, level FROM tree ORDER BY level, name;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Dùng CTE đệ quy sinh các số từ 1 đến 10 rồi trả về TỔNG của chúng (một cột một dòng).",
+        "en": "Use a recursive CTE to generate the numbers 1 to 10 and return their SUM (one column, one row)."
+      },
+      "hint": {
+        "vi": "WITH RECURSIVE n(i) AS (SELECT 1 UNION ALL SELECT i + 1 FROM n WHERE i < 10) SELECT SUM(i) FROM n.",
+        "en": "WITH RECURSIVE n(i) AS (SELECT 1 UNION ALL SELECT i + 1 FROM n WHERE i < 10) SELECT SUM(i) FROM n."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT 0;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "WITH RECURSIVE n(i) AS (\n  SELECT 1\n  UNION ALL\n  SELECT i + 1 FROM n WHERE i < 10\n)\nSELECT SUM(i) FROM n;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 1 cột",
+            "en": "Has 1 columns"
+          },
+          "test": "columns.length===1"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[55]]\""
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Dùng cây quản lý đệ quy, trả về name và level của mọi nhân viên (người không có quản lý là level 0), sắp xếp theo level rồi name.",
+        "en": "Using the recursive management tree, return name and level of every employee (a person with no manager is level 0), sorted by level then name."
+      },
+      "hint": {
+        "vi": "Phần neo: manager_id IS NULL; phần đệ quy nối employees với tree theo manager_id = t.id.",
+        "en": "Anchor: manager_id IS NULL; recursive part joins employees to tree on manager_id = t.id."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name, 0 AS level FROM employees;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "WITH RECURSIVE tree(id, name, level) AS (\n  SELECT id, name, 0 FROM employees WHERE manager_id IS NULL\n  UNION ALL\n  SELECT e.id, e.name, t.level + 1\n  FROM employees e JOIN tree t ON e.manager_id = t.id\n)\nSELECT name, level FROM tree ORDER BY level, name;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 2 cột",
+            "en": "Has 2 columns"
+          },
+          "test": "columns.length===2"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[\\\"Lan\\\",0],[\\\"Minh\\\",1],[\\\"Phong\\\",1],[\\\"Thao\\\",1],[\\\"Viet\\\",1],[\\\"Nam\\\",2],[\\\"Oanh\\\",2],[\\\"Quynh\\\",2],[\\\"Son\\\",2],[\\\"Uyen\\\",2]]\""
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "all"
+}

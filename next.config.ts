@@ -17,6 +17,7 @@ const nextConfig: NextConfig = {
       { source: "/:lang(vi|en)/learning/statistics/14-integrals", destination: "/:lang/learning/statistics/32-integrals", permanent: true },
       { source: "/:lang(vi|en)/learning/statistics/15-vectors-matrices", destination: "/:lang/learning/statistics/36-vectors-matrices", permanent: true },
       { source: "/:lang(vi|en)/learning/statistics/16-eigen-pca", destination: "/:lang/learning/statistics/38-eigen-pca", permanent: true },
+      { source: "/:lang(vi|en)/learning/programming/courses/sql/15-project-sales-analysis", destination: "/:lang/learning/programming/courses/sql/40-project-sales-analysis", permanent: true },
       { source: "/:lang(vi|en)/learning/programming/courses/prob-stats", destination: "/:lang/learning/statistics", permanent: true },
       { source: "/:lang(vi|en)/learning/programming/courses/prob-stats/:lesson", destination: "/:lang/learning/statistics/:lesson", permanent: true },
     ];

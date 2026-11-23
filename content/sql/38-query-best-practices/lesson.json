@@ -1,0 +1,105 @@
+{
+  "title": {
+    "vi": "Thực hành tốt khi viết SQL chuyên nghiệp",
+    "en": "Professional SQL best practices"
+  },
+  "summary": {
+    "vi": "cấu trúc CTE, đặt tên, kiểm thử kết quả, bẫy thường gặp (nhân dòng, NULL, chia nguyên)",
+    "en": "CTE structure, naming, testing results, common traps (fan-out, NULLs, integer division)"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "-- Cấu trúc tốt: mỗi CTE làm MỘT việc, tên nói rõ ý nghĩa, mỗi bước kiểm tra được\nWITH completed_orders AS (\n  SELECT id, customer_id FROM orders WHERE status = 'completed'\n),\norder_revenue AS (\n  SELECT o.id AS order_id, o.customer_id, SUM(oi.quantity * p.price) AS revenue\n  FROM completed_orders o\n  JOIN order_items oi ON oi.order_id = o.id\n  JOIN products p     ON p.id = oi.product_id\n  GROUP BY o.id, o.customer_id\n)\nSELECT c.name, COUNT(*) AS orders, SUM(r.revenue) AS revenue\nFROM order_revenue r JOIN customers c ON c.id = r.customer_id\nGROUP BY c.id\nORDER BY revenue DESC\nLIMIT 3;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Bẫy NHÂN DÒNG (fan-out): đếm số đơn của mỗi khách một cách ĐÚNG, dù đã nối với order_items (mỗi đơn có nhiều dòng hàng). Trả về name và orders = COUNT(DISTINCT o.id), chỉ khách có đơn, sắp xếp theo orders giảm dần rồi name.",
+        "en": "The FAN-OUT trap: count each customer's orders CORRECTLY even after joining order_items (each order has several lines). Return name and orders = COUNT(DISTINCT o.id), only customers with orders, sorted by orders descending then name."
+      },
+      "hint": {
+        "vi": "COUNT(DISTINCT o.id) thay vì COUNT(*).",
+        "en": "COUNT(DISTINCT o.id) instead of COUNT(*)."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT c.name, COUNT(*) AS orders FROM customers c JOIN orders o ON o.customer_id = c.id JOIN order_items oi ON oi.order_id = o.id GROUP BY c.id;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT c.name, COUNT(DISTINCT o.id) AS orders\nFROM customers c\nJOIN orders o ON o.customer_id = c.id\nJOIN order_items oi ON oi.order_id = o.id\nGROUP BY c.id\nORDER BY orders DESC, c.name;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 2 cột",
+            "en": "Has 2 columns"
+          },
+          "test": "columns.length===2"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[\\\"An Nguyen\\\",3],[\\\"Binh Tran\\\",3],[\\\"Chi Le\\\",2],[\\\"Dung Pham\\\",2],[\\\"Giang Do\\\",2],[\\\"Phuong Vu\\\",2]]\""
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Bẫy NULL: đếm số khách KHÔNG có email theo hai cách đúng: cột a = COUNT(*) - COUNT(email) và cột b = SUM(CASE WHEN email IS NULL THEN 1 ELSE 0 END). Hai giá trị phải bằng nhau.",
+        "en": "The NULL trap: count customers WITHOUT an email in two correct ways: column a = COUNT(*) - COUNT(email) and column b = SUM(CASE WHEN email IS NULL THEN 1 ELSE 0 END). Both must be equal."
+      },
+      "hint": {
+        "vi": "COUNT(cột) bỏ qua NULL còn COUNT(*) thì không.",
+        "en": "COUNT(column) skips NULLs while COUNT(*) does not."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT COUNT(*) AS a, COUNT(*) AS b FROM customers;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT COUNT(*) - COUNT(email) AS a,\n       SUM(CASE WHEN email IS NULL THEN 1 ELSE 0 END) AS b\nFROM customers;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 2 cột",
+            "en": "Has 2 columns"
+          },
+          "test": "columns.length===2"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[1,1]]\""
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "all"
+}

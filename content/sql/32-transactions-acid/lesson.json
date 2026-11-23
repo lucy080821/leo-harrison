@@ -1,0 +1,98 @@
+{
+  "title": {
+    "vi": "Giao dịch và tính chất ACID",
+    "en": "Transactions and the ACID properties"
+  },
+  "summary": {
+    "vi": "BEGIN, COMMIT, ROLLBACK, SAVEPOINT, nguyên tử, nhất quán, cô lập, bền vững",
+    "en": "BEGIN, COMMIT, ROLLBACK, SAVEPOINT, atomicity, consistency, isolation, durability"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "-- Chuyển tồn kho từ sản phẩm 1 sang 2: hoặc cả hai bước thành công, hoặc không bước nào\nBEGIN;\nUPDATE products SET stock = stock - 5 WHERE id = 1;\nUPDATE products SET stock = stock + 5 WHERE id = 2;\nCOMMIT;\n\nSELECT id, stock FROM products WHERE id IN (1, 2) ORDER BY id;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Bắt đầu một giao dịch, giảm stock của sản phẩm id = 1 đi 5, rồi ROLLBACK để huỷ. Kết quả: stock của sản phẩm 1 phải còn nguyên (12).",
+        "en": "Start a transaction, reduce the stock of product id = 1 by 5, then ROLLBACK to cancel. Result: product 1's stock must stay unchanged (12)."
+      },
+      "hint": {
+        "vi": "BEGIN; UPDATE …; ROLLBACK;",
+        "en": "BEGIN; UPDATE …; ROLLBACK;"
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "UPDATE products SET stock = stock - 5 WHERE id = 1;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "BEGIN;\nUPDATE products SET stock = stock - 5 WHERE id = 1;\nROLLBACK;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "stock của sản phẩm 1 vẫn là 12",
+            "en": "product 1's stock is still 12"
+          },
+          "test": "q('SELECT stock FROM products WHERE id = 1')[0][0]===12"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Chuyển tồn kho: trong một giao dịch, giảm stock sản phẩm 1 đi 5 và tăng sản phẩm 2 thêm 5, rồi COMMIT. Kết quả: sản phẩm 1 còn 7, sản phẩm 2 có 35.",
+        "en": "Transfer stock: in one transaction, reduce product 1's stock by 5 and increase product 2's by 5, then COMMIT. Result: product 1 has 7, product 2 has 35."
+      },
+      "hint": {
+        "vi": "BEGIN; hai UPDATE; COMMIT;",
+        "en": "BEGIN; two UPDATEs; COMMIT;"
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "UPDATE products SET stock = stock - 5 WHERE id = 1;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "BEGIN;\nUPDATE products SET stock = stock - 5 WHERE id = 1;\nUPDATE products SET stock = stock + 5 WHERE id = 2;\nCOMMIT;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "sản phẩm 1 còn 7",
+            "en": "product 1 has 7"
+          },
+          "test": "q('SELECT stock FROM products WHERE id = 1')[0][0]===7"
+        },
+        {
+          "label": {
+            "vi": "sản phẩm 2 có 35",
+            "en": "product 2 has 35"
+          },
+          "test": "q('SELECT stock FROM products WHERE id = 2')[0][0]===35"
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "all"
+}

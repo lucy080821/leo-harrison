@@ -1,0 +1,105 @@
+{
+  "title": {
+    "vi": "Hàm cửa sổ (2): xếp hạng, top-N mỗi nhóm, khử trùng và phân vị",
+    "en": "Window functions (2): ranking, top-N per group, de-duplication and quantiles"
+  },
+  "summary": {
+    "vi": "ROW_NUMBER, RANK, DENSE_RANK, NTILE, PERCENT_RANK, mẫu top-N",
+    "en": "ROW_NUMBER, RANK, DENSE_RANK, NTILE, PERCENT_RANK, the top-N pattern"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "-- Top 2 lương cao nhất MỖI phòng ban\nSELECT name, department_id, salary\nFROM (\n  SELECT name, department_id, salary,\n         ROW_NUMBER() OVER (PARTITION BY department_id ORDER BY salary DESC) AS rn\n  FROM employees\n  WHERE department_id IS NOT NULL\n)\nWHERE rn <= 2\nORDER BY department_id, rn;\n\n-- Chia lương thành 4 nhóm phân vị\nSELECT name, salary, NTILE(4) OVER (ORDER BY salary DESC) AS quartile FROM employees ORDER BY salary DESC;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Với mỗi phòng ban (bỏ người chưa có phòng), lấy 2 nhân viên lương cao nhất: trả về name, department_id, salary, sắp xếp theo department_id rồi salary giảm dần. Dùng ROW_NUMBER trong truy vấn con.",
+        "en": "For each department (skip people without one), take the 2 highest-paid employees: return name, department_id, salary, sorted by department_id then salary descending. Use ROW_NUMBER in a subquery."
+      },
+      "hint": {
+        "vi": "ROW_NUMBER() OVER (PARTITION BY department_id ORDER BY salary DESC) AS rn rồi WHERE rn <= 2.",
+        "en": "ROW_NUMBER() OVER (PARTITION BY department_id ORDER BY salary DESC) AS rn then WHERE rn <= 2."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name, department_id, salary FROM employees ORDER BY department_id, salary DESC;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name, department_id, salary\nFROM (\n  SELECT name, department_id, salary,\n         ROW_NUMBER() OVER (PARTITION BY department_id ORDER BY salary DESC) AS rn\n  FROM employees\n  WHERE department_id IS NOT NULL\n)\nWHERE rn <= 2\nORDER BY department_id, salary DESC;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 3 cột",
+            "en": "Has 3 columns"
+          },
+          "test": "columns.length===3"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[\\\"Lan\\\",1,4000],[\\\"Minh\\\",1,3200],[\\\"Phong\\\",2,2500],[\\\"Quynh\\\",2,2300],[\\\"Thao\\\",3,2100],[\\\"Uyen\\\",3,2000]]\""
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Dùng NTILE(2) chia nhân viên theo lương giảm dần thành 2 nửa: trả về name và nửa (cột half), sắp xếp theo lương giảm dần rồi name.",
+        "en": "Use NTILE(2) to split employees by salary descending into 2 halves: return name and the half (column half), sorted by salary descending then name."
+      },
+      "hint": {
+        "vi": "NTILE(2) OVER (ORDER BY salary DESC) AS half.",
+        "en": "NTILE(2) OVER (ORDER BY salary DESC) AS half."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name FROM employees ORDER BY salary DESC;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name, NTILE(2) OVER (ORDER BY salary DESC) AS half\nFROM employees\nORDER BY salary DESC, name;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 2 cột",
+            "en": "Has 2 columns"
+          },
+          "test": "columns.length===2"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[\\\"Lan\\\",1],[\\\"Minh\\\",1],[\\\"Nam\\\",1],[\\\"Oanh\\\",1],[\\\"Phong\\\",1],[\\\"Quynh\\\",2],[\\\"Son\\\",2],[\\\"Thao\\\",2],[\\\"Uyen\\\",2],[\\\"Viet\\\",2]]\""
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "all"
+}

@@ -1,0 +1,105 @@
+{
+  "title": {
+    "vi": "Hàm cửa sổ (3): tổng luỹ kế, trung bình trượt, LAG/LEAD",
+    "en": "Window functions (3): running totals, moving averages, LAG/LEAD"
+  },
+  "summary": {
+    "vi": "ROWS BETWEEN, SUM() OVER luỹ kế, AVG trượt, LAG, tăng trưởng theo tháng",
+    "en": "ROWS BETWEEN, cumulative SUM() OVER, rolling AVG, LAG, month-over-month growth"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "WITH m AS (\n  SELECT strftime('%Y-%m', purchase_date) AS month, SUM(amount) AS revenue\n  FROM purchases GROUP BY month\n)\nSELECT month, revenue,\n       SUM(revenue) OVER (ORDER BY month)                                   AS running_total,\n       ROUND(AVG(revenue) OVER (ORDER BY month ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 1) AS ma3,\n       LAG(revenue) OVER (ORDER BY month)                                   AS prev_month\nFROM m\nORDER BY month\nLIMIT 6;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tính doanh thu theo THÁNG (month, revenue) cùng cột running_total là tổng luỹ kế theo thứ tự tháng. Chỉ lấy 5 tháng đầu, sắp xếp theo month.",
+        "en": "Compute revenue per MONTH (month, revenue) with a running_total column, the cumulative sum in month order. Take only the first 5 months, sorted by month."
+      },
+      "hint": {
+        "vi": "SUM(revenue) OVER (ORDER BY month) AS running_total.",
+        "en": "SUM(revenue) OVER (ORDER BY month) AS running_total."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT strftime('%Y-%m', purchase_date) AS month, SUM(amount) AS revenue FROM purchases GROUP BY month ORDER BY month LIMIT 5;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "WITH m AS (\n  SELECT strftime('%Y-%m', purchase_date) AS month, SUM(amount) AS revenue\n  FROM purchases GROUP BY month\n)\nSELECT month, revenue,\n       SUM(revenue) OVER (ORDER BY month) AS running_total\nFROM m\nORDER BY month\nLIMIT 5;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 3 cột",
+            "en": "Has 3 columns"
+          },
+          "test": "columns.length===3"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[\\\"2023-01\\\",320,320],[\\\"2023-02\\\",1565,1885],[\\\"2023-03\\\",835,2720],[\\\"2023-04\\\",2010,4730],[\\\"2023-05\\\",1090,5820]]\""
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Tính tăng trưởng so với tháng trước theo phần trăm: cột month và growth_pct = ROUND((revenue - LAG)*100.0/LAG, 1) cho 6 tháng đầu có LAG (bỏ tháng đầu tiên). Sắp xếp theo month.",
+        "en": "Compute growth versus the previous month as a percent: columns month and growth_pct = ROUND((revenue - LAG)*100.0/LAG, 1) for the first 6 months that have a LAG (skip the very first month). Sorted by month."
+      },
+      "hint": {
+        "vi": "Tính LAG(revenue) OVER (ORDER BY month) trong CTE rồi lọc prev IS NOT NULL.",
+        "en": "Compute LAG(revenue) OVER (ORDER BY month) in a CTE then filter prev IS NOT NULL."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT strftime('%Y-%m', purchase_date) AS month FROM purchases GROUP BY month LIMIT 6;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "WITH m AS (\n  SELECT strftime('%Y-%m', purchase_date) AS month, SUM(amount) AS revenue\n  FROM purchases GROUP BY month\n),\ng AS (\n  SELECT month, revenue, LAG(revenue) OVER (ORDER BY month) AS prev FROM m\n)\nSELECT month, ROUND((revenue - prev) * 100.0 / prev, 1) AS growth_pct\nFROM g\nWHERE prev IS NOT NULL\nORDER BY month\nLIMIT 6;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 2 cột",
+            "en": "Has 2 columns"
+          },
+          "test": "columns.length===2"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[\\\"2023-02\\\",389.1],[\\\"2023-03\\\",-46.6],[\\\"2023-04\\\",140.7],[\\\"2023-05\\\",-45.8],[\\\"2023-06\\\",64.2],[\\\"2023-07\\\",-24]]\""
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "analytics"
+}

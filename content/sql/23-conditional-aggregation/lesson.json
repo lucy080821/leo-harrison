@@ -1,0 +1,105 @@
+{
+  "title": {
+    "vi": "Tổng hợp có điều kiện và bảng xoay (pivot)",
+    "en": "Conditional aggregation and pivot tables"
+  },
+  "summary": {
+    "vi": "SUM(CASE WHEN …), COUNT có điều kiện, tỷ lệ phần trăm, xoay hàng thành cột",
+    "en": "SUM(CASE WHEN …), conditional counts, percentages, turning rows into columns"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "SELECT\n  country,\n  COUNT(*)                                            AS users,\n  SUM(CASE WHEN channel = 'organic' THEN 1 ELSE 0 END) AS organic,\n  SUM(CASE WHEN channel = 'ads'     THEN 1 ELSE 0 END) AS ads,\n  SUM(CASE WHEN channel = 'referral' THEN 1 ELSE 0 END) AS referral,\n  ROUND(100.0 * SUM(CASE WHEN channel = 'ads' THEN 1 ELSE 0 END) / COUNT(*), 1) AS ads_pct\nFROM users\nGROUP BY country\nORDER BY country;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Xoay dữ liệu: với mỗi channel, đếm số người dùng theo từng quốc gia VN, SG, TH, ID thành bốn cột vn, sg, th, id (dùng SUM(CASE …)). Cột đầu là channel, sắp xếp theo channel.",
+        "en": "Pivot: for each channel, count users by country VN, SG, TH, ID into four columns vn, sg, th, id (use SUM(CASE …)). The first column is channel, sorted by channel."
+      },
+      "hint": {
+        "vi": "SUM(CASE WHEN country = 'VN' THEN 1 ELSE 0 END) AS vn.",
+        "en": "SUM(CASE WHEN country = 'VN' THEN 1 ELSE 0 END) AS vn."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT channel, COUNT(*) FROM users GROUP BY channel;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT channel,\n  SUM(CASE WHEN country = 'VN' THEN 1 ELSE 0 END) AS vn,\n  SUM(CASE WHEN country = 'SG' THEN 1 ELSE 0 END) AS sg,\n  SUM(CASE WHEN country = 'TH' THEN 1 ELSE 0 END) AS th,\n  SUM(CASE WHEN country = 'ID' THEN 1 ELSE 0 END) AS id\nFROM users\nGROUP BY channel\nORDER BY channel;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 5 cột",
+            "en": "Has 5 columns"
+          },
+          "test": "columns.length===5"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[\\\"ads\\\",32,7,15,10],[\\\"organic\\\",26,17,19,8],[\\\"referral\\\",19,10,4,4],[\\\"social\\\",13,3,5,1]]\""
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Với mỗi channel, tính tỷ lệ phần trăm người dùng ở Việt Nam (country = 'VN') làm tròn 1 chữ số: cột channel và vn_pct, sắp xếp theo channel.",
+        "en": "For each channel, compute the percentage of users in Vietnam (country = 'VN') rounded to 1 digit: columns channel and vn_pct, sorted by channel."
+      },
+      "hint": {
+        "vi": "100.0 * SUM(CASE …) / COUNT(*).",
+        "en": "100.0 * SUM(CASE …) / COUNT(*)."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT channel FROM users GROUP BY channel;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT channel,\n  ROUND(100.0 * SUM(CASE WHEN country = 'VN' THEN 1 ELSE 0 END) / COUNT(*), 1) AS vn_pct\nFROM users\nGROUP BY channel\nORDER BY channel;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 2 cột",
+            "en": "Has 2 columns"
+          },
+          "test": "columns.length===2"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[\\\"ads\\\",47.1],[\\\"organic\\\",36.6],[\\\"referral\\\",50],[\\\"social\\\",56.5]]\""
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "analytics"
+}

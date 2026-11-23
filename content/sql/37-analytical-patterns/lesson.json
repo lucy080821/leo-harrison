@@ -1,0 +1,105 @@
+{
+  "title": {
+    "vi": "Các mẫu phân tích kinh doanh: Pareto, tỷ trọng, YoY",
+    "en": "Business analysis patterns: Pareto, share of total, YoY"
+  },
+  "summary": {
+    "vi": "tỷ trọng trên tổng bằng SUM() OVER (), quy tắc 80/20, tăng trưởng, top-N",
+    "en": "share of total with SUM() OVER (), the 80/20 rule, growth, top-N"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "WITH rev AS (\n  SELECT p.category, SUM(oi.quantity * p.price) AS revenue\n  FROM order_items oi JOIN products p ON p.id = oi.product_id\n  GROUP BY p.category\n)\nSELECT category, revenue,\n       ROUND(100.0 * revenue / SUM(revenue) OVER (), 1)                       AS share_pct,\n       ROUND(100.0 * SUM(revenue) OVER (ORDER BY revenue DESC) / SUM(revenue) OVER (), 1) AS cumulative_pct\nFROM rev\nORDER BY revenue DESC;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tính doanh thu từng sản phẩm (name, revenue = SUM(quantity × price)) cùng share_pct = tỷ trọng % trên tổng (làm tròn 1 chữ số). Lấy 3 sản phẩm doanh thu cao nhất, sắp xếp theo revenue giảm dần rồi name.",
+        "en": "Compute each product's revenue (name, revenue = SUM(quantity × price)) with share_pct = its % of the total (rounded to 1 digit). Take the 3 top products, sorted by revenue descending then name."
+      },
+      "hint": {
+        "vi": "SUM(revenue) OVER () làm mẫu số.",
+        "en": "SUM(revenue) OVER () as the denominator."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name, price FROM products;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "WITH rev AS (\n  SELECT p.name, SUM(oi.quantity * p.price) AS revenue\n  FROM order_items oi JOIN products p ON p.id = oi.product_id\n  GROUP BY p.name\n)\nSELECT name, revenue, ROUND(100.0 * revenue / SUM(revenue) OVER (), 1) AS share_pct\nFROM rev\nORDER BY revenue DESC, name\nLIMIT 3;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 3 cột",
+            "en": "Has 3 columns"
+          },
+          "test": "columns.length===3"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[\\\"Laptop\\\",45000000,48.7],[\\\"Phone\\\",24000000,26],[\\\"Chair\\\",5400000,5.8]]\""
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Phân tích Pareto: đếm xem cần BAO NHIÊU sản phẩm (theo doanh thu giảm dần) để đạt ít nhất 80% tổng doanh thu. Trả về một số, cột n_products.",
+        "en": "Pareto analysis: count HOW MANY products (by descending revenue) are needed to reach at least 80% of total revenue. Return one number, column n_products."
+      },
+      "hint": {
+        "vi": "Tính tỷ trọng luỹ kế; đếm số sản phẩm có tỷ trọng luỹ kế TRƯỚC nó < 80%, cộng 1 (hoặc MIN rank có cumulative >= 80).",
+        "en": "Compute the cumulative share; count products whose cumulative share BEFORE them is < 80%."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT COUNT(*) AS n_products FROM products;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "WITH rev AS (\n  SELECT p.name, SUM(oi.quantity * p.price) AS revenue\n  FROM order_items oi JOIN products p ON p.id = oi.product_id\n  GROUP BY p.name\n),\nc AS (\n  SELECT name, revenue,\n         SUM(revenue) OVER (ORDER BY revenue DESC, name) AS cum,\n         SUM(revenue) OVER () AS total\n  FROM rev\n)\nSELECT COUNT(*) AS n_products\nFROM c\nWHERE (cum - revenue) * 1.0 / total < 0.8;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 1 cột",
+            "en": "Has 1 columns"
+          },
+          "test": "columns.length===1"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[3]]\""
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "all"
+}

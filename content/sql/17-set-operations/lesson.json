@@ -1,0 +1,105 @@
+{
+  "title": {
+    "vi": "Phép toán tập hợp: UNION, INTERSECT, EXCEPT",
+    "en": "Set operations: UNION, INTERSECT, EXCEPT"
+  },
+  "summary": {
+    "vi": "gộp, giao, hiệu giữa các kết quả truy vấn",
+    "en": "combining, intersecting and subtracting query results"
+  },
+  "minutes": 20,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "-- Khách hàng KHÔNG có đơn nào (hiệu tập hợp)\nSELECT id FROM customers\nEXCEPT\nSELECT customer_id FROM orders\nORDER BY id;\n\n-- Thành phố có cả khách hàng LẪN nhân viên? (nơi này chỉ minh hoạ cú pháp)\nSELECT city FROM customers\nUNION\nSELECT name FROM departments\nORDER BY 1\nLIMIT 5;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tìm id khách hàng CHƯA có đơn nào, dùng EXCEPT giữa customers.id và orders.customer_id. Sắp xếp theo id.",
+        "en": "Find ids of customers with NO orders, using EXCEPT between customers.id and orders.customer_id. Sort by id."
+      },
+      "hint": {
+        "vi": "SELECT id FROM customers EXCEPT SELECT customer_id FROM orders.",
+        "en": "SELECT id FROM customers EXCEPT SELECT customer_id FROM orders."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT id FROM customers;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT id FROM customers\nEXCEPT\nSELECT customer_id FROM orders\nORDER BY id;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 1 cột",
+            "en": "Has 1 columns"
+          },
+          "test": "columns.length===1"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[5],[8]]\""
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Đếm TỔNG số dòng khi ghép tên khách hàng và tên nhân viên bằng UNION ALL (giữ cả bản trùng) rồi đếm bằng COUNT(*).",
+        "en": "Count the TOTAL rows when combining customer names and employee names with UNION ALL (keeping duplicates) then COUNT(*)."
+      },
+      "hint": {
+        "vi": "SELECT COUNT(*) FROM (… UNION ALL …).",
+        "en": "SELECT COUNT(*) FROM (… UNION ALL …)."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT COUNT(*) FROM customers;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT COUNT(*)\nFROM (\n  SELECT name FROM customers\n  UNION ALL\n  SELECT name FROM employees\n);\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 1 cột",
+            "en": "Has 1 columns"
+          },
+          "test": "columns.length===1"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[18]]\""
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "all"
+}

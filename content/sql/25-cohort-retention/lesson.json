@@ -1,0 +1,105 @@
+{
+  "title": {
+    "vi": "Phân tích nhóm (cohort) và tỷ lệ giữ chân",
+    "en": "Cohort analysis and retention"
+  },
+  "summary": {
+    "vi": "nhóm theo tháng đăng ký, tháng kể từ đăng ký, người dùng còn hoạt động",
+    "en": "signup-month cohorts, months since signup, active users"
+  },
+  "minutes": 35,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "WITH cohort AS (\n  SELECT id AS user_id, strftime('%Y-%m', signup_date) AS cohort_month FROM users\n),\nactivity AS (\n  SELECT DISTINCT e.user_id, strftime('%Y-%m', e.event_date) AS active_month\n  FROM events e WHERE e.event_type = 'view'\n)\nSELECT c.cohort_month,\n       COUNT(DISTINCT c.user_id) AS cohort_size,\n       COUNT(DISTINCT a.user_id) AS ever_active\nFROM cohort c\nLEFT JOIN activity a ON a.user_id = c.user_id\nGROUP BY c.cohort_month\nORDER BY c.cohort_month\nLIMIT 4;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Với mỗi THÁNG ĐĂNG KÝ (cohort_month dạng YYYY-MM), đếm số người dùng (cohort_size) và số người trong đó từng có sự kiện 'purchase' (buyers). Lấy 4 tháng đầu, sắp xếp theo cohort_month.",
+        "en": "For each SIGNUP MONTH (cohort_month as YYYY-MM), count users (cohort_size) and how many of them ever had a 'purchase' event (buyers). Take the first 4 months, sorted by cohort_month."
+      },
+      "hint": {
+        "vi": "COUNT(DISTINCT u.id) và COUNT(DISTINCT e.user_id) với LEFT JOIN events e ON … AND e.event_type = 'purchase'.",
+        "en": "COUNT(DISTINCT u.id) and COUNT(DISTINCT e.user_id) with LEFT JOIN events e ON … AND e.event_type = 'purchase'."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT strftime('%Y-%m', signup_date) AS cohort_month FROM users LIMIT 4;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT strftime('%Y-%m', u.signup_date) AS cohort_month,\n       COUNT(DISTINCT u.id) AS cohort_size,\n       COUNT(DISTINCT e.user_id) AS buyers\nFROM users u\nLEFT JOIN events e ON e.user_id = u.id AND e.event_type = 'purchase'\nGROUP BY cohort_month\nORDER BY cohort_month\nLIMIT 4;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 3 cột",
+            "en": "Has 3 columns"
+          },
+          "test": "columns.length===3"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[\\\"2023-01\\\",16,6],[\\\"2023-02\\\",15,9],[\\\"2023-03\\\",17,7],[\\\"2023-04\\\",15,8]]\""
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Tỷ lệ giữ chân tháng thứ hai: trong tất cả người dùng đăng ký trước 2024-01-01, tỷ lệ phần trăm (làm tròn 1 chữ số, cột retention_m2) có ít nhất một sự kiện 'view' trong khoảng 31 đến 60 ngày SAU ngày đăng ký (dùng julianday).",
+        "en": "Month-2 retention: among all users who signed up before 2024-01-01, the percentage (rounded to 1 digit, column retention_m2) with at least one 'view' event 31 to 60 days AFTER signup (use julianday)."
+      },
+      "hint": {
+        "vi": "EXISTS (SELECT 1 FROM events e WHERE e.user_id = u.id AND e.event_type='view' AND julianday(e.event_date) - julianday(u.signup_date) BETWEEN 31 AND 60).",
+        "en": "EXISTS (SELECT 1 FROM events e WHERE e.user_id = u.id AND e.event_type='view' AND julianday(e.event_date) - julianday(u.signup_date) BETWEEN 31 AND 60)."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT COUNT(*) AS retention_m2 FROM users;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT ROUND(100.0 * SUM(CASE WHEN EXISTS (\n    SELECT 1 FROM events e\n    WHERE e.user_id = u.id AND e.event_type = 'view'\n      AND julianday(e.event_date) - julianday(u.signup_date) BETWEEN 31 AND 60\n  ) THEN 1 ELSE 0 END) / COUNT(*), 1) AS retention_m2\nFROM users u\nWHERE u.signup_date < '2024-01-01';\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 1 cột",
+            "en": "Has 1 columns"
+          },
+          "test": "columns.length===1"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[41]]\""
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "analytics"
+}

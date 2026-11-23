@@ -1,0 +1,98 @@
+{
+  "title": {
+    "vi": "Hiệu năng truy vấn: chỉ mục và kế hoạch thực thi",
+    "en": "Query performance: indexes and execution plans"
+  },
+  "summary": {
+    "vi": "EXPLAIN QUERY PLAN, CREATE INDEX, chỉ mục phức hợp, truy vấn sargable",
+    "en": "EXPLAIN QUERY PLAN, CREATE INDEX, composite indexes, sargable queries"
+  },
+  "minutes": 35,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "-- Kế hoạch TRƯỚC khi có chỉ mục: quét toàn bảng (SCAN)\nEXPLAIN QUERY PLAN SELECT * FROM events WHERE user_id = 42;\n\nCREATE INDEX idx_events_user ON events(user_id);\n\n-- Kế hoạch SAU: tìm theo chỉ mục (SEARCH ... USING INDEX)\nEXPLAIN QUERY PLAN SELECT * FROM events WHERE user_id = 42;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tạo chỉ mục tên idx_events_user trên cột user_id của bảng events, rồi tạo chỉ mục phức hợp idx_events_type_date trên (event_type, event_date).",
+        "en": "Create an index named idx_events_user on the user_id column of events, then a composite index idx_events_type_date on (event_type, event_date)."
+      },
+      "hint": {
+        "vi": "CREATE INDEX ten ON bang(cot1, cot2);",
+        "en": "CREATE INDEX name ON table(col1, col2);"
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "-- tạo hai chỉ mục\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "CREATE INDEX idx_events_user ON events(user_id);\nCREATE INDEX idx_events_type_date ON events(event_type, event_date);\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có idx_events_user",
+            "en": "idx_events_user exists"
+          },
+          "test": "q(\"SELECT COUNT(*) FROM sqlite_master WHERE type='index' AND name='idx_events_user'\")[0][0]===1"
+        },
+        {
+          "label": {
+            "vi": "Có idx_events_type_date",
+            "en": "idx_events_type_date exists"
+          },
+          "test": "q(\"SELECT COUNT(*) FROM sqlite_master WHERE type='index' AND name='idx_events_type_date'\")[0][0]===1"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Sau khi tạo chỉ mục idx_events_user, chạy EXPLAIN QUERY PLAN cho SELECT * FROM events WHERE user_id = 42 để kết quả cho thấy SQLite dùng chỉ mục (cột detail chứa 'idx_events_user').",
+        "en": "After creating idx_events_user, run EXPLAIN QUERY PLAN for SELECT * FROM events WHERE user_id = 42 so the result shows SQLite using the index (the detail column contains 'idx_events_user')."
+      },
+      "hint": {
+        "vi": "Câu EXPLAIN QUERY PLAN phải là câu LỆNH CUỐI CÙNG để kết quả hiện ra.",
+        "en": "The EXPLAIN QUERY PLAN must be the LAST statement so its result is shown."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "EXPLAIN QUERY PLAN SELECT * FROM events WHERE user_id = 42;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "CREATE INDEX idx_events_user ON events(user_id);\nEXPLAIN QUERY PLAN SELECT * FROM events WHERE user_id = 42;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Kế hoạch dùng chỉ mục",
+            "en": "The plan uses the index"
+          },
+          "test": "rows.some(function(r){return String(r[3]).indexOf('idx_events_user')>=0})"
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "analytics"
+}

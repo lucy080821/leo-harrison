@@ -1,0 +1,105 @@
+{
+  "title": {
+    "vi": "Lược đồ sao và kho dữ liệu phân tích",
+    "en": "Star schemas and analytic data warehouses"
+  },
+  "summary": {
+    "vi": "bảng sự kiện (fact), bảng chiều (dimension), hạt (grain), truy vấn trên lược đồ sao",
+    "en": "fact tables, dimension tables, grain, querying a star schema"
+  },
+  "minutes": 35,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "-- Lược đồ sao thu nhỏ từ dữ liệu cửa hàng\nCREATE VIEW fact_sales AS\nSELECT oi.id AS line_id, o.order_date, o.customer_id, oi.product_id,\n       oi.quantity, oi.quantity * p.price AS revenue\nFROM order_items oi\nJOIN orders o   ON o.id = oi.order_id\nJOIN products p ON p.id = oi.product_id\nWHERE o.status = 'completed';\n\n-- Truy vấn kiểu BI: doanh thu theo loại sản phẩm và thành phố khách\nSELECT p.category, c.city, SUM(f.revenue) AS revenue\nFROM fact_sales f\nJOIN products  p ON p.id = f.product_id\nJOIN customers c ON c.id = f.customer_id\nGROUP BY p.category, c.city\nORDER BY revenue DESC\nLIMIT 5;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Dựng sẵn fact_sales ở dưới. Trả về doanh thu theo THÁNG (month dạng YYYY-MM, revenue) từ các đơn 'completed', sắp xếp theo month. Gợi ý: strftime trên order_date.",
+        "en": "fact_sales is built below. Return revenue per MONTH (month as YYYY-MM, revenue) from 'completed' orders, sorted by month. Hint: strftime on order_date."
+      },
+      "hint": {
+        "vi": "SELECT strftime('%Y-%m', order_date) AS month, SUM(revenue) FROM fact_sales GROUP BY month.",
+        "en": "SELECT strftime('%Y-%m', order_date) AS month, SUM(revenue) FROM fact_sales GROUP BY month."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "CREATE VIEW fact_sales AS\nSELECT oi.id AS line_id, o.order_date, o.customer_id, oi.product_id,\n       oi.quantity, oi.quantity * p.price AS revenue\nFROM order_items oi\nJOIN orders o   ON o.id = oi.order_id\nJOIN products p ON p.id = oi.product_id\nWHERE o.status = 'completed';\n\nSELECT * FROM fact_sales LIMIT 3;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "CREATE VIEW fact_sales AS\nSELECT oi.id AS line_id, o.order_date, o.customer_id, oi.product_id,\n       oi.quantity, oi.quantity * p.price AS revenue\nFROM order_items oi\nJOIN orders o   ON o.id = oi.order_id\nJOIN products p ON p.id = oi.product_id\nWHERE o.status = 'completed';\n\nSELECT strftime('%Y-%m', order_date) AS month, SUM(revenue) AS revenue\nFROM fact_sales\nGROUP BY month\nORDER BY month;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 2 cột",
+            "en": "Has 2 columns"
+          },
+          "test": "columns.length===2"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[\\\"2024-08\\\",25385000],[\\\"2024-09\\\",17655000],[\\\"2024-10\\\",31650000]]\""
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Cùng fact_sales: trả về doanh thu theo LOẠI sản phẩm (category, revenue), sắp xếp theo revenue giảm dần rồi category.",
+        "en": "With the same fact_sales: return revenue by product CATEGORY (category, revenue), sorted by revenue descending then category."
+      },
+      "hint": {
+        "vi": "JOIN products p ON p.id = f.product_id rồi GROUP BY p.category.",
+        "en": "JOIN products p ON p.id = f.product_id then GROUP BY p.category."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "CREATE VIEW fact_sales AS\nSELECT oi.id AS line_id, o.order_date, o.customer_id, oi.product_id,\n       oi.quantity, oi.quantity * p.price AS revenue\nFROM order_items oi\nJOIN orders o   ON o.id = oi.order_id\nJOIN products p ON p.id = oi.product_id\nWHERE o.status = 'completed';\n\nSELECT category FROM products;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "CREATE VIEW fact_sales AS\nSELECT oi.id AS line_id, o.order_date, o.customer_id, oi.product_id,\n       oi.quantity, oi.quantity * p.price AS revenue\nFROM order_items oi\nJOIN orders o   ON o.id = oi.order_id\nJOIN products p ON p.id = oi.product_id\nWHERE o.status = 'completed';\n\nSELECT p.category, SUM(f.revenue) AS revenue\nFROM fact_sales f\nJOIN products p ON p.id = f.product_id\nGROUP BY p.category\nORDER BY revenue DESC, p.category;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 2 cột",
+            "en": "Has 2 columns"
+          },
+          "test": "columns.length===2"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[\\\"Electronics\\\",66700000],[\\\"Furniture\\\",5350000],[\\\"Accessories\\\",1950000],[\\\"Stationery\\\",690000]]\""
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "all"
+}

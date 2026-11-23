@@ -1,0 +1,105 @@
+{
+  "title": {
+    "vi": "Phân khúc khách hàng RFM",
+    "en": "RFM customer segmentation"
+  },
+  "summary": {
+    "vi": "Recency, Frequency, Monetary, chấm điểm bằng NTILE, đặt tên phân khúc",
+    "en": "Recency, Frequency, Monetary, scoring with NTILE, naming segments"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "WITH rfm AS (\n  SELECT user_id,\n         CAST(julianday('2024-07-01') - julianday(MAX(purchase_date)) AS INTEGER) AS recency_days,\n         COUNT(*)    AS frequency,\n         SUM(amount) AS monetary\n  FROM purchases\n  GROUP BY user_id\n)\nSELECT user_id, recency_days, frequency, monetary,\n       NTILE(3) OVER (ORDER BY monetary DESC) AS m_score\nFROM rfm\nORDER BY monetary DESC, user_id\nLIMIT 5;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tính RFM cho mỗi người dùng có đơn mua tại mốc 2024-07-01: user_id, recency_days (số ngày từ lần mua gần nhất), frequency (số đơn), monetary (tổng tiền). Lấy 5 người có monetary cao nhất, sắp xếp theo monetary giảm dần rồi user_id.",
+        "en": "Compute RFM for each user with purchases as of 2024-07-01: user_id, recency_days (days since the latest purchase), frequency (number of orders), monetary (total spend). Take the 5 with the highest monetary, sorted by monetary descending then user_id."
+      },
+      "hint": {
+        "vi": "julianday('2024-07-01') − julianday(MAX(purchase_date)), COUNT(*), SUM(amount).",
+        "en": "julianday('2024-07-01') − julianday(MAX(purchase_date)), COUNT(*), SUM(amount)."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT user_id, SUM(amount) AS monetary FROM purchases GROUP BY user_id LIMIT 5;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT user_id,\n       CAST(julianday('2024-07-01') - julianday(MAX(purchase_date)) AS INTEGER) AS recency_days,\n       COUNT(*) AS frequency,\n       SUM(amount) AS monetary\nFROM purchases\nGROUP BY user_id\nORDER BY monetary DESC, user_id\nLIMIT 5;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 4 cột",
+            "en": "Has 4 columns"
+          },
+          "test": "columns.length===4"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[89,402,3,660],[178,384,5,655],[163,451,3,640],[196,327,2,640],[6,122,3,600]]\""
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Chia người mua thành 3 nhóm theo tổng tiền (NTILE(3) ORDER BY monetary DESC, nhóm 1 = chi nhiều nhất) rồi đếm số người và tổng doanh thu mỗi nhóm: cột m_group, users, revenue; sắp xếp theo m_group.",
+        "en": "Split buyers into 3 groups by total spend (NTILE(3) ORDER BY monetary DESC, group 1 = highest spenders) then count users and total revenue per group: columns m_group, users, revenue; sorted by m_group."
+      },
+      "hint": {
+        "vi": "Tính monetary trong CTE, NTILE trong CTE thứ hai, rồi GROUP BY m_group.",
+        "en": "Compute monetary in a CTE, NTILE in a second CTE, then GROUP BY m_group."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT 1 AS m_group, COUNT(DISTINCT user_id) AS users FROM purchases;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "WITH t AS (\n  SELECT user_id, SUM(amount) AS monetary FROM purchases GROUP BY user_id\n),\ng AS (\n  SELECT user_id, monetary, NTILE(3) OVER (ORDER BY monetary DESC, user_id) AS m_group FROM t\n)\nSELECT m_group, COUNT(*) AS users, SUM(monetary) AS revenue\nFROM g\nGROUP BY m_group\nORDER BY m_group;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 3 cột",
+            "en": "Has 3 columns"
+          },
+          "test": "columns.length===3"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[1,29,10705],[2,28,3225],[3,28,950]]\""
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "analytics"
+}

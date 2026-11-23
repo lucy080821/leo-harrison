@@ -1,0 +1,105 @@
+{
+  "title": {
+    "vi": "EXISTS và truy vấn con tương quan",
+    "en": "EXISTS and correlated subqueries"
+  },
+  "summary": {
+    "vi": "EXISTS, NOT EXISTS, truy vấn con tương quan, so với trung bình nhóm",
+    "en": "EXISTS, NOT EXISTS, correlated subqueries, comparing with the group average"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "-- Khách có ít nhất một đơn đã hoàn tất\nSELECT c.name\nFROM customers c\nWHERE EXISTS (SELECT 1 FROM orders o WHERE o.customer_id = c.id AND o.status = 'completed')\nORDER BY c.name;\n\n-- Truy vấn con tương quan: nhân viên lương cao hơn TRUNG BÌNH phòng của mình\nSELECT e.name, e.salary\nFROM employees e\nWHERE e.salary > (SELECT AVG(salary) FROM employees x WHERE x.department_id = e.department_id)\nORDER BY e.name;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Liệt kê tên khách hàng KHÔNG có đơn nào ở trạng thái 'completed' (dùng NOT EXISTS), sắp xếp theo tên.",
+        "en": "List names of customers with NO order in status 'completed' (use NOT EXISTS), sorted by name."
+      },
+      "hint": {
+        "vi": "WHERE NOT EXISTS (SELECT 1 FROM orders o WHERE o.customer_id = c.id AND o.status = 'completed').",
+        "en": "WHERE NOT EXISTS (SELECT 1 FROM orders o WHERE o.customer_id = c.id AND o.status = 'completed')."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name FROM customers;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT c.name\nFROM customers c\nWHERE NOT EXISTS (\n  SELECT 1 FROM orders o\n  WHERE o.customer_id = c.id AND o.status = 'completed'\n)\nORDER BY c.name;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 1 cột",
+            "en": "Has 1 columns"
+          },
+          "test": "columns.length===1"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[\\\"Em Hoang\\\"],[\\\"Hoa Bui\\\"]]\""
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Trả về name và salary của nhân viên có lương CAO HƠN lương trung bình của đúng phòng ban mình (truy vấn con tương quan; bỏ qua người chưa có phòng). Sắp xếp theo name.",
+        "en": "Return name and salary of employees paid MORE than the average of their own department (correlated subquery; skip people without a department). Sort by name."
+      },
+      "hint": {
+        "vi": "WHERE salary > (SELECT AVG(salary) FROM employees x WHERE x.department_id = e.department_id).",
+        "en": "WHERE salary > (SELECT AVG(salary) FROM employees x WHERE x.department_id = e.department_id)."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT name, salary FROM employees;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT e.name, e.salary\nFROM employees e\nWHERE e.salary > (\n  SELECT AVG(x.salary) FROM employees x WHERE x.department_id = e.department_id\n)\nORDER BY e.name;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 2 cột",
+            "en": "Has 2 columns"
+          },
+          "test": "columns.length===2"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[\\\"Lan\\\",4000],[\\\"Phong\\\",2500],[\\\"Thao\\\",2100]]\""
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "all"
+}

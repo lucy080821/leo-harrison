@@ -1,0 +1,105 @@
+{
+  "title": {
+    "vi": "Dự án: bộ truy vấn KPI cho bảng điều khiển",
+    "en": "Project: a KPI query set for a dashboard"
+  },
+  "summary": {
+    "vi": "người dùng mới, doanh thu, chuyển đổi, giữ chân, doanh thu trung bình trên người mua (ARPPU)",
+    "en": "new users, revenue, conversion, retention, average revenue per paying user (ARPPU)"
+  },
+  "minutes": 45,
+  "preview": "web",
+  "files": [
+    {
+      "name": "query.sql",
+      "lang": "sql",
+      "code": "-- KPI theo tháng: người dùng mới, người mua, doanh thu, ARPPU\nWITH new_users AS (\n  SELECT strftime('%Y-%m', signup_date) AS month, COUNT(*) AS new_users FROM users GROUP BY month\n),\nsales AS (\n  SELECT strftime('%Y-%m', purchase_date) AS month,\n         COUNT(DISTINCT user_id) AS buyers, SUM(amount) AS revenue\n  FROM purchases GROUP BY month\n)\nSELECT s.month, n.new_users, s.buyers, s.revenue,\n       ROUND(1.0 * s.revenue / s.buyers, 1) AS arppu\nFROM sales s LEFT JOIN new_users n ON n.month = s.month\nORDER BY s.month\nLIMIT 4;\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Dự án: trả về bảng KPI theo THÁNG cho 2023: month, new_users (số người đăng ký trong tháng), buyers (số người mua DISTINCT), revenue (tổng tiền) và arppu = ROUND(revenue / buyers, 1). Chỉ các tháng 2023 có đơn mua, sắp xếp theo month.",
+        "en": "Project: return a KPI table by MONTH for 2023: month, new_users (signups that month), buyers (DISTINCT buyers), revenue (total amount) and arppu = ROUND(revenue / buyers, 1). Only 2023 months that have purchases, sorted by month."
+      },
+      "hint": {
+        "vi": "Hai CTE (new_users, sales) rồi LEFT JOIN theo month và lọc month LIKE '2023%'.",
+        "en": "Two CTEs (new_users, sales) then LEFT JOIN on month and filter month LIKE '2023%'."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT strftime('%Y-%m', signup_date) AS month, COUNT(*) AS new_users FROM users GROUP BY month;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "WITH new_users AS (\n  SELECT strftime('%Y-%m', signup_date) AS month, COUNT(*) AS new_users FROM users GROUP BY month\n),\nsales AS (\n  SELECT strftime('%Y-%m', purchase_date) AS month,\n         COUNT(DISTINCT user_id) AS buyers, SUM(amount) AS revenue\n  FROM purchases GROUP BY month\n)\nSELECT s.month, n.new_users, s.buyers, s.revenue,\n       ROUND(1.0 * s.revenue / s.buyers, 1) AS arppu\nFROM sales s LEFT JOIN new_users n ON n.month = s.month\nWHERE s.month LIKE '2023%'\nORDER BY s.month;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 5 cột",
+            "en": "Has 5 columns"
+          },
+          "test": "columns.length===5"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[\\\"2023-01\\\",16,4,320,80],[\\\"2023-02\\\",15,8,1565,195.6],[\\\"2023-03\\\",17,4,835,208.8],[\\\"2023-04\\\",15,14,2010,143.6],[\\\"2023-05\\\",20,11,1090,99.1],[\\\"2023-06\\\",14,8,1790,223.8],[\\\"2023-07\\\",19,8,1360,170],[\\\"2023-08\\\",23,10,1345,134.5],[\\\"2023-09\\\",8,5,735,147],[\\\"2023-10\\\",15,4,335,83.8],[\\\"2023-11\\\",20,11,1385,125.9],[\\\"2023-12\\\",18,11,1190,108.2]]\""
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "KPI theo KÊNH: với mỗi channel trả về users, buyers (số người đã từng mua), conversion_pct = 100.0 * buyers / users làm tròn 1 chữ số, và revenue (tổng tiền, 0 nếu không có). Sắp xếp theo conversion_pct giảm dần rồi channel.",
+        "en": "KPIs by CHANNEL: for each channel return users, buyers (users who ever purchased), conversion_pct = 100.0 * buyers / users rounded to 1 digit, and revenue (total amount, 0 if none). Sorted by conversion_pct descending then channel."
+      },
+      "hint": {
+        "vi": "Tính theo người rồi gộp theo channel; COALESCE(SUM(amount), 0).",
+        "en": "Compute per user then aggregate by channel; COALESCE(SUM(amount), 0)."
+      },
+      "starter": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "SELECT channel, COUNT(*) AS users FROM users GROUP BY channel;\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "query.sql",
+          "lang": "sql",
+          "code": "WITH per_user AS (\n  SELECT u.id, u.channel, COALESCE(SUM(p.amount), 0) AS revenue,\n         CASE WHEN COUNT(p.id) > 0 THEN 1 ELSE 0 END AS bought\n  FROM users u LEFT JOIN purchases p ON p.user_id = u.id\n  GROUP BY u.id, u.channel\n)\nSELECT channel, COUNT(*) AS users, SUM(bought) AS buyers,\n       ROUND(100.0 * SUM(bought) / COUNT(*), 1) AS conversion_pct,\n       SUM(revenue) AS revenue\nFROM per_user\nGROUP BY channel\nORDER BY conversion_pct DESC, channel;\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 5 cột",
+            "en": "Has 5 columns"
+          },
+          "test": "columns.length===5"
+        },
+        {
+          "label": {
+            "vi": "Kết quả khớp đáp án",
+            "en": "Result matches the expected one"
+          },
+          "test": "JSON.stringify(rows)===\"[[\\\"ads\\\",68,32,47.1,4935],[\\\"organic\\\",71,32,45.1,6685],[\\\"social\\\",23,8,34.8,1350],[\\\"referral\\\",38,13,34.2,1910]]\""
+        }
+      ]
+    }
+  ],
+  "engine": "sql",
+  "dataset": "analytics"
+}
