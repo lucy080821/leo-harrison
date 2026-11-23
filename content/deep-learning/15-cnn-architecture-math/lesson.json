@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Toán của CNN: kích thước đầu ra, tham số và vùng tiếp nhận",
+    "en": "CNN arithmetic: output size, parameters and receptive field"
+  },
+  "summary": {
+    "vi": "công thức (W−K+2P)/S+1, đếm tham số, conv vs dense, pooling, vùng tiếp nhận qua nhiều tầng",
+    "en": "the formula (W−K+2P)/S+1, counting parameters, conv vs dense, pooling, receptive field across layers"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\ndef conv_out(w, k, p=0, s=1):\n    return (w - k + 2 * p) // s + 1\n\ndef conv_params(c_in, c_out, k, bias=True):\n    return c_out * (c_in * k * k + (1 if bias else 0))\n\n# Ví dụ: ảnh 32x32x3 qua conv 3x3, 16 bộ lọc, padding 1\nprint(\"kích thước:\", conv_out(32, 3, p=1), \"| tham số:\", conv_params(3, 16, 3))\nprint(\"pool 2x2 stride 2:\", conv_out(32, 2, s=2))\nprint(\"dense tương đương:\", (32 * 32 * 3) * (32 * 32 * 16))   # nếu dùng tầng kết nối đầy đủ\n\n# Vùng tiếp nhận: mỗi tầng conv k, stride s mở rộng thêm (k-1) * (tích stride trước đó)\ndef receptive_field(layers):\n    r, jump = 1, 1\n    for k, s in layers:\n        r += (k - 1) * jump\n        jump *= s\n    return r\n\nprint(\"RF của 3 tầng conv 3x3:\", receptive_field([(3, 1)] * 3))\nprint(\"RF của conv3-pool2-conv3-pool2:\", receptive_field([(3, 1), (2, 2), (3, 1), (2, 2)]))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Cài conv_out(w, k, p, s) = (w − k + 2p)//s + 1. In kích thước đầu ra cho (w=28, k=5, p=0, s=1) và (w=224, k=7, p=3, s=2), mỗi số một dòng.",
+        "en": "Implement conv_out(w, k, p, s) = (w − k + 2p)//s + 1. Print the output size for (w=28, k=5, p=0, s=1) and (w=224, k=7, p=3, s=2), one per line."
+      },
+      "hint": {
+        "vi": "(w - k + 2*p)//s + 1.",
+        "en": "(w - k + 2*p)//s + 1."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def conv_out(w, k, p, s):\n    pass\n\nprint(conv_out(28, 5, 0, 1))\nprint(conv_out(224, 7, 3, 2))\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "def conv_out(w, k, p, s):\n    return (w - k + 2 * p) // s + 1\n\nprint(conv_out(28, 5, 0, 1))\nprint(conv_out(224, 7, 3, 2))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '24\\n112'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Số tham số của tầng conv có c_in=64, c_out=128, kernel 3×3, có bias là c_out·(c_in·k·k + 1). In số đó, rồi số tham số của tầng dense nối 64 đầu vào với 128 đầu ra (có bias), mỗi số một dòng.",
+        "en": "The parameter count of a conv layer with c_in=64, c_out=128, 3×3 kernel, with bias is c_out·(c_in·k·k + 1). Print it, then the parameter count of a dense layer from 64 inputs to 128 outputs (with bias), one per line."
+      },
+      "hint": {
+        "vi": "conv: 128*(64*9+1); dense: 64*128+128.",
+        "en": "conv: 128*(64*9+1); dense: 64*128+128."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "# in số tham số conv rồi dense\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "print(128 * (64 * 3 * 3 + 1))\nprint(64 * 128 + 128)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '73856\\n8320'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

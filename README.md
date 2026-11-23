@@ -33,7 +33,7 @@ Build production (để deploy VPS): `npm run build && npm start`.
 - [x] Giai đoạn 1: khung app, dark mode, EN/VI, bài tập, tiến độ (lưu trên trình duyệt)
 - [x] Giai đoạn 2: HTML (13 bài), CSS (16 bài), JavaScript (22 bài) — song ngữ, 102 bài tập tự chấm
 - [x] Giai đoạn 3: Python cơ bản (16 bài), Python Data Analyst (29 bài, đã mở rộng: chuỗi thời gian, vector hoá, kiểm định, hồi quy, cohort, RFM, A/B, dự báo, văn bản), SQL (40 bài, đã mở rộng chuyên sâu: cửa sổ nâng cao, cohort, funnel, RFM, hiệu năng, giao dịch, lược đồ sao…) — chạy bằng Pyodide và SQLite WASM
-- [x] Giai đoạn 4: Toán cho ML (7 bài), Machine Learning (24, đã mở rộng: đặc trưng, mất cân bằng, ROC/PR, kiểm định chéo, giải thích mô hình, chuỗi thời gian, bất thường, văn bản, gợi ý), Deep Learning (10), AI hiện đại (8) — scikit-learn chạy trong trình duyệt, mạng nơ-ron tự cài bằng NumPy
+- [x] Giai đoạn 4: Toán cho ML (7 bài), Machine Learning (24, đã mở rộng: đặc trưng, mất cân bằng, ROC/PR, kiểm định chéo, giải thích mô hình, chuỗi thời gian, bất thường, văn bản, gợi ý), Deep Learning (20, đã mở rộng: khởi tạo, mất mát, chuẩn hoá, lịch LR, toán CNN, embedding, mô hình ngôn ngữ, multi-head, chuyển giao, gỡ lỗi), AI hiện đại (8) — scikit-learn chạy trong trình duyệt, mạng nơ-ron tự cài bằng NumPy
 - [x] Giai đoạn 5: React (8 bài), Node.js (9), Next.js (6), React Native (5) — React/JSX chạy bằng Babel + esm.sh, Node chạy bằng bản mô phỏng trong trình duyệt
 - [x] Nền tảng lập trình (12 bài khái niệm cơ bản, có nguồn học thuật): `content/foundations`
 - [x] Xác suất, thống kê và toán cao cấp (39 bài, 4 module): `content/prob-stats`, hiển thị ở hướng học riêng `/learning/statistics` (không nằm trong Lập trình; link cũ `/learning/programming/courses/prob-stats/...` tự chuyển hướng)

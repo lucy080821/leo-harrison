@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Học chuyển giao: đặc trưng đóng băng và tinh chỉnh",
+    "en": "Transfer learning: frozen features and fine-tuning"
+  },
+  "summary": {
+    "vi": "đặc trưng tiền huấn luyện, linear probe, đóng băng vs tinh chỉnh, LR khác nhau cho từng tầng, dữ liệu ít",
+    "en": "pretrained features, linear probe, freezing vs fine-tuning, different LRs per layer, small data"
+  },
+  "minutes": 35,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\nrng = np.random.default_rng(0)\n\n# \"Mạng tiền huấn luyện\" giả lập: một phép chiếu cố định đã học được đặc trưng hữu ích (đóng băng)\nW_frozen = rng.normal(size=(20, 8))\ndef features(x):\n    return np.tanh(x @ W_frozen)\n\n# Bài toán mới với RẤT ÍT dữ liệu: 30 mẫu có nhãn\nX = rng.normal(size=(30, 20))\ntrue_w = rng.normal(size=8)\ny = (features(X) @ true_w > 0).astype(float)\n\n# Linear probe: chỉ huấn luyện MỘT tầng tuyến tính (logistic) trên đặc trưng đóng băng\nF = features(X)\nw, b = np.zeros(8), 0.0\nfor _ in range(500):\n    p = 1 / (1 + np.exp(-(F @ w + b)))\n    w -= 0.5 * F.T @ (p - y) / len(y)\n    b -= 0.5 * (p - y).mean()\nacc = ((1 / (1 + np.exp(-(F @ w + b))) > 0.5) == y).mean()\n\nprint(\"tham số phải huấn luyện:\", w.size + 1, \"(thay vì\", W_frozen.size + w.size + 1, \")\")\nprint(\"accuracy linear probe:\", round(float(acc), 2))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Với W_frozen có kích thước (20, 8) và đầu phân loại 8 đặc trưng → 1 đầu ra (có bias), tính tổng số tham số của toàn mạng và số tham số cần huấn luyện khi đóng băng W_frozen. In hai số, mỗi số một dòng.",
+        "en": "With W_frozen of shape (20, 8) and a classification head 8 features → 1 output (with bias), compute the network's total parameters and the number to train when W_frozen is frozen. Print the two numbers, one per line."
+      },
+      "hint": {
+        "vi": "tổng = 20*8 + (8+1); huấn luyện = 8+1.",
+        "en": "total = 20*8 + (8+1); trainable = 8+1."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "# in tổng tham số rồi số cần huấn luyện\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "print(20 * 8 + (8 + 1))\nprint(8 + 1)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '169\\n9'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Một lịch LR khác nhau theo tầng (discriminative LR): tầng đầu 1e-5, giữa 1e-4, cuối (đầu phân loại) 1e-3. Tính tỷ lệ LR đầu phân loại / LR tầng đầu và in số đó (là số nguyên).",
+        "en": "A layer-wise (discriminative) LR schedule: first layer 1e-5, middle 1e-4, last (classification head) 1e-3. Compute the ratio head LR / first-layer LR and print it (an integer)."
+      },
+      "hint": {
+        "vi": "round(1e-3 / 1e-5).",
+        "en": "round(1e-3 / 1e-5)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "lrs = [1e-5, 1e-4, 1e-3]\n# in tỷ lệ cuối / đầu\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "lrs = [1e-5, 1e-4, 1e-3]\nprint(round(lrs[-1] / lrs[0]))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '100'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

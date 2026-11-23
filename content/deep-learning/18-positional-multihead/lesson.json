@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Mã hoá vị trí và chú ý đa đầu (multi-head attention)",
+    "en": "Positional encoding and multi-head attention"
+  },
+  "summary": {
+    "vi": "sin/cos vị trí, vì sao attention không biết thứ tự, chia đầu, mặt nạ nhân quả, kích thước tensor",
+    "en": "sin/cos positions, why attention ignores order, splitting heads, causal masks, tensor shapes"
+  },
+  "minutes": 40,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\ndef positional_encoding(n, d):\n    pos = np.arange(n)[:, None]\n    i = np.arange(d // 2)[None, :]\n    angle = pos / (10000 ** (2 * i / d))\n    pe = np.zeros((n, d))\n    pe[:, 0::2], pe[:, 1::2] = np.sin(angle), np.cos(angle)\n    return pe\n\npe = positional_encoding(4, 4)\nprint(np.round(pe[0], 3).tolist(), np.round(pe[1], 3).tolist())\n\ndef softmax(z):\n    z = z - z.max(axis=-1, keepdims=True); e = np.exp(z)\n    return e / e.sum(axis=-1, keepdims=True)\n\ndef attention(Q, K, V, causal=False):\n    s = Q @ K.T / np.sqrt(K.shape[-1])\n    if causal:                                    # token chỉ được nhìn quá khứ\n        s = np.where(np.triu(np.ones_like(s), 1) == 1, -1e9, s)\n    return softmax(s) @ V, softmax(s)\n\nrng = np.random.default_rng(0)\nx = rng.normal(size=(5, 8))\n# Multi-head: chia d=8 thành 2 đầu x 4 chiều, mỗi đầu attention riêng rồi nối lại\nheads = [attention(x[:, h * 4:(h + 1) * 4], x[:, h * 4:(h + 1) * 4], x[:, h * 4:(h + 1) * 4])[0] for h in range(2)]\nout = np.concatenate(heads, axis=-1)\nprint(\"kích thước đầu ra:\", out.shape)\n\n_, w = attention(x, x, x, causal=True)\nprint(\"trọng số trên đường chéo trên (tương lai) =\", float(np.triu(w, 1).sum()))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Cài positional_encoding(n, d) với sin ở chỉ số chẵn, cos ở chỉ số lẻ, angle = pos / 10000^(2i/d). Với n=3, d=4, in hàng vị trí 0 và vị trí 2 làm tròn 3 chữ số (hai list, mỗi list một dòng).",
+        "en": "Implement positional_encoding(n, d) with sin at even indices, cos at odd indices, angle = pos / 10000^(2i/d). With n=3, d=4, print the position-0 row and the position-2 row rounded to 3 digits (two lists, one per line)."
+      },
+      "hint": {
+        "vi": "pe[:, 0::2] = sin(angle); pe[:, 1::2] = cos(angle).",
+        "en": "pe[:, 0::2] = sin(angle); pe[:, 1::2] = cos(angle)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\ndef positional_encoding(n, d):\n    pass\n\npe = positional_encoding(3, 4)\n# in hàng 0 và hàng 2\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\ndef positional_encoding(n, d):\n    pos = np.arange(n)[:, None]\n    i = np.arange(d // 2)[None, :]\n    ang = pos / (10000 ** (2 * i / d))\n    pe = np.zeros((n, d))\n    pe[:, 0::2] = np.sin(ang)\n    pe[:, 1::2] = np.cos(ang)\n    return pe\n\npe = positional_encoding(3, 4)\nprint(np.round(pe[0], 3).tolist())\nprint(np.round(pe[2], 3).tolist())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '[0.0, 1.0, 0.0, 1.0]\\n[0.909, -0.416, 0.02, 1.0]'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Tạo mặt nạ nhân quả cho chuỗi dài 4: ma trận trọng số attention đều (mỗi hàng chia đều cho các vị trí được phép nhìn, tức vị trí ≤ hàng). In ma trận làm tròn 2 chữ số (list lồng nhau).",
+        "en": "Build a causal mask for a sequence of length 4: a uniform attention-weight matrix (each row shared equally among the positions allowed to be seen, i.e. positions ≤ the row). Print the matrix rounded to 2 digits (a nested list)."
+      },
+      "hint": {
+        "vi": "np.tril(np.ones((4, 4))) rồi chia mỗi hàng cho tổng.",
+        "en": "np.tril(np.ones((4, 4))) then divide each row by its sum."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n# in ma trận attention đều có mặt nạ nhân quả\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nm = np.tril(np.ones((4, 4)))\nprint(np.round(m / m.sum(axis=1, keepdims=True), 2).tolist())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '[[1.0, 0.0, 0.0, 0.0], [0.5, 0.5, 0.0, 0.0], [0.33, 0.33, 0.33, 0.0], [0.25, 0.25, 0.25, 0.25]]'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

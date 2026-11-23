@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Chuẩn hoá: BatchNorm và LayerNorm",
+    "en": "Normalisation: BatchNorm and LayerNorm"
+  },
+  "summary": {
+    "vi": "trung bình/phương sai theo batch hay theo mẫu, gamma và beta, train vs inference, vì sao Transformer dùng LayerNorm",
+    "en": "batch vs per-sample statistics, gamma and beta, train vs inference, why Transformers use LayerNorm"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\nrng = np.random.default_rng(0)\nx = rng.normal(5.0, 3.0, size=(8, 4))          # (batch, đặc trưng), lệch xa 0/1\n\ndef batchnorm(x, gamma=1.0, beta=0.0, eps=1e-5):\n    mu, var = x.mean(axis=0), x.var(axis=0)    # thống kê THEO CỘT, qua cả batch\n    return gamma * (x - mu) / np.sqrt(var + eps) + beta\n\ndef layernorm(x, gamma=1.0, beta=0.0, eps=1e-5):\n    mu, var = x.mean(axis=1, keepdims=True), x.var(axis=1, keepdims=True)   # THEO HÀNG, từng mẫu\n    return gamma * (x - mu) / np.sqrt(var + eps) + beta\n\nbn, ln = batchnorm(x), layernorm(x)\nprint(\"BN: trung bình cột ~0:\", np.round(bn.mean(axis=0), 6).tolist())\nprint(\"LN: trung bình hàng ~0:\", np.round(ln.mean(axis=1), 6)[:3].tolist())\nprint(\"BN std cột:\", np.round(bn.std(axis=0), 3).tolist())\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Cài layernorm (chuẩn hoá theo từng hàng, eps=1e-5, gamma=1, beta=0) cho x = [[1,2,3,4],[10,20,30,40]]. In độ lệch chuẩn của mỗi hàng sau chuẩn hoá làm tròn 3 chữ số (list).",
+        "en": "Implement layernorm (normalise each row, eps=1e-5, gamma=1, beta=0) for x = [[1,2,3,4],[10,20,30,40]]. Print each row's standard deviation after normalising, rounded to 3 digits (a list)."
+      },
+      "hint": {
+        "vi": "(x - mean(axis=1, keepdims=True)) / sqrt(var(axis=1, keepdims=True) + eps).",
+        "en": "(x - mean(axis=1, keepdims=True)) / sqrt(var(axis=1, keepdims=True) + eps)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nx = np.array([[1.0, 2, 3, 4], [10, 20, 30, 40]])\n# in std từng hàng sau layernorm\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nx = np.array([[1.0, 2, 3, 4], [10, 20, 30, 40]])\ny = (x - x.mean(axis=1, keepdims=True)) / np.sqrt(x.var(axis=1, keepdims=True) + 1e-5)\nprint(np.round(y.std(axis=1), 3).tolist())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '[1.0, 1.0]'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Với cùng x, cài batchnorm (theo cột, eps=1e-5). In trung bình của mỗi cột sau chuẩn hoá làm tròn 6 chữ số (list; dùng abs để tránh -0.0).",
+        "en": "With the same x, implement batchnorm (per column, eps=1e-5). Print each column's mean after normalising rounded to 6 digits (a list; use abs to avoid -0.0)."
+      },
+      "hint": {
+        "vi": "mean(axis=0), var(axis=0).",
+        "en": "mean(axis=0), var(axis=0)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nx = np.array([[1.0, 2, 3, 4], [10, 20, 30, 40]])\n# in trung bình từng cột sau batchnorm\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nx = np.array([[1.0, 2, 3, 4], [10, 20, 30, 40]])\ny = (x - x.mean(axis=0)) / np.sqrt(x.var(axis=0) + 1e-5)\nprint(np.abs(np.round(y.mean(axis=0), 6)).tolist())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '[0.0, 0.0, 0.0, 0.0]'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

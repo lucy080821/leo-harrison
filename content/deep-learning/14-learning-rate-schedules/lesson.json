@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Lịch tốc độ học, warmup và cắt gradient",
+    "en": "Learning-rate schedules, warmup and gradient clipping"
+  },
+  "summary": {
+    "vi": "step decay, cosine, warmup tuyến tính, tìm LR, clip theo chuẩn, Adam từng bước",
+    "en": "step decay, cosine, linear warmup, LR range test, norm clipping, Adam step by step"
+  },
+  "minutes": 35,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\ndef cosine_lr(step, total, lr_max, warmup=0, lr_min=0.0):\n    if step < warmup:                                  # warmup tuyến tính từ 0 -> lr_max\n        return lr_max * (step + 1) / warmup\n    t = (step - warmup) / max(1, total - warmup)       # tiến độ 0 -> 1\n    return lr_min + 0.5 * (lr_max - lr_min) * (1 + np.cos(np.pi * t))\n\ntotal = 100\nprint([round(cosine_lr(s, total, 0.1, warmup=10), 4) for s in (0, 9, 10, 55, 99)])\n\ndef clip_by_norm(g, max_norm):\n    n = np.linalg.norm(g)\n    return g * (max_norm / n) if n > max_norm else g   # giữ HƯỚNG, thu nhỏ độ dài\n\ng = np.array([3.0, 4.0])                               # chuẩn 5\nprint(clip_by_norm(g, 1.0).tolist(), round(float(np.linalg.norm(clip_by_norm(g, 1.0))), 3))\n\n# Adam một bước (m, v là ước lượng động lượng bậc 1, 2; có hiệu chỉnh lệch)\ndef adam_step(w, g, m, v, t, lr=0.1, b1=0.9, b2=0.999, eps=1e-8):\n    m = b1 * m + (1 - b1) * g\n    v = b2 * v + (1 - b2) * g * g\n    mh, vh = m / (1 - b1 ** t), v / (1 - b2 ** t)\n    return w - lr * mh / (np.sqrt(vh) + eps), m, v\n\nw, m, v = 1.0, 0.0, 0.0\nfor t in range(1, 4):\n    w, m, v = adam_step(w, 2 * w, m, v, t)             # tối thiểu hoá w^2\nprint(round(w, 4))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Cài cosine_lr(step, total, lr_max, warmup) như ví dụ (lr_min = 0). Với total=100, lr_max=0.1, warmup=10, in LR tại step 0, 10 và 99 làm tròn 4 chữ số (list).",
+        "en": "Implement cosine_lr(step, total, lr_max, warmup) as in the example (lr_min = 0). With total=100, lr_max=0.1, warmup=10, print the LR at steps 0, 10 and 99 rounded to 4 digits (a list)."
+      },
+      "hint": {
+        "vi": "warmup: lr_max*(step+1)/warmup; sau đó 0.5*lr_max*(1+cos(pi*t)).",
+        "en": "warmup: lr_max*(step+1)/warmup; then 0.5*lr_max*(1+cos(pi*t))."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\ndef cosine_lr(step, total, lr_max, warmup):\n    pass\n\nprint([round(cosine_lr(s, 100, 0.1, 10), 4) for s in (0, 10, 99)])\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\ndef cosine_lr(step, total, lr_max, warmup):\n    if step < warmup:\n        return lr_max * (step + 1) / warmup\n    t = (step - warmup) / max(1, total - warmup)\n    return 0.5 * lr_max * (1 + np.cos(np.pi * t))\n\nprint([round(float(cosine_lr(s, 100, 0.1, 10)), 4) for s in (0, 10, 99)])\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '[0.01, 0.1, 0.0]'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Cài clip_by_norm(g, max_norm) (nếu chuẩn > max_norm thì thu nhỏ để chuẩn = max_norm, giữ hướng). Với g = [6, 8] và max_norm = 5, in kết quả (list) rồi chuẩn của nó làm tròn 3 chữ số, mỗi cái một dòng.",
+        "en": "Implement clip_by_norm(g, max_norm) (if the norm exceeds max_norm, rescale so the norm equals max_norm, keeping direction). With g = [6, 8] and max_norm = 5, print the result (a list) then its norm rounded to 3 digits, one per line."
+      },
+      "hint": {
+        "vi": "g * (max_norm / np.linalg.norm(g)).",
+        "en": "g * (max_norm / np.linalg.norm(g))."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\ndef clip_by_norm(g, max_norm):\n    pass\n\ng = np.array([6.0, 8.0])\n# in kết quả và chuẩn\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\ndef clip_by_norm(g, max_norm):\n    n = np.linalg.norm(g)\n    return g * (max_norm / n) if n > max_norm else g\n\ng = np.array([6.0, 8.0])\nr = clip_by_norm(g, 5.0)\nprint(r.tolist())\nprint(round(float(np.linalg.norm(r)), 3))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '[3.0, 4.0]\\n5.0'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

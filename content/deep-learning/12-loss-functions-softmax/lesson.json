@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Hàm mất mát: softmax, entropy chéo và ổn định số học",
+    "en": "Loss functions: softmax, cross-entropy and numerical stability"
+  },
+  "summary": {
+    "vi": "softmax, log-sum-exp, cross-entropy, MSE vs MAE vs Huber, gradient của softmax + CE",
+    "en": "softmax, log-sum-exp, cross-entropy, MSE vs MAE vs Huber, the softmax + CE gradient"
+  },
+  "minutes": 35,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\ndef softmax(z):\n    z = z - z.max(axis=1, keepdims=True)          # trừ max: tránh tràn số exp\n    e = np.exp(z)\n    return e / e.sum(axis=1, keepdims=True)\n\ndef cross_entropy(p, y):\n    return float(-np.log(p[np.arange(len(y)), y]).mean())\n\nz = np.array([[2.0, 1.0, 0.1], [0.5, 2.5, 0.3]])\ny = np.array([0, 1])\np = softmax(z)\nprint(np.round(p, 3).tolist())\nprint(\"CE:\", round(cross_entropy(p, y), 4))\n\n# Ổn định số học: điểm rất lớn vẫn an toàn\nprint(np.round(softmax(np.array([[1000.0, 1001.0, 1002.0]])), 3).tolist())\n\n# Gradient của (softmax + CE) theo z rất gọn: (p - one_hot) / N\nonehot = np.eye(3)[y]\ngrad = (p - onehot) / len(y)\nprint(np.round(grad, 3).tolist())\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Cài softmax ổn định (trừ max) cho z = [[1.0, 2.0, 3.0]]. In xác suất làm tròn 3 chữ số dưới dạng list (dùng .tolist()).",
+        "en": "Implement a stable softmax (subtract the max) for z = [[1.0, 2.0, 3.0]]. Print the probabilities rounded to 3 digits as a list (use .tolist())."
+      },
+      "hint": {
+        "vi": "e = np.exp(z - z.max(axis=1, keepdims=True)); e / e.sum(axis=1, keepdims=True).",
+        "en": "e = np.exp(z - z.max(axis=1, keepdims=True)); e / e.sum(axis=1, keepdims=True)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nz = np.array([[1.0, 2.0, 3.0]])\n# in softmax(z) làm tròn 3 chữ số\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nz = np.array([[1.0, 2.0, 3.0]])\ne = np.exp(z - z.max(axis=1, keepdims=True))\nprint(np.round(e / e.sum(axis=1, keepdims=True), 3).tolist())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '[[0.09, 0.245, 0.665]]'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Với p = [[0.7, 0.2, 0.1]] và nhãn đúng là lớp 0, tính entropy chéo −log(p[đúng]) và in làm tròn 4 chữ số. Rồi in entropy chéo nếu nhãn đúng là lớp 2, mỗi số một dòng.",
+        "en": "With p = [[0.7, 0.2, 0.1]] and the true class 0, compute the cross-entropy −log(p[true]) and print it rounded to 4 digits. Then print the cross-entropy if the true class were 2, one per line."
+      },
+      "hint": {
+        "vi": "-np.log(p[0, k]).",
+        "en": "-np.log(p[0, k])."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\np = np.array([[0.7, 0.2, 0.1]])\n# in CE khi đúng là lớp 0, rồi lớp 2\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\np = np.array([[0.7, 0.2, 0.1]])\nprint(round(float(-np.log(p[0, 0])), 4))\nprint(round(float(-np.log(p[0, 2])), 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '0.3567\\n2.3026'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

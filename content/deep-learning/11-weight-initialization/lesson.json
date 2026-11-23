@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Khởi tạo trọng số: Xavier, He và gradient biến mất",
+    "en": "Weight initialisation: Xavier, He and vanishing gradients"
+  },
+  "summary": {
+    "vi": "phương sai qua các tầng, Xavier cho tanh, He cho ReLU, vì sao khởi tạo 0 hỏng",
+    "en": "variance across layers, Xavier for tanh, He for ReLU, why zero init fails"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\nrng = np.random.default_rng(0)\nx = rng.normal(size=(1000, 256))\n\ndef forward_std(init, act, depth=10, width=256):\n    a = x\n    for _ in range(depth):\n        W = init(width, width)\n        a = act(a @ W)\n    return float(a.std())\n\nsmall = lambda n_in, n_out: rng.normal(0, 0.01, (n_in, n_out))              # quá nhỏ -> tín hiệu tắt dần\nxavier = lambda n_in, n_out: rng.normal(0, np.sqrt(1 / n_in), (n_in, n_out))  # Var = 1/n_in\nhe = lambda n_in, n_out: rng.normal(0, np.sqrt(2 / n_in), (n_in, n_out))      # Var = 2/n_in\nrelu = lambda z: np.maximum(0, z)\n\nprint(\"tanh  + nhỏ  :\", round(forward_std(small, np.tanh), 6))\nprint(\"tanh  + Xavier:\", round(forward_std(xavier, np.tanh), 3))\nprint(\"ReLU  + Xavier:\", round(forward_std(xavier, relu), 3))\nprint(\"ReLU  + He    :\", round(forward_std(he, relu), 3))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Dùng rng = default_rng(0), x ~ N(0,1) kích thước (1000, 256), 10 tầng 256→256 với ReLU. Khởi tạo He (std = √(2/n_in)). In True nếu độ lệch chuẩn kích hoạt cuối nằm trong khoảng (0.5, 3), ngược lại False.",
+        "en": "Use rng = default_rng(0), x ~ N(0,1) of shape (1000, 256), 10 layers 256→256 with ReLU. Initialise with He (std = √(2/n_in)). Print True if the final activation std lies in (0.5, 3), else False."
+      },
+      "hint": {
+        "vi": "W = rng.normal(0, np.sqrt(2/256), (256, 256)); a = np.maximum(0, a @ W).",
+        "en": "W = rng.normal(0, np.sqrt(2/256), (256, 256)); a = np.maximum(0, a @ W)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nrng = np.random.default_rng(0)\na = rng.normal(size=(1000, 256))\n# 10 tầng ReLU với khởi tạo He; in True/False\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nrng = np.random.default_rng(0)\na = rng.normal(size=(1000, 256))\nfor _ in range(10):\n    W = rng.normal(0, np.sqrt(2 / 256), (256, 256))\n    a = np.maximum(0, a @ W)\nprint(bool(0.5 < a.std() < 3))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == 'True'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Cùng thiết lập nhưng khởi tạo std = 0.01 với tanh, 10 tầng. In True nếu độ lệch chuẩn kích hoạt cuối NHỎ HƠN 1e-6 (tín hiệu đã tắt), ngược lại False.",
+        "en": "Same setup but initialise with std = 0.01 and tanh, 10 layers. Print True if the final activation std is SMALLER than 1e-6 (the signal has vanished), else False."
+      },
+      "hint": {
+        "vi": "a = np.tanh(a @ W) với W ~ N(0, 0.01).",
+        "en": "a = np.tanh(a @ W) with W ~ N(0, 0.01)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nrng = np.random.default_rng(0)\na = rng.normal(size=(1000, 256))\n# 10 tầng tanh với std = 0.01; in True/False\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nrng = np.random.default_rng(0)\na = rng.normal(size=(1000, 256))\nfor _ in range(10):\n    a = np.tanh(a @ rng.normal(0, 0.01, (256, 256)))\nprint(bool(a.std() < 1e-6))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == 'True'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

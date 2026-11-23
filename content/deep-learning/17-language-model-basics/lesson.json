@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Mô hình ngôn ngữ: n-gram, xác suất và perplexity",
+    "en": "Language models: n-grams, probabilities and perplexity"
+  },
+  "summary": {
+    "vi": "P(từ kế | ngữ cảnh), đếm bigram, làm mượt Laplace, perplexity, từ n-gram đến LLM",
+    "en": "P(next | context), counting bigrams, Laplace smoothing, perplexity, from n-grams to LLMs"
+  },
+  "minutes": 35,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\nfrom collections import Counter\n\ncorpus = \"the cat sat on the mat the dog sat on the log\".split()\nvocab = sorted(set(corpus)); V = len(vocab)\nuni = Counter(corpus)\nbi = Counter(zip(corpus, corpus[1:]))\n\ndef p_bigram(w1, w2, alpha=1.0):\n    # xác suất có điều kiện P(w2 | w1) với làm mượt Laplace (cộng alpha)\n    return (bi[(w1, w2)] + alpha) / (uni[w1] + alpha * V)\n\nprint(\"P(cat|the) =\", round(p_bigram(\"the\", \"cat\"), 3))\nprint(\"P(sat|dog) =\", round(p_bigram(\"dog\", \"sat\"), 3))\nprint(\"P(mat|dog) =\", round(p_bigram(\"dog\", \"mat\"), 3), \"(chưa từng thấy, nhờ Laplace vẫn > 0)\")\n\ndef perplexity(sent, alpha=1.0):\n    ws = sent.split()\n    logp = sum(np.log(p_bigram(a, b, alpha)) for a, b in zip(ws, ws[1:]))\n    return float(np.exp(-logp / (len(ws) - 1)))\n\nprint(\"perplexity câu quen :\", round(perplexity(\"the cat sat on the mat\"), 2))\nprint(\"perplexity câu lạ   :\", round(perplexity(\"mat the on cat sat the\"), 2))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Với corpus 'the cat sat on the mat the dog sat on the log', tính P(cat | the) bằng ước lượng thường (không làm mượt): đếm(the cat)/đếm(the). In kết quả.",
+        "en": "With the corpus 'the cat sat on the mat the dog sat on the log', compute P(cat | the) by plain estimation (no smoothing): count(the cat)/count(the). Print the result."
+      },
+      "hint": {
+        "vi": "Counter(zip(c, c[1:])) và Counter(c).",
+        "en": "Counter(zip(c, c[1:])) and Counter(c)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from collections import Counter\nc = 'the cat sat on the mat the dog sat on the log'.split()\n# in P(cat | the)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from collections import Counter\nc = 'the cat sat on the mat the dog sat on the log'.split()\nbi = Counter(zip(c, c[1:]))\nprint(bi[('the', 'cat')] / Counter(c)['the'])\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '0.25'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Với làm mượt Laplace (alpha = 1) và |V| = số từ khác nhau trong corpus, in P(mat | dog) làm tròn 4 chữ số.",
+        "en": "With Laplace smoothing (alpha = 1) and |V| = number of distinct words in the corpus, print P(mat | dog) rounded to 4 digits."
+      },
+      "hint": {
+        "vi": "(đếm(dog,mat) + 1) / (đếm(dog) + |V|).",
+        "en": "(count(dog,mat) + 1) / (count(dog) + |V|)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from collections import Counter\nc = 'the cat sat on the mat the dog sat on the log'.split()\n# in P(mat | dog) có Laplace\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from collections import Counter\nc = 'the cat sat on the mat the dog sat on the log'.split()\nbi = Counter(zip(c, c[1:])); uni = Counter(c); V = len(set(c))\nprint(round((bi[('dog', 'mat')] + 1) / (uni['dog'] + V), 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '0.125'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

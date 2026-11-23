@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Embedding: biểu diễn từ và thực thể bằng vector",
+    "en": "Embeddings: representing words and entities as vectors"
+  },
+  "summary": {
+    "vi": "one-hot vs embedding, bảng tra cứu, cosine, phép loại suy vector, học embedding bằng ngữ cảnh",
+    "en": "one-hot vs embedding, lookup table, cosine, vector analogies, learning embeddings from context"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\nvocab = [\"king\", \"queen\", \"man\", \"woman\", \"apple\", \"banana\"]\n# Embedding dựng tay 3 chiều: [hoàng gia, nam tính, trái cây]\nE = np.array([\n    [0.9, 0.8, 0.0],   # king\n    [0.9, 0.1, 0.0],   # queen\n    [0.1, 0.9, 0.0],   # man\n    [0.1, 0.1, 0.0],   # woman\n    [0.0, 0.0, 0.9],   # apple\n    [0.0, 0.1, 0.8],   # banana\n])\nidx = {w: i for i, w in enumerate(vocab)}\ndef vec(w): return E[idx[w]]                       # embedding = tra cứu một HÀNG của ma trận\n\ndef cos(a, b):\n    return float(a @ b / (np.linalg.norm(a) * np.linalg.norm(b)))\n\nprint(\"king~queen:\", round(cos(vec(\"king\"), vec(\"queen\")), 2))\nprint(\"king~apple:\", round(cos(vec(\"king\"), vec(\"apple\")), 2))\n\n# Loại suy: king - man + woman ≈ ?\ntarget = vec(\"king\") - vec(\"man\") + vec(\"woman\")\ncands = [w for w in vocab if w not in (\"king\", \"man\", \"woman\")]\nprint(\"king - man + woman =\", max(cands, key=lambda w: cos(target, vec(w))))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Dùng ma trận E trong ví dụ, in cosine giữa 'apple' và 'banana' làm tròn 2 chữ số.",
+        "en": "Using the matrix E in the example, print the cosine between 'apple' and 'banana' rounded to 2 digits."
+      },
+      "hint": {
+        "vi": "cos(a, b) = a·b / (‖a‖‖b‖).",
+        "en": "cos(a, b) = a·b / (‖a‖‖b‖)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nE = np.array([[0.9,0.8,0.0],[0.9,0.1,0.0],[0.1,0.9,0.0],[0.1,0.1,0.0],[0.0,0.0,0.9],[0.0,0.1,0.8]])\nvocab = ['king','queen','man','woman','apple','banana']\n# in cosine(apple, banana)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nE = np.array([[0.9,0.8,0.0],[0.9,0.1,0.0],[0.1,0.9,0.0],[0.1,0.1,0.0],[0.0,0.0,0.9],[0.0,0.1,0.8]])\nvocab = ['king','queen','man','woman','apple','banana']\na, b = E[vocab.index('apple')], E[vocab.index('banana')]\nprint(round(float(a @ b / (np.linalg.norm(a) * np.linalg.norm(b))), 2))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '0.99'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Với cùng E, tính vector king − man + woman rồi in từ (trừ king, man, woman) có cosine lớn nhất với vector đó.",
+        "en": "With the same E, compute the vector king − man + woman then print the word (excluding king, man, woman) with the largest cosine to it."
+      },
+      "hint": {
+        "vi": "max(candidates, key=lambda w: cos(target, E[idx[w]])).",
+        "en": "max(candidates, key=lambda w: cos(target, E[idx[w]]))."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nE = np.array([[0.9,0.8,0.0],[0.9,0.1,0.0],[0.1,0.9,0.0],[0.1,0.1,0.0],[0.0,0.0,0.9],[0.0,0.1,0.8]])\nvocab = ['king','queen','man','woman','apple','banana']\n# in từ loại suy\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nE = np.array([[0.9,0.8,0.0],[0.9,0.1,0.0],[0.1,0.9,0.0],[0.1,0.1,0.0],[0.0,0.0,0.9],[0.0,0.1,0.8]])\nvocab = ['king','queen','man','woman','apple','banana']\ni = {w: k for k, w in enumerate(vocab)}\nt = E[i['king']] - E[i['man']] + E[i['woman']]\ncos = lambda a, b: a @ b / (np.linalg.norm(a) * np.linalg.norm(b))\nprint(max([w for w in vocab if w not in ('king', 'man', 'woman')], key=lambda w: cos(t, E[i[w]])))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == 'queen'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

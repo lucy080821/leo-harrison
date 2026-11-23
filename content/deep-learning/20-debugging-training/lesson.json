@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Gỡ lỗi huấn luyện: kiểm tra gradient và danh sách kiểm tra",
+    "en": "Debugging training: gradient checking and a checklist"
+  },
+  "summary": {
+    "vi": "kiểm tra gradient bằng sai phân trung tâm, overfit một batch, mất mát ban đầu, lỗi thường gặp",
+    "en": "gradient checking with central differences, overfitting one batch, initial loss, common bugs"
+  },
+  "minutes": 35,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\n\ndef loss_fn(w, X, y):\n    p = 1 / (1 + np.exp(-(X @ w)))\n    return float(-(y * np.log(p) + (1 - y) * np.log(1 - p)).mean())\n\ndef grad_fn(w, X, y):                                  # gradient GIẢI TÍCH\n    p = 1 / (1 + np.exp(-(X @ w)))\n    return X.T @ (p - y) / len(y)\n\ndef numeric_grad(w, X, y, h=1e-5):                     # sai phân trung tâm\n    g = np.zeros_like(w)\n    for i in range(len(w)):\n        e = np.zeros_like(w); e[i] = h\n        g[i] = (loss_fn(w + e, X, y) - loss_fn(w - e, X, y)) / (2 * h)\n    return g\n\nrng = np.random.default_rng(0)\nX = rng.normal(size=(20, 4)); y = (rng.random(20) > 0.5).astype(float); w = rng.normal(size=4)\n\na, n = grad_fn(w, X, y), numeric_grad(w, X, y)\nrel = np.linalg.norm(a - n) / (np.linalg.norm(a) + np.linalg.norm(n))\nprint(\"sai số tương đối:\", float(f\"{rel:.1e}\"), \"-> gradient đúng\" if rel < 1e-6 else \"-> CÓ LỖI\")\n\n# Overfit một batch nhỏ: mất mát phải về gần 0, nếu không có bug\nXs, ys = X[:4], y[:4]\nw2 = np.zeros(4)\nfor _ in range(2000):\n    w2 -= 1.0 * grad_fn(w2, Xs, ys)\nprint(\"mất mát sau khi overfit 4 mẫu:\", round(loss_fn(w2, Xs, ys), 3))\nprint(\"mất mát ban đầu ≈ ln 2 =\", round(loss_fn(np.zeros(4), X, y), 3))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Cài numeric_grad cho f(w) = Σ w² bằng sai phân trung tâm (h = 1e-5) tại w = [1, 2, 3]. In gradient (làm tròn 3 chữ số, list). (Gradient giải tích là 2w.)",
+        "en": "Implement numeric_grad for f(w) = Σ w² using central differences (h = 1e-5) at w = [1, 2, 3]. Print the gradient (rounded to 3 digits, a list). (The analytic gradient is 2w.)"
+      },
+      "hint": {
+        "vi": "(f(w + e) − f(w − e)) / (2h).",
+        "en": "(f(w + e) − f(w − e)) / (2h)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nf = lambda w: float((w ** 2).sum())\nw = np.array([1.0, 2.0, 3.0])\n# in gradient số\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nf = lambda w: float((w ** 2).sum())\nw = np.array([1.0, 2.0, 3.0])\nh = 1e-5\ng = np.zeros(3)\nfor i in range(3):\n    e = np.zeros(3); e[i] = h\n    g[i] = (f(w + e) - f(w - e)) / (2 * h)\nprint(np.round(g, 3).tolist())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '[2.0, 4.0, 6.0]'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Mất mát entropy chéo nhị phân khi mô hình đoán đều (p = 0.5 cho mọi mẫu) bằng ln 2. In giá trị làm tròn 4 chữ số. Rồi in True nếu với 10 lớp (đoán đều 1/10) mất mát ban đầu mong đợi bằng ln 10 ≈ 2.3026 (làm tròn 4 chữ số).",
+        "en": "The binary cross-entropy loss when the model guesses uniformly (p = 0.5 for every sample) equals ln 2. Print the value rounded to 4 digits. Then print True if for 10 classes (uniform 1/10) the expected initial loss equals ln 10 ≈ 2.3026 (rounded to 4 digits)."
+      },
+      "hint": {
+        "vi": "np.log(2), np.log(10).",
+        "en": "np.log(2), np.log(10)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\n# in ln 2 rồi True/False cho ln 10\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nprint(round(float(np.log(2)), 4))\nprint(round(float(np.log(10)), 4) == 2.3026)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '0.6931\\nTrue'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}
