@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Chiến lược kiểm định chéo: Stratified, Group và theo thời gian",
+    "en": "Cross-validation strategies: stratified, group and time-based"
+  },
+  "summary": {
+    "vi": "KFold, StratifiedKFold, GroupKFold, TimeSeriesSplit, rò rỉ do chia sai, cross_val_score",
+    "en": "KFold, StratifiedKFold, GroupKFold, TimeSeriesSplit, leakage from wrong splits, cross_val_score"
+  },
+  "minutes": 35,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\nfrom sklearn.model_selection import GroupKFold, StratifiedKFold, TimeSeriesSplit\n\ny = np.array([0] * 90 + [1] * 10)             # 10% lớp dương\nX = np.arange(100).reshape(-1, 1)\n\n# 1) Stratified: mỗi fold giữ đúng tỷ lệ lớp\nskf = StratifiedKFold(n_splits=5, shuffle=True, random_state=0)\nprint(\"số dương mỗi fold kiểm tra:\", [int(y[te].sum()) for _, te in skf.split(X, y)])\n\n# 2) Group: cùng một khách hàng KHÔNG được vừa ở train vừa ở test\ngroups = np.repeat(np.arange(20), 5)           # 20 khách, mỗi khách 5 dòng\nfor tr, te in GroupKFold(n_splits=4).split(X, y, groups):\n    assert not set(groups[tr]) & set(groups[te])\nprint(\"GroupKFold: không khách nào bị chia đôi\")\n\n# 3) Time series: luôn huấn luyện bằng quá khứ, kiểm tra bằng tương lai\nfor tr, te in TimeSeriesSplit(n_splits=4).split(X):\n    print(\"train\", tr[0], \"-\", tr[-1], \"| test\", te[0], \"-\", te[-1])\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Với y có 90 số 0 và 10 số 1, dùng StratifiedKFold(5, shuffle=True, random_state=0). In danh sách số lớp dương trong mỗi fold kiểm tra.",
+        "en": "With y holding 90 zeros and 10 ones, use StratifiedKFold(5, shuffle=True, random_state=0). Print the list of positive counts in each test fold."
+      },
+      "hint": {
+        "vi": "[int(y[te].sum()) for _, te in skf.split(X, y)].",
+        "en": "[int(y[te].sum()) for _, te in skf.split(X, y)]."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nfrom sklearn.model_selection import StratifiedKFold\ny = np.array([0] * 90 + [1] * 10)\nX = np.arange(100).reshape(-1, 1)\n# in số dương mỗi fold\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nfrom sklearn.model_selection import StratifiedKFold\ny = np.array([0] * 90 + [1] * 10)\nX = np.arange(100).reshape(-1, 1)\nskf = StratifiedKFold(n_splits=5, shuffle=True, random_state=0)\nprint([int(y[te].sum()) for _, te in skf.split(X, y)])\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '[2, 2, 2, 2, 2]'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Với 100 mẫu theo thời gian, dùng TimeSeriesSplit(n_splits=4). In danh sách kích thước tập huấn luyện của 4 lần chia.",
+        "en": "With 100 time-ordered samples, use TimeSeriesSplit(n_splits=4). Print the list of training-set sizes of the 4 splits."
+      },
+      "hint": {
+        "vi": "[len(tr) for tr, te in tscv.split(X)].",
+        "en": "[len(tr) for tr, te in tscv.split(X)]."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nfrom sklearn.model_selection import TimeSeriesSplit\nX = np.arange(100).reshape(-1, 1)\n# in kích thước tập huấn luyện mỗi lần\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nfrom sklearn.model_selection import TimeSeriesSplit\nX = np.arange(100).reshape(-1, 1)\nprint([len(tr) for tr, te in TimeSeriesSplit(n_splits=4).split(X)])\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '[20, 40, 60, 80]'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

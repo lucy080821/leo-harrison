@@ -1,0 +1,93 @@
+{
+  "title": {
+    "vi": "Phân loại văn bản với TF-IDF và hồi quy logistic",
+    "en": "Text classification with TF-IDF and logistic regression"
+  },
+  "summary": {
+    "vi": "CountVectorizer, TfidfVectorizer, n-gram, Pipeline văn bản, từ có trọng số lớn nhất, giới hạn",
+    "en": "CountVectorizer, TfidfVectorizer, n-grams, a text Pipeline, the most weighted words, limits"
+  },
+  "minutes": 35,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np, pandas as pd\nfrom sklearn.feature_extraction.text import TfidfVectorizer\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.pipeline import make_pipeline\n\nr = pd.read_csv(\"reviews.csv\")\nr = r[r[\"rating\"] != 3]                              # bỏ trung tính để bài toán nhị phân\ny = (r[\"rating\"] >= 4).astype(int)                   # 1 = tích cực\nX_tr, X_te, y_tr, y_te = train_test_split(r[\"text\"], y, test_size=0.3, stratify=y, random_state=0)\n\nclf = make_pipeline(TfidfVectorizer(ngram_range=(1, 2), min_df=2), LogisticRegression(max_iter=1000))\nclf.fit(X_tr, y_tr)\nprint(\"accuracy kiểm tra:\", round(clf.score(X_te, y_te), 2))\n\n# Từ nào đẩy dự đoán về tích cực / tiêu cực nhiều nhất?\nvec, lr = clf.named_steps[\"tfidfvectorizer\"], clf.named_steps[\"logisticregression\"]\nwords = np.array(vec.get_feature_names_out())\norder = np.argsort(lr.coef_[0])\nprint(\"tiêu cực:\", list(words[order[:3]]))\nprint(\"tích cực:\", list(words[order[-3:]]))\nprint(clf.predict([\"fast delivery but terrible quality\"]))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Với reviews.csv (bỏ rating 3, nhãn = rating >= 4), dùng TfidfVectorizer() mặc định trên toàn bộ cột text. In kích thước từ vựng (len(vectorizer.vocabulary_)).",
+        "en": "With reviews.csv (drop rating 3, label = rating >= 4), use a default TfidfVectorizer() on the whole text column. Print the vocabulary size (len(vectorizer.vocabulary_))."
+      },
+      "hint": {
+        "vi": "v.fit(texts); len(v.vocabulary_).",
+        "en": "v.fit(texts); len(v.vocabulary_)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nfrom sklearn.feature_extraction.text import TfidfVectorizer\nr = pd.read_csv('reviews.csv')\nr = r[r['rating'] != 3]\n# in kích thước từ vựng\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nfrom sklearn.feature_extraction.text import TfidfVectorizer\nr = pd.read_csv('reviews.csv')\nr = r[r['rating'] != 3]\nv = TfidfVectorizer().fit(r['text'])\nprint(len(v.vocabulary_))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '59'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Chia 70/30 (stratify, random_state=0), huấn luyện pipeline TfidfVectorizer + LogisticRegression(max_iter=1000). In True nếu accuracy kiểm tra >= 0.9, ngược lại False.",
+        "en": "Split 70/30 (stratify, random_state=0), train a TfidfVectorizer + LogisticRegression(max_iter=1000) pipeline. Print True if the test accuracy is >= 0.9, else False."
+      },
+      "hint": {
+        "vi": "make_pipeline(TfidfVectorizer(), LogisticRegression(max_iter=1000)).",
+        "en": "make_pipeline(TfidfVectorizer(), LogisticRegression(max_iter=1000))."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nfrom sklearn.feature_extraction.text import TfidfVectorizer\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.pipeline import make_pipeline\nr = pd.read_csv('reviews.csv')\nr = r[r['rating'] != 3]\ny = (r['rating'] >= 4).astype(int)\n# in True/False\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nfrom sklearn.feature_extraction.text import TfidfVectorizer\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.pipeline import make_pipeline\nr = pd.read_csv('reviews.csv')\nr = r[r['rating'] != 3]\ny = (r['rating'] >= 4).astype(int)\nX_tr, X_te, y_tr, y_te = train_test_split(r['text'], y, test_size=0.3, stratify=y, random_state=0)\nclf = make_pipeline(TfidfVectorizer(), LogisticRegression(max_iter=1000)).fit(X_tr, y_tr)\nprint(bool(clf.score(X_te, y_te) >= 0.9))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == 'True'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "data": [
+    "reviews.csv"
+  ]
+}

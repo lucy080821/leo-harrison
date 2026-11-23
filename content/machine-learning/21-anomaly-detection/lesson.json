@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Phát hiện bất thường: Isolation Forest và giới hạn",
+    "en": "Anomaly detection: Isolation Forest and its limits"
+  },
+  "summary": {
+    "vi": "không có nhãn, IsolationForest, contamination, điểm bất thường, đánh giá khi có ít nhãn",
+    "en": "unlabelled data, IsolationForest, contamination, anomaly scores, evaluating with few labels"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\nfrom sklearn.ensemble import IsolationForest\n\nrng = np.random.default_rng(0)\nnormal = rng.normal(0, 1, size=(300, 2))               # hành vi bình thường\nodd = rng.uniform(4, 6, size=(6, 2))                    # vài điểm bất thường xa hẳn\nX = np.vstack([normal, odd])\ntruth = np.r_[np.zeros(300), np.ones(6)]\n\niso = IsolationForest(n_estimators=200, contamination=6 / 306, random_state=0).fit(X)\npred = (iso.predict(X) == -1).astype(int)              # -1 = bất thường\nscore = -iso.score_samples(X)                          # càng lớn càng bất thường\n\nprint(\"số điểm bị đánh dấu:\", int(pred.sum()))\nprint(\"bắt đúng bao nhiêu trong 6 điểm thật:\", int((pred * truth).sum()))\nprint(\"điểm bất thường cao nhất thuộc nhóm bất thường:\", bool(truth[score.argmax()] == 1))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tạo 300 điểm bình thường N(0,1) hai chiều và 6 điểm uniform(4,6) (rng = default_rng(0), normal trước rồi odd). Dùng IsolationForest(n_estimators=200, contamination=6/306, random_state=0). In số điểm bị đánh dấu là bất thường (predict == −1).",
+        "en": "Create 300 normal 2-D points N(0,1) and 6 uniform(4,6) points (rng = default_rng(0), normal first then odd). Use IsolationForest(n_estimators=200, contamination=6/306, random_state=0). Print the number of points flagged as anomalies (predict == −1)."
+      },
+      "hint": {
+        "vi": "contamination = tỷ lệ bất thường kỳ vọng.",
+        "en": "contamination = the expected anomaly rate."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nfrom sklearn.ensemble import IsolationForest\nrng = np.random.default_rng(0)\nnormal = rng.normal(0, 1, size=(300, 2))\nodd = rng.uniform(4, 6, size=(6, 2))\nX = np.vstack([normal, odd])\n# in số điểm bị đánh dấu\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nfrom sklearn.ensemble import IsolationForest\nrng = np.random.default_rng(0)\nnormal = rng.normal(0, 1, size=(300, 2))\nodd = rng.uniform(4, 6, size=(6, 2))\nX = np.vstack([normal, odd])\nm = IsolationForest(n_estimators=200, contamination=6 / 306, random_state=0).fit(X)\nprint(int((m.predict(X) == -1).sum()))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '6'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Cùng dữ liệu, in True nếu 6 điểm có điểm bất thường (-score_samples) CAO NHẤT chính là 6 điểm odd (chỉ số 300 đến 305), ngược lại False.",
+        "en": "With the same data, print True if the 6 points with the HIGHEST anomaly score (-score_samples) are exactly the 6 odd points (indices 300 to 305), else False."
+      },
+      "hint": {
+        "vi": "np.argsort(score)[-6:] rồi so sánh tập hợp.",
+        "en": "np.argsort(score)[-6:] then compare as sets."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nfrom sklearn.ensemble import IsolationForest\nrng = np.random.default_rng(0)\nnormal = rng.normal(0, 1, size=(300, 2))\nodd = rng.uniform(4, 6, size=(6, 2))\nX = np.vstack([normal, odd])\nm = IsolationForest(n_estimators=200, contamination=6 / 306, random_state=0).fit(X)\n# in True/False\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np\nfrom sklearn.ensemble import IsolationForest\nrng = np.random.default_rng(0)\nnormal = rng.normal(0, 1, size=(300, 2))\nodd = rng.uniform(4, 6, size=(6, 2))\nX = np.vstack([normal, odd])\nm = IsolationForest(n_estimators=200, contamination=6 / 306, random_state=0).fit(X)\ntop = set(np.argsort(-m.score_samples(X))[-6:].tolist())\nprint(top == set(range(300, 306)))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == 'True'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

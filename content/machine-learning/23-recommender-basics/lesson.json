@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Hệ gợi ý cơ bản: tương đồng cosine và lọc cộng tác",
+    "en": "Recommender basics: cosine similarity and collaborative filtering"
+  },
+  "summary": {
+    "vi": "ma trận người dùng–sản phẩm, cosine similarity, gợi ý dựa trên sản phẩm, cold-start, đánh giá",
+    "en": "user–item matrix, cosine similarity, item-based recommendation, cold start, evaluation"
+  },
+  "minutes": 35,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\nimport pandas as pd\nfrom sklearn.metrics.pairwise import cosine_similarity\n\n# Ma trận người dùng x sản phẩm: 1 = đã mua\nitems = [\"Phone\", \"Case\", \"Charger\", \"Laptop\", \"Mouse\", \"Desk\"]\nM = pd.DataFrame([\n    [1, 1, 1, 0, 0, 0],\n    [1, 1, 0, 0, 0, 0],\n    [1, 0, 1, 0, 0, 0],\n    [0, 0, 0, 1, 1, 0],\n    [0, 0, 0, 1, 1, 1],\n    [0, 0, 0, 1, 0, 1],\n    [1, 1, 1, 0, 0, 0],\n], columns=items)\n\n# Tương đồng giữa các SẢN PHẨM = cosine giữa các cột (người mua chung)\nsim = pd.DataFrame(cosine_similarity(M.T), index=items, columns=items).round(2)\nprint(sim.loc[\"Phone\"].drop(\"Phone\").sort_values(ascending=False).head(2).to_dict())\n\n# Gợi ý cho một người dùng: cộng điểm tương đồng của các món đã mua, bỏ món đã có\ndef recommend(user_row, k=2):\n    owned = user_row[user_row == 1].index\n    score = sim[owned].sum(axis=1).drop(owned)\n    return list(score.sort_values(ascending=False).head(k).index)\n\nprint(\"gợi ý cho người mua Laptop:\", recommend(pd.Series([0, 0, 0, 1, 0, 0], index=items)))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Với ma trận người dùng × sản phẩm trong ví dụ, tính cosine similarity giữa hai cột 'Phone' và 'Case' và in kết quả làm tròn 2 chữ số.",
+        "en": "With the user × item matrix in the example, compute the cosine similarity between the columns 'Phone' and 'Case' and print it rounded to 2 digits."
+      },
+      "hint": {
+        "vi": "cosine_similarity(M[['Phone', 'Case']].T)[0, 1].",
+        "en": "cosine_similarity(M[['Phone', 'Case']].T)[0, 1]."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nfrom sklearn.metrics.pairwise import cosine_similarity\nitems = ['Phone', 'Case', 'Charger', 'Laptop', 'Mouse', 'Desk']\nM = pd.DataFrame([[1,1,1,0,0,0],[1,1,0,0,0,0],[1,0,1,0,0,0],[0,0,0,1,1,0],[0,0,0,1,1,1],[0,0,0,1,0,1],[1,1,1,0,0,0]], columns=items)\n# in cosine(Phone, Case)\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nfrom sklearn.metrics.pairwise import cosine_similarity\nitems = ['Phone', 'Case', 'Charger', 'Laptop', 'Mouse', 'Desk']\nM = pd.DataFrame([[1,1,1,0,0,0],[1,1,0,0,0,0],[1,0,1,0,0,0],[0,0,0,1,1,0],[0,0,0,1,1,1],[0,0,0,1,0,1],[1,1,1,0,0,0]], columns=items)\nprint(round(float(cosine_similarity(M[['Phone', 'Case']].T)[0, 1]), 2))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '0.87'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Một người dùng mới chỉ mua 'Mouse'. Dùng tổng tương đồng của các món đã mua (cùng ma trận), in sản phẩm được gợi ý hàng đầu (không tính món đã có).",
+        "en": "A new user bought only 'Mouse'. Using the sum of similarities of owned items (same matrix), print the top recommended item (excluding owned items)."
+      },
+      "hint": {
+        "vi": "sim['Mouse'].drop('Mouse').idxmax().",
+        "en": "sim['Mouse'].drop('Mouse').idxmax()."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nfrom sklearn.metrics.pairwise import cosine_similarity\nitems = ['Phone', 'Case', 'Charger', 'Laptop', 'Mouse', 'Desk']\nM = pd.DataFrame([[1,1,1,0,0,0],[1,1,0,0,0,0],[1,0,1,0,0,0],[0,0,0,1,1,0],[0,0,0,1,1,1],[0,0,0,1,0,1],[1,1,1,0,0,0]], columns=items)\nsim = pd.DataFrame(cosine_similarity(M.T), index=items, columns=items)\n# in sản phẩm gợi ý hàng đầu\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nfrom sklearn.metrics.pairwise import cosine_similarity\nitems = ['Phone', 'Case', 'Charger', 'Laptop', 'Mouse', 'Desk']\nM = pd.DataFrame([[1,1,1,0,0,0],[1,1,0,0,0,0],[1,0,1,0,0,0],[0,0,0,1,1,0],[0,0,0,1,1,1],[0,0,0,1,0,1],[1,1,1,0,0,0]], columns=items)\nsim = pd.DataFrame(cosine_similarity(M.T), index=items, columns=items)\nprint(sim['Mouse'].drop('Mouse').idxmax())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == 'Laptop'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

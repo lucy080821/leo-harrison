@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "ROC, Precision-Recall và chọn ngưỡng quyết định",
+    "en": "ROC, precision-recall and choosing the decision threshold"
+  },
+  "summary": {
+    "vi": "predict_proba, roc_auc, precision_recall_curve, chọn ngưỡng theo mục tiêu recall hoặc chi phí",
+    "en": "predict_proba, roc_auc, precision_recall_curve, picking a threshold by recall target or cost"
+  },
+  "minutes": 35,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\nfrom sklearn.datasets import load_breast_cancer\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.metrics import precision_recall_curve, precision_score, recall_score, roc_auc_score\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.pipeline import make_pipeline\nfrom sklearn.preprocessing import StandardScaler\n\nX, y = load_breast_cancer(return_X_y=True)\ny = 1 - y                                     # 1 = ác tính (lớp cần bắt)\nX_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.3, stratify=y, random_state=0)\nmodel = make_pipeline(StandardScaler(), LogisticRegression(max_iter=1000)).fit(X_tr, y_tr)\nproba = model.predict_proba(X_te)[:, 1]\nprint(\"ROC-AUC:\", round(roc_auc_score(y_te, proba), 3))\n\n# Mỗi ngưỡng cho một cặp (precision, recall)\nprec, rec, thr = precision_recall_curve(y_te, proba)\n\n# Mục tiêu nghiệp vụ: recall >= 0.98 (bỏ sót ung thư rất đắt) -> ngưỡng cao nhất thoả mãn\nok = np.where(rec[:-1] >= 0.98)[0]\nt = thr[ok[-1]]\npred = (proba >= t).astype(int)\nprint(\"ngưỡng chọn:\", round(float(t), 3), \"| recall:\", round(recall_score(y_te, pred), 3), \"| precision:\", round(precision_score(y_te, pred), 3))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Huấn luyện pipeline StandardScaler + LogisticRegression trên ung thư vú (1 = ác tính, tức y = 1 − target; chia 70/30, stratify, random_state=0). In ROC-AUC của tập kiểm tra làm tròn 2 chữ số.",
+        "en": "Train a StandardScaler + LogisticRegression pipeline on the breast cancer data (1 = malignant, i.e. y = 1 − target; 70/30 split, stratify, random_state=0). Print the test-set ROC-AUC rounded to 2 digits."
+      },
+      "hint": {
+        "vi": "roc_auc_score(y_te, model.predict_proba(X_te)[:, 1]).",
+        "en": "roc_auc_score(y_te, model.predict_proba(X_te)[:, 1])."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_breast_cancer\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.metrics import roc_auc_score\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.pipeline import make_pipeline\nfrom sklearn.preprocessing import StandardScaler\nX, y = load_breast_cancer(return_X_y=True)\ny = 1 - y\n# in ROC-AUC\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_breast_cancer\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.metrics import roc_auc_score\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.pipeline import make_pipeline\nfrom sklearn.preprocessing import StandardScaler\nX, y = load_breast_cancer(return_X_y=True)\ny = 1 - y\nX_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.3, stratify=y, random_state=0)\nm = make_pipeline(StandardScaler(), LogisticRegression(max_iter=1000)).fit(X_tr, y_tr)\nprint(round(roc_auc_score(y_te, m.predict_proba(X_te)[:, 1]), 2))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '0.99'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Với mô hình trên, quét ngưỡng 0.5, 0.3, 0.1 trên xác suất. In True nếu recall KHÔNG giảm khi hạ ngưỡng (recall(0.1) >= recall(0.3) >= recall(0.5)), ngược lại False.",
+        "en": "With the model above, sweep thresholds 0.5, 0.3, 0.1 on the probability. Print True if recall does NOT decrease as the threshold drops (recall(0.1) >= recall(0.3) >= recall(0.5)), else False."
+      },
+      "hint": {
+        "vi": "pred = (proba >= t).astype(int).",
+        "en": "pred = (proba >= t).astype(int)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_breast_cancer\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.metrics import recall_score\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.pipeline import make_pipeline\nfrom sklearn.preprocessing import StandardScaler\nX, y = load_breast_cancer(return_X_y=True)\ny = 1 - y\nX_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.3, stratify=y, random_state=0)\nm = make_pipeline(StandardScaler(), LogisticRegression(max_iter=1000)).fit(X_tr, y_tr)\nproba = m.predict_proba(X_te)[:, 1]\n# in True/False\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_breast_cancer\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.metrics import recall_score\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.pipeline import make_pipeline\nfrom sklearn.preprocessing import StandardScaler\nX, y = load_breast_cancer(return_X_y=True)\ny = 1 - y\nX_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.3, stratify=y, random_state=0)\nm = make_pipeline(StandardScaler(), LogisticRegression(max_iter=1000)).fit(X_tr, y_tr)\nproba = m.predict_proba(X_te)[:, 1]\nr = [recall_score(y_te, (proba >= t).astype(int)) for t in (0.5, 0.3, 0.1)]\nprint(r[2] >= r[1] >= r[0])\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == 'True'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

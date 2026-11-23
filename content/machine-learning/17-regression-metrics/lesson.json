@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Đánh giá mô hình hồi quy: MAE, RMSE, R² và phân tích phần dư",
+    "en": "Evaluating regression models: MAE, RMSE, R² and residual analysis"
+  },
+  "summary": {
+    "vi": "baseline, MAE, RMSE, R², dự đoán so thực tế, phần dư theo dự đoán, log-target",
+    "en": "baseline, MAE, RMSE, R², predicted vs actual, residuals vs predicted, log target"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\nfrom sklearn.datasets import load_diabetes\nfrom sklearn.dummy import DummyRegressor\nfrom sklearn.ensemble import GradientBoostingRegressor\nfrom sklearn.linear_model import Ridge\nfrom sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score\nfrom sklearn.model_selection import train_test_split\n\nX, y = load_diabetes(return_X_y=True)\nX_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.3, random_state=0)\n\nmodels = {\n    \"baseline (trung bình)\": DummyRegressor(),\n    \"Ridge\": Ridge(alpha=1.0),\n    \"GradientBoosting\": GradientBoostingRegressor(random_state=0),\n}\nfor name, m in models.items():\n    p = m.fit(X_tr, y_tr).predict(X_te)\n    print(name.ljust(22), \"MAE\", round(mean_absolute_error(y_te, p), 1),\n          \"| RMSE\", round(float(np.sqrt(mean_squared_error(y_te, p))), 1), \"| R²\", round(r2_score(y_te, p), 2))\n\n# Phần dư: nên quanh 0, không có mẫu hình theo giá trị dự đoán\np = models[\"Ridge\"].predict(X_te)\nresid = y_te - p\nprint(\"trung bình phần dư:\", round(float(resid.mean()), 1))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Trên bộ diabetes (chia 70/30, random_state=0), huấn luyện Ridge(alpha=1.0). In MAE của tập kiểm tra làm tròn 0 chữ số thập phân (round(x)).",
+        "en": "On the diabetes data (70/30 split, random_state=0), train Ridge(alpha=1.0). Print the test-set MAE rounded to an integer (round(x))."
+      },
+      "hint": {
+        "vi": "mean_absolute_error(y_te, model.predict(X_te)).",
+        "en": "mean_absolute_error(y_te, model.predict(X_te))."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_diabetes\nfrom sklearn.linear_model import Ridge\nfrom sklearn.metrics import mean_absolute_error\nfrom sklearn.model_selection import train_test_split\nX, y = load_diabetes(return_X_y=True)\nX_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.3, random_state=0)\n# in MAE làm tròn\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_diabetes\nfrom sklearn.linear_model import Ridge\nfrom sklearn.metrics import mean_absolute_error\nfrom sklearn.model_selection import train_test_split\nX, y = load_diabetes(return_X_y=True)\nX_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.3, random_state=0)\nm = Ridge(alpha=1.0).fit(X_tr, y_tr)\nprint(round(mean_absolute_error(y_te, m.predict(X_te))))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '46'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "In True nếu Ridge có R² tập kiểm tra LỚN HƠN baseline DummyRegressor() (R² của baseline xấp xỉ 0 hoặc âm), ngược lại False.",
+        "en": "Print True if Ridge's test R² is GREATER than the DummyRegressor() baseline's (the baseline's R² is about 0 or negative), else False."
+      },
+      "hint": {
+        "vi": "r2_score(y_te, model.fit(X_tr, y_tr).predict(X_te)).",
+        "en": "r2_score(y_te, model.fit(X_tr, y_tr).predict(X_te))."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_diabetes\nfrom sklearn.dummy import DummyRegressor\nfrom sklearn.linear_model import Ridge\nfrom sklearn.metrics import r2_score\nfrom sklearn.model_selection import train_test_split\nX, y = load_diabetes(return_X_y=True)\nX_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.3, random_state=0)\n# in True/False\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_diabetes\nfrom sklearn.dummy import DummyRegressor\nfrom sklearn.linear_model import Ridge\nfrom sklearn.metrics import r2_score\nfrom sklearn.model_selection import train_test_split\nX, y = load_diabetes(return_X_y=True)\nX_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.3, random_state=0)\nb = r2_score(y_te, DummyRegressor().fit(X_tr, y_tr).predict(X_te))\nr = r2_score(y_te, Ridge(alpha=1.0).fit(X_tr, y_tr).predict(X_te))\nprint(r > b)\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == 'True'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

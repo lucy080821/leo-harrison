@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Giải thích mô hình: permutation importance và partial dependence",
+    "en": "Interpreting models: permutation importance and partial dependence"
+  },
+  "summary": {
+    "vi": "importance của cây vs permutation, partial dependence, hệ số tuyến tính, giới hạn của giải thích",
+    "en": "tree importance vs permutation, partial dependence, linear coefficients, limits of explanation"
+  },
+  "minutes": 35,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np\nfrom sklearn.datasets import load_wine\nfrom sklearn.ensemble import RandomForestClassifier\nfrom sklearn.inspection import permutation_importance\nfrom sklearn.model_selection import train_test_split\n\ndata = load_wine()\nX_tr, X_te, y_tr, y_te = train_test_split(data.data, data.target, test_size=0.3, stratify=data.target, random_state=0)\nrf = RandomForestClassifier(n_estimators=200, random_state=0).fit(X_tr, y_tr)\nprint(\"accuracy kiểm tra:\", round(rf.score(X_te, y_te), 2))\n\n# 1) Importance dựa trên cây (nhanh, nhưng thiên lệch với đặc trưng nhiều giá trị)\ntop_tree = np.argsort(rf.feature_importances_)[::-1][:3]\nprint(\"top theo cây:\", [data.feature_names[i] for i in top_tree])\n\n# 2) Permutation importance TRÊN TẬP KIỂM TRA: xáo từng cột, đo accuracy giảm bao nhiêu\nr = permutation_importance(rf, X_te, y_te, n_repeats=20, random_state=0)\ntop_perm = np.argsort(r.importances_mean)[::-1][:3]\nprint(\"top theo permutation:\", [data.feature_names[i] for i in top_perm])\nprint(\"đặc trưng nào giảm accuracy nhiều nhất:\", round(float(r.importances_mean.max()), 3))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Huấn luyện RandomForestClassifier(n_estimators=200, random_state=0) trên bộ wine (chia 70/30, stratify, random_state=0). In accuracy tập kiểm tra làm tròn 2 chữ số.",
+        "en": "Train RandomForestClassifier(n_estimators=200, random_state=0) on the wine data (70/30 split, stratify, random_state=0). Print the test accuracy rounded to 2 digits."
+      },
+      "hint": {
+        "vi": "rf.score(X_te, y_te).",
+        "en": "rf.score(X_te, y_te)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_wine\nfrom sklearn.ensemble import RandomForestClassifier\nfrom sklearn.model_selection import train_test_split\nX, y = load_wine(return_X_y=True)\n# in accuracy\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_wine\nfrom sklearn.ensemble import RandomForestClassifier\nfrom sklearn.model_selection import train_test_split\nX, y = load_wine(return_X_y=True)\nX_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.3, stratify=y, random_state=0)\nprint(round(RandomForestClassifier(n_estimators=200, random_state=0).fit(X_tr, y_tr).score(X_te, y_te), 2))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '1.0'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Tính permutation_importance (n_repeats=20, random_state=0) trên tập kiểm tra. In True nếu importance trung bình LỚN NHẤT lớn hơn 0.01, ngược lại False (tức là có ít nhất một đặc trưng thực sự quan trọng).",
+        "en": "Compute permutation_importance (n_repeats=20, random_state=0) on the test set. Print True if the LARGEST mean importance exceeds 0.01, else False (i.e. at least one feature really matters)."
+      },
+      "hint": {
+        "vi": "r.importances_mean.max() > 0.01.",
+        "en": "r.importances_mean.max() > 0.01."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_wine\nfrom sklearn.ensemble import RandomForestClassifier\nfrom sklearn.inspection import permutation_importance\nfrom sklearn.model_selection import train_test_split\nX, y = load_wine(return_X_y=True)\nX_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.3, stratify=y, random_state=0)\nrf = RandomForestClassifier(n_estimators=200, random_state=0).fit(X_tr, y_tr)\n# in True/False\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "from sklearn.datasets import load_wine\nfrom sklearn.ensemble import RandomForestClassifier\nfrom sklearn.inspection import permutation_importance\nfrom sklearn.model_selection import train_test_split\nX, y = load_wine(return_X_y=True)\nX_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.3, stratify=y, random_state=0)\nrf = RandomForestClassifier(n_estimators=200, random_state=0).fit(X_tr, y_tr)\nr = permutation_importance(rf, X_te, y_te, n_repeats=20, random_state=0)\nprint(bool(r.importances_mean.max() > 0.01))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == 'True'"
+        }
+      ]
+    }
+  ],
+  "engine": "python"
+}

@@ -1,0 +1,93 @@
+{
+  "title": {
+    "vi": "Học máy cho chuỗi thời gian: đặc trưng trễ và kiểm định theo thời gian",
+    "en": "Machine learning for time series: lag features and time-based validation"
+  },
+  "summary": {
+    "vi": "lag, rolling, đặc trưng lịch, chia theo thời gian, so với baseline seasonal naive, dự báo từng bước",
+    "en": "lags, rolling, calendar features, time-based split, beating seasonal naive, step-ahead forecasts"
+  },
+  "minutes": 40,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np, pandas as pd\nfrom sklearn.ensemble import GradientBoostingRegressor\nfrom sklearn.linear_model import Ridge\nfrom sklearn.metrics import mean_absolute_error\n\ns = pd.read_csv(\"daily_sales.csv\", parse_dates=[\"date\"]).set_index(\"date\")\n\n# Đặc trưng CHỈ dùng thông tin có sẵn tại thời điểm dự báo (shift để tránh nhìn tương lai)\nf = pd.DataFrame(index=s.index)\nfor k in (1, 7, 14):\n    f[f\"lag{k}\"] = s[\"units\"].shift(k)\nf[\"roll7\"] = s[\"units\"].shift(1).rolling(7).mean()\nf[\"dow\"] = s.index.dayofweek\nf[\"weekend\"] = (f[\"dow\"] >= 5).astype(int)\nf[\"promo\"] = s[\"promo\"]                      # kế hoạch khuyến mãi biết trước\nf[\"y\"] = s[\"units\"]\nf = f.dropna()\n\ntrain, test = f.iloc[:-60], f.iloc[-60:]       # chia theo thời gian\ncols = [c for c in f.columns if c != \"y\"]\n\nbase = test[\"lag7\"]                            # seasonal naive: giá trị đúng tuần trước\nprint(\"MAE seasonal naive:\", round(mean_absolute_error(test[\"y\"], base), 2))\nfor name, m in [(\"Ridge\", Ridge(alpha=1.0)), (\"GradBoost\", GradientBoostingRegressor(random_state=0))]:\n    m.fit(train[cols], train[\"y\"])\n    print(\"MAE\", name.ljust(10), round(mean_absolute_error(test[\"y\"], m.predict(test[cols])), 2))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tạo đặc trưng lag1 và lag7 (shift) từ cột units của daily_sales.csv, bỏ dòng thiếu (dropna), rồi in số dòng còn lại.",
+        "en": "Create lag1 and lag7 features (shift) from the units column of daily_sales.csv, drop rows with missing values (dropna), then print the number of rows left."
+      },
+      "hint": {
+        "vi": "df['units'].shift(7) làm mất 7 dòng đầu.",
+        "en": "df['units'].shift(7) loses the first 7 rows."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\ns = pd.read_csv('daily_sales.csv')\n# tạo lag1, lag7, dropna, in số dòng\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\ns = pd.read_csv('daily_sales.csv')\ns['lag1'] = s['units'].shift(1)\ns['lag7'] = s['units'].shift(7)\nprint(len(s.dropna()))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '723'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Với đặc trưng lag1, lag7, dow (thứ trong tuần), promo và 60 ngày cuối làm kiểm tra, huấn luyện Ridge(alpha=1.0) và so MAE với baseline lag7. In True nếu Ridge TỐT HƠN (MAE nhỏ hơn) baseline.",
+        "en": "With features lag1, lag7, dow (weekday), promo and the last 60 days as test, train Ridge(alpha=1.0) and compare its MAE with the lag7 baseline. Print True if Ridge is BETTER (smaller MAE)."
+      },
+      "hint": {
+        "vi": "train = f.iloc[:-60]; test = f.iloc[-60:].",
+        "en": "train = f.iloc[:-60]; test = f.iloc[-60:]."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nfrom sklearn.linear_model import Ridge\nfrom sklearn.metrics import mean_absolute_error\ns = pd.read_csv('daily_sales.csv', parse_dates=['date'])\n# in True/False\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nfrom sklearn.linear_model import Ridge\nfrom sklearn.metrics import mean_absolute_error\ns = pd.read_csv('daily_sales.csv', parse_dates=['date'])\ns['lag1'] = s['units'].shift(1)\ns['lag7'] = s['units'].shift(7)\ns['dow'] = s['date'].dt.dayofweek\nf = s.dropna()\ntr, te = f.iloc[:-60], f.iloc[-60:]\ncols = ['lag1', 'lag7', 'dow', 'promo']\nm = Ridge(alpha=1.0).fit(tr[cols], tr['units'])\nprint(mean_absolute_error(te['units'], m.predict(te[cols])) < mean_absolute_error(te['units'], te['lag7']))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == 'True'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "data": [
+    "daily_sales.csv"
+  ]
+}

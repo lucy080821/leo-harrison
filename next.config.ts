@@ -18,6 +18,7 @@ const nextConfig: NextConfig = {
       { source: "/:lang(vi|en)/learning/statistics/15-vectors-matrices", destination: "/:lang/learning/statistics/36-vectors-matrices", permanent: true },
       { source: "/:lang(vi|en)/learning/statistics/16-eigen-pca", destination: "/:lang/learning/statistics/38-eigen-pca", permanent: true },
       { source: "/:lang(vi|en)/learning/programming/courses/sql/15-project-sales-analysis", destination: "/:lang/learning/programming/courses/sql/40-project-sales-analysis", permanent: true },
+      { source: "/:lang(vi|en)/learning/programming/courses/machine-learning/13-project-breast-cancer", destination: "/:lang/learning/programming/courses/machine-learning/24-project-breast-cancer", permanent: true },
       { source: "/:lang(vi|en)/learning/programming/courses/python-data/14-project-sales-report", destination: "/:lang/learning/programming/courses/python-data/29-project-sales-report", permanent: true },
       { source: "/:lang(vi|en)/learning/programming/courses/prob-stats", destination: "/:lang/learning/statistics", permanent: true },
       { source: "/:lang(vi|en)/learning/programming/courses/prob-stats/:lesson", destination: "/:lang/learning/statistics/:lesson", permanent: true },
