@@ -1,0 +1,89 @@
+{
+  "title": {
+    "vi": "Chiến lược render: tĩnh, động và Partial Prerendering",
+    "en": "Rendering strategies: static, dynamic and Partial Prerendering"
+  },
+  "summary": {
+    "vi": "vỏ tĩnh + phần truyền dần, API chạy lúc yêu cầu, cache ngắn hạn, chọn chiến lược",
+    "en": "static shell + streamed parts, request-time APIs, short-lived caches, choosing a strategy"
+  },
+  "minutes": 30,
+  "preview": "console",
+  "files": [
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "// Phân loại một trang theo đặc điểm của nó (mô phỏng quy tắc của Cache Components)\nfunction classify(page) {\n  const dynamic = page.usesCookies || page.usesHeaders || page.usesSearchParams || page.uncachedFetch;\n  if (!dynamic) return \"tĩnh (dựng sẵn lúc build)\";\n  if (page.hasSuspense) return \"vỏ tĩnh + truyền dần phần động\";\n  return \"chặn: cần <Suspense> quanh phần động\";\n}\n\nconsole.log(classify({}));\nconsole.log(classify({ usesCookies: true, hasSuspense: true }));\nconsole.log(classify({ uncachedFetch: true }));\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Theo tài liệu, một cache là 'ngắn hạn' (bị loại khỏi prerender, thành phần động) nếu dùng profile 'seconds', hoặc revalidate = 0, hoặc expire < 300 giây. Viết isShortLived({profile, revalidate, expire}) và in kết quả cho: {profile:'seconds'}, {revalidate:0}, {expire:60}, {profile:'hours'}.",
+        "en": "Per the docs a cache is 'short-lived' (excluded from prerenders, becomes dynamic) if it uses the 'seconds' profile, or revalidate = 0, or expire < 300 seconds. Write isShortLived({profile, revalidate, expire}) and log the results for: {profile:'seconds'}, {revalidate:0}, {expire:60}, {profile:'hours'}."
+      },
+      "hint": {
+        "vi": "kiểm tra từng điều kiện; expire có thể undefined.",
+        "en": "check each condition; expire may be undefined."
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function isShortLived(c) {\n  // viết ở đây\n}\nconsole.log([\n  isShortLived({ profile: \"seconds\" }),\n  isShortLived({ revalidate: 0 }),\n  isShortLived({ expire: 60 }),\n  isShortLived({ profile: \"hours\" }),\n].join(\",\"));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function isShortLived(c) {\n  return c.profile === \"seconds\" || c.revalidate === 0 || (c.expire !== undefined && c.expire < 300);\n}\nconsole.log([\n  isShortLived({ profile: \"seconds\" }),\n  isShortLived({ revalidate: 0 }),\n  isShortLived({ expire: 60 }),\n  isShortLived({ profile: \"hours\" }),\n].join(\",\"));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "true,true,true,false",
+            "en": "true,true,true,false"
+          },
+          "test": "logs.join('|')==='true,true,true,false'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Chọn chiến lược từ yêu cầu nghiệp vụ. Viết strategy(r) với r = {perUser, freshness} trong đó freshness là 'never' | 'minutes' | 'realtime': nếu perUser trả 'dynamic (Suspense)'; ngược lại nếu freshness = 'never' trả 'static'; 'minutes' trả 'cache (minutes)'; 'realtime' trả 'dynamic (Suspense)'. In kết quả cho ba trường hợp: {perUser:false,freshness:'never'}, {perUser:false,freshness:'minutes'}, {perUser:true,freshness:'never'}.",
+        "en": "Choose a strategy from business needs. Write strategy(r) with r = {perUser, freshness} where freshness is 'never' | 'minutes' | 'realtime': if perUser return 'dynamic (Suspense)'; else if freshness = 'never' return 'static'; 'minutes' return 'cache (minutes)'; 'realtime' return 'dynamic (Suspense)'. Log the results for: {perUser:false,freshness:'never'}, {perUser:false,freshness:'minutes'}, {perUser:true,freshness:'never'}."
+      },
+      "hint": {
+        "vi": "xử lý perUser trước.",
+        "en": "handle perUser first."
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function strategy(r) {\n  // viết ở đây\n}\nconsole.log([\n  strategy({ perUser: false, freshness: \"never\" }),\n  strategy({ perUser: false, freshness: \"minutes\" }),\n  strategy({ perUser: true, freshness: \"never\" }),\n].join(\" | \"));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function strategy(r) {\n  if (r.perUser) return \"dynamic (Suspense)\";\n  if (r.freshness === \"never\") return \"static\";\n  if (r.freshness === \"minutes\") return \"cache (minutes)\";\n  return \"dynamic (Suspense)\";\n}\nconsole.log([\n  strategy({ perUser: false, freshness: \"never\" }),\n  strategy({ perUser: false, freshness: \"minutes\" }),\n  strategy({ perUser: true, freshness: \"never\" }),\n].join(\" | \"));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đúng ba chiến lược",
+            "en": "The three strategies"
+          },
+          "test": "logs.join('|')==='static | cache (minutes) | dynamic (Suspense)'"
+        }
+      ]
+    }
+  ]
+}

@@ -36,11 +36,11 @@ export default function Loading() {
 ```jsx
 // app/posts/error.js
 "use client";
-export default function Error({ error, reset }) {
+export default function Error({ error, retry }) {
   return (
     <div>
       <p>Something went wrong: {error.message}</p>
-      <button onClick={reset}>Try again</button>
+      <button onClick={() => retry()}>Try again</button>
     </div>
   );
 }

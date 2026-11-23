@@ -1,0 +1,89 @@
+{
+  "title": {
+    "vi": "Lấy dữ liệu: song song, tuần tự và chống trùng lặp",
+    "en": "Fetching data: parallel, sequential and de-duplication"
+  },
+  "summary": {
+    "vi": "waterfall, Promise.all, React.cache, preload, truyền dữ liệu bằng props",
+    "en": "waterfalls, Promise.all, React.cache, preload, passing data via props"
+  },
+  "minutes": 30,
+  "preview": "console",
+  "files": [
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "// Ghi lại thứ tự bắt đầu/kết thúc để thấy \"thác nước\" (waterfall)\nconst events = [];\nconst delay = (ms, v) => new Promise((r) => setTimeout(() => r(v), ms));\nconst fetchUser = async () => { events.push(\"start user\"); await delay(20); events.push(\"end user\"); return \"An\"; };\nconst fetchPosts = async () => { events.push(\"start posts\"); await delay(20); events.push(\"end posts\"); return 3; };\n\n(async () => {\n  // TUẦN TỰ: posts chỉ bắt đầu sau khi user xong => chậm gấp đôi\n  await fetchUser();\n  await fetchPosts();\n  console.log(events.join(\",\"));\n})();\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Hai yêu cầu độc lập đang chạy tuần tự. Sửa để chạy SONG SONG bằng Promise.all: cả hai 'start' phải xảy ra trước bất kỳ 'end' nào. In events.join(',').",
+        "en": "Two independent requests run sequentially. Fix them to run IN PARALLEL with Promise.all: both 'start' events must happen before any 'end'. Log events.join(',')."
+      },
+      "hint": {
+        "vi": "await Promise.all([fetchUser(), fetchPosts()]).",
+        "en": "await Promise.all([fetchUser(), fetchPosts()])."
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const events = [];\nconst delay = (ms) => new Promise((r) => setTimeout(r, ms));\nconst a = async () => { events.push(\"start A\"); await delay(20); events.push(\"end A\"); };\nconst b = async () => { events.push(\"start B\"); await delay(20); events.push(\"end B\"); };\n(async () => {\n  await a();\n  await b();\n  console.log(events.join(\",\"));\n})();\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const events = [];\nconst delay = (ms) => new Promise((r) => setTimeout(r, ms));\nconst a = async () => { events.push(\"start A\"); await delay(20); events.push(\"end A\"); };\nconst b = async () => { events.push(\"start B\"); await delay(20); events.push(\"end B\"); };\n(async () => {\n  await Promise.all([a(), b()]);\n  console.log(events.join(\",\"));\n})();\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Hai start trước hai end",
+            "en": "Both starts before both ends"
+          },
+          "test": "logs.join('|')==='start A,start B,end A,end B'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Chống trùng lặp: viết memo(fn) lưu kết quả theo đối số (đối số chuỗi) để gọi cùng id nhiều lần chỉ chạy fn thật một lần (giống React.cache trong một lượt render). Gọi get('1'), get('1'), get('2'): in số lần fn thật chạy.",
+        "en": "De-duplication: write memo(fn) caching results by (string) argument so calling with the same id repeatedly runs the real fn once (like React.cache within a render pass). Call get('1'), get('1'), get('2'): log how many times the real fn ran."
+      },
+      "hint": {
+        "vi": "const m = new Map(); trả m.get(k) nếu đã có.",
+        "en": "const m = new Map(); return m.get(k) if present."
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "let real = 0;\nfunction memo(fn) {\n  // viết ở đây\n}\nconst get = memo((id) => { real++; return \"user\" + id; });\nget(\"1\"); get(\"1\"); get(\"2\");\nconsole.log(real);\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "let real = 0;\nfunction memo(fn) {\n  const m = new Map();\n  return (k) => {\n    if (!m.has(k)) m.set(k, fn(k));\n    return m.get(k);\n  };\n}\nconst get = memo((id) => { real++; return \"user\" + id; });\nget(\"1\"); get(\"1\"); get(\"2\");\nconsole.log(real);\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "fn thật chạy 2 lần",
+            "en": "the real fn ran twice"
+          },
+          "test": "logs.join('|')==='2'"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "title": {
+    "vi": "Xác thực: phiên, cookie và lớp truy cập dữ liệu (DAL)",
+    "en": "Authentication: sessions, cookies and the data access layer (DAL)"
+  },
+  "summary": {
+    "vi": "băm mật khẩu, phiên phía máy chủ, cookie an toàn, verifySession, phân quyền theo vai trò",
+    "en": "password hashing, server-side sessions, secure cookies, verifySession, role-based authorization"
+  },
+  "minutes": 35,
+  "preview": "console",
+  "files": [
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "// Phiên lưu phía MÁY CHỦ; cookie chỉ giữ một ID ngẫu nhiên, khó đoán\nconst sessions = new Map();\nconst newId = () => Array.from({ length: 16 }, () => Math.floor(Math.random() * 16).toString(16)).join(\"\");\n\nfunction createSession(userId, now) {\n  const id = newId();\n  sessions.set(id, { userId, expires: now + 7 * 24 * 3600 * 1000 });\n  return id;\n}\n\nfunction verifySession(id, now) {\n  const s = sessions.get(id);\n  if (!s || s.expires < now) return null;\n  return { userId: s.userId };\n}\n\nconst t0 = 0;\nconst id = createSession(42, t0);\nconsole.log(id.length, JSON.stringify(verifySession(id, t0 + 1000)));\nconsole.log(verifySession(\"khong-co\", t0));\nconsole.log(verifySession(id, t0 + 8 * 24 * 3600 * 1000));\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết cookieOptions(isProd) trả object tùy chọn cookie phiên an toàn: { httpOnly: true, secure: isProd, sameSite: 'lax', path: '/', maxAge: 604800 }. In JSON.stringify(cookieOptions(true)).",
+        "en": "Write cookieOptions(isProd) returning secure session cookie options: { httpOnly: true, secure: isProd, sameSite: 'lax', path: '/', maxAge: 604800 }. Log JSON.stringify(cookieOptions(true))."
+      },
+      "hint": {
+        "vi": "httpOnly chặn JavaScript đọc cookie; secure chỉ gửi qua HTTPS.",
+        "en": "httpOnly stops JavaScript reading the cookie; secure sends it over HTTPS only."
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function cookieOptions(isProd) {\n  // viết ở đây\n}\nconsole.log(JSON.stringify(cookieOptions(true)));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function cookieOptions(isProd) {\n  return { httpOnly: true, secure: isProd, sameSite: \"lax\", path: \"/\", maxAge: 604800 };\n}\nconsole.log(JSON.stringify(cookieOptions(true)));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đúng bộ tuỳ chọn cookie",
+            "en": "The right cookie options"
+          },
+          "test": "logs.join('|')==='{\"httpOnly\":true,\"secure\":true,\"sameSite\":\"lax\",\"path\":\"/\",\"maxAge\":604800}'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Lớp truy cập dữ liệu: viết getInvoice(session, invoice) trả invoice nếu invoice.ownerId === session.userId hoặc session.role === 'admin'; ngược lại trả null. Chống IDOR (đọc dữ liệu người khác chỉ bằng đoán id). In kết quả (id hoặc null) cho: chủ sở hữu, người khác, admin.",
+        "en": "Data access layer: write getInvoice(session, invoice) returning the invoice if invoice.ownerId === session.userId or session.role === 'admin'; else null. This prevents IDOR (reading others' data just by guessing an id). Log the result (id or null) for: the owner, another user, an admin."
+      },
+      "hint": {
+        "vi": "so sánh ownerId với session.userId trước khi trả.",
+        "en": "compare ownerId with session.userId before returning."
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const inv = { id: 7, ownerId: 1 };\nfunction getInvoice(session, invoice) {\n  // viết ở đây\n}\nconst show = (r) => (r ? r.id : null);\nconsole.log(show(getInvoice({ userId: 1, role: \"user\" }, inv)));\nconsole.log(show(getInvoice({ userId: 2, role: \"user\" }, inv)));\nconsole.log(show(getInvoice({ userId: 9, role: \"admin\" }, inv)));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const inv = { id: 7, ownerId: 1 };\nfunction getInvoice(session, invoice) {\n  return invoice.ownerId === session.userId || session.role === \"admin\" ? invoice : null;\n}\nconst show = (r) => (r ? r.id : null);\nconsole.log(show(getInvoice({ userId: 1, role: \"user\" }, inv)));\nconsole.log(show(getInvoice({ userId: 2, role: \"user\" }, inv)));\nconsole.log(show(getInvoice({ userId: 9, role: \"admin\" }, inv)));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "7|null|7",
+            "en": "7|null|7"
+          },
+          "test": "logs.join('|')==='7|null|7'"
+        }
+      ]
+    }
+  ]
+}

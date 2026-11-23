@@ -1,0 +1,89 @@
+{
+  "title": {
+    "vi": "Cấu hình và sản xuất: biến môi trường, kiểm tra và quan sát",
+    "en": "Configuration and production: env variables, validation and observability"
+  },
+  "summary": {
+    "vi": "NEXT_PUBLIC_, bí mật chỉ ở máy chủ, kiểm tra env lúc khởi động, health check, log có cấu trúc",
+    "en": "NEXT_PUBLIC_, server-only secrets, validating env at startup, health checks, structured logs"
+  },
+  "minutes": 30,
+  "preview": "console",
+  "files": [
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "// Kiểm tra biến môi trường LÚC KHỞI ĐỘNG: lỗi sớm còn hơn lỗi lúc 3 giờ sáng\nfunction loadEnv(env) {\n  const errors = [];\n  if (!env.DATABASE_URL) errors.push(\"thiếu DATABASE_URL\");\n  const port = Number(env.PORT ?? 3000);\n  if (!Number.isInteger(port) || port < 1 || port > 65535) errors.push(\"PORT không hợp lệ\");\n  if (errors.length) throw new Error(errors.join(\"; \"));\n  return { databaseUrl: env.DATABASE_URL, port };\n}\n\ntry { loadEnv({ PORT: \"abc\" }); } catch (e) { console.log(e.message); }\nconsole.log(JSON.stringify(loadEnv({ DATABASE_URL: \"postgres://x\" })));\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Chỉ biến bắt đầu bằng NEXT_PUBLIC_ được gửi tới trình duyệt. Viết publicEnv(env) trả object chỉ chứa các khoá đó. Với env {DB_URL:'secret', NEXT_PUBLIC_SITE:'Lexi', NEXT_PUBLIC_API:'/api'} in danh sách khoá (sắp xếp, nối bằng dấu phẩy).",
+        "en": "Only variables starting with NEXT_PUBLIC_ are sent to the browser. Write publicEnv(env) returning an object with only those keys. With env {DB_URL:'secret', NEXT_PUBLIC_SITE:'Lexi', NEXT_PUBLIC_API:'/api'} log the key list (sorted, comma-joined)."
+      },
+      "hint": {
+        "vi": "Object.entries(env).filter(([k]) => k.startsWith('NEXT_PUBLIC_')).",
+        "en": "Object.entries(env).filter(([k]) => k.startsWith('NEXT_PUBLIC_'))."
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function publicEnv(env) {\n  // viết ở đây\n}\nconst env = { DB_URL: \"secret\", NEXT_PUBLIC_SITE: \"Lexi\", NEXT_PUBLIC_API: \"/api\" };\nconsole.log(Object.keys(publicEnv(env)).sort().join(\",\"));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function publicEnv(env) {\n  return Object.fromEntries(Object.entries(env).filter(([k]) => k.startsWith(\"NEXT_PUBLIC_\")));\n}\nconst env = { DB_URL: \"secret\", NEXT_PUBLIC_SITE: \"Lexi\", NEXT_PUBLIC_API: \"/api\" };\nconsole.log(Object.keys(publicEnv(env)).sort().join(\",\"));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Chỉ khoá công khai",
+            "en": "Only public keys"
+          },
+          "test": "logs.join('|')==='NEXT_PUBLIC_API,NEXT_PUBLIC_SITE'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Viết health(checks) cho điểm cuối /api/health: checks là object tên → true/false. Trả { status: 200, body: 'ok' } nếu tất cả true, ngược lại { status: 503, body: <tên các kiểm tra hỏng nối bằng dấu phẩy> }. In status và body cho {db:true,cache:true} và {db:false,cache:true}.",
+        "en": "Write health(checks) for the /api/health endpoint: checks is an object name → true/false. Return { status: 200, body: 'ok' } if all are true, else { status: 503, body: <failing check names comma-joined> }. Log status and body for {db:true,cache:true} and {db:false,cache:true}."
+      },
+      "hint": {
+        "vi": "Object.entries(checks).filter(([, ok]) => !ok).map(([k]) => k).",
+        "en": "Object.entries(checks).filter(([, ok]) => !ok).map(([k]) => k)."
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function health(checks) {\n  // viết ở đây\n}\nconst a = health({ db: true, cache: true });\nconst b = health({ db: false, cache: true });\nconsole.log(a.status + \":\" + a.body + \",\" + b.status + \":\" + b.body);\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function health(checks) {\n  const bad = Object.entries(checks).filter(([, ok]) => !ok).map(([k]) => k);\n  return bad.length === 0 ? { status: 200, body: \"ok\" } : { status: 503, body: bad.join(\",\") };\n}\nconst a = health({ db: true, cache: true });\nconst b = health({ db: false, cache: true });\nconsole.log(a.status + \":\" + a.body + \",\" + b.status + \":\" + b.body);\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "200:ok,503:db",
+            "en": "200:ok,503:db"
+          },
+          "test": "logs.join('|')==='200:ok,503:db'"
+        }
+      ]
+    }
+  ]
+}

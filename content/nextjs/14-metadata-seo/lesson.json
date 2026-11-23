@@ -1,0 +1,89 @@
+{
+  "title": {
+    "vi": "Metadata và SEO: thẻ head, Open Graph và sitemap",
+    "en": "Metadata and SEO: head tags, Open Graph and sitemaps"
+  },
+  "summary": {
+    "vi": "generateMetadata, mẫu tiêu đề, Open Graph, canonical, sitemap.xml, robots",
+    "en": "generateMetadata, title templates, Open Graph, canonical, sitemap.xml, robots"
+  },
+  "minutes": 30,
+  "preview": "console",
+  "files": [
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "// Biến object metadata thành các thẻ <head>\nfunction renderHead(meta, baseUrl, path) {\n  const title = meta.template ? meta.template.replace(\"%s\", meta.title) : meta.title;\n  const tags = [\n    \"<title>\" + title + \"</title>\",\n    '<meta name=\"description\" content=\"' + meta.description + '\">',\n    '<link rel=\"canonical\" href=\"' + baseUrl + path + '\">',\n    '<meta property=\"og:title\" content=\"' + title + '\">',\n  ];\n  return tags;\n}\n\nconsole.log(renderHead(\n  { title: \"Giới thiệu\", template: \"%s | Lexi Learn\", description: \"Về chúng tôi\" },\n  \"https://lexi.example\", \"/about\"\n).join(\"\\n\"));\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết sitemap(urls) trả chuỗi XML: mỗi url thành <url><loc>…</loc></url> bọc trong <urlset>…</urlset> (không xuống dòng). In sitemap(['https://a.com/','https://a.com/b']).",
+        "en": "Write sitemap(urls) returning an XML string: each url becomes <url><loc>…</loc></url> wrapped in <urlset>…</urlset> (no newlines). Log sitemap(['https://a.com/','https://a.com/b'])."
+      },
+      "hint": {
+        "vi": "urls.map(u => '<url><loc>' + u + '</loc></url>').join('').",
+        "en": "urls.map(u => '<url><loc>' + u + '</loc></url>').join('')."
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function sitemap(urls) {\n  // viết ở đây\n}\nconsole.log(sitemap([\"https://a.com/\", \"https://a.com/b\"]));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function sitemap(urls) {\n  return \"<urlset>\" + urls.map((u) => \"<url><loc>\" + u + \"</loc></url>\").join(\"\") + \"</urlset>\";\n}\nconsole.log(sitemap([\"https://a.com/\", \"https://a.com/b\"]));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đúng XML",
+            "en": "Correct XML"
+          },
+          "test": "logs.join('|')==='<urlset><url><loc>https://a.com/</loc></url><url><loc>https://a.com/b</loc></url></urlset>'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Viết robots(disallow) trả chuỗi 'User-agent: *' rồi mỗi đường dẫn bị chặn thành 'Disallow: <path>' nối bằng ';' (một dòng). Với disallow = ['/admin','/api'] in kết quả.",
+        "en": "Write robots(disallow) returning 'User-agent: *' then each blocked path as 'Disallow: <path>' joined with ';' (one line). With disallow = ['/admin','/api'] log the result."
+      },
+      "hint": {
+        "vi": "['User-agent: *', ...disallow.map(p => 'Disallow: ' + p)].join(';').",
+        "en": "['User-agent: *', ...disallow.map(p => 'Disallow: ' + p)].join(';')."
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function robots(disallow) {\n  // viết ở đây\n}\nconsole.log(robots([\"/admin\", \"/api\"]));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function robots(disallow) {\n  return [\"User-agent: *\", ...disallow.map((p) => \"Disallow: \" + p)].join(\";\");\n}\nconsole.log(robots([\"/admin\", \"/api\"]));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đúng robots",
+            "en": "Correct robots"
+          },
+          "test": "logs.join('|')==='User-agent: *;Disallow: /admin;Disallow: /api'"
+        }
+      ]
+    }
+  ]
+}

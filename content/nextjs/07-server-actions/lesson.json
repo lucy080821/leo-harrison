@@ -1,0 +1,89 @@
+{
+  "title": {
+    "vi": "Server Actions: biến form thành lời gọi máy chủ",
+    "en": "Server Actions: turning forms into server calls"
+  },
+  "summary": {
+    "vi": "'use server', formData, trả lỗi như giá trị, useActionState, kiểm tra quyền",
+    "en": "'use server', formData, errors as return values, useActionState, authorization"
+  },
+  "minutes": 35,
+  "preview": "console",
+  "files": [
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "// app/actions.js — chạy trên MÁY CHỦ; mô phỏng ý tưởng bằng hàm thường\n// Hàm nhận (prevState, formData) và TRẢ LỖI NHƯ GIÁ TRỊ (không throw cho lỗi dự kiến)\nasync function createPost(prevState, formData) {\n  const title = (formData.get(\"title\") || \"\").trim();\n  if (title.length < 3) return { ok: false, message: \"Tiêu đề tối thiểu 3 ký tự\" };\n  return { ok: true, message: \"Đã tạo: \" + title };\n}\n\nconst fd = (obj) => { const f = new FormData(); for (const k in obj) f.append(k, obj[k]); return f; };\n\n(async () => {\n  console.log((await createPost({}, fd({ title: \"Hi\" }))).message);\n  console.log((await createPost({}, fd({ title: \"Next.js\" }))).message);\n})();\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết action addTodo(prevState, formData): nếu formData.get('text') rỗng (sau trim) trả { ok: false, message: 'Bắt buộc' }; ngược lại trả { ok: true, todos: [...prevState.todos, text] }. Gọi với prevState {todos: []}: in message khi rỗng, rồi in todos.join(',') sau khi thêm 'a' và tiếp 'b'.",
+        "en": "Write the action addTodo(prevState, formData): if formData.get('text') is empty (after trim) return { ok: false, message: 'Required' }; else return { ok: true, todos: [...prevState.todos, text] }. Call with prevState {todos: []}: log the message when empty, then log todos.join(',') after adding 'a' and then 'b'."
+      },
+      "hint": {
+        "vi": "Trả object mới thay vì sửa prevState.",
+        "en": "Return a new object instead of mutating prevState."
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "async function addTodo(prevState, formData) {\n  // viết ở đây\n}\nconst fd = (t) => { const f = new FormData(); f.append(\"text\", t); return f; };\n(async () => {\n  let s = { todos: [] };\n  const r0 = await addTodo(s, fd(\"  \"));\n  console.log(r0.message);\n  s = await addTodo(s, fd(\"a\"));\n  s = await addTodo(s, fd(\"b\"));\n  console.log(s.todos.join(\",\"));\n})();\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "async function addTodo(prevState, formData) {\n  const text = (formData.get(\"text\") || \"\").trim();\n  if (!text) return { ok: false, message: \"Required\" };\n  return { ok: true, todos: [...prevState.todos, text] };\n}\nconst fd = (t) => { const f = new FormData(); f.append(\"text\", t); return f; };\n(async () => {\n  let s = { todos: [] };\n  const r0 = await addTodo(s, fd(\"  \"));\n  console.log(r0.message);\n  s = await addTodo(s, fd(\"a\"));\n  s = await addTodo(s, fd(\"b\"));\n  console.log(s.todos.join(\",\"));\n})();\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Rỗng báo Required, thêm a,b ra a,b",
+            "en": "Empty gives Required; adding a,b gives a,b"
+          },
+          "test": "logs.join('|')==='Required|a,b'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Server Action phải TỰ kiểm tra quyền (có thể bị gọi bằng POST trực tiếp). Viết deletePost(session, id): nếu !session thì throw Error('Unauthorized'); nếu session.role !== 'admin' trả { ok:false, status:403 }; ngược lại trả { ok:true, status:200 }. In status cho: không session (bắt lỗi in 'Unauthorized'), user thường, admin.",
+        "en": "A Server Action must CHECK permissions itself (it can be POSTed to directly). Write deletePost(session, id): if !session throw Error('Unauthorized'); if session.role !== 'admin' return { ok:false, status:403 }; else return { ok:true, status:200 }. Log: no session (catch and log 'Unauthorized'), a normal user's status, an admin's status."
+      },
+      "hint": {
+        "vi": "Kiểm tra theo thứ tự: xác thực rồi phân quyền.",
+        "en": "Check in order: authentication, then authorization."
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function deletePost(session, id) {\n  // viết ở đây\n}\ntry { deletePost(null, 1); } catch (e) { console.log(e.message); }\nconsole.log(deletePost({ role: \"user\" }, 1).status);\nconsole.log(deletePost({ role: \"admin\" }, 1).status);\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function deletePost(session, id) {\n  if (!session) throw new Error(\"Unauthorized\");\n  if (session.role !== \"admin\") return { ok: false, status: 403 };\n  return { ok: true, status: 200 };\n}\ntry { deletePost(null, 1); } catch (e) { console.log(e.message); }\nconsole.log(deletePost({ role: \"user\" }, 1).status);\nconsole.log(deletePost({ role: \"admin\" }, 1).status);\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Unauthorized, 403, 200",
+            "en": "Unauthorized, 403, 200"
+          },
+          "test": "logs.join('|')==='Unauthorized|403|200'"
+        }
+      ]
+    }
+  ]
+}

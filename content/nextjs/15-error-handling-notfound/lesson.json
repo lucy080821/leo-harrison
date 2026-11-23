@@ -1,0 +1,89 @@
+{
+  "title": {
+    "vi": "Xử lý lỗi: error.js, not-found và lỗi dự kiến",
+    "en": "Error handling: error.js, not-found and expected errors"
+  },
+  "summary": {
+    "vi": "lỗi dự kiến vs không dự kiến, error.js với retry, not-found.js, global-error, ghi log",
+    "en": "expected vs unexpected errors, error.js with retry, not-found.js, global-error, logging"
+  },
+  "minutes": 30,
+  "preview": "console",
+  "files": [
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "// Lỗi DỰ KIẾN: trả như giá trị (Result). Lỗi KHÔNG dự kiến: throw -> error.js\nfunction parseAge(input) {\n  const n = Number(input);\n  if (!Number.isInteger(n) || n < 0 || n > 130) return { ok: false, error: \"Tuổi không hợp lệ\" };\n  return { ok: true, value: n };\n}\nconsole.log(JSON.stringify(parseAge(\"20\")));\nconsole.log(JSON.stringify(parseAge(\"abc\")));\n\n// Mô phỏng retry() của error.js: thử lại một thao tác có thể thất bại\nasync function withRetry(fn, attempts) {\n  let last;\n  for (let i = 0; i < attempts; i++) {\n    try { return await fn(i); } catch (e) { last = e; }\n  }\n  throw last;\n}\nwithRetry(async (i) => { if (i < 2) throw new Error(\"lỗi \" + i); return \"ok sau \" + (i + 1) + \" lần\"; }, 3).then(console.log);\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Dùng mẫu Result: viết safe(fn) gọi fn() và trả { ok: true, value } nếu thành công hoặc { ok: false, error: e.message } nếu ném lỗi. In JSON cho safe(() => 5) và safe(() => { throw new Error('x'); }), cách nhau '|'.",
+        "en": "Use the Result pattern: write safe(fn) calling fn() and returning { ok: true, value } on success or { ok: false, error: e.message } if it throws. Log the JSON for safe(() => 5) and safe(() => { throw new Error('x'); }), separated by '|'."
+      },
+      "hint": {
+        "vi": "try { return { ok: true, value: fn() }; } catch (e) { ... }",
+        "en": "try { return { ok: true, value: fn() }; } catch (e) { ... }"
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function safe(fn) {\n  // viết ở đây\n}\nconsole.log(JSON.stringify(safe(() => 5)) + \"|\" + JSON.stringify(safe(() => { throw new Error(\"x\"); })));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function safe(fn) {\n  try { return { ok: true, value: fn() }; }\n  catch (e) { return { ok: false, error: e.message }; }\n}\nconsole.log(JSON.stringify(safe(() => 5)) + \"|\" + JSON.stringify(safe(() => { throw new Error(\"x\"); })));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Hai kết quả đúng",
+            "en": "Both results correct"
+          },
+          "test": "logs.join('|')==='{\"ok\":true,\"value\":5}|{\"ok\":false,\"error\":\"x\"}'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Cài retry giống retry() của error.js: withRetry(fn, attempts) gọi fn(i) tối đa attempts lần, trả kết quả lần đầu thành công, và nếu hết lần thì ném lỗi cuối. fn thất bại 2 lần đầu rồi thành công: in kết quả; sau đó thử attempts = 2 và in 'fail' khi bị ném lỗi.",
+        "en": "Implement retry like error.js's retry(): withRetry(fn, attempts) calls fn(i) at most attempts times, returns the first success, and throws the last error if all fail. fn fails the first 2 times then succeeds: log the result; then try attempts = 2 and log 'fail' when it throws."
+      },
+      "hint": {
+        "vi": "vòng for, try/catch, lưu lỗi cuối.",
+        "en": "a for loop, try/catch, keep the last error."
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "async function withRetry(fn, attempts) {\n  // viết ở đây\n}\nconst f = async (i) => { if (i < 2) throw new Error(\"e\" + i); return \"ok\" + i; };\n(async () => {\n  console.log(await withRetry(f, 3));\n  try { await withRetry(f, 2); } catch (e) { console.log(\"fail\"); }\n})();\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "async function withRetry(fn, attempts) {\n  let last;\n  for (let i = 0; i < attempts; i++) {\n    try { return await fn(i); } catch (e) { last = e; }\n  }\n  throw last;\n}\nconst f = async (i) => { if (i < 2) throw new Error(\"e\" + i); return \"ok\" + i; };\n(async () => {\n  console.log(await withRetry(f, 3));\n  try { await withRetry(f, 2); } catch (e) { console.log(\"fail\"); }\n})();\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "ok2|fail",
+            "en": "ok2|fail"
+          },
+          "test": "logs.join('|')==='ok2|fail'"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "title": {
+    "vi": "Route động: [slug], [...slug] và params bất đồng bộ",
+    "en": "Dynamic routes: [slug], [...slug] and async params"
+  },
+  "summary": {
+    "vi": "segment động, catch-all, optional catch-all, await params, generateStaticParams",
+    "en": "dynamic segments, catch-all, optional catch-all, await params, generateStaticParams"
+  },
+  "minutes": 30,
+  "preview": "console",
+  "files": [
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "// Khớp URL với mẫu thư mục: [id] một đoạn, [...slug] nhiều đoạn, [[...slug]] tuỳ chọn\nfunction match(pattern, url) {\n  const p = pattern.split(\"/\").filter(Boolean), u = url.split(\"/\").filter(Boolean);\n  const params = {};\n  for (let i = 0; i < p.length; i++) {\n    const m = p[i].match(/^\\[(\\[)?\\.\\.\\.(\\w+)\\]\\]?$/);\n    if (m) {                                   // catch-all\n      const rest = u.slice(i);\n      if (rest.length === 0 && !m[1]) return null;       // [...slug] bắt buộc >= 1 đoạn\n      params[m[2]] = rest;\n      return params;\n    }\n    const d = p[i].match(/^\\[(\\w+)\\]$/);\n    if (d) { if (!u[i]) return null; params[d[1]] = u[i]; }\n    else if (p[i] !== u[i]) return null;\n  }\n  return p.length === u.length ? params : null;\n}\n\nconsole.log(JSON.stringify(match(\"/blog/[slug]\", \"/blog/hello\")));\nconsole.log(JSON.stringify(match(\"/docs/[...slug]\", \"/docs/a/b/c\")));\nconsole.log(JSON.stringify(match(\"/shop/[[...slug]]\", \"/shop\")));\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Cài params cho route /blog/[slug] bằng hàm paramsOf(url): với '/blog/hello-world' trả {slug:'hello-world'}, với '/about' trả null. In JSON của hai kết quả, cách nhau '|' (dùng JSON.stringify).",
+        "en": "Implement params for the route /blog/[slug] with paramsOf(url): for '/blog/hello-world' return {slug:'hello-world'}, for '/about' return null. Log the JSON of both results, separated by '|' (use JSON.stringify)."
+      },
+      "hint": {
+        "vi": "tách đường dẫn theo '/', so sánh đoạn đầu với 'blog'.",
+        "en": "split the path by '/', compare the first segment with 'blog'."
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function paramsOf(url) {\n  // viết ở đây\n}\nconsole.log(JSON.stringify(paramsOf(\"/blog/hello-world\")) + \"|\" + JSON.stringify(paramsOf(\"/about\")));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function paramsOf(url) {\n  const [a, slug, ...rest] = url.split(\"/\").filter(Boolean);\n  return a === \"blog\" && slug && rest.length === 0 ? { slug } : null;\n}\nconsole.log(JSON.stringify(paramsOf(\"/blog/hello-world\")) + \"|\" + JSON.stringify(paramsOf(\"/about\")));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "{slug} và null",
+            "en": "{slug} and null"
+          },
+          "test": "logs.join('|')==='{\"slug\":\"hello-world\"}|null'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "generateStaticParams trả danh sách params để dựng sẵn lúc build. Cho posts = [{slug:'a'},{slug:'b'}], viết hàm paths(posts) trả mảng đường dẫn '/blog/<slug>' và in paths(posts).join(',').",
+        "en": "generateStaticParams returns the list of params to prerender at build time. Given posts = [{slug:'a'},{slug:'b'}], write paths(posts) returning an array of '/blog/<slug>' paths and log paths(posts).join(',')."
+      },
+      "hint": {
+        "vi": "posts.map((p) => '/blog/' + p.slug).",
+        "en": "posts.map((p) => '/blog/' + p.slug)."
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const posts = [{ slug: \"a\" }, { slug: \"b\" }];\nfunction paths(posts) {\n  // viết ở đây\n}\nconsole.log(paths(posts).join(\",\"));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const posts = [{ slug: \"a\" }, { slug: \"b\" }];\nfunction paths(posts) {\n  return posts.map((p) => \"/blog/\" + p.slug);\n}\nconsole.log(paths(posts).join(\",\"));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "/blog/a,/blog/b",
+            "en": "/blog/a,/blog/b"
+          },
+          "test": "logs.join('|')==='/blog/a,/blog/b'"
+        }
+      ]
+    }
+  ]
+}

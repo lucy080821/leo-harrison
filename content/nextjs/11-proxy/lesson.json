@@ -1,0 +1,89 @@
+{
+  "title": {
+    "vi": "Proxy (trước là middleware): chạy mã trước mỗi yêu cầu",
+    "en": "Proxy (formerly middleware): code that runs before each request"
+  },
+  "summary": {
+    "vi": "proxy.ts, redirect/rewrite, matcher, kiểm tra lạc quan, giới hạn của proxy",
+    "en": "proxy.ts, redirect/rewrite, matcher, optimistic checks, proxy's limits"
+  },
+  "minutes": 30,
+  "preview": "console",
+  "files": [
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "// proxy.js — chạy TRƯỚC khi yêu cầu hoàn tất. Mô phỏng bằng đối tượng đơn giản.\nfunction proxy(req) {\n  const loggedIn = req.cookies.session === \"ok\";\n  if (req.path.startsWith(\"/dashboard\") && !loggedIn) {\n    return { type: \"redirect\", to: \"/login\" };\n  }\n  return { type: \"next\" };\n}\n\nconsole.log(JSON.stringify(proxy({ path: \"/dashboard/stats\", cookies: {} })));\nconsole.log(JSON.stringify(proxy({ path: \"/dashboard/stats\", cookies: { session: \"ok\" } })));\nconsole.log(JSON.stringify(proxy({ path: \"/about\", cookies: {} })));\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết proxy(req): nếu path là '/old-blog' thì rewrite sang '/blog' (trả { type: 'rewrite', to: '/blog' }); nếu path bắt đầu bằng '/admin' và req.role !== 'admin' thì redirect '/login'; ngược lại { type: 'next' }. In type của ba yêu cầu: /old-blog, /admin (role user), /home.",
+        "en": "Write proxy(req): if path is '/old-blog' rewrite to '/blog' (return { type: 'rewrite', to: '/blog' }); if path starts with '/admin' and req.role !== 'admin' redirect to '/login'; else { type: 'next' }. Log the type of three requests: /old-blog, /admin (role user), /home."
+      },
+      "hint": {
+        "vi": "Kiểm tra theo thứ tự rewrite, admin, mặc định.",
+        "en": "Check in order: rewrite, admin, default."
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function proxy(req) {\n  // viết ở đây\n}\nconsole.log(proxy({ path: \"/old-blog\" }).type);\nconsole.log(proxy({ path: \"/admin/users\", role: \"user\" }).type);\nconsole.log(proxy({ path: \"/home\" }).type);\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function proxy(req) {\n  if (req.path === \"/old-blog\") return { type: \"rewrite\", to: \"/blog\" };\n  if (req.path.startsWith(\"/admin\") && req.role !== \"admin\") return { type: \"redirect\", to: \"/login\" };\n  return { type: \"next\" };\n}\nconsole.log(proxy({ path: \"/old-blog\" }).type);\nconsole.log(proxy({ path: \"/admin/users\", role: \"user\" }).type);\nconsole.log(proxy({ path: \"/home\" }).type);\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "rewrite|redirect|next",
+            "en": "rewrite|redirect|next"
+          },
+          "test": "logs.join('|')==='rewrite|redirect|next'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Cài matcher: matches(pattern, path) cho mẫu '/dashboard/:path*' (khớp '/dashboard' và mọi đường dẫn con) và mẫu chính xác như '/about'. In kết quả cho ('/dashboard/:path*','/dashboard/a/b'), ('/dashboard/:path*','/dashboard'), ('/dashboard/:path*','/other'), ('/about','/about').",
+        "en": "Implement a matcher: matches(pattern, path) for the pattern '/dashboard/:path*' (matches '/dashboard' and every sub-path) and exact patterns like '/about'. Log results for ('/dashboard/:path*','/dashboard/a/b'), ('/dashboard/:path*','/dashboard'), ('/dashboard/:path*','/other'), ('/about','/about')."
+      },
+      "hint": {
+        "vi": "nếu mẫu kết thúc bằng '/:path*', so sánh tiền tố.",
+        "en": "if the pattern ends with '/:path*', compare the prefix."
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function matches(pattern, path) {\n  // viết ở đây\n}\nconsole.log([\n  matches(\"/dashboard/:path*\", \"/dashboard/a/b\"),\n  matches(\"/dashboard/:path*\", \"/dashboard\"),\n  matches(\"/dashboard/:path*\", \"/other\"),\n  matches(\"/about\", \"/about\"),\n].join(\",\"));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function matches(pattern, path) {\n  if (pattern.endsWith(\"/:path*\")) {\n    const base = pattern.slice(0, -7);\n    return path === base || path.startsWith(base + \"/\");\n  }\n  return pattern === path;\n}\nconsole.log([\n  matches(\"/dashboard/:path*\", \"/dashboard/a/b\"),\n  matches(\"/dashboard/:path*\", \"/dashboard\"),\n  matches(\"/dashboard/:path*\", \"/other\"),\n  matches(\"/about\", \"/about\"),\n].join(\",\"));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "true,true,false,true",
+            "en": "true,true,false,true"
+          },
+          "test": "logs.join('|')==='true,true,false,true'"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "title": {
+    "vi": "Cache: 'use cache', cacheLife và cacheTag",
+    "en": "Caching: 'use cache', cacheLife and cacheTag"
+  },
+  "summary": {
+    "vi": "cache kết quả hàm, hết hạn theo thời gian, thẻ và làm mới theo yêu cầu",
+    "en": "caching function results, time-based expiry, tags and on-demand revalidation"
+  },
+  "minutes": 35,
+  "preview": "console",
+  "files": [
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "// Mô phỏng ý tưởng của 'use cache' + cacheLife + cacheTag bằng một bộ nhớ đệm nhỏ\nlet clock = 0;                      // đồng hồ giả để thử nghiệm\nconst store = new Map();\n\nfunction cached(key, fn, { ttl, tags = [] }) {\n  const hit = store.get(key);\n  if (hit && clock - hit.at < ttl) return hit.value;       // còn hạn: trả cache\n  const value = fn();                                      // hết hạn/chưa có: tính lại\n  store.set(key, { value, at: clock, tags });\n  return value;\n}\n\nfunction revalidateTag(tag) {\n  for (const [k, v] of store) if (v.tags.includes(tag)) store.delete(k);\n}\n\nlet calls = 0;\nconst getProducts = () => cached(\"products\", () => ++calls, { ttl: 60, tags: [\"products\"] });\n\nconsole.log(getProducts(), getProducts());   // 1 1  (lần hai từ cache)\nclock = 61;\nconsole.log(getProducts());                  // 2    (hết hạn)\nrevalidateTag(\"products\");\nconsole.log(getProducts());                  // 3    (bị làm mới theo thẻ)\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Cài cached(key, fn, ttl) với đồng hồ giả clock: trả giá trị cache nếu clock - at < ttl, ngược lại gọi lại fn. Với ttl = 10, gọi 2 lần ở clock=0, đặt clock = 10, gọi lần 3: in số lần fn thực sự chạy.",
+        "en": "Implement cached(key, fn, ttl) with the fake clock: return the cached value if clock - at < ttl, else call fn again. With ttl = 10, call twice at clock=0, set clock = 10, call a third time: log how many times fn actually ran."
+      },
+      "hint": {
+        "vi": "so sánh clock - hit.at < ttl.",
+        "en": "compare clock - hit.at < ttl."
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "let clock = 0;\nconst store = new Map();\nfunction cached(key, fn, ttl) {\n  // viết ở đây\n}\nlet runs = 0;\nconst f = () => ++runs;\ncached(\"k\", f, 10); cached(\"k\", f, 10);\nclock = 10;\ncached(\"k\", f, 10);\nconsole.log(runs);\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "let clock = 0;\nconst store = new Map();\nfunction cached(key, fn, ttl) {\n  const hit = store.get(key);\n  if (hit && clock - hit.at < ttl) return hit.value;\n  const value = fn();\n  store.set(key, { value, at: clock });\n  return value;\n}\nlet runs = 0;\nconst f = () => ++runs;\ncached(\"k\", f, 10); cached(\"k\", f, 10);\nclock = 10;\ncached(\"k\", f, 10);\nconsole.log(runs);\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "fn chạy 2 lần",
+            "en": "fn ran twice"
+          },
+          "test": "logs.join('|')==='2'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Thêm làm mới theo thẻ: mỗi mục lưu mảng tags; revalidateTag(tag) xoá mọi mục có tag đó. Lưu 'a' (tag 'x'), 'b' (tag 'y'), 'c' (tags 'x','y'), gọi revalidateTag('x'), rồi in các khoá còn lại nối bằng dấu phẩy.",
+        "en": "Add tag revalidation: each entry stores a tags array; revalidateTag(tag) deletes every entry with that tag. Store 'a' (tag 'x'), 'b' (tag 'y'), 'c' (tags 'x','y'), call revalidateTag('x'), then log the remaining keys joined by commas."
+      },
+      "hint": {
+        "vi": "for (const [k, v] of store) if (v.tags.includes(tag)) store.delete(k).",
+        "en": "for (const [k, v] of store) if (v.tags.includes(tag)) store.delete(k)."
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const store = new Map();\nstore.set(\"a\", { tags: [\"x\"] });\nstore.set(\"b\", { tags: [\"y\"] });\nstore.set(\"c\", { tags: [\"x\", \"y\"] });\n\nfunction revalidateTag(tag) {\n  // viết ở đây\n}\n\nrevalidateTag(\"x\");\nconsole.log([...store.keys()].join(\",\"));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const store = new Map();\nstore.set(\"a\", { tags: [\"x\"] });\nstore.set(\"b\", { tags: [\"y\"] });\nstore.set(\"c\", { tags: [\"x\", \"y\"] });\n\nfunction revalidateTag(tag) {\n  for (const [k, v] of store) if (v.tags.includes(tag)) store.delete(k);\n}\n\nrevalidateTag(\"x\");\nconsole.log([...store.keys()].join(\",\"));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Còn lại chỉ b",
+            "en": "Only b remains"
+          },
+          "test": "logs.join('|')==='b'"
+        }
+      ]
+    }
+  ]
+}

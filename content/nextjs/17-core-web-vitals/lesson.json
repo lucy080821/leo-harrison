@@ -1,0 +1,89 @@
+{
+  "title": {
+    "vi": "Hiệu năng thật: Core Web Vitals (LCP, CLS, INP)",
+    "en": "Real performance: Core Web Vitals (LCP, CLS, INP)"
+  },
+  "summary": {
+    "vi": "ngưỡng tốt/cần cải thiện/kém, cách tính CLS, phân tích gói JS, danh sách tối ưu",
+    "en": "good/needs improvement/poor thresholds, how CLS is computed, bundle analysis, an optimisation checklist"
+  },
+  "minutes": 30,
+  "preview": "console",
+  "files": [
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "// Ngưỡng Core Web Vitals (web.dev): [tốt, cần cải thiện]\nconst T = { LCP: [2500, 4000], INP: [200, 500], CLS: [0.1, 0.25] };\n\nfunction rate(metric, value) {\n  const [good, ni] = T[metric];\n  return value <= good ? \"tốt\" : value <= ni ? \"cần cải thiện\" : \"kém\";\n}\n\nconsole.log(rate(\"LCP\", 2100), rate(\"LCP\", 3000), rate(\"LCP\", 5000));\nconsole.log(rate(\"CLS\", 0.05), rate(\"INP\", 350));\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Dùng ngưỡng LCP ≤ 2500 ms tốt, ≤ 4000 ms cần cải thiện, còn lại kém; CLS ≤ 0.1 tốt, ≤ 0.25 cần cải thiện; INP ≤ 200 ms tốt, ≤ 500 ms cần cải thiện. Viết rate(metric, value) trả 'good' | 'ni' | 'poor'. In kết quả cho: LCP 2400, LCP 4001, CLS 0.1, CLS 0.3, INP 200, INP 501.",
+        "en": "Use thresholds: LCP ≤ 2500 ms good, ≤ 4000 ms needs improvement, else poor; CLS ≤ 0.1 good, ≤ 0.25 needs improvement; INP ≤ 200 ms good, ≤ 500 ms needs improvement. Write rate(metric, value) returning 'good' | 'ni' | 'poor'. Log the results for: LCP 2400, LCP 4001, CLS 0.1, CLS 0.3, INP 200, INP 501."
+      },
+      "hint": {
+        "vi": "bảng ngưỡng theo metric; so sánh <=.",
+        "en": "a threshold table per metric; compare with <=."
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function rate(metric, value) {\n  // viết ở đây\n}\nconst cases = [[\"LCP\", 2400], [\"LCP\", 4001], [\"CLS\", 0.1], [\"CLS\", 0.3], [\"INP\", 200], [\"INP\", 501]];\nconsole.log(cases.map(([m, v]) => rate(m, v)).join(\",\"));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const T = { LCP: [2500, 4000], CLS: [0.1, 0.25], INP: [200, 500] };\nfunction rate(metric, value) {\n  const [g, n] = T[metric];\n  return value <= g ? \"good\" : value <= n ? \"ni\" : \"poor\";\n}\nconst cases = [[\"LCP\", 2400], [\"LCP\", 4001], [\"CLS\", 0.1], [\"CLS\", 0.3], [\"INP\", 200], [\"INP\", 501]];\nconsole.log(cases.map(([m, v]) => rate(m, v)).join(\",\"));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "good,poor,good,poor,good,poor",
+            "en": "good,poor,good,poor,good,poor"
+          },
+          "test": "logs.join('|')==='good,poor,good,poor,good,poor'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Điểm dịch chuyển bố cục = phần viewport bị ảnh hưởng (impact) × khoảng cách dịch chuyển (distance, tính theo tỷ lệ viewport). Viết shift(impact, distance) và in tổng CLS (làm tròn 3 chữ số) cho hai lần dịch chuyển: (0.5, 0.2) và (0.3, 0.1).",
+        "en": "A layout-shift score = the fraction of the viewport affected (impact) × the shift distance (as a viewport fraction). Write shift(impact, distance) and log the total CLS (rounded to 3 digits) for two shifts: (0.5, 0.2) and (0.3, 0.1)."
+      },
+      "hint": {
+        "vi": "impact * distance; cộng các lần.",
+        "en": "impact * distance; sum the shifts."
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function shift(impact, distance) {\n  // viết ở đây\n}\nconst total = shift(0.5, 0.2) + shift(0.3, 0.1);\nconsole.log(Math.round(total * 1000) / 1000);\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function shift(impact, distance) {\n  return impact * distance;\n}\nconst total = shift(0.5, 0.2) + shift(0.3, 0.1);\nconsole.log(Math.round(total * 1000) / 1000);\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "CLS = 0.13",
+            "en": "CLS = 0.13"
+          },
+          "test": "logs.join('|')==='0.13'"
+        }
+      ]
+    }
+  ]
+}

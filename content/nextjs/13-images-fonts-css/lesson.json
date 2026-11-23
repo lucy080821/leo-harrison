@@ -1,0 +1,89 @@
+{
+  "title": {
+    "vi": "Ảnh, font và CSS: tối ưu Core Web Vitals",
+    "en": "Images, fonts and CSS: optimising Core Web Vitals"
+  },
+  "summary": {
+    "vi": "next/image, width/height chống dịch chuyển bố cục, srcset, next/font, CSS Modules và Tailwind",
+    "en": "next/image, width/height against layout shift, srcset, next/font, CSS Modules and Tailwind"
+  },
+  "minutes": 30,
+  "preview": "console",
+  "files": [
+    {
+      "name": "script.js",
+      "lang": "javascript",
+      "code": "// next/image tạo nhiều kích thước ảnh và chọn kích thước vừa đủ cho màn hình\nconst deviceSizes = [640, 750, 828, 1080, 1200, 1920, 2048, 3840];   // mặc định của Next.js\n\nfunction pickWidth(neededPx) {\n  return deviceSizes.find((w) => w >= neededPx) ?? deviceSizes[deviceSizes.length - 1];\n}\n\n// Ảnh hiển thị rộng 400 CSS px trên màn hình DPR 2 cần 800 px thật => lấy bản 828\nconsole.log(pickWidth(400 * 2));\nconsole.log(pickWidth(1000));\nconsole.log(pickWidth(5000));\n\n// Giữ chỗ trước khi ảnh tải: tỷ lệ khung hình = height / width\nconst ratio = (w, h) => Math.round((h / w) * 10000) / 100;\nconsole.log(ratio(1600, 900) + \"%\");\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Dùng deviceSizes mặc định [640, 750, 828, 1080, 1200, 1920, 2048, 3840]. Viết pickWidth(css, dpr) trả kích thước nhỏ nhất ≥ css × dpr (hoặc kích thước lớn nhất nếu không có). In kết quả cho (300,1), (300,2), (1200,2).",
+        "en": "With the default deviceSizes [640, 750, 828, 1080, 1200, 1920, 2048, 3840]. Write pickWidth(css, dpr) returning the smallest size ≥ css × dpr (or the largest if none). Log the results for (300,1), (300,2), (1200,2)."
+      },
+      "hint": {
+        "vi": "deviceSizes.find((w) => w >= css * dpr) ?? last.",
+        "en": "deviceSizes.find((w) => w >= css * dpr) ?? last."
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const deviceSizes = [640, 750, 828, 1080, 1200, 1920, 2048, 3840];\nfunction pickWidth(css, dpr) {\n  // viết ở đây\n}\nconsole.log([pickWidth(300, 1), pickWidth(300, 2), pickWidth(1200, 2)].join(\",\"));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "const deviceSizes = [640, 750, 828, 1080, 1200, 1920, 2048, 3840];\nfunction pickWidth(css, dpr) {\n  const need = css * dpr;\n  return deviceSizes.find((w) => w >= need) ?? deviceSizes[deviceSizes.length - 1];\n}\nconsole.log([pickWidth(300, 1), pickWidth(300, 2), pickWidth(1200, 2)].join(\",\"));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "640,640,3840",
+            "en": "640,640,3840"
+          },
+          "test": "logs.join('|')==='640,640,3840'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Chống dịch chuyển bố cục (CLS): viết reservedHeight(containerWidth, imgW, imgH) trả chiều cao cần giữ chỗ (làm tròn) khi ảnh co theo chiều rộng container. In kết quả cho (400,1600,900) và (320,800,800).",
+        "en": "Avoiding layout shift (CLS): write reservedHeight(containerWidth, imgW, imgH) returning the height to reserve (rounded) when the image scales to the container width. Log the results for (400,1600,900) and (320,800,800)."
+      },
+      "hint": {
+        "vi": "Math.round(containerWidth * imgH / imgW).",
+        "en": "Math.round(containerWidth * imgH / imgW)."
+      },
+      "starter": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function reservedHeight(containerWidth, imgW, imgH) {\n  // viết ở đây\n}\nconsole.log(reservedHeight(400, 1600, 900) + \",\" + reservedHeight(320, 800, 800));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "script.js",
+          "lang": "javascript",
+          "code": "function reservedHeight(containerWidth, imgW, imgH) {\n  return Math.round((containerWidth * imgH) / imgW);\n}\nconsole.log(reservedHeight(400, 1600, 900) + \",\" + reservedHeight(320, 800, 800));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "225,320",
+            "en": "225,320"
+          },
+          "test": "logs.join('|')==='225,320'"
+        }
+      ]
+    }
+  ]
+}
