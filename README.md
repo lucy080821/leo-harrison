@@ -36,7 +36,7 @@ Build production (để deploy VPS): `npm run build && npm start`.
 - [x] Giai đoạn 4: Toán cho ML (7 bài), Machine Learning (13), Deep Learning (10), AI hiện đại (8) — scikit-learn chạy trong trình duyệt, mạng nơ-ron tự cài bằng NumPy
 - [x] Giai đoạn 5: React (8 bài), Node.js (9), Next.js (6), React Native (5) — React/JSX chạy bằng Babel + esm.sh, Node chạy bằng bản mô phỏng trong trình duyệt
 - [x] Nền tảng lập trình (12 bài khái niệm cơ bản, có nguồn học thuật): `content/foundations`
-- [x] Xác suất, thống kê và toán cao cấp (16 bài, nhóm Data): `content/prob-stats`
+- [x] Xác suất, thống kê và toán cao cấp (16 bài): `content/prob-stats`, hiển thị ở hướng học riêng `/learning/statistics` (không nằm trong Lập trình; link cũ `/learning/programming/courses/prob-stats/...` tự chuyển hướng)
 - [x] Git và GitHub (14 bài, có trình mô phỏng Git `gitsim` chạy bằng Pyodide): `content/git-github`
 - Hình minh hoạ SVG (vi/en) cho mọi khoá (kể cả ngữ âm học) nằm trong `public/lessons/<khoá>/`, sinh bằng matplotlib; mỗi bài có ít nhất một hình
 - [ ] Ý tưởng sau này: WebContainers (Node thật trong trình duyệt, cần giấy phép thương mại và header COOP/COEP), tài khoản đăng nhập để đồng bộ tiến độ

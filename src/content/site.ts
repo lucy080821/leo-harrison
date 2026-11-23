@@ -269,6 +269,11 @@ export const t = {
     vi: "Lexi Learn: HTML, CSS, JavaScript, React, Next.js, Node.js, Python, SQL và nhập môn AI. Lý thuyết bên trái, code chạy trực tiếp bên phải.",
     en: "Lexi Learn: HTML, CSS, JavaScript, React, Next.js, Node.js, Python, SQL and an intro to AI. Theory on the left, live code on the right.",
   } as L10n,
+  statistics: { vi: "Toán và Thống kê", en: "Math and Statistics" } as L10n,
+  statisticsDesc: {
+    vi: "Xác suất, thống kê và toán cao cấp từ khái niệm cơ bản đến nâng cao: Bayes, phân phối, kiểm định, hồi quy, vi tích phân, đại số tuyến tính. Ví dụ thực tế, code chạy ngay trong trình duyệt.",
+    en: "Probability, statistics and advanced math from basics to advanced: Bayes, distributions, testing, regression, calculus, linear algebra. Real-world examples, code that runs right in your browser.",
+  } as L10n,
   english: { vi: "Tiếng Anh chuyên sâu", en: "Advanced English" } as L10n,
   englishDesc: {
     vi: "Ngữ âm học tiếng Anh: cấu âm, âm học, thính học, âm vị học và đối chiếu Việt - Anh. Giọng Anh-Anh và Anh-Mỹ song song.",

@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { categories, courses } from "@/content/registry";
+import { categories, courses, statisticsCourse } from "@/content/registry";
 import { getLessons } from "@/lib/content";
 import { getArticles } from "@/lib/articles";
 import { locales } from "@/lib/i18n";
@@ -14,6 +14,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/learning/english", priority: 0.7, freq: "monthly" },
     { path: "/learning/english/phonetics", priority: 0.8, freq: "weekly" },
     ...getArticles("phonetics").map((l) => ({ path: `/learning/english/phonetics/${l.slug}`, priority: 0.6, freq: "monthly" as const })),
+    { path: "/learning/statistics", priority: 0.8, freq: "weekly" },
+    ...getLessons(statisticsCourse.id).map((l) => ({ path: `/learning/statistics/${l.slug}`, priority: 0.6, freq: "monthly" as const })),
     { path: "/about", priority: 0.6, freq: "monthly" },
     { path: "/learning/programming", priority: 0.8, freq: "weekly" },
     ...categories.map((c) => ({ path: `/learning/programming/${c.id}`, priority: 0.7, freq: "monthly" as const })),

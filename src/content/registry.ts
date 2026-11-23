@@ -154,16 +154,6 @@ export const courses: Course[] = [
     name: { vi: "SQL", en: "SQL" },
     desc: { vi: "Truy vấn và quản lý dữ liệu quan hệ.", en: "Query and manage relational data." },
   },
-  {
-    id: "prob-stats",
-    category: "data",
-    badge: "σ",
-    name: { vi: "Xác suất, thống kê và toán cao cấp", en: "Probability, Statistics and Advanced Math" },
-    desc: {
-      vi: "16 bài từ khái niệm cơ bản đến nâng cao: xác suất, Bayes, phân phối, kiểm định, hồi quy, vi tích phân, đại số tuyến tính, PCA; ví dụ thực tế và hình minh hoạ.",
-      en: "16 lessons from basics to advanced: probability, Bayes, distributions, testing, regression, calculus, linear algebra, PCA; real-world examples and illustrations.",
-    },
-  },
   // AI
   {
     id: "math-for-ml",
@@ -204,3 +194,14 @@ export function getCategory(id: string) {
 export function coursesOf(category: CategoryId) {
   return courses.filter((c) => c.category === category);
 }
+
+/** Khoá Xác suất, thống kê và toán cao cấp: một hướng học riêng (/learning/statistics), không nằm trong Lập trình. */
+export const statisticsCourse = {
+  id: "prob-stats",
+  badge: "σ",
+  name: { vi: "Xác suất, thống kê và toán cao cấp", en: "Probability, Statistics and Advanced Math" } as L10n,
+  desc: {
+    vi: "16 bài từ khái niệm cơ bản đến nâng cao: xác suất, Bayes, phân phối, kiểm định, hồi quy, vi tích phân, đại số tuyến tính, PCA; ví dụ thực tế và hình minh hoạ.",
+    en: "16 lessons from basics to advanced: probability, Bayes, distributions, testing, regression, calculus, linear algebra, PCA; real-world examples and illustrations.",
+  } as L10n,
+};

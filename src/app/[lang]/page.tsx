@@ -11,7 +11,7 @@ import { ProjectBlock } from "@/components/ProjectBlock";
 import { Reveal } from "@/components/Reveal";
 import { ScrollBackground } from "@/components/ScrollBackground";
 import { SocialLinks } from "@/components/SocialLinks";
-import { categories, coursesOf } from "@/content/registry";
+import { categories, coursesOf, statisticsCourse } from "@/content/registry";
 import {
   experience,
   heroLine,
@@ -63,6 +63,7 @@ export default async function Home({
     categories
       .flatMap((c) => coursesOf(c.id))
       .reduce((n, co) => n + getLessons(co.id).length, 0) +
+    getLessons(statisticsCourse.id).length +
     getArticles("phonetics").length;
   const current = experience[0];
   const stats = [
