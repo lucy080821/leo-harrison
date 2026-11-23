@@ -77,7 +77,7 @@ export default async function PhoneticsLesson({ params }: { params: Promise<Para
         isPractice={l.kind === "practice"}
         backHref={base}
         crumbs={[
-          { label: "Lexi Learn", href: `/${lang}/learning` },
+          { label: "Learn With Leo", href: `/${lang}/learning` },
           { label: site.english[lang], href: `/${lang}/learning/english` },
           { label: course.name[lang], href: base },
           { label: l.title[lang] },

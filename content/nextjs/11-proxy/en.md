@@ -48,7 +48,7 @@ For **simple static** redirects, use `redirects` in `next.config.ts` first (no c
 
 ## i18n pattern
 
-Read `Accept-Language` or a cookie, then redirect `/` → `/vi`. (This very Lexi Learn site does exactly this.)
+Read `Accept-Language` or a cookie, then redirect `/` → `/vi`. (This very Learn With Leo site does exactly this.)
 
 ## Debugging
 

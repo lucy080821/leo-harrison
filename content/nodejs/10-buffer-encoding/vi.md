@@ -1,6 +1,6 @@
 # Buffer và mã hoá: hex, base64 và nhị phân
 
-> **Lưu ý:** trong trình duyệt không có Node thật, nên Lexi Learn chạy một bản **mô phỏng** (fs trong bộ nhớ, `http`/`express` thu nhỏ, kiểm thử bằng `app.inject`). Code bạn viết giống hệt khi chạy trên Node thật; phần cuối mỗi bài chỉ ra cách chạy ngoài máy.
+> **Lưu ý:** trong trình duyệt không có Node thật, nên Learn With Leo chạy một bản **mô phỏng** (fs trong bộ nhớ, `http`/`express` thu nhỏ, kiểm thử bằng `app.inject`). Code bạn viết giống hệt khi chạy trên Node thật; phần cuối mỗi bài chỉ ra cách chạy ngoài máy.
 
 Máy tính lưu và truyền **byte**, không phải "chữ". Mỗi khi đọc tệp, nhận dữ liệu mạng, làm việc với ảnh, mã hoá, bạn đang xử lý **byte**. Trong Node, `Buffer` là đối tượng giữ một dãy byte.
 

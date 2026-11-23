@@ -6,7 +6,7 @@ Thống kê dùng sai còn nguy hiểm hơn không dùng. Ba bẫy kinh điển:
 
 Một xu hướng xuất hiện trong từng nhóm có thể **đảo ngược** khi gộp các nhóm lại. Ví dụ nổi tiếng là phân tích tuyển sinh sau đại học của Đại học California, Berkeley (Bickel, Hammel & O'Connell, 1975, *Science*): số liệu gộp cho thấy nam được nhận cao hơn nữ, nhưng khi tách theo khoa thì không còn bằng chứng thiên lệch như vậy, vì phụ nữ nộp nhiều hơn vào những khoa cạnh tranh cao hơn.
 
-Số liệu trong bài này là **minh hoạ** do Lexi Learn dựng ra: điều trị A tốt hơn ở cả hai nhóm bệnh nhân, nhưng gộp lại B trông tốt hơn vì B được dùng chủ yếu cho ca nhẹ.
+Số liệu trong bài này là **minh hoạ** do Learn With Leo dựng ra: điều trị A tốt hơn ở cả hai nhóm bệnh nhân, nhưng gộp lại B trông tốt hơn vì B được dùng chủ yếu cho ca nhẹ.
 
 ![Hai biểu đồ cột: tỷ lệ khỏi của A và B theo từng nhóm và khi gộp](/lessons/prob-stats/29-pitfalls-simpson-vi.svg)
 *A cao hơn ở cả hai nhóm, nhưng B cao hơn khi gộp vì B chủ yếu điều trị ca nhẹ.*

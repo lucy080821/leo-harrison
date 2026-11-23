@@ -26,7 +26,7 @@ export default async function EnglishPage({ params }: { params: Promise<{ lang: 
 
   return (
     <div className="mx-auto max-w-3xl px-4 pt-14">
-      <Breadcrumbs items={[{ label: "Lexi Learn", href: `/${lang}/learning` }, { label: t.english[lang] }]} />
+      <Breadcrumbs items={[{ label: "Learn With Leo", href: `/${lang}/learning` }, { label: t.english[lang] }]} />
       <h1 className="h-display mt-4 text-4xl sm:text-5xl">{t.englishPageTitle[lang]}</h1>
       <p className="mt-4 text-lg leading-relaxed text-muted">{t.englishPageBody[lang]}</p>
 

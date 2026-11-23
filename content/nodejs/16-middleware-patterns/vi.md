@@ -1,6 +1,6 @@
 # Middleware thực dụng: request id, xác thực và giới hạn tần suất
 
-> **Lưu ý:** trong trình duyệt không có Node thật, nên Lexi Learn chạy một bản **mô phỏng** (fs trong bộ nhớ, `http`/`express` thu nhỏ, kiểm thử bằng `app.inject`). Code bạn viết giống hệt khi chạy trên Node thật; phần cuối mỗi bài chỉ ra cách chạy ngoài máy.
+> **Lưu ý:** trong trình duyệt không có Node thật, nên Learn With Leo chạy một bản **mô phỏng** (fs trong bộ nhớ, `http`/`express` thu nhỏ, kiểm thử bằng `app.inject`). Code bạn viết giống hệt khi chạy trên Node thật; phần cuối mỗi bài chỉ ra cách chạy ngoài máy.
 
 Middleware là **đường ống** mà mọi yêu cầu đi qua. Các mối quan tâm chung (log, xác thực, giới hạn tần suất, nén, CORS) nên nằm ở đây, **không** lặp lại trong từng route.
 

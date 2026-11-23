@@ -1,6 +1,6 @@
 # Streams and processing large data with async generators
 
-> **Note:** a browser has no real Node, so Lexi Learn runs a **simulation** (in-memory fs, a mini `http`/`express`, testing with `app.inject`). The code you write is identical to real Node; each lesson ends with how to run it locally.
+> **Note:** a browser has no real Node, so Learn With Leo runs a **simulation** (in-memory fs, a mini `http`/`express`, testing with `app.inject`). The code you write is identical to real Node; each lesson ends with how to run it locally.
 
 Reading a 5 GB CSV with `fs.readFileSync` **loads it all into RAM** and crashes. **Streams** process data **chunk by chunk**: memory use stays nearly constant however large the data.
 

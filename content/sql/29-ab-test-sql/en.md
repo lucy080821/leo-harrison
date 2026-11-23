@@ -41,6 +41,6 @@ Let pA, pB be the rates and nA, nB the group sizes.
 
 - Kohavi, R., Tang, D., Xu, Y. *Trustworthy Online Controlled Experiments* (2020).
 - Diez et al. *OpenIntro Statistics*, chapter 6.
-- Lexi Learn's "Math and Statistics" course: the lessons on testing, power and A/B experiments.
+- Learn With Leo's "Math and Statistics" course: the lessons on testing, power and A/B experiments.
 
 > **Data:** this lesson uses the sample data built into the editor (SQLite running in your browser). The syntax here is SQLite's; differences from PostgreSQL, MySQL and BigQuery are covered in the dialects lesson.

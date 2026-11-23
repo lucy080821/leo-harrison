@@ -1,6 +1,6 @@
 # Structured logging and observability: levels, request ids and metrics
 
-> **Note:** a browser has no real Node, so Lexi Learn runs a **simulation** (in-memory fs, a mini `http`/`express`, testing with `app.inject`). The code you write is identical to real Node; each lesson ends with how to run it locally.
+> **Note:** a browser has no real Node, so Learn With Leo runs a **simulation** (in-memory fs, a mini `http`/`express`, testing with `app.inject`). The code you write is identical to real Node; each lesson ends with how to run it locally.
 
 When your service runs at 3 a.m. and something breaks, all you have is **logs, metrics and traces**. A system you can't observe can't be operated reliably.
 

@@ -248,8 +248,8 @@ export const skills: L10n[] = skillGroups.flatMap((g) => g.items);
 export const t = {
   hello: { vi: "Xin chào, mình là", en: "Hi, I'm" } as L10n,
   heroSub: {
-    vi: "Mình làm Lucy Tutor (học và luyện thi tiếng Anh cùng AI), Cerno (biến Google Sheets thành bảng điều khiển dữ liệu) và Lexi Learn (khóa học lập trình song ngữ, có bài tập tự chấm). Mình cũng làm kênh Tiếng Anh Không Khó trên YouTube và TikTok.",
-    en: "I build Lucy Tutor (learn English and prepare for exams with AI), Cerno (turn Google Sheets into dashboards) and Lexi Learn (a bilingual programming course with auto-checked exercises). I also run the Tiếng Anh Không Khó channel on YouTube and TikTok.",
+    vi: "Mình làm Lucy Tutor (học và luyện thi tiếng Anh cùng AI), Cerno (biến Google Sheets thành bảng điều khiển dữ liệu) và Learn With Leo (khóa học lập trình song ngữ, có bài tập tự chấm). Mình cũng làm kênh Tiếng Anh Không Khó trên YouTube và TikTok.",
+    en: "I build Lucy Tutor (learn English and prepare for exams with AI), Cerno (turn Google Sheets into dashboards) and Learn With Leo (a bilingual programming course with auto-checked exercises). I also run the Tiếng Anh Không Khó channel on YouTube and TikTok.",
   } as L10n,
   seeProjects: { vi: "Xem các dự án", en: "See my projects" } as L10n,
   startLearning: { vi: "Học lập trình", en: "Learn to code" } as L10n,
@@ -266,8 +266,8 @@ export const t = {
   } as L10n,
   programming: { vi: "Lập trình", en: "Programming" } as L10n,
   programmingDesc: {
-    vi: "Lexi Learn: HTML, CSS, JavaScript, React, Next.js, Node.js, Python, SQL và nhập môn AI. Lý thuyết bên trái, code chạy trực tiếp bên phải.",
-    en: "Lexi Learn: HTML, CSS, JavaScript, React, Next.js, Node.js, Python, SQL and an intro to AI. Theory on the left, live code on the right.",
+    vi: "Learn With Leo: HTML, CSS, JavaScript, React, Next.js, Node.js, Python, SQL và nhập môn AI. Lý thuyết bên trái, code chạy trực tiếp bên phải.",
+    en: "Learn With Leo: HTML, CSS, JavaScript, React, Next.js, Node.js, Python, SQL and an intro to AI. Theory on the left, live code on the right.",
   } as L10n,
   statistics: { vi: "Toán và Thống kê", en: "Math and Statistics" } as L10n,
   statisticsDesc: {
@@ -288,8 +288,8 @@ export const t = {
   } as L10n,
   heroRole: { vi: "Chuyên viên phân tích dữ liệu", en: "Data Analyst" } as L10n,
   heroSummary: {
-    vi: "Hơn 10 năm làm kinh doanh ngành hàng tiêu dùng và xuất nhập khẩu. Mình dùng SQL, Python và Power BI để đọc dữ liệu bán hàng, và xây công cụ học tập: Lucy Tutor, Cerno, Lexi Learn.",
-    en: "Over 10 years in consumer-goods sales and import–export. I use SQL, Python and Power BI to read sales data, and I build learning tools: Lucy Tutor, Cerno and Lexi Learn.",
+    vi: "Hơn 10 năm làm kinh doanh ngành hàng tiêu dùng và xuất nhập khẩu. Mình dùng SQL, Python và Power BI để đọc dữ liệu bán hàng, và xây công cụ học tập: Lucy Tutor, Cerno, Learn With Leo.",
+    en: "Over 10 years in consumer-goods sales and import–export. I use SQL, Python and Power BI to read sales data, and I build learning tools: Lucy Tutor, Cerno and Learn With Leo.",
   } as L10n,
   objectiveTitle: { vi: "Mục tiêu nghề nghiệp", en: "Career objective" } as L10n,
   objective: {
@@ -310,8 +310,8 @@ export const t = {
       en: "I'm Tạ Hoàng Anh Tuấn, and people call me Leo. I build tools that make learning and reading data less of a chore.",
     },
     {
-      vi: "Lucy Tutor ra đời để học và luyện thi tiếng Anh có AI đồng hành. Cerno dành cho ai có dữ liệu trong Google Sheets nhưng chưa có cách trình bày. Lexi Learn là nơi mình viết lại những gì đã học về lập trình, để người khác bắt đầu từ con số 0 mà không bị lạc. Kênh Tiếng Anh Không Khó trên YouTube và TikTok đưa tiếng Anh đến người học theo cách nhẹ nhàng hơn.",
-      en: "Lucy Tutor lets people study and prepare for English exams with an AI alongside them. Cerno is for anyone whose data sits in Google Sheets with no good way to show it. Lexi Learn is where I write down what I've learned about programming so others can start from zero without getting lost. The Tiếng Anh Không Khó channel on YouTube and TikTok brings English to learners in a lighter way.",
+      vi: "Lucy Tutor ra đời để học và luyện thi tiếng Anh có AI đồng hành. Cerno dành cho ai có dữ liệu trong Google Sheets nhưng chưa có cách trình bày. Learn With Leo là nơi mình viết lại những gì đã học về lập trình, để người khác bắt đầu từ con số 0 mà không bị lạc. Kênh Tiếng Anh Không Khó trên YouTube và TikTok đưa tiếng Anh đến người học theo cách nhẹ nhàng hơn.",
+      en: "Lucy Tutor lets people study and prepare for English exams with an AI alongside them. Cerno is for anyone whose data sits in Google Sheets with no good way to show it. Learn With Leo is where I write down what I've learned about programming so others can start from zero without getting lost. The Tiếng Anh Không Khó channel on YouTube and TikTok brings English to learners in a lighter way.",
     },
     {
       vi: "Trang này gom tất cả lại một chỗ, kèm những gì mình học được và muốn chia sẻ. Phần tiếng Anh chuyên sâu sẽ là chủ đề tiếp theo.",
@@ -338,8 +338,8 @@ export const seo: Record<"home" | "projects" | "learning" | "about" | "english",
   home: {
     title: { vi: "Tạ Hoàng Anh Tuấn (Leo) – Chuyên viên phân tích dữ liệu | hồ sơ trực tuyến, dự án, học lập trình", en: "Tạ Hoàng Anh Tuấn (Leo) – Data Analyst | Online CV, projects, learn to code" },
     description: {
-      vi: "Hồ sơ trực tuyến của Tạ Hoàng Anh Tuấn (Leo): chuyên viên phân tích dữ liệu, hơn 10 năm kinh doanh và xuất nhập khẩu. Kỹ năng SQL, Python, Power BI; dự án Lucy Tutor, Cerno và khoá học lập trình Lexi Learn.",
-      en: "Online CV of Tạ Hoàng Anh Tuấn (Leo): Data Analyst with 10+ years in sales and import–export. SQL, Python and Power BI skills; projects Lucy Tutor, Cerno and the Lexi Learn programming course.",
+      vi: "Hồ sơ trực tuyến của Tạ Hoàng Anh Tuấn (Leo): chuyên viên phân tích dữ liệu, hơn 10 năm kinh doanh và xuất nhập khẩu. Kỹ năng SQL, Python, Power BI; dự án Lucy Tutor, Cerno và khoá học lập trình Learn With Leo.",
+      en: "Online CV of Tạ Hoàng Anh Tuấn (Leo): Data Analyst with 10+ years in sales and import–export. SQL, Python and Power BI skills; projects Lucy Tutor, Cerno and the Learn With Leo programming course.",
     },
   },
   projects: {
@@ -359,8 +359,8 @@ export const seo: Record<"home" | "projects" | "learning" | "about" | "english",
   about: {
     title: { vi: "Giới thiệu | Leo – Tạ Hoàng Anh Tuấn", en: "About | Leo – Tạ Hoàng Anh Tuấn" },
     description: {
-      vi: "Tạ Hoàng Anh Tuấn (Leo) làm công cụ giúp việc học và đọc dữ liệu dễ hơn: Lucy Tutor, Cerno, Lexi Learn và kênh Tiếng Anh Không Khó.",
-      en: "Tạ Hoàng Anh Tuấn (Leo) builds tools that make learning and reading data easier: Lucy Tutor, Cerno, Lexi Learn and the Tiếng Anh Không Khó channel.",
+      vi: "Tạ Hoàng Anh Tuấn (Leo) làm công cụ giúp việc học và đọc dữ liệu dễ hơn: Lucy Tutor, Cerno, Learn With Leo và kênh Tiếng Anh Không Khó.",
+      en: "Tạ Hoàng Anh Tuấn (Leo) builds tools that make learning and reading data easier: Lucy Tutor, Cerno, Learn With Leo and the Tiếng Anh Không Khó channel.",
     },
   },
   english: {

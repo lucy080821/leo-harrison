@@ -46,7 +46,7 @@ export default async function StatisticsPage({ params }: { params: Promise<{ lan
           isAccessibleForFree: true,
         }}
       />
-      <Breadcrumbs items={[{ label: "Lexi Learn", href: `/${lang}/learning` }, { label: site.statistics[lang] }]} />
+      <Breadcrumbs items={[{ label: "Learn With Leo", href: `/${lang}/learning` }, { label: site.statistics[lang] }]} />
       <h1 className="h-display mt-3 text-3xl sm:text-4xl">{site.statistics[lang]}</h1>
       <p className="mt-2 text-lg text-muted">{co.desc[lang]}</p>
 

@@ -13,7 +13,7 @@
     {
       "name": "index.html",
       "lang": "html",
-      "code": "<header>\n  <h1>Blog của Lexi</h1>\n  <nav>\n    <a href=\"#\">Trang chủ</a>\n    <a href=\"#\">Bài viết</a>\n    <a href=\"#\">Liên hệ</a>\n  </nav>\n</header>\n<main>\n  <article>\n    <h2>Bài viết đầu tiên</h2>\n    <p>Nội dung bài viết...</p>\n  </article>\n  <aside>\n    <h3>Về tác giả</h3>\n    <p>Một người đang học lập trình.</p>\n  </aside>\n</main>\n<footer>\n  <p>&copy; 2026 Lexi Learn</p>\n</footer>\n"
+      "code": "<header>\n  <h1>Blog của Lexi</h1>\n  <nav>\n    <a href=\"#\">Trang chủ</a>\n    <a href=\"#\">Bài viết</a>\n    <a href=\"#\">Liên hệ</a>\n  </nav>\n</header>\n<main>\n  <article>\n    <h2>Bài viết đầu tiên</h2>\n    <p>Nội dung bài viết...</p>\n  </article>\n  <aside>\n    <h3>Về tác giả</h3>\n    <p>Một người đang học lập trình.</p>\n  </aside>\n</main>\n<footer>\n  <p>&copy; 2026 Learn With Leo</p>\n</footer>\n"
     }
   ],
   "exercises": [

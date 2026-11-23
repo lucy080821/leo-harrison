@@ -1,6 +1,6 @@
 # process, đối số dòng lệnh và cấu hình
 
-> **Lưu ý:** trong trình duyệt không có Node thật, nên Lexi Learn chạy một bản **mô phỏng** (fs trong bộ nhớ, `http`/`express` thu nhỏ, kiểm thử bằng `app.inject`). Code bạn viết giống hệt khi chạy trên Node thật; phần cuối mỗi bài chỉ ra cách chạy ngoài máy.
+> **Lưu ý:** trong trình duyệt không có Node thật, nên Learn With Leo chạy một bản **mô phỏng** (fs trong bộ nhớ, `http`/`express` thu nhỏ, kiểm thử bằng `app.inject`). Code bạn viết giống hệt khi chạy trên Node thật; phần cuối mỗi bài chỉ ra cách chạy ngoài máy.
 
 Một chương trình Node thực tế không chỉ là mã: nó nhận **đối số**, đọc **cấu hình**, trả **mã thoát**, và phản ứng với **tín hiệu** của hệ điều hành. Đối tượng toàn cục `process` là cửa ngõ.
 

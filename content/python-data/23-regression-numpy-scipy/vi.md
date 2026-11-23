@@ -37,4 +37,4 @@ Hồi quy trả lời: *khi X đổi 1 đơn vị, Y đổi bao nhiêu (trung b�
 
 - James, Witten, Hastie, Tibshirani. *An Introduction to Statistical Learning*, chương 3.
 - SciPy documentation, `scipy.stats.linregress`.
-- Khoá "Toán và Thống kê" của Lexi Learn, bài hồi quy.
+- Khoá "Toán và Thống kê" của Learn With Leo, bài hồi quy.

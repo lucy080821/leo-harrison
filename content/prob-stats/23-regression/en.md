@@ -27,7 +27,7 @@ Francis Galton (1886) observed that children of very tall parents tend to be sli
 
 Predict price from area. Warnings: predict only **within the observed range** (interpolation); extrapolation is risky; and always plot the **residuals** to check the model is sensible.
 
-> This is the foundation of supervised Machine Learning: linear regression is the first model in the Lexi Learn ML course.
+> This is the foundation of supervised Machine Learning: linear regression is the first model in the Learn With Leo ML course.
 
 ## References
 

@@ -40,4 +40,4 @@ The "Math and Statistics" course explains **why** tests work. This lesson is the
 
 - SciPy documentation, "scipy.stats".
 - Wasserstein & Lazar (2016). The ASA statement on p-values. *The American Statistician* 70(2).
-- Lexi Learn's "Math and Statistics" course (lessons 15 to 21).
+- Learn With Leo's "Math and Statistics" course (lessons 15 to 21).

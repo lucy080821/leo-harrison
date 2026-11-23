@@ -1,6 +1,6 @@
 # Node.js and modules
 
-> **Note:** a browser has no real Node, so Lexi Learn runs a **simulation** (in-memory fs, a mini `http`/`express`, testing with `app.inject`). The code you write is identical to real Node; each lesson ends with how to run it locally.
+> **Note:** a browser has no real Node, so Learn With Leo runs a **simulation** (in-memory fs, a mini `http`/`express`, testing with `app.inject`). The code you write is identical to real Node; each lesson ends with how to run it locally.
 
 **Node.js** runs JavaScript **outside the browser** — for servers, command-line tools and automation scripts. It is the same language you already know, but instead of `window`/`document` you get system modules: `fs` (files), `http` (network), `path`…
 

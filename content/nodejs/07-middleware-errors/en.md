@@ -1,6 +1,6 @@
 # Middleware and error handling
 
-> **Note:** a browser has no real Node, so Lexi Learn runs a **simulation** (in-memory fs, a mini `http`/`express`, testing with `app.inject`). The code you write is identical to real Node; each lesson ends with how to run it locally.
+> **Note:** a browser has no real Node, so Learn With Leo runs a **simulation** (in-memory fs, a mini `http`/`express`, testing with `app.inject`). The code you write is identical to real Node; each lesson ends with how to run it locally.
 
 **Middleware** is a `(req, res, next)` function that sits *between* the request and the route. It can read/modify `req` and `res`, then either **end** the response or call `next()` to hand over.
 

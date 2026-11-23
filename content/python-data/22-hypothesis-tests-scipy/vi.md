@@ -40,4 +40,4 @@ Khoá "Toán và Thống kê" giải thích **vì sao** các kiểm định ho�
 
 - SciPy documentation, "scipy.stats".
 - Wasserstein & Lazar (2016). The ASA statement on p-values. *The American Statistician* 70(2).
-- Khoá "Toán và Thống kê" của Lexi Learn (bài 15 đến 21).
+- Khoá "Toán và Thống kê" của Learn With Leo (bài 15 đến 21).

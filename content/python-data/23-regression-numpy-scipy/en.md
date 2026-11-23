@@ -37,4 +37,4 @@ Regression answers: *when X changes by 1 unit, how much does Y change (on averag
 
 - James, Witten, Hastie, Tibshirani. *An Introduction to Statistical Learning*, chapter 3.
 - SciPy documentation, `scipy.stats.linregress`.
-- Lexi Learn's "Math and Statistics" course, regression lesson.
+- Learn With Leo's "Math and Statistics" course, regression lesson.

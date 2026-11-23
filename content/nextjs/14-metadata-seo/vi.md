@@ -10,7 +10,7 @@
 // app/about/page.js
 export const metadata = {
   title: 'Giới thiệu',
-  description: 'Về Lexi Learn',
+  description: 'Về Learn With Leo',
 }
 
 // app/blog/[slug]/page.js
@@ -24,7 +24,7 @@ export async function generateMetadata({ params }) {
 Metadata **gộp** từ layout đến trang, trang con ghi đè cha. Mẫu tiêu đề trong layout gốc:
 
 ```js
-title: { template: '%s | Lexi Learn', default: 'Lexi Learn' }
+title: { template: '%s | Learn With Leo', default: 'Learn With Leo' }
 ```
 
 ![Metadata được gộp từ layout xuống trang và biến thành thẻ head](/lessons/nextjs/14-metadata-seo-fig-vi.svg)

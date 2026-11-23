@@ -1,6 +1,6 @@
 # Token và JWT: cấu trúc, hạn dùng và những cạm bẫy
 
-> **Lưu ý:** trong trình duyệt không có Node thật, nên Lexi Learn chạy một bản **mô phỏng** (fs trong bộ nhớ, `http`/`express` thu nhỏ, kiểm thử bằng `app.inject`). Code bạn viết giống hệt khi chạy trên Node thật; phần cuối mỗi bài chỉ ra cách chạy ngoài máy.
+> **Lưu ý:** trong trình duyệt không có Node thật, nên Learn With Leo chạy một bản **mô phỏng** (fs trong bộ nhớ, `http`/`express` thu nhỏ, kiểm thử bằng `app.inject`). Code bạn viết giống hệt khi chạy trên Node thật; phần cuối mỗi bài chỉ ra cách chạy ngoài máy.
 
 **JWT (JSON Web Token)** là cách đóng gói thông tin "ai, quyền gì, đến khi nào" thành một chuỗi đã **ký**. API dùng nó để biết yêu cầu đến từ ai mà không phải tra CSDL mỗi lần.
 

@@ -1,6 +1,6 @@
 # Tầng dữ liệu: repository, truy vấn tham số hoá và giao dịch
 
-> **Lưu ý:** trong trình duyệt không có Node thật, nên Lexi Learn chạy một bản **mô phỏng** (fs trong bộ nhớ, `http`/`express` thu nhỏ, kiểm thử bằng `app.inject`). Code bạn viết giống hệt khi chạy trên Node thật; phần cuối mỗi bài chỉ ra cách chạy ngoài máy.
+> **Lưu ý:** trong trình duyệt không có Node thật, nên Learn With Leo chạy một bản **mô phỏng** (fs trong bộ nhớ, `http`/`express` thu nhỏ, kiểm thử bằng `app.inject`). Code bạn viết giống hệt khi chạy trên Node thật; phần cuối mỗi bài chỉ ra cách chạy ngoài máy.
 
 API thực tế gần như luôn có CSDL. Cách bạn **tổ chức mã truy cập dữ liệu** quyết định bảo trì, bảo mật và hiệu năng.
 
@@ -29,7 +29,7 @@ Luôn **tham số hoá** (bài 17): `{ text: 'SELECT … WHERE id = $1', values:
 | **Drizzle**, **Kysely** | truy vấn có kiểu, gần SQL |
 | **Prisma** | ORM với lược đồ, tiện nhưng trừu tượng dày hơn |
 
-Dù dùng ORM, **hiểu SQL** (khoá SQL của Lexi Learn) để đọc truy vấn sinh ra và tối ưu chỉ mục.
+Dù dùng ORM, **hiểu SQL** (khoá SQL của Learn With Leo) để đọc truy vấn sinh ra và tối ưu chỉ mục.
 
 ## Giao dịch (transaction)
 

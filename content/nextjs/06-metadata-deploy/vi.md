@@ -10,7 +10,7 @@
 // app/about/page.js — metadata tĩnh
 export const metadata = {
   title: "Giới thiệu",
-  description: "Về Lexi Learn",
+  description: "Về Learn With Leo",
 };
 
 // app/blog/[slug]/page.js — metadata động

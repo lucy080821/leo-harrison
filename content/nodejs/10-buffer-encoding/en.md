@@ -1,6 +1,6 @@
 # Buffer and encodings: hex, base64 and binary
 
-> **Note:** a browser has no real Node, so Lexi Learn runs a **simulation** (in-memory fs, a mini `http`/`express`, testing with `app.inject`). The code you write is identical to real Node; each lesson ends with how to run it locally.
+> **Note:** a browser has no real Node, so Learn With Leo runs a **simulation** (in-memory fs, a mini `http`/`express`, testing with `app.inject`). The code you write is identical to real Node; each lesson ends with how to run it locally.
 
 Computers store and transmit **bytes**, not "text". Whenever you read a file, receive network data, handle images or cryptography, you handle **bytes**. In Node, `Buffer` is an object holding a sequence of bytes.
 

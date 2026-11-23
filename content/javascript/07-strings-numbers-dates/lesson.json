@@ -13,15 +13,15 @@
     {
       "name": "script.js",
       "lang": "javascript",
-      "code": "const s = \"  Hello, Lexi Learn  \";\nconsole.log(s.trim());                     // \"Hello, Lexi Learn\"\nconsole.log(s.trim().toUpperCase());\nconsole.log(s.trim().split(\" \"));          // [\"Hello,\",\"Lexi\",\"Learn\"]\nconsole.log(s.includes(\"Lexi\"));           // true\nconsole.log(\"abcdef\".slice(1, 4));         // \"bcd\"\nconsole.log(\"a-b-c\".replaceAll(\"-\", \"+\")); // \"a+b+c\"\n\nconsole.log((3.14159).toFixed(2));         // \"3.14\" (chuỗi)\nconsole.log(Math.round(2.5), Math.floor(2.9), Math.ceil(2.1));\nconsole.log(Math.max(3, 9, 4), Math.PI);\nconsole.log(Number(\"42\") + 1, parseInt(\"12px\"), 0.1 + 0.2);\n"
+      "code": "const s = \"  Hello, Learn With Leo  \";\nconsole.log(s.trim());                     // \"Hello, Learn With Leo\"\nconsole.log(s.trim().toUpperCase());\nconsole.log(s.trim().split(\" \"));          // [\"Hello,\",\"Lexi\",\"Learn\"]\nconsole.log(s.includes(\"Lexi\"));           // true\nconsole.log(\"abcdef\".slice(1, 4));         // \"bcd\"\nconsole.log(\"a-b-c\".replaceAll(\"-\", \"+\")); // \"a+b+c\"\n\nconsole.log((3.14159).toFixed(2));         // \"3.14\" (chuỗi)\nconsole.log(Math.round(2.5), Math.floor(2.9), Math.ceil(2.1));\nconsole.log(Math.max(3, 9, 4), Math.PI);\nconsole.log(Number(\"42\") + 1, parseInt(\"12px\"), 0.1 + 0.2);\n"
     }
   ],
   "exercises": [
     {
       "id": "ex1",
       "prompt": {
-        "vi": "Cho text = \"  Hello, Lexi Learn  \": in chuỗi đã cắt khoảng trắng hai đầu và viết HOA, rồi in số từ (tách bằng dấu cách).",
-        "en": "Given text = \"  Hello, Lexi Learn  \": print the trimmed, UPPERCASE string, then print the number of words (split by space)."
+        "vi": "Cho text = \"  Hello, Learn With Leo  \": in chuỗi đã cắt khoảng trắng hai đầu và viết HOA, rồi in số từ (tách bằng dấu cách).",
+        "en": "Given text = \"  Hello, Learn With Leo  \": print the trimmed, UPPERCASE string, then print the number of words (split by space)."
       },
       "hint": {
         "vi": "text.trim().toUpperCase() và text.trim().split(\" \").length",
@@ -31,14 +31,14 @@
         {
           "name": "script.js",
           "lang": "javascript",
-          "code": "const text = \"  Hello, Lexi Learn  \";\n// viết ở đây\n"
+          "code": "const text = \"  Hello, Learn With Leo  \";\n// viết ở đây\n"
         }
       ],
       "solution": [
         {
           "name": "script.js",
           "lang": "javascript",
-          "code": "const text = \"  Hello, Lexi Learn  \";\nconsole.log(text.trim().toUpperCase());\nconsole.log(text.trim().split(\" \").length);\n"
+          "code": "const text = \"  Hello, Learn With Leo  \";\nconsole.log(text.trim().toUpperCase());\nconsole.log(text.trim().split(\" \").length);\n"
         }
       ],
       "checks": [

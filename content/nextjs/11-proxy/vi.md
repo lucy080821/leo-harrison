@@ -48,7 +48,7 @@ Với chuyển hướng **tĩnh, đơn giản**, dùng `redirects` trong `next.c
 
 ## Mẫu đa ngôn ngữ
 
-Đọc `Accept-Language` hoặc cookie, rồi redirect `/` → `/vi`. (Trang này của Lexi Learn dùng đúng cách này.)
+Đọc `Accept-Language` hoặc cookie, rồi redirect `/` → `/vi`. (Trang này của Learn With Leo dùng đúng cách này.)
 
 ## Gỡ lỗi
 

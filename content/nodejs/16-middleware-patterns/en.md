@@ -1,6 +1,6 @@
 # Practical middleware: request id, auth and rate limiting
 
-> **Note:** a browser has no real Node, so Lexi Learn runs a **simulation** (in-memory fs, a mini `http`/`express`, testing with `app.inject`). The code you write is identical to real Node; each lesson ends with how to run it locally.
+> **Note:** a browser has no real Node, so Learn With Leo runs a **simulation** (in-memory fs, a mini `http`/`express`, testing with `app.inject`). The code you write is identical to real Node; each lesson ends with how to run it locally.
 
 Middleware is the **pipeline** every request passes through. Cross-cutting concerns (logging, auth, rate limiting, compression, CORS) belong here, **not** repeated in each route.
 

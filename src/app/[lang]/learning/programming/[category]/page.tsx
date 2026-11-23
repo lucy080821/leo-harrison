@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return pageMeta({
     lang,
     path: `/learning/programming/${cat.id}`,
-    title: `${cat.name[lang]} – ${lang === "vi" ? "học lập trình" : "learn programming"} | Lexi Learn`,
+    title: `${cat.name[lang]} – ${lang === "vi" ? "học lập trình" : "learn programming"} | Learn With Leo`,
     description: cat.desc[lang],
   });
 }
@@ -34,7 +34,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ lang:
     <div className="mx-auto max-w-6xl px-4 py-10">
       <Breadcrumbs
         items={[
-          { label: "Lexi Learn", href: `/${lang}/learning` },
+          { label: "Learn With Leo", href: `/${lang}/learning` },
           { label: site.programming[lang], href: `/${lang}/learning/programming` },
           { label: cat.name[lang] },
         ]}

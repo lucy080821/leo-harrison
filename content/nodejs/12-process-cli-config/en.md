@@ -1,6 +1,6 @@
 # process, command-line arguments and configuration
 
-> **Note:** a browser has no real Node, so Lexi Learn runs a **simulation** (in-memory fs, a mini `http`/`express`, testing with `app.inject`). The code you write is identical to real Node; each lesson ends with how to run it locally.
+> **Note:** a browser has no real Node, so Learn With Leo runs a **simulation** (in-memory fs, a mini `http`/`express`, testing with `app.inject`). The code you write is identical to real Node; each lesson ends with how to run it locally.
 
 A real Node program is more than code: it receives **arguments**, reads **configuration**, returns an **exit code**, and reacts to OS **signals**. The global `process` object is the gateway.
 

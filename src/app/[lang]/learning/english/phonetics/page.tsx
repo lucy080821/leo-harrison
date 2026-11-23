@@ -49,7 +49,7 @@ export default async function PhoneticsCourse({ params }: { params: Promise<{ la
       />
       <Breadcrumbs
         items={[
-          { label: "Lexi Learn", href: `/${lang}/learning` },
+          { label: "Learn With Leo", href: `/${lang}/learning` },
           { label: site.english[lang], href: `/${lang}/learning/english` },
           { label: course.name[lang] },
         ]}

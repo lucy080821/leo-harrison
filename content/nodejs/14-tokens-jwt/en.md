@@ -1,6 +1,6 @@
 # Tokens and JWT: structure, expiry and pitfalls
 
-> **Note:** a browser has no real Node, so Lexi Learn runs a **simulation** (in-memory fs, a mini `http`/`express`, testing with `app.inject`). The code you write is identical to real Node; each lesson ends with how to run it locally.
+> **Note:** a browser has no real Node, so Learn With Leo runs a **simulation** (in-memory fs, a mini `http`/`express`, testing with `app.inject`). The code you write is identical to real Node; each lesson ends with how to run it locally.
 
 **JWT (JSON Web Token)** packs "who, what permissions, until when" into a **signed** string. APIs use it to know who a request comes from without a database lookup each time.
 

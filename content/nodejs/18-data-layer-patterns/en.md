@@ -1,6 +1,6 @@
 # The data layer: repositories, parameterised queries and transactions
 
-> **Note:** a browser has no real Node, so Lexi Learn runs a **simulation** (in-memory fs, a mini `http`/`express`, testing with `app.inject`). The code you write is identical to real Node; each lesson ends with how to run it locally.
+> **Note:** a browser has no real Node, so Learn With Leo runs a **simulation** (in-memory fs, a mini `http`/`express`, testing with `app.inject`). The code you write is identical to real Node; each lesson ends with how to run it locally.
 
 Real APIs almost always have a database. How you **organise data-access code** determines maintainability, security and performance.
 
@@ -29,7 +29,7 @@ Always **parameterise** (lesson 17): `{ text: 'SELECT … WHERE id = $1', values
 | **Drizzle**, **Kysely** | typed queries, close to SQL |
 | **Prisma** | schema-based ORM, convenient but a thicker abstraction |
 
-Even with an ORM, **understand SQL** (Lexi Learn's SQL course) to read generated queries and tune indexes.
+Even with an ORM, **understand SQL** (Learn With Leo's SQL course) to read generated queries and tune indexes.
 
 ## Transactions
 

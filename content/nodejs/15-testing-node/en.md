@@ -1,6 +1,6 @@
 # Testing Node: a hand-made test runner, assert and app.inject
 
-> **Note:** a browser has no real Node, so Lexi Learn runs a **simulation** (in-memory fs, a mini `http`/`express`, testing with `app.inject`). The code you write is identical to real Node; each lesson ends with how to run it locally.
+> **Note:** a browser has no real Node, so Learn With Leo runs a **simulation** (in-memory fs, a mini `http`/`express`, testing with `app.inject`). The code you write is identical to real Node; each lesson ends with how to run it locally.
 
 Testing isn't "extra work": it gives you the **courage to change code**. An API without tests is one **nobody dares touch** after three months.
 

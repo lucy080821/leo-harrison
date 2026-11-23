@@ -27,4 +27,4 @@ An overall average hides trends. A **cohort** is a group of users sharing a star
 
 - pandas documentation, `Period`, `groupby`, `unstack`.
 - Croll & Yoskovitz. *Lean Analytics*, the retention chapter.
-- Lexi Learn's SQL course, cohort analysis lesson (the same method in SQL).
+- Learn With Leo's SQL course, cohort analysis lesson (the same method in SQL).

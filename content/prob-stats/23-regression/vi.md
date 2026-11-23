@@ -27,7 +27,7 @@ Francis Galton (1886) quan sát con cái của người rất cao có xu hướn
 
 Từ diện tích dự đoán giá. Cảnh báo: chỉ nên dự đoán **trong khoảng dữ liệu đã quan sát** (nội suy), việc ngoại suy rất rủi ro; và hãy luôn vẽ **đồ thị phần dư** để kiểm tra mô hình có hợp lý không.
 
-> Đây chính là nền tảng của Machine Learning có giám sát: hồi quy tuyến tính là mô hình đầu tiên trong khoá ML của Lexi Learn.
+> Đây chính là nền tảng của Machine Learning có giám sát: hồi quy tuyến tính là mô hình đầu tiên trong khoá ML của Learn With Leo.
 
 ## Nguồn tham khảo
 

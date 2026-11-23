@@ -10,7 +10,7 @@ Set the title/description so search engines and social networks understand your 
 // app/about/page.js — static metadata
 export const metadata = {
   title: "About",
-  description: "About Lexi Learn",
+  description: "About Learn With Leo",
 };
 
 // app/blog/[slug]/page.js — dynamic metadata

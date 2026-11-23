@@ -63,7 +63,7 @@ export default async function StatisticsLessonPage({ params }: { params: Promise
             "@type": "BreadcrumbList",
             itemListElement: [
               { "@type": "ListItem", position: 1, name: "Leo", item: abs(`/${lang}`) },
-              { "@type": "ListItem", position: 2, name: "Lexi Learn", item: abs(`/${lang}/learning`) },
+              { "@type": "ListItem", position: 2, name: "Learn With Leo", item: abs(`/${lang}/learning`) },
               { "@type": "ListItem", position: 3, name: site.statistics[lang], item: abs(base) },
               { "@type": "ListItem", position: 4, name: l.title[lang], item: url },
             ],
@@ -72,7 +72,7 @@ export default async function StatisticsLessonPage({ params }: { params: Promise
       />
       <Breadcrumbs
         bar
-        items={[{ label: "Lexi Learn", href: `/${lang}/learning` }, { label: site.statistics[lang], href: base }, { label: l.title[lang] }]}
+        items={[{ label: "Learn With Leo", href: `/${lang}/learning` }, { label: site.statistics[lang], href: base }, { label: l.title[lang] }]}
       />
       <LessonWorkspace
         lang={lang}

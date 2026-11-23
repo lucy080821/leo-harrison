@@ -11,7 +11,7 @@ Mobile apps are **closed and reopened constantly**, and often run **offline**. Y
 | **AsyncStorage** (`@react-native-async-storage/async-storage`) | small settings, flags, light caches | **string** key-value, async, **unencrypted** |
 | **MMKV** | very fast key-value (synchronous) | for frequently read data |
 | **SecureStore / Keychain / Keystore** (`expo-secure-store`) | **tokens, keys, secrets** | OS hardware-backed encryption; small capacity |
-| **SQLite** (`expo-sqlite`), WatermelonDB, Realm | **structured, large** data, queries, offline | Lexi Learn's SQL course applies directly |
+| **SQLite** (`expo-sqlite`), WatermelonDB, Realm | **structured, large** data, queries, offline | Learn With Leo's SQL course applies directly |
 | **File system** (`expo-file-system`) | images, downloads | manage disk usage |
 
 **Security rule:** secrets (login tokens, private API keys) **never** go into plain AsyncStorage: on a rooted/jailbroken device or via backups it can be read. Use a secure store.

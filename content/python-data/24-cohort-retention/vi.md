@@ -27,4 +27,4 @@ Trung bình toàn bộ che giấu xu hướng. **Cohort** là nhóm người dù
 
 - pandas documentation, `Period`, `groupby`, `unstack`.
 - Croll & Yoskovitz. *Lean Analytics*, chương về giữ chân.
-- Khoá SQL của Lexi Learn, bài phân tích cohort (cùng phương pháp bằng SQL).
+- Khoá SQL của Learn With Leo, bài phân tích cohort (cùng phương pháp bằng SQL).

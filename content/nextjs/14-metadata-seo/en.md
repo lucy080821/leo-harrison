@@ -10,7 +10,7 @@
 // app/about/page.js
 export const metadata = {
   title: 'About',
-  description: 'About Lexi Learn',
+  description: 'About Learn With Leo',
 }
 
 // app/blog/[slug]/page.js
@@ -24,7 +24,7 @@ export async function generateMetadata({ params }) {
 Metadata **merges** from layout down to page, with children overriding parents. A title template in the root layout:
 
 ```js
-title: { template: '%s | Lexi Learn', default: 'Lexi Learn' }
+title: { template: '%s | Learn With Leo', default: 'Learn With Leo' }
 ```
 
 ![Metadata merges from layout down to page and becomes head tags](/lessons/nextjs/14-metadata-seo-fig-en.svg)

@@ -1,6 +1,6 @@
 # The event loop and concurrency: execution order and parallelism limits
 
-> **Note:** a browser has no real Node, so Lexi Learn runs a **simulation** (in-memory fs, a mini `http`/`express`, testing with `app.inject`). The code you write is identical to real Node; each lesson ends with how to run it locally.
+> **Note:** a browser has no real Node, so Learn With Leo runs a **simulation** (in-memory fs, a mini `http`/`express`, testing with `app.inject`). The code you write is identical to real Node; each lesson ends with how to run it locally.
 
 Node runs JavaScript on a **single main thread**, yet serves tens of thousands of connections. The secret is the **event loop** plus **non-blocking I/O**. Understanding it helps you avoid Node's most expensive performance mistake.
 

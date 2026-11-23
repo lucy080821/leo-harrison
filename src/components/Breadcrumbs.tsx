@@ -3,7 +3,7 @@ import Link from "next/link";
 export type Crumb = { label: string; href?: string };
 
 /**
- * Đường dẫn điều hướng, ví dụ: Lexi Learn › Lập trình › Frontend › HTML.
+ * Đường dẫn điều hướng, ví dụ: Learn With Leo › Lập trình › Frontend › HTML.
  * Mục cuối là trang hiện tại (không bấm được). Có thể dùng làm thanh mảnh phía trên bài học (bar) hoặc đặt trong nội dung.
  */
 export function Breadcrumbs({ items, bar = false, className = "" }: { items: Crumb[]; bar?: boolean; className?: string }) {

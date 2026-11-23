@@ -1,6 +1,6 @@
 # EventEmitter: event-driven code
 
-> **Note:** a browser has no real Node, so Lexi Learn runs a **simulation** (in-memory fs, a mini `http`/`express`, testing with `app.inject`). The code you write is identical to real Node; each lesson ends with how to run it locally.
+> **Note:** a browser has no real Node, so Learn With Leo runs a **simulation** (in-memory fs, a mini `http`/`express`, testing with `app.inject`). The code you write is identical to real Node; each lesson ends with how to run it locally.
 
 Much of Node (HTTP servers, streams, processes) is **event-driven**: "when X happens, do Y". The `EventEmitter` class is the foundation of that model.
 

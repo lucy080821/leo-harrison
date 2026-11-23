@@ -6,7 +6,7 @@ Statistics misused is more dangerous than none. Three classic traps:
 
 A trend that appears in each group can **reverse** when the groups are combined. The famous example is the graduate-admissions analysis at the University of California, Berkeley (Bickel, Hammel & O'Connell, 1975, *Science*): pooled data showed men admitted at a higher rate than women, but within departments there was no comparable evidence of bias, because women applied more to more competitive departments.
 
-The numbers in this lesson are **illustrative**, constructed by Lexi Learn: treatment A is better in both patient groups, yet pooled B looks better because B was given mostly to mild cases.
+The numbers in this lesson are **illustrative**, constructed by Learn With Leo: treatment A is better in both patient groups, yet pooled B looks better because B was given mostly to mild cases.
 
 ![Bar charts: A and B recovery rates per group and pooled](/lessons/prob-stats/29-pitfalls-simpson-en.svg)
 *A is higher in both groups, but B is higher pooled because B mostly treated mild cases.*

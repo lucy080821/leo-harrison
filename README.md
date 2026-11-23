@@ -1,4 +1,4 @@
-# Lexi Learn
+# Learn With Leo
 
 Web app học lập trình song ngữ **Anh – Việt**: lý thuyết bên trái, trình soạn code chạy **realtime** bên phải, có bài tập tự kiểm tra.
 
@@ -47,8 +47,8 @@ Build production (để deploy VPS): `npm run build && npm start`.
 |---|---|
 | `/vi`, `/en` | Trang chủ portfolio (câu mở đầu song ngữ, dự án, học, liên hệ) |
 | `/projects` | Lucy Tutor và Cerno |
-| `/learning` | Danh mục học: Lập trình (Lexi Learn), Tiếng Anh chuyên sâu (sắp ra mắt) |
-| `/learning/programming/...` | Lexi Learn: lộ trình, khoá học, bài học |
+| `/learning` | Danh mục học: Lập trình (Learn With Leo), Tiếng Anh chuyên sâu (sắp ra mắt) |
+| `/learning/programming/...` | Learn With Leo: lộ trình, khoá học, bài học |
 | `/about` | Giới thiệu và liên hệ |
 
 Nội dung portfolio (tên, email, dự án, câu chữ) nằm trong `src/content/site.ts`; logo dự án trong `public/projects/`. Font Be Vietnam Pro và Newsreader được đóng gói sẵn (`@fontsource`), không tải từ Google.

@@ -13,7 +13,7 @@
     {
       "name": "script.js",
       "lang": "javascript",
-      "code": "// Biến object metadata thành các thẻ <head>\nfunction renderHead(meta, baseUrl, path) {\n  const title = meta.template ? meta.template.replace(\"%s\", meta.title) : meta.title;\n  const tags = [\n    \"<title>\" + title + \"</title>\",\n    '<meta name=\"description\" content=\"' + meta.description + '\">',\n    '<link rel=\"canonical\" href=\"' + baseUrl + path + '\">',\n    '<meta property=\"og:title\" content=\"' + title + '\">',\n  ];\n  return tags;\n}\n\nconsole.log(renderHead(\n  { title: \"Giới thiệu\", template: \"%s | Lexi Learn\", description: \"Về chúng tôi\" },\n  \"https://lexi.example\", \"/about\"\n).join(\"\\n\"));\n"
+      "code": "// Biến object metadata thành các thẻ <head>\nfunction renderHead(meta, baseUrl, path) {\n  const title = meta.template ? meta.template.replace(\"%s\", meta.title) : meta.title;\n  const tags = [\n    \"<title>\" + title + \"</title>\",\n    '<meta name=\"description\" content=\"' + meta.description + '\">',\n    '<link rel=\"canonical\" href=\"' + baseUrl + path + '\">',\n    '<meta property=\"og:title\" content=\"' + title + '\">',\n  ];\n  return tags;\n}\n\nconsole.log(renderHead(\n  { title: \"Giới thiệu\", template: \"%s | Learn With Leo\", description: \"Về chúng tôi\" },\n  \"https://lexi.example\", \"/about\"\n).join(\"\\n\"));\n"
     }
   ],
   "exercises": [

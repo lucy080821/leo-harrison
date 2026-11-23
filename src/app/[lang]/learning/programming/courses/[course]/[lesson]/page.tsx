@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   return pageMeta({
     lang,
     path: `/learning/programming/courses/${course}/${l.slug}`,
-    title: `${l.title[lang]} | ${co.name[lang]} – Lexi Learn`,
+    title: `${l.title[lang]} | ${co.name[lang]} – Learn With Leo`,
     description: `${l.summary[lang]}. ${lang === "vi" ? "Bài học song ngữ có bài tập tự chấm, code chạy trực tiếp trên trình duyệt." : "A bilingual lesson with auto-checked exercises; code runs live in your browser."}`,
     type: "article",
   });
@@ -69,7 +69,7 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
             "@type": "BreadcrumbList",
             itemListElement: [
               { "@type": "ListItem", position: 1, name: "Leo", item: abs(`/${lang}`) },
-              { "@type": "ListItem", position: 2, name: "Lexi Learn", item: abs(`/${lang}/learning`) },
+              { "@type": "ListItem", position: 2, name: "Learn With Leo", item: abs(`/${lang}/learning`) },
               { "@type": "ListItem", position: 3, name: site.programming[lang], item: abs(`/${lang}/learning/programming`) },
               { "@type": "ListItem", position: 4, name: cat.name[lang], item: abs(`/${lang}/learning/programming/${cat.id}`) },
               { "@type": "ListItem", position: 5, name: co.name[lang], item: abs(base) },
@@ -81,7 +81,7 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
       <Breadcrumbs
         bar
         items={[
-          { label: "Lexi Learn", href: `/${lang}/learning` },
+          { label: "Learn With Leo", href: `/${lang}/learning` },
           { label: site.programming[lang], href: `/${lang}/learning/programming` },
           { label: cat.name[lang], href: `/${lang}/learning/programming/${cat.id}` },
           { label: co.name[lang], href: base },

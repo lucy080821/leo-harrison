@@ -1,6 +1,6 @@
 # Cache trong dịch vụ: LRU, TTL và các bẫy
 
-> **Lưu ý:** trong trình duyệt không có Node thật, nên Lexi Learn chạy một bản **mô phỏng** (fs trong bộ nhớ, `http`/`express` thu nhỏ, kiểm thử bằng `app.inject`). Code bạn viết giống hệt khi chạy trên Node thật; phần cuối mỗi bài chỉ ra cách chạy ngoài máy.
+> **Lưu ý:** trong trình duyệt không có Node thật, nên Learn With Leo chạy một bản **mô phỏng** (fs trong bộ nhớ, `http`/`express` thu nhỏ, kiểm thử bằng `app.inject`). Code bạn viết giống hệt khi chạy trên Node thật; phần cuối mỗi bài chỉ ra cách chạy ngoài máy.
 
 Cache là cách **rẻ nhất** để làm hệ thống nhanh hơn và chịu tải tốt hơn: lưu kết quả của việc tốn kém để lần sau trả ngay. Nhưng nó cũng là **nguồn bug tinh vi nhất**.
 

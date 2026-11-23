@@ -1,6 +1,6 @@
 # Async: callbacks, Promises, async/await
 
-> **Note:** a browser has no real Node, so Lexi Learn runs a **simulation** (in-memory fs, a mini `http`/`express`, testing with `app.inject`). The code you write is identical to real Node; each lesson ends with how to run it locally.
+> **Note:** a browser has no real Node, so Learn With Leo runs a **simulation** (in-memory fs, a mini `http`/`express`, testing with `app.inject`). The code you write is identical to real Node; each lesson ends with how to run it locally.
 
 Node runs on **one thread** yet handles thousands of requests thanks to the **event loop**: when it hits a wait (file read, network call, timer), it registers "call me back when done" and moves on.
 

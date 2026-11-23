@@ -41,6 +41,6 @@ Gọi pA, pB là tỷ lệ; nA, nB là cỡ nhóm.
 
 - Kohavi, R., Tang, D., Xu, Y. *Trustworthy Online Controlled Experiments* (2020).
 - Diez et al. *OpenIntro Statistics*, chương 6.
-- Khoá "Toán và Thống kê" của Lexi Learn: các bài về kiểm định, power và thực nghiệm A/B.
+- Khoá "Toán và Thống kê" của Learn With Leo: các bài về kiểm định, power và thực nghiệm A/B.
 
 > **Dữ liệu:** bài này dùng bộ dữ liệu mẫu có sẵn trong trình soạn thảo (SQLite chạy ngay trong trình duyệt). Cú pháp ở đây theo SQLite; phần khác biệt với PostgreSQL, MySQL, BigQuery được nêu trong bài về các phương ngữ.

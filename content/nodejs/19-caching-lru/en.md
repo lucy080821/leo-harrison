@@ -1,6 +1,6 @@
 # Caching in services: LRU, TTL and pitfalls
 
-> **Note:** a browser has no real Node, so Lexi Learn runs a **simulation** (in-memory fs, a mini `http`/`express`, testing with `app.inject`). The code you write is identical to real Node; each lesson ends with how to run it locally.
+> **Note:** a browser has no real Node, so Learn With Leo runs a **simulation** (in-memory fs, a mini `http`/`express`, testing with `app.inject`). The code you write is identical to real Node; each lesson ends with how to run it locally.
 
 Caching is the **cheapest** way to make a system faster and more load-tolerant: store the result of costly work to return instantly next time. But it is also the **source of the subtlest bugs**.
 

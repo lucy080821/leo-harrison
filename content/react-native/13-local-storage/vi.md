@@ -11,7 +11,7 @@
 | **AsyncStorage** (`@react-native-async-storage/async-storage`) | cài đặt nhỏ, cờ, bộ nhớ đệm nhẹ | khoá-giá trị **chuỗi**, bất đồng bộ, **không mã hoá** |
 | **MMKV** | khoá-giá trị rất nhanh (đồng bộ) | cho dữ liệu đọc thường xuyên |
 | **SecureStore / Keychain / Keystore** (`expo-secure-store`) | **token, khoá, bí mật** | mã hoá bằng phần cứng hệ điều hành; dung lượng nhỏ |
-| **SQLite** (`expo-sqlite`), WatermelonDB, Realm | dữ liệu **có cấu trúc, nhiều**, truy vấn, ngoại tuyến | khoá SQL của Lexi Learn áp dụng trực tiếp |
+| **SQLite** (`expo-sqlite`), WatermelonDB, Realm | dữ liệu **có cấu trúc, nhiều**, truy vấn, ngoại tuyến | khoá SQL của Learn With Leo áp dụng trực tiếp |
 | **Hệ thống tệp** (`expo-file-system`) | ảnh, tệp tải về | quản lý dung lượng |
 
 **Quy tắc bảo mật:** bí mật (token đăng nhập, khoá API riêng) **không bao giờ** vào AsyncStorage thuần: trên thiết bị đã root/jailbreak hoặc qua sao lưu, nó đọc được. Dùng kho an toàn.
