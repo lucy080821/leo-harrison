@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { notFound } from "next/navigation";
 import { englishCourses, phoneticsModules } from "@/content/english";
 import { seo, t } from "@/content/site";
@@ -25,9 +26,7 @@ export default async function EnglishPage({ params }: { params: Promise<{ lang: 
 
   return (
     <div className="mx-auto max-w-3xl px-4 pt-14">
-      <Link href={`/${lang}/learning`} className="text-sm text-muted hover:text-brand">
-        ← {t.backToLearning[lang]}
-      </Link>
+      <Breadcrumbs items={[{ label: "Lexi Learn", href: `/${lang}/learning` }, { label: t.english[lang] }]} />
       <h1 className="h-display mt-4 text-4xl sm:text-5xl">{t.englishPageTitle[lang]}</h1>
       <p className="mt-4 text-lg leading-relaxed text-muted">{t.englishPageBody[lang]}</p>
 

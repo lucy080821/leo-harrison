@@ -4,6 +4,7 @@ import { ArticleLesson } from "@/components/ArticleLesson";
 import { JsonLd } from "@/components/JsonLd";
 import { Markdown } from "@/components/Markdown";
 import { Widget } from "@/components/phonetics/Widget";
+import { t as site } from "@/content/site";
 import { englishCourses, phoneticsModules } from "@/content/english";
 import { getArticleBody, getArticles } from "@/lib/articles";
 import { isLocale, locales } from "@/lib/i18n";
@@ -61,7 +62,7 @@ export default async function PhoneticsLesson({ params }: { params: Promise<Para
             "@type": "BreadcrumbList",
             itemListElement: [
               { "@type": "ListItem", position: 1, name: "Leo", item: abs(`/${lang}`) },
-              { "@type": "ListItem", position: 2, name: lang === "vi" ? "Tiếng Anh chuyên sâu" : "Advanced English", item: abs(`/${lang}/learning/english`) },
+              { "@type": "ListItem", position: 2, name: site.english[lang], item: abs(`/${lang}/learning/english`) },
               { "@type": "ListItem", position: 3, name: course.name[lang], item: abs(base) },
               { "@type": "ListItem", position: 4, name: l.title[lang], item: url },
             ],
@@ -75,6 +76,12 @@ export default async function PhoneticsLesson({ params }: { params: Promise<Para
         quiz={l.quiz}
         isPractice={l.kind === "practice"}
         backHref={base}
+        crumbs={[
+          { label: "Lexi Learn", href: `/${lang}/learning` },
+          { label: site.english[lang], href: `/${lang}/learning/english` },
+          { label: course.name[lang], href: base },
+          { label: l.title[lang] },
+        ]}
         prevHref={idx > 0 ? `${base}/${all[idx - 1].slug}` : undefined}
         nextHref={idx < all.length - 1 ? `${base}/${all[idx + 1].slug}` : undefined}
         moduleTitle={mod?.title[lang] ?? ""}

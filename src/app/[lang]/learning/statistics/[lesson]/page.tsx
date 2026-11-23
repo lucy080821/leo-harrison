@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { JsonLd } from "@/components/JsonLd";
 import { LessonWorkspace } from "@/components/LessonWorkspace";
 import { Markdown } from "@/components/Markdown";
@@ -62,11 +63,16 @@ export default async function StatisticsLessonPage({ params }: { params: Promise
             "@type": "BreadcrumbList",
             itemListElement: [
               { "@type": "ListItem", position: 1, name: "Leo", item: abs(`/${lang}`) },
-              { "@type": "ListItem", position: 2, name: site.statistics[lang], item: abs(base) },
-              { "@type": "ListItem", position: 3, name: l.title[lang], item: url },
+              { "@type": "ListItem", position: 2, name: "Lexi Learn", item: abs(`/${lang}/learning`) },
+              { "@type": "ListItem", position: 3, name: site.statistics[lang], item: abs(base) },
+              { "@type": "ListItem", position: 4, name: l.title[lang], item: url },
             ],
           },
         ]}
+      />
+      <Breadcrumbs
+        bar
+        items={[{ label: "Lexi Learn", href: `/${lang}/learning` }, { label: site.statistics[lang], href: base }, { label: l.title[lang] }]}
       />
       <LessonWorkspace
         lang={lang}

@@ -1,7 +1,9 @@
 import Link from "next/link";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { notFound } from "next/navigation";
 import { categories, coursesOf } from "@/content/registry";
 import { getLessons } from "@/lib/content";
+import { t as site } from "@/content/site";
 import { dict, isLocale, locales } from "@/lib/i18n";
 import { pageMeta } from "@/lib/seo";
 
@@ -28,6 +30,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-12">
+      <Breadcrumbs items={[{ label: "Lexi Learn", href: `/${lang}/learning` }, { label: site.programming[lang] }]} />
       <section className="mx-auto max-w-3xl text-center">
         <h1 className="bg-gradient-to-r from-brand to-brand2 bg-clip-text text-4xl font-extrabold tracking-tight text-transparent sm:text-5xl">
           {t.heroTitle}

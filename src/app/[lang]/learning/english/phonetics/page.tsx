@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { t as site } from "@/content/site";
 import { CourseProgress, LessonStatus } from "@/components/LessonStatus";
 import { JsonLd } from "@/components/JsonLd";
 import { englishCourses, phoneticsModules, quizText } from "@/content/english";
@@ -45,9 +47,13 @@ export default async function PhoneticsCourse({ params }: { params: Promise<{ la
           isAccessibleForFree: true,
         }}
       />
-      <Link href={`/${lang}/learning/english`} className="text-sm text-muted hover:text-brand">
-        ← {lang === "vi" ? "Tiếng Anh chuyên sâu" : "Advanced English"}
-      </Link>
+      <Breadcrumbs
+        items={[
+          { label: "Lexi Learn", href: `/${lang}/learning` },
+          { label: site.english[lang], href: `/${lang}/learning/english` },
+          { label: course.name[lang] },
+        ]}
+      />
       <h1 className="h-display mt-3 text-4xl">{course.name[lang]}</h1>
       <p className="mt-3 text-lg leading-relaxed text-muted">{course.desc[lang]}</p>
       <CourseProgress course="phonetics" lessons={lessons.map((l) => l.slug)} label={t.progress} />

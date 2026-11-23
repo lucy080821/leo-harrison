@@ -243,7 +243,7 @@ export function LessonWorkspace(p: Props) {
   const lessonDone = isDone(p.courseId, p.slug);
 
   return (
-    <div className="mx-auto grid max-w-[1600px] gap-0 lg:h-[calc(100vh-4rem)] lg:grid-cols-2">
+    <div className="mx-auto grid max-w-[1600px] gap-0 lg:h-[calc(100vh-6.25rem)] lg:grid-cols-2">
       {/* ===== Trái: lý thuyết + bài tập ===== */}
       <section className="min-w-0 overflow-y-auto border-line px-5 py-6 lg:border-r" aria-label={t.theory}>
         {p.children}

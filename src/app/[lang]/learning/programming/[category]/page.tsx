@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { t as site } from "@/content/site";
 import { notFound } from "next/navigation";
 import { categories, coursesOf, getCategory } from "@/content/registry";
 import { getLessons } from "@/lib/content";
@@ -30,9 +32,13 @@ export default async function CategoryPage({ params }: { params: Promise<{ lang:
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
-      <Link href={`/${lang}/learning/programming`} className="text-sm text-muted hover:text-brand">
-        ← {t.back}
-      </Link>
+      <Breadcrumbs
+        items={[
+          { label: "Lexi Learn", href: `/${lang}/learning` },
+          { label: site.programming[lang], href: `/${lang}/learning/programming` },
+          { label: cat.name[lang] },
+        ]}
+      />
       <h1 className="mt-3 text-3xl font-extrabold">{cat.name[lang]}</h1>
       <p className="mt-2 max-w-2xl text-muted">{cat.desc[lang]}</p>
 

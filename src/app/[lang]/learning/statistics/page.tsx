@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { JsonLd } from "@/components/JsonLd";
 import { CourseProgress, LessonStatus } from "@/components/LessonStatus";
 import { statisticsCourse as co } from "@/content/registry";
@@ -45,9 +46,7 @@ export default async function StatisticsPage({ params }: { params: Promise<{ lan
           isAccessibleForFree: true,
         }}
       />
-      <Link href={`/${lang}/learning`} className="text-sm text-muted hover:text-brand">
-        ← {site.learningTitle[lang]}
-      </Link>
+      <Breadcrumbs items={[{ label: "Lexi Learn", href: `/${lang}/learning` }, { label: site.statistics[lang] }]} />
       <h1 className="h-display mt-3 text-3xl sm:text-4xl">{site.statistics[lang]}</h1>
       <p className="mt-2 text-lg text-muted">{co.desc[lang]}</p>
 

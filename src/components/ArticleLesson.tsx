@@ -1,5 +1,6 @@
 "use client";
 
+import { Breadcrumbs, type Crumb } from "@/components/Breadcrumbs";
 import Link from "next/link";
 import { useState } from "react";
 import { useProgress } from "@/lib/progress";
@@ -147,6 +148,7 @@ export function ArticleLesson({
   quiz,
   isPractice,
   backHref,
+  crumbs,
   prevHref,
   nextHref,
   moduleTitle,
@@ -160,6 +162,7 @@ export function ArticleLesson({
   quiz: ClientQuizItem[];
   isPractice: boolean;
   backHref: string;
+  crumbs?: Crumb[];
   prevHref?: string;
   nextHref?: string;
   moduleTitle: string;
@@ -175,9 +178,13 @@ export function ArticleLesson({
 
   return (
     <article className="mx-auto max-w-3xl px-4 py-10">
-      <Link href={backHref} className="text-sm text-muted hover:text-brand">
-        ← {t.backToCourse}
-      </Link>
+      {crumbs ? (
+        <Breadcrumbs items={crumbs} />
+      ) : (
+        <Link href={backHref} className="text-sm text-muted hover:text-brand">
+          ← {t.backToCourse}
+        </Link>
+      )}
       <p className="mt-4 text-sm text-muted">
         {moduleTitle} · {minutes} {t.minutes}
         {isPractice ? ` · ${t.practice}` : ""}

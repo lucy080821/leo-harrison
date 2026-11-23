@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { courses, getCourse } from "@/content/registry";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { courses, getCategory, getCourse } from "@/content/registry";
+import { t as site } from "@/content/site";
 import { getEngineData, getLessonBody, getLessons } from "@/lib/content";
 import { LessonWorkspace } from "@/components/LessonWorkspace";
 import { Markdown } from "@/components/Markdown";
@@ -43,6 +45,7 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
   const base = `/${lang}/learning/programming/courses/${course}`;
 
   const co = getCourse(course)!;
+  const cat = getCategory(co.category)!;
   const url = abs(`${base}/${l.slug}`);
   return (
     <>
@@ -66,14 +69,26 @@ export default async function LessonPage({ params }: { params: Promise<Params> }
             "@type": "BreadcrumbList",
             itemListElement: [
               { "@type": "ListItem", position: 1, name: "Leo", item: abs(`/${lang}`) },
-              { "@type": "ListItem", position: 2, name: "Lexi Learn", item: abs(`/${lang}/learning/programming`) },
-              { "@type": "ListItem", position: 3, name: co.name[lang], item: abs(base) },
-              { "@type": "ListItem", position: 4, name: l.title[lang], item: url },
+              { "@type": "ListItem", position: 2, name: "Lexi Learn", item: abs(`/${lang}/learning`) },
+              { "@type": "ListItem", position: 3, name: site.programming[lang], item: abs(`/${lang}/learning/programming`) },
+              { "@type": "ListItem", position: 4, name: cat.name[lang], item: abs(`/${lang}/learning/programming/${cat.id}`) },
+              { "@type": "ListItem", position: 5, name: co.name[lang], item: abs(base) },
+              { "@type": "ListItem", position: 6, name: l.title[lang], item: url },
             ],
           },
         ]}
       />
-    <LessonWorkspace
+      <Breadcrumbs
+        bar
+        items={[
+          { label: "Lexi Learn", href: `/${lang}/learning` },
+          { label: site.programming[lang], href: `/${lang}/learning/programming` },
+          { label: cat.name[lang], href: `/${lang}/learning/programming/${cat.id}` },
+          { label: co.name[lang], href: base },
+          { label: l.title[lang] },
+        ]}
+      />
+      <LessonWorkspace
       lang={lang}
       t={t}
       courseId={course}

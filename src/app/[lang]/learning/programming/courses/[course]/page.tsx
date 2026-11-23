@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { t as site } from "@/content/site";
 import { notFound } from "next/navigation";
 import { courses, getCategory, getCourse } from "@/content/registry";
 import { getLessons } from "@/lib/content";
@@ -47,9 +49,14 @@ export default async function CoursePage({ params }: { params: Promise<{ lang: s
           isAccessibleForFree: true,
         }}
       />
-      <Link href={`/${lang}/learning/programming/${cat.id}`} className="text-sm text-muted hover:text-brand">
-        ← {cat.name[lang]}
-      </Link>
+      <Breadcrumbs
+        items={[
+          { label: "Lexi Learn", href: `/${lang}/learning` },
+          { label: site.programming[lang], href: `/${lang}/learning/programming` },
+          { label: cat.name[lang], href: `/${lang}/learning/programming/${cat.id}` },
+          { label: co.name[lang] },
+        ]}
+      />
       <h1 className="mt-3 text-3xl font-extrabold">{co.name[lang]}</h1>
       <p className="mt-2 text-muted">{co.desc[lang]}</p>
 
