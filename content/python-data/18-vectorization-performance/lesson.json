@@ -1,0 +1,93 @@
+{
+  "title": {
+    "vi": "Vector hoá và hiệu năng: tránh vòng lặp và apply",
+    "en": "Vectorisation and performance: avoiding loops and apply"
+  },
+  "summary": {
+    "vi": "phép toán theo cột, np.where, np.select, kiểu dữ liệu nhẹ, query/eval, đo thời gian",
+    "en": "column-wise operations, np.where, np.select, lean dtypes, query/eval, timing"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np, pandas as pd\n\ndf = pd.read_csv(\"sales.csv\")\n\n# Chậm: apply từng dòng bằng hàm Python\nslow = df.apply(lambda r: r[\"units\"] * r[\"unit_price\"], axis=1)\n# Nhanh: phép toán trên cả cột (vector hoá)\nfast = df[\"units\"] * df[\"unit_price\"]\nprint(\"hai cách cho kết quả giống nhau:\", bool((slow == fast).all()))\n\n# Điều kiện -> np.where / np.select thay cho if/else từng dòng\ndf[\"revenue\"] = fast\ndf[\"size\"] = np.select(\n    [df[\"revenue\"] >= 1000, df[\"revenue\"] >= 200],\n    [\"large\", \"medium\"], default=\"small\")\nprint(df[\"size\"].value_counts().to_dict())\n\n# Kiểu dữ liệu nhẹ hơn\nprint(df[\"units\"].astype(\"int16\").dtype, df[\"region\"].astype(\"category\").nbytes < df[\"region\"].memory_usage(deep=True))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Dùng np.select để phân loại mỗi đơn theo doanh thu = units × unit_price: >= 500 là 'high', >= 100 là 'mid', còn lại 'low'. In dict đếm số đơn mỗi loại (value_counts().to_dict()).",
+        "en": "Use np.select to classify each order by revenue = units × unit_price: >= 500 is 'high', >= 100 is 'mid', otherwise 'low'. Print a dict of order counts per class (value_counts().to_dict())."
+      },
+      "hint": {
+        "vi": "np.select([rev >= 500, rev >= 100], ['high', 'mid'], default='low').",
+        "en": "np.select([rev >= 500, rev >= 100], ['high', 'mid'], default='low')."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np, pandas as pd\ndf = pd.read_csv('sales.csv')\n# in dict đếm theo loại\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np, pandas as pd\ndf = pd.read_csv('sales.csv')\nrev = df['units'] * df['unit_price']\ncls = np.select([rev >= 500, rev >= 100], ['high', 'mid'], default='low')\nprint(dict(sorted(pd.Series(cls).value_counts().to_dict().items())))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == \"{'high': 29, 'low': 22, 'mid': 9}\""
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Dùng df.query để lọc các đơn của vùng 'North' có units >= 10, rồi in số dòng.",
+        "en": "Use df.query to filter orders from region 'North' with units >= 10, then print the number of rows."
+      },
+      "hint": {
+        "vi": "df.query(\"region == 'North' and units >= 10\").",
+        "en": "df.query(\"region == 'North' and units >= 10\")."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\ndf = pd.read_csv('sales.csv')\n# in số dòng sau khi lọc bằng query\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\ndf = pd.read_csv('sales.csv')\nprint(len(df.query(\"region == 'North' and units >= 10\")))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '3'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "data": [
+    "sales.csv"
+  ]
+}

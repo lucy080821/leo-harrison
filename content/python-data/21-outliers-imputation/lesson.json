@@ -1,0 +1,94 @@
+{
+  "title": {
+    "vi": "Ngoại lai và điền giá trị thiếu (imputation)",
+    "en": "Outliers and imputing missing values"
+  },
+  "summary": {
+    "vi": "IQR, điểm z, winsorize, điền bằng trung vị/nhóm, cờ thiếu, cẩn thận rò rỉ",
+    "en": "IQR, z-scores, winsorising, filling by median/group, missing flags, avoiding leakage"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np, pandas as pd\n\nsales = pd.read_csv(\"sales.csv\")\np = sales[\"units\"] * sales[\"unit_price\"]      # doanh thu mỗi đơn\n\nq1, q3 = p.quantile([0.25, 0.75])\niqr = q3 - q1\nlo, hi = q1 - 1.5 * iqr, q3 + 1.5 * iqr\nout = sales[(p < lo) | (p > hi)]\nprint(\"ngưỡng IQR:\", round(lo, 1), round(hi, 1), \"| số ngoại lai:\", len(out))\n\nz = (p - p.mean()) / p.std()\nprint(\"ngoại lai theo z > 3:\", int((z.abs() > 3).sum()))\n\n# Winsorize: kẹp giá trị vào [lo, hi] thay vì xoá\nprint(\"TB trước/sau:\", round(p.mean(), 1), round(p.clip(lo, hi).mean(), 1))\n\ndf = pd.read_csv(\"housing.csv\")\n\n# Điền thiếu: tạo cờ rồi điền bằng trung vị theo nhóm\ndf.loc[::10, \"area_m2\"] = np.nan\ndf[\"area_missing\"] = df[\"area_m2\"].isna()\ndf[\"area_m2\"] = df[\"area_m2\"].fillna(df.groupby(\"rooms\")[\"area_m2\"].transform(\"median\"))\nprint(int(df[\"area_missing\"].sum()), \"ô đã điền; còn thiếu:\", int(df[\"area_m2\"].isna().sum()))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Doanh thu mỗi đơn = units × unit_price trong sales.csv. Tính ngoại lai theo quy tắc IQR (1,5 × IQR) và in số đơn ngoại lai.",
+        "en": "Order revenue = units × unit_price in sales.csv. Find outliers by the IQR rule (1.5 × IQR) and print the number of outlier orders."
+      },
+      "hint": {
+        "vi": "q1, q3 = quantile([.25, .75]); lo = q1 − 1.5·iqr; hi = q3 + 1.5·iqr.",
+        "en": "q1, q3 = quantile([.25, .75]); lo = q1 − 1.5·iqr; hi = q3 + 1.5·iqr."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\ns = pd.read_csv('sales.csv')\nx = s['units'] * s['unit_price']\n# in số ngoại lai IQR\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\ns = pd.read_csv('sales.csv')\nx = s['units'] * s['unit_price']\nq1, q3 = x.quantile([0.25, 0.75])\ni = q3 - q1\nprint(int(((x < q1 - 1.5 * i) | (x > q3 + 1.5 * i)).sum()))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '8'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Trung bình doanh thu BỊ ảnh hưởng bởi ngoại lai. Winsorize doanh thu (units × unit_price) vào [phân vị 5%, phân vị 95%] (clip) rồi in trung bình trước và sau, làm tròn 2 chữ số, mỗi số một dòng.",
+        "en": "The mean revenue is affected by outliers. Winsorise revenue (units × unit_price) to [5th percentile, 95th percentile] (clip) then print the mean before and after, rounded to 2 digits, one per line."
+      },
+      "hint": {
+        "vi": "p.clip(p.quantile(.05), p.quantile(.95)).",
+        "en": "p.clip(p.quantile(.05), p.quantile(.95))."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\ns = pd.read_csv('sales.csv')\np = s['units'] * s['unit_price']\n# in trung bình trước/sau\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\ns = pd.read_csv('sales.csv')\np = s['units'] * s['unit_price']\nw = p.clip(p.quantile(0.05), p.quantile(0.95))\nprint(round(float(p.mean()), 2))\nprint(round(float(w.mean()), 2))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '1175.72\\n1033.51'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "data": [
+    "sales.csv",
+    "housing.csv"
+  ]
+}

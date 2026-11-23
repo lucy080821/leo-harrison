@@ -1,0 +1,94 @@
+{
+  "title": {
+    "vi": "Văn bản và kiểu phân loại trong pandas",
+    "en": "Text and categorical data in pandas"
+  },
+  "summary": {
+    "vi": "accessor .str, contains/extract/split, chuẩn hoá, kiểu category, tiết kiệm bộ nhớ",
+    "en": "the .str accessor, contains/extract/split, normalising, the category dtype, saving memory"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import pandas as pd\n\nr = pd.read_csv(\"reviews.csv\")\nr[\"text\"] = r[\"text\"].str.strip().str.lower()            # chuẩn hoá cả cột một lần\nprint(r[\"text\"].str.contains(\"battery\").sum(), \"bình luận nhắc tới battery\")\nprint(r[\"text\"].str.split().str.len().describe().round(2).to_dict())   # số từ mỗi bình luận\nr[\"first_word\"] = r[\"text\"].str.split().str[0]\nprint(r[\"first_word\"].value_counts().head(3).to_dict())\n\nu = pd.read_csv(\"users.csv\")\nu[\"channel\"] = u[\"channel\"].astype(\"category\")           # ít bộ nhớ, thứ tự rõ ràng\nprint(u[\"channel\"].cat.categories.tolist())\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Đọc reviews.csv, đưa text về chữ thường rồi đếm số bình luận chứa chữ 'delivery'. In số đó.",
+        "en": "Read reviews.csv, lower-case text then count the reviews containing the word 'delivery'. Print that number."
+      },
+      "hint": {
+        "vi": "str.lower().str.contains('delivery').sum().",
+        "en": "str.lower().str.contains('delivery').sum()."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nr = pd.read_csv('reviews.csv')\n# in số bình luận chứa 'delivery'\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nr = pd.read_csv('reviews.csv')\nprint(int(r['text'].str.lower().str.contains('delivery').sum()))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '13'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Tính số từ trung bình của mỗi bình luận theo từng mức rating (rating 1 đến 5). In dict {rating: số từ TB làm tròn 2 chữ số}.",
+        "en": "Compute the average number of words per review for each rating (1 to 5). Print a dict {rating: average words rounded to 2 digits}."
+      },
+      "hint": {
+        "vi": "r['n'] = r.text.str.split().str.len(); r.groupby('rating').n.mean().round(2).to_dict().",
+        "en": "r['n'] = r.text.str.split().str.len(); r.groupby('rating').n.mean().round(2).to_dict()."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nr = pd.read_csv('reviews.csv')\n# in dict rating -> số từ TB\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nr = pd.read_csv('reviews.csv')\nr['n'] = r['text'].str.split().str.len()\nprint({int(k): float(v) for k, v in r.groupby('rating')['n'].mean().round(2).items()})\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '{1: 5.96, 2: 6.62, 3: 3.6, 4: 5.79, 5: 5.12}'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "data": [
+    "users.csv",
+    "reviews.csv"
+  ]
+}

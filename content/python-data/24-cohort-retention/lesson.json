@@ -1,0 +1,94 @@
+{
+  "title": {
+    "vi": "Phân tích cohort và giữ chân người dùng",
+    "en": "Cohort analysis and user retention"
+  },
+  "summary": {
+    "vi": "nhóm theo tháng đăng ký, số tháng kể từ khi đăng ký, ma trận giữ chân, pivot",
+    "en": "signup-month cohorts, months since signup, retention matrix, pivot"
+  },
+  "minutes": 35,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import pandas as pd\n\nusers = pd.read_csv(\"users.csv\", parse_dates=[\"signup_date\"])\nev = pd.read_csv(\"events.csv\", parse_dates=[\"event_date\"])\n\n# Bỏ sự kiện của người dùng không tồn tại (khoá ngoại mồ côi), rồi nối\ndf = ev.merge(users[[\"id\", \"signup_date\"]], left_on=\"user_id\", right_on=\"id\")\ndf[\"cohort\"] = df[\"signup_date\"].dt.to_period(\"M\")\ndf[\"age\"] = (df[\"event_date\"].dt.to_period(\"M\") - df[\"cohort\"]).apply(lambda x: x.n)\n\n# Số người dùng DUY NHẤT hoạt động ở mỗi (cohort, tháng thứ k)\nactive = df.groupby([\"cohort\", \"age\"])[\"user_id\"].nunique().unstack(fill_value=0)\n\n# Chia cho quy mô cohort = số người đăng ký trong tháng đó\nsize = users.groupby(users[\"signup_date\"].dt.to_period(\"M\")).size()\nretention = active.div(size, axis=0).round(2)\nprint(retention.iloc[:3, :4])\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Từ users.csv, đếm số người đăng ký theo THÁNG (to_period('M')). In 3 tháng đầu tiên dưới dạng danh sách số lượng: size.head(3).tolist().",
+        "en": "From users.csv, count signups per MONTH (to_period('M')). Print the first 3 months as a list of counts: size.head(3).tolist()."
+      },
+      "hint": {
+        "vi": "users.groupby(users['signup_date'].dt.to_period('M')).size().",
+        "en": "users.groupby(users['signup_date'].dt.to_period('M')).size()."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nu = pd.read_csv('users.csv', parse_dates=['signup_date'])\n# in 3 tháng đầu\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nu = pd.read_csv('users.csv', parse_dates=['signup_date'])\nsize = u.groupby(u['signup_date'].dt.to_period('M')).size()\nprint(size.head(3).tolist())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '[16, 15, 17]'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "events.csv chứa cả sự kiện của người dùng KHÔNG có trong users.csv (mồ côi). Đếm số sự kiện mồ côi, rồi số sự kiện hợp lệ, mỗi số một dòng.",
+        "en": "events.csv also contains events from users that are NOT in users.csv (orphans). Count the orphan events, then the valid events, one per line."
+      },
+      "hint": {
+        "vi": "~e['user_id'].isin(u['id']).",
+        "en": "~e['user_id'].isin(u['id'])."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nu = pd.read_csv('users.csv')\ne = pd.read_csv('events.csv')\n# in số sự kiện mồ côi và hợp lệ\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nu = pd.read_csv('users.csv')\ne = pd.read_csv('events.csv')\nok = e['user_id'].isin(u['id'])\nprint(int((~ok).sum()))\nprint(int(ok.sum()))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '4\\n1688'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "data": [
+    "users.csv",
+    "events.csv"
+  ]
+}

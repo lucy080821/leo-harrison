@@ -1,0 +1,93 @@
+{
+  "title": {
+    "vi": "Ngày giờ và chuỗi thời gian trong pandas",
+    "en": "Dates and time series in pandas"
+  },
+  "summary": {
+    "vi": "to_datetime, .dt, DatetimeIndex, resample, shift, thay đổi theo kỳ",
+    "en": "to_datetime, .dt, DatetimeIndex, resample, shift, period-over-period change"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import pandas as pd\n\ns = pd.read_csv(\"daily_sales.csv\", parse_dates=[\"date\"]).set_index(\"date\")[\"units\"]\nprint(s.index.min().date(), s.index.max().date(), len(s))\n\nmonthly = s.resample(\"MS\").sum()                  # MS = đầu tháng\nprint(monthly.head(3).to_dict())\nprint(\"thứ trong tuần trung bình:\", s.groupby(s.index.dayofweek).mean().round(1).to_dict())\n\nmom = monthly.pct_change().mul(100).round(1)       # tăng trưởng so với tháng trước (%)\nprint(mom.head(4).tolist())\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Đọc daily_sales.csv (cột date là ngày), đặt date làm chỉ mục rồi tổng doanh số units theo THÁNG bằng resample('MS'). In tổng của 3 tháng đầu dưới dạng danh sách số nguyên.",
+        "en": "Read daily_sales.csv (date is a date column), set date as the index then sum units by MONTH with resample('MS'). Print the totals of the first 3 months as a list of integers."
+      },
+      "hint": {
+        "vi": "s.resample('MS').sum().head(3).tolist().",
+        "en": "s.resample('MS').sum().head(3).tolist()."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\ndf = pd.read_csv('daily_sales.csv', parse_dates=['date']).set_index('date')\n# in tổng 3 tháng đầu\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\ndf = pd.read_csv('daily_sales.csv', parse_dates=['date']).set_index('date')\nprint([int(x) for x in df['units'].resample('MS').sum().head(3)])\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '[3457, 3334, 3739]'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Tìm thứ trong tuần (0 = thứ Hai … 6 = Chủ nhật) có doanh số TRUNG BÌNH cao nhất. In số thứ đó.",
+        "en": "Find the weekday (0 = Monday … 6 = Sunday) with the highest AVERAGE sales. Print that number."
+      },
+      "hint": {
+        "vi": "groupby(df.index.dayofweek).units.mean().idxmax().",
+        "en": "groupby(df.index.dayofweek).units.mean().idxmax()."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\ndf = pd.read_csv('daily_sales.csv', parse_dates=['date']).set_index('date')\n# in thứ có doanh số TB cao nhất\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\ndf = pd.read_csv('daily_sales.csv', parse_dates=['date']).set_index('date')\nprint(int(df.groupby(df.index.dayofweek)['units'].mean().idxmax()))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '5'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "data": [
+    "daily_sales.csv"
+  ]
+}

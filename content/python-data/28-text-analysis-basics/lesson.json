@@ -1,0 +1,93 @@
+{
+  "title": {
+    "vi": "Phân tích văn bản cơ bản: tần suất từ và cảm xúc theo từ điển",
+    "en": "Basic text analysis: word frequencies and lexicon sentiment"
+  },
+  "summary": {
+    "vi": "chuẩn hoá, tách từ, bỏ stop word, Counter, từ khoá theo nhóm, điểm cảm xúc theo từ điển",
+    "en": "normalising, tokenising, stop words, Counter, keywords by group, lexicon sentiment scores"
+  },
+  "minutes": 35,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import re\nfrom collections import Counter\nimport pandas as pd\n\nr = pd.read_csv(\"reviews.csv\")\nSTOP = {\"the\", \"a\", \"is\", \"it\", \"to\", \"for\", \"this\", \"with\", \"very\", \"of\", \"and\", \"was\", \"as\", \"on\", \"what\", \"after\", \"not\"}\n\ndef tokens(text):\n    return [w for w in re.findall(r\"[a-z']+\", text.lower()) if w not in STOP]\n\nr[\"tokens\"] = r[\"text\"].apply(tokens)\nr[\"label\"] = pd.cut(r[\"rating\"], [0, 2, 3, 5], labels=[\"neg\", \"neu\", \"pos\"])\n\nfor lab in [\"pos\", \"neg\"]:\n    c = Counter(w for t in r.loc[r[\"label\"] == lab, \"tokens\"] for w in t)\n    print(lab, c.most_common(4))\n\n# Điểm cảm xúc theo từ điển nhỏ\nLEX = {\"great\": 1, \"love\": 1, \"excellent\": 1, \"amazing\": 1, \"good\": 1, \"terrible\": -1, \"awful\": -1, \"poor\": -1, \"disappointed\": -1}\nr[\"score\"] = r[\"tokens\"].apply(lambda t: sum(LEX.get(w, 0) for w in t))\nprint(\"trung bình điểm:\", r.groupby(\"label\", observed=True)[\"score\"].mean().round(2).to_dict())\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Chuẩn hoá chữ thường, tách từ bằng re.findall(r\"[a-z']+\"), rồi in số từ KHÁC NHAU (vocabulary) trên toàn bộ cột text của reviews.csv.",
+        "en": "Lowercase, tokenise with re.findall(r\"[a-z']+\"), then print the number of DISTINCT words (vocabulary) across the whole text column of reviews.csv."
+      },
+      "hint": {
+        "vi": "set() các từ của mọi dòng.",
+        "en": "a set() of the words from every row."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import re\nimport pandas as pd\nr = pd.read_csv('reviews.csv')\n# in kích thước từ vựng\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import re\nimport pandas as pd\nr = pd.read_csv('reviews.csv')\nv = set()\nfor t in r['text']:\n    v.update(re.findall(r\"[a-z']+\", t.lower()))\nprint(len(v))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '71'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Tìm 3 từ phổ biến nhất (bỏ stop word the, a, is, it, to, for, this, with, very, of, and, was, as, on, not) trong các đánh giá có rating <= 2. In danh sách từ (không in số đếm) theo thứ tự giảm dần; nếu bằng nhau thì theo thứ tự xuất hiện đầu tiên (Counter.most_common).",
+        "en": "Find the 3 most common words (excluding stop words the, a, is, it, to, for, this, with, very, of, and, was, as, on, not) in reviews with rating <= 2. Print the list of words (no counts) in descending order; ties follow first appearance (Counter.most_common)."
+      },
+      "hint": {
+        "vi": "[w for w, _ in c.most_common(3)].",
+        "en": "[w for w, _ in c.most_common(3)]."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import re\nfrom collections import Counter\nimport pandas as pd\nr = pd.read_csv('reviews.csv')\nSTOP = {'the', 'a', 'is', 'it', 'to', 'for', 'this', 'with', 'very', 'of', 'and', 'was', 'as', 'on', 'not'}\n# in 3 từ phổ biến nhất\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import re\nfrom collections import Counter\nimport pandas as pd\nr = pd.read_csv('reviews.csv')\nSTOP = {'the', 'a', 'is', 'it', 'to', 'for', 'this', 'with', 'very', 'of', 'and', 'was', 'as', 'on', 'not'}\nc = Counter()\nfor t in r.loc[r['rating'] <= 2, 'text']:\n    c.update(w for w in re.findall(r\"[a-z']+\", t.lower()) if w not in STOP)\nprint([w for w, _ in c.most_common(3)])\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == \"['slow', 'delivery', 'disappointed']\""
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "data": [
+    "reviews.csv"
+  ]
+}

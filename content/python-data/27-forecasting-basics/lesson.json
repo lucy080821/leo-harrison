@@ -1,0 +1,93 @@
+{
+  "title": {
+    "vi": "Dự báo chuỗi thời gian cơ bản và đo sai số",
+    "en": "Basic time-series forecasting and measuring error"
+  },
+  "summary": {
+    "vi": "chia train/test theo thời gian, baseline mùa vụ, MAE, RMSE, MAPE, phân rã xu hướng",
+    "en": "time-based train/test split, seasonal baseline, MAE, RMSE, MAPE, trend decomposition"
+  },
+  "minutes": 35,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np, pandas as pd\n\ns = pd.read_csv(\"daily_sales.csv\", parse_dates=[\"date\"]).set_index(\"date\")[\"units\"]\n\n# Chia theo THỜI GIAN (không xáo trộn!): 28 ngày cuối để kiểm tra\ntrain, test = s[:-28], s[-28:]\n\n# Baseline 1: ngày mai = hôm nay (naive)\nnaive = pd.Series(train.iloc[-1], index=test.index)\n# Baseline 2: seasonal naive - lặp lại đúng tuần trước (chu kỳ 7 ngày)\nlast_week = train.iloc[-7:].values\nsnaive = pd.Series(np.tile(last_week, 4), index=test.index)\n# Baseline 3: trung bình 28 ngày cuối của tập huấn luyện\nmean28 = pd.Series(train.iloc[-28:].mean(), index=test.index)\n\ndef metrics(y, f):\n    e = y - f\n    return {\"MAE\": round(e.abs().mean(), 2), \"RMSE\": round(float(np.sqrt((e ** 2).mean())), 2), \"MAPE%\": round(float((e.abs() / y).mean() * 100), 2)}\n\nfor name, f in [(\"naive\", naive), (\"seasonal naive\", snaive), (\"mean28\", mean28)]:\n    print(name.ljust(15), metrics(test, f))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Chia daily_sales.csv: 28 ngày cuối làm tập kiểm tra. Dự báo seasonal naive (lặp lại 7 ngày cuối của tập huấn luyện 4 lần). In MAE làm tròn 2 chữ số.",
+        "en": "Split daily_sales.csv: the last 28 days are the test set. Seasonal-naive forecast (repeat the last 7 days of the training set 4 times). Print the MAE rounded to 2 digits."
+      },
+      "hint": {
+        "vi": "np.tile(train.iloc[-7:].values, 4).",
+        "en": "np.tile(train.iloc[-7:].values, 4)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np, pandas as pd\ns = pd.read_csv('daily_sales.csv')['units']\n# in MAE seasonal naive\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np, pandas as pd\ns = pd.read_csv('daily_sales.csv')['units']\ntrain, test = s[:-28], s[-28:]\nf = np.tile(train.iloc[-7:].values, 4)\nprint(round(float(np.abs(test.values - f).mean()), 2))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '11.75'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Với cùng cách chia, dự báo 'naive' (mọi ngày = giá trị cuối của tập huấn luyện) và in MAPE (%) làm tròn 2 chữ số.",
+        "en": "With the same split, make a 'naive' forecast (every day = the last training value) and print the MAPE (%) rounded to 2 digits."
+      },
+      "hint": {
+        "vi": "mean(abs(y − f) / y) × 100.",
+        "en": "mean(abs(y − f) / y) × 100."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np, pandas as pd\ns = pd.read_csv('daily_sales.csv')['units']\n# in MAPE naive\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np, pandas as pd\ns = pd.read_csv('daily_sales.csv')['units']\ntrain, test = s[:-28], s[-28:]\nf = train.iloc[-1]\nprint(round(float((np.abs(test - f) / test).mean() * 100), 2))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '6.12'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "data": [
+    "daily_sales.csv"
+  ]
+}

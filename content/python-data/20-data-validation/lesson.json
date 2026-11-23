@@ -1,0 +1,94 @@
+{
+  "title": {
+    "vi": "Kiểm tra và xác thực dữ liệu bằng pandas",
+    "en": "Validating data with pandas"
+  },
+  "summary": {
+    "vi": "trùng lặp, thiếu, kiểu dữ liệu, phạm vi hợp lệ, khoá ngoại, assert như hợp đồng",
+    "en": "duplicates, missing values, dtypes, valid ranges, foreign keys, assertions as contracts"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import pandas as pd\n\nusers = pd.read_csv(\"users.csv\")\nbuys = pd.read_csv(\"purchases.csv\", parse_dates=[\"purchase_date\"])\n\nreport = {\n    \"duplicate_purchases\": int(buys.duplicated(subset=[\"user_id\", \"purchase_date\", \"amount\"]).sum()),\n    \"null_country\": int(users[\"country\"].isna().sum()),\n    \"orphan_purchases\": int((~buys[\"user_id\"].isin(users[\"id\"])).sum()),\n    \"negative_amount\": int((buys[\"amount\"] <= 0).sum()),\n}\nprint(report)\n\n# Đối chiếu logic nghiệp vụ: không được mua trước ngày đăng ký\nm = buys.merge(users.assign(signup_date=pd.to_datetime(users[\"signup_date\"])), left_on=\"user_id\", right_on=\"id\")\nprint(\"mua trước khi đăng ký:\", int((m[\"purchase_date\"] < m[\"signup_date\"]).sum()))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tìm các dòng trùng lặp trong purchases.csv (cùng user_id, purchase_date, amount). In số dòng bị trùng (duplicated().sum()) rồi số dòng còn lại sau khi drop_duplicates, mỗi số một dòng.",
+        "en": "Find duplicate rows in purchases.csv (same user_id, purchase_date, amount). Print the number of duplicated rows (duplicated().sum()) then the rows left after drop_duplicates, one number per line."
+      },
+      "hint": {
+        "vi": "subset=['user_id', 'purchase_date', 'amount'].",
+        "en": "subset=['user_id', 'purchase_date', 'amount']."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nb = pd.read_csv('purchases.csv')\n# in số trùng rồi số dòng còn lại\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nb = pd.read_csv('purchases.csv')\nk = ['user_id', 'purchase_date', 'amount']\nprint(int(b.duplicated(subset=k).sum()))\nprint(len(b.drop_duplicates(subset=k)))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '5\\n128'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Đếm số đơn mua có ngày TRƯỚC ngày đăng ký của người dùng đó (merge purchases với users theo user_id = id; nhớ đổi hai cột ngày sang datetime). In số đơn.",
+        "en": "Count purchases dated BEFORE that user's signup date (merge purchases with users on user_id = id; remember to convert both date columns to datetime). Print the count."
+      },
+      "hint": {
+        "vi": "pd.to_datetime cho cả signup_date và purchase_date.",
+        "en": "pd.to_datetime for both signup_date and purchase_date."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nu = pd.read_csv('users.csv')\nb = pd.read_csv('purchases.csv')\n# in số đơn mua trước ngày đăng ký\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nu = pd.read_csv('users.csv', parse_dates=['signup_date'])\nb = pd.read_csv('purchases.csv', parse_dates=['purchase_date'])\nm = b.merge(u, left_on='user_id', right_on='id')\nprint(int((m['purchase_date'] < m['signup_date']).sum()))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '3'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "data": [
+    "users.csv",
+    "purchases.csv"
+  ]
+}

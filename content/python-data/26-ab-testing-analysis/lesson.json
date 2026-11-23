@@ -1,0 +1,94 @@
+{
+  "title": {
+    "vi": "Phân tích thử nghiệm A/B từ đầu đến cuối",
+    "en": "A/B test analysis from start to finish"
+  },
+  "summary": {
+    "vi": "kiểm tra chia nhóm, tỷ lệ chuyển đổi, kiểm định hai tỷ lệ, khoảng tin cậy, lift, cỡ mẫu",
+    "en": "checking the split, conversion rates, two-proportion test, confidence interval, lift, sample size"
+  },
+  "minutes": 35,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np, pandas as pd\nfrom scipy import stats\n\nu = pd.read_csv(\"users.csv\")\nbuyers = set(pd.read_csv(\"purchases.csv\")[\"user_id\"])\nu[\"converted\"] = u[\"id\"].isin(buyers)\n\n# Giả lập thử nghiệm: người dùng có id chẵn xem phiên bản B\nu[\"variant\"] = np.where(u[\"id\"] % 2 == 0, \"B\", \"A\")\n\n# 1) Kiểm tra chia nhóm (SRM: sample ratio mismatch) - kỳ vọng 50/50\nn = u[\"variant\"].value_counts()\nprint(\"quy mô:\", n.to_dict(), \"| p SRM =\", round(stats.chisquare(n.values).pvalue, 3))\n\n# 2) Tỷ lệ chuyển đổi và kiểm định hai tỷ lệ\ng = u.groupby(\"variant\")[\"converted\"].agg([\"sum\", \"count\"])\npA, pB = g.loc[\"A\", \"sum\"] / g.loc[\"A\", \"count\"], g.loc[\"B\", \"sum\"] / g.loc[\"B\", \"count\"]\np_pool = g[\"sum\"].sum() / g[\"count\"].sum()\nse = np.sqrt(p_pool * (1 - p_pool) * (1 / g.loc[\"A\", \"count\"] + 1 / g.loc[\"B\", \"count\"]))\nz = (pB - pA) / se\nprint(\"A:\", round(pA, 3), \"B:\", round(pB, 3), \"| z =\", round(z, 3), \"| p =\", round(2 * (1 - stats.norm.cdf(abs(z))), 3))\n\n# 3) Khoảng tin cậy 95% cho hiệu (không gộp)\nse_diff = np.sqrt(pA * (1 - pA) / g.loc[\"A\", \"count\"] + pB * (1 - pB) / g.loc[\"B\", \"count\"])\nprint(\"KTC 95% cho B−A:\", round(pB - pA - 1.96 * se_diff, 3), round(pB - pA + 1.96 * se_diff, 3))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Đánh dấu người dùng đã mua (id có trong purchases.user_id). Chia nhóm theo id chẵn/lẻ: chẵn = 'B', lẻ = 'A'. In tỷ lệ chuyển đổi của B làm tròn 4 chữ số.",
+        "en": "Flag users who bought (id present in purchases.user_id). Split by id parity: even = 'B', odd = 'A'. Print B's conversion rate rounded to 4 digits."
+      },
+      "hint": {
+        "vi": "u['id'].isin(set(purchases['user_id'])), rồi groupby('variant').mean().",
+        "en": "u['id'].isin(set(purchases['user_id'])), then groupby('variant').mean()."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np, pandas as pd\nu = pd.read_csv('users.csv')\nbuyers = set(pd.read_csv('purchases.csv')['user_id'])\n# in tỷ lệ chuyển đổi của B\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np, pandas as pd\nu = pd.read_csv('users.csv')\nbuyers = set(pd.read_csv('purchases.csv')['user_id'])\nu['c'] = u['id'].isin(buyers)\nu['v'] = np.where(u['id'] % 2 == 0, 'B', 'A')\nprint(round(float(u.groupby('v')['c'].mean()['B']), 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '0.43'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Tính cỡ mẫu mỗi nhóm cần để phát hiện sự tăng tỷ lệ chuyển đổi từ 10% lên 12% với α = 0,05 hai phía và power 80% (công thức hai tỷ lệ: n = (z_{α/2}+z_β)² · (p1(1−p1)+p2(1−p2)) / (p2−p1)²). In n làm tròn LÊN thành số nguyên (math.ceil).",
+        "en": "Compute the sample size per group needed to detect a rise in conversion from 10% to 12% with two-sided α = 0.05 and 80% power (two-proportion formula: n = (z_{α/2}+z_β)² · (p1(1−p1)+p2(1−p2)) / (p2−p1)²). Print n rounded UP to an integer (math.ceil)."
+      },
+      "hint": {
+        "vi": "z_{α/2} = norm.ppf(0.975), z_β = norm.ppf(0.8).",
+        "en": "z_{α/2} = norm.ppf(0.975), z_β = norm.ppf(0.8)."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import math\nfrom scipy import stats\np1, p2 = 0.10, 0.12\n# in n mỗi nhóm\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import math\nfrom scipy import stats\np1, p2 = 0.10, 0.12\nz = stats.norm.ppf(0.975) + stats.norm.ppf(0.8)\nprint(math.ceil(z ** 2 * (p1 * (1 - p1) + p2 * (1 - p2)) / (p2 - p1) ** 2))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '3839'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "data": [
+    "users.csv",
+    "purchases.csv"
+  ]
+}

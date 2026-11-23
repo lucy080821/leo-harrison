@@ -1,0 +1,93 @@
+{
+  "title": {
+    "vi": "Phân khúc khách hàng bằng RFM",
+    "en": "Customer segmentation with RFM"
+  },
+  "summary": {
+    "vi": "Recency, Frequency, Monetary, qcut chấm điểm 1–4, đặt tên phân khúc",
+    "en": "Recency, Frequency, Monetary, qcut scoring 1–4, naming segments"
+  },
+  "minutes": 35,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import pandas as pd\n\nb = pd.read_csv(\"purchases.csv\", parse_dates=[\"purchase_date\"]).drop_duplicates([\"user_id\", \"purchase_date\", \"amount\"])\ntoday = b[\"purchase_date\"].max() + pd.Timedelta(days=1)       # ngày tham chiếu\n\nrfm = b.groupby(\"user_id\").agg(\n    recency=(\"purchase_date\", lambda s: (today - s.max()).days),   # càng nhỏ càng tốt\n    frequency=(\"purchase_date\", \"count\"),\n    monetary=(\"amount\", \"sum\"),\n)\n\n# Chấm điểm 1–4 theo tứ phân vị. Recency đảo chiều: mua gần đây = điểm cao\nrfm[\"R\"] = pd.qcut(rfm[\"recency\"], 4, labels=[4, 3, 2, 1]).astype(int)\nrfm[\"F\"] = pd.qcut(rfm[\"frequency\"].rank(method=\"first\"), 4, labels=[1, 2, 3, 4]).astype(int)\nrfm[\"M\"] = pd.qcut(rfm[\"monetary\"], 4, labels=[1, 2, 3, 4]).astype(int)\n\nrfm[\"segment\"] = \"Khác\"\nrfm.loc[(rfm.R >= 3) & (rfm.F >= 3) & (rfm.M >= 3), \"segment\"] = \"Champions\"\nrfm.loc[(rfm.R <= 2) & (rfm.F >= 3), \"segment\"] = \"Cần giữ chân\"\nprint(rfm[\"segment\"].value_counts().to_dict())\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Với purchases.csv (đã drop_duplicates theo user_id, purchase_date, amount), tính số khách hàng DUY NHẤT và tổng chi tiêu của khách chi nhiều nhất (làm tròn 2 chữ số), mỗi số một dòng.",
+        "en": "With purchases.csv (after drop_duplicates on user_id, purchase_date, amount), compute the number of UNIQUE customers and the total spend of the top-spending customer (rounded to 2 digits), one per line."
+      },
+      "hint": {
+        "vi": "groupby('user_id')['amount'].sum(); .max().",
+        "en": "groupby('user_id')['amount'].sum(); .max()."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nb = pd.read_csv('purchases.csv').drop_duplicates(['user_id', 'purchase_date', 'amount'])\n# in số khách và chi tiêu cao nhất\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nb = pd.read_csv('purchases.csv').drop_duplicates(['user_id', 'purchase_date', 'amount'])\nm = b.groupby('user_id')['amount'].sum()\nprint(len(m))\nprint(round(float(m.max()), 2))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '85\\n660.0'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Tính recency (ngày từ lần mua gần nhất đến ngày tham chiếu = ngày mua lớn nhất + 1) cho mỗi khách và in trung vị recency làm tròn 1 chữ số.",
+        "en": "Compute recency (days from each customer's latest purchase to the reference date = latest purchase date + 1) and print the median recency rounded to 1 digit."
+      },
+      "hint": {
+        "vi": "(today - s.max()).days trong agg.",
+        "en": "(today - s.max()).days inside agg."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nb = pd.read_csv('purchases.csv', parse_dates=['purchase_date']).drop_duplicates(['user_id', 'purchase_date', 'amount'])\n# in trung vị recency\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nb = pd.read_csv('purchases.csv', parse_dates=['purchase_date']).drop_duplicates(['user_id', 'purchase_date', 'amount'])\ntoday = b['purchase_date'].max() + pd.Timedelta(days=1)\nr = b.groupby('user_id')['purchase_date'].apply(lambda s: (today - s.max()).days)\nprint(round(float(r.median()), 1))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '266.0'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "data": [
+    "purchases.csv"
+  ]
+}

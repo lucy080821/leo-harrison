@@ -6,7 +6,7 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-11-23T04:45:25.687557</dc:date>
+    <dc:date>2026-11-23T05:13:48.534129</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -40,7 +40,7 @@ Q 18.36 16.0704 18.36 22.7232
 L 18.36 44.8992 
 Q 18.36 51.552 25.056 51.552 
 z
-" clip-path="url(#pb2997a0de7)" style="fill: #e0f2fe; stroke: #0e7490; stroke-width: 1.4; stroke-linejoin: miter"/>
+" clip-path="url(#p2505000655)" style="fill: #e0f2fe; stroke: #0e7490; stroke-width: 1.4; stroke-linejoin: miter"/>
    </g>
    <g id="patch_3">
     <path d="M 47.376 95.904 
@@ -53,7 +53,7 @@ Q 40.68 60.4224 40.68 67.0752
 L 40.68 89.2512 
 Q 40.68 95.904 47.376 95.904 
 z
-" clip-path="url(#pb2997a0de7)" style="fill: #bae6fd; stroke: #0e7490; stroke-width: 1.4; stroke-linejoin: miter"/>
+" clip-path="url(#p2505000655)" style="fill: #bae6fd; stroke: #0e7490; stroke-width: 1.4; stroke-linejoin: miter"/>
    </g>
    <g id="patch_4">
     <path d="M 69.696 140.256 
@@ -66,7 +66,7 @@ Q 63 104.7744 63 111.4272
 L 63 133.6032 
 Q 63 140.256 69.696 140.256 
 z
-" clip-path="url(#pb2997a0de7)" style="fill: #7dd3fc; stroke: #0e7490; stroke-width: 1.4; stroke-linejoin: miter"/>
+" clip-path="url(#p2505000655)" style="fill: #7dd3fc; stroke: #0e7490; stroke-width: 1.4; stroke-linejoin: miter"/>
    </g>
    <g id="patch_5">
     <path d="M 92.016 184.608 
@@ -79,7 +79,7 @@ Q 85.32 149.1264 85.32 155.7792
 L 85.32 177.9552 
 Q 85.32 184.608 92.016 184.608 
 z
-" clip-path="url(#pb2997a0de7)" style="fill: #38bdf8; stroke: #0e7490; stroke-width: 1.4; stroke-linejoin: miter"/>
+" clip-path="url(#p2505000655)" style="fill: #38bdf8; stroke: #0e7490; stroke-width: 1.4; stroke-linejoin: miter"/>
    </g>
    <g id="text_1">
     <!-- Tài khoản + 2FA -->
@@ -1117,7 +1117,7 @@ z
   </g>
  </g>
  <defs>
-  <clipPath id="pb2997a0de7">
+  <clipPath id="p2505000655">
    <rect x="7.2" y="7.2" width="334.8" height="199.584"/>
   </clipPath>
  </defs>

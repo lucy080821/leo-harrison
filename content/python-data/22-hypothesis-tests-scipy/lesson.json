@@ -1,0 +1,95 @@
+{
+  "title": {
+    "vi": "Kiểm định thống kê trong Python với scipy.stats",
+    "en": "Statistical tests in Python with scipy.stats"
+  },
+  "summary": {
+    "vi": "ttest_ind, ttest_rel, mannwhitneyu, chi2_contingency, khoảng tin cậy, cỡ hiệu ứng",
+    "en": "ttest_ind, ttest_rel, mannwhitneyu, chi2_contingency, confidence intervals, effect sizes"
+  },
+  "minutes": 35,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np, pandas as pd\nfrom scipy import stats\n\ns = pd.read_csv(\"students.csv\")\na, b = s.loc[s[\"gender\"] == \"M\", \"math\"], s.loc[s[\"gender\"] == \"F\", \"math\"]\n\nt, p = stats.ttest_ind(a, b, equal_var=False)        # Welch t-test\nd = (a.mean() - b.mean()) / np.sqrt((a.var(ddof=1) + b.var(ddof=1)) / 2)   # cỡ hiệu ứng Cohen's d\nprint(\"t =\", round(t, 3), \" p =\", round(p, 4), \" d =\", round(d, 3))\n\n# Khoảng tin cậy 95% cho hiệu hai trung bình\ndiff = a.mean() - b.mean()\nse = np.sqrt(a.var(ddof=1) / len(a) + b.var(ddof=1) / len(b))\nprint(\"KTC 95% =\", round(diff - 1.96 * se, 3), round(diff + 1.96 * se, 3))\n\n# Kiểm định độc lập: kênh thu hút và việc có mua hay không\nu = pd.read_csv(\"users.csv\"); buyers = set(pd.read_csv(\"purchases.csv\")[\"user_id\"])\nu[\"bought\"] = u[\"id\"].isin(buyers)\nchi2, p2, dof, _ = stats.chi2_contingency(pd.crosstab(u[\"channel\"], u[\"bought\"]))\nprint(\"chi2 =\", round(chi2, 3), \" p =\", round(p2, 4), \" dof =\", dof)\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "So sánh điểm physics của nam (M) và nữ (F) trong students.csv bằng Welch t-test (equal_var=False). In thống kê t làm tròn 4 chữ số.",
+        "en": "Compare physics scores of male (M) and female (F) students in students.csv with a Welch t-test (equal_var=False). Print the t statistic rounded to 4 digits."
+      },
+      "hint": {
+        "vi": "stats.ttest_ind(a, b, equal_var=False).statistic.",
+        "en": "stats.ttest_ind(a, b, equal_var=False).statistic."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nfrom scipy import stats\ns = pd.read_csv('students.csv')\n# in t\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nfrom scipy import stats\ns = pd.read_csv('students.csv')\na = s.loc[s['gender'] == 'M', 'physics']\nb = s.loc[s['gender'] == 'F', 'physics']\nprint(round(float(stats.ttest_ind(a, b, equal_var=False).statistic), 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '-1.1299'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Kiểm định Mann–Whitney U cho điểm literature giữa nam và nữ (two-sided). In thống kê U làm tròn 2 chữ số.",
+        "en": "Run a Mann–Whitney U test on literature scores between male and female students (two-sided). Print the U statistic rounded to 2 digits."
+      },
+      "hint": {
+        "vi": "stats.mannwhitneyu(a, b, alternative='two-sided').statistic.",
+        "en": "stats.mannwhitneyu(a, b, alternative='two-sided').statistic."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nfrom scipy import stats\ns = pd.read_csv('students.csv')\n# in U\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nfrom scipy import stats\ns = pd.read_csv('students.csv')\na = s.loc[s['gender'] == 'M', 'literature']\nb = s.loc[s['gender'] == 'F', 'literature']\nprint(round(float(stats.mannwhitneyu(a, b, alternative='two-sided').statistic), 2))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '140.5'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "data": [
+    "students.csv",
+    "users.csv",
+    "purchases.csv"
+  ]
+}

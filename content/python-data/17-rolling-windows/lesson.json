@@ -1,0 +1,93 @@
+{
+  "title": {
+    "vi": "Cửa sổ trượt, luỹ kế và trung bình mũ",
+    "en": "Rolling windows, cumulative and exponentially weighted means"
+  },
+  "summary": {
+    "vi": "rolling, expanding, ewm, cumsum, phát hiện bất thường theo cửa sổ",
+    "en": "rolling, expanding, ewm, cumsum, window-based anomaly detection"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import pandas as pd\n\ns = pd.read_csv(\"daily_sales.csv\", parse_dates=[\"date\"]).set_index(\"date\")[\"units\"]\n\nma7 = s.rolling(7).mean()                       # trung bình trượt 7 ngày (loại bỏ mùa vụ tuần)\nprint(ma7.dropna().head(2).round(2).tolist())\n\ncum = s.cumsum()                                # tổng luỹ kế\nprint(int(cum.iloc[-1]), \"= tổng toàn kỳ\")\n\newm = s.ewm(span=7, adjust=False).mean()       # trung bình mũ: gần đây nặng hơn\nz = (s - s.rolling(30).mean()) / s.rolling(30).std()\nprint(\"số ngày bất thường (|z| > 3):\", int((z.abs() > 3).sum()))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tính trung bình trượt 7 ngày của units trong daily_sales.csv và in giá trị CUỐI CÙNG (ngày cuối), làm tròn 2 chữ số.",
+        "en": "Compute the 7-day rolling mean of units in daily_sales.csv and print the LAST value (the final day), rounded to 2 digits."
+      },
+      "hint": {
+        "vi": "s.rolling(7).mean().iloc[-1].",
+        "en": "s.rolling(7).mean().iloc[-1]."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\ns = pd.read_csv('daily_sales.csv', parse_dates=['date']).set_index('date')['units']\n# in TB trượt 7 ngày cuối\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\ns = pd.read_csv('daily_sales.csv', parse_dates=['date']).set_index('date')['units']\nprint(round(float(s.rolling(7).mean().iloc[-1]), 2))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '166.29'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Đếm số ngày mà units cao hơn trung bình trượt 30 ngày GẦN NHẤT (rolling(30).mean()) quá 20%. In số ngày.",
+        "en": "Count the days where units exceed the 30-day rolling mean by more than 20%. Print the number of days."
+      },
+      "hint": {
+        "vi": "(s > 1.2 * s.rolling(30).mean()).sum().",
+        "en": "(s > 1.2 * s.rolling(30).mean()).sum()."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\ns = pd.read_csv('daily_sales.csv', parse_dates=['date']).set_index('date')['units']\n# in số ngày\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\ns = pd.read_csv('daily_sales.csv', parse_dates=['date']).set_index('date')['units']\nprint(int((s > 1.2 * s.rolling(30).mean()).sum()))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '26'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "data": [
+    "daily_sales.csv"
+  ]
+}

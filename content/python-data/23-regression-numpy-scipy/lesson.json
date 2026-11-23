@@ -1,0 +1,93 @@
+{
+  "title": {
+    "vi": "Hồi quy tuyến tính: ước lượng, R² và phần dư",
+    "en": "Linear regression: estimates, R² and residuals"
+  },
+  "summary": {
+    "vi": "linregress, polyfit, dự đoán, R², phần dư, hồi quy bội bằng ma trận",
+    "en": "linregress, polyfit, prediction, R², residuals, multiple regression via matrices"
+  },
+  "minutes": 35,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import numpy as np, pandas as pd\nfrom scipy import stats\n\nh = pd.read_csv(\"housing.csv\")\n\n# Hồi quy đơn: giá theo diện tích\nr = stats.linregress(h[\"area_m2\"], h[\"price\"])\nprint(\"hệ số góc:\", round(r.slope, 2), \"| chặn:\", round(r.intercept, 1), \"| R²:\", round(r.rvalue ** 2, 3))\nprint(\"dự đoán cho 60 m²:\", round(r.intercept + r.slope * 60, 1))\n\n# Phần dư: dữ liệu - dự đoán. Mô hình tốt thì phần dư quanh 0, không có mẫu hình\nresid = h[\"price\"] - (r.intercept + r.slope * h[\"area_m2\"])\nprint(\"trung bình phần dư:\", round(resid.mean(), 6), \"| độ lệch chuẩn:\", round(resid.std(ddof=2), 1))\n\n# Hồi quy bội bằng đại số ma trận: beta = (XᵀX)⁻¹ Xᵀy  (dùng lstsq cho ổn định)\nX = np.column_stack([np.ones(len(h)), h[\"area_m2\"], h[\"rooms\"], h[\"age_years\"], h[\"distance_km\"]])\nbeta, *_ = np.linalg.lstsq(X, h[\"price\"], rcond=None)\npred = X @ beta\nr2 = 1 - ((h[\"price\"] - pred) ** 2).sum() / ((h[\"price\"] - h[\"price\"].mean()) ** 2).sum()\nprint(\"hệ số:\", np.round(beta, 2), \"| R² bội:\", round(r2, 3))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Hồi quy price theo area_m2 trong housing.csv bằng scipy.stats.linregress. In hệ số góc rồi R² (rvalue**2), mỗi số một dòng, làm tròn 3 chữ số.",
+        "en": "Regress price on area_m2 in housing.csv with scipy.stats.linregress. Print the slope then R² (rvalue**2), one per line, rounded to 3 digits."
+      },
+      "hint": {
+        "vi": "r = stats.linregress(x, y); r.slope, r.rvalue ** 2.",
+        "en": "r = stats.linregress(x, y); r.slope, r.rvalue ** 2."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nfrom scipy import stats\nh = pd.read_csv('housing.csv')\n# in slope, R²\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\nfrom scipy import stats\nh = pd.read_csv('housing.csv')\nr = stats.linregress(h['area_m2'], h['price'])\nprint(round(r.slope, 3))\nprint(round(r.rvalue ** 2, 3))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '32.457\\n0.883'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Dùng hồi quy bội (np.linalg.lstsq) với cột hằng và 4 biến area_m2, rooms, age_years, distance_km để dự đoán price. In R² làm tròn 3 chữ số.",
+        "en": "Use multiple regression (np.linalg.lstsq) with an intercept column and 4 variables area_m2, rooms, age_years, distance_km to predict price. Print R² rounded to 3 digits."
+      },
+      "hint": {
+        "vi": "X = np.column_stack([np.ones(n), ...]); R² = 1 − SSR/SST.",
+        "en": "X = np.column_stack([np.ones(n), ...]); R² = 1 − SSR/SST."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np, pandas as pd\nh = pd.read_csv('housing.csv')\n# in R² bội\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import numpy as np, pandas as pd\nh = pd.read_csv('housing.csv')\nX = np.column_stack([np.ones(len(h)), h['area_m2'], h['rooms'], h['age_years'], h['distance_km']])\nb, *_ = np.linalg.lstsq(X, h['price'], rcond=None)\np = X @ b\ny = h['price']\nprint(round(float(1 - ((y - p) ** 2).sum() / ((y - y.mean()) ** 2).sum()), 3))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '0.998'"
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "data": [
+    "housing.csv"
+  ]
+}

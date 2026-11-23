@@ -1,0 +1,93 @@
+{
+  "title": {
+    "vi": "GroupBy nâng cao: transform, filter, xếp hạng và nhiều thống kê",
+    "en": "Advanced groupby: transform, filter, ranking and many statistics"
+  },
+  "summary": {
+    "vi": "agg nhiều hàm, transform, filter, rank, top-N mỗi nhóm, tỷ trọng trong nhóm",
+    "en": "agg with many functions, transform, filter, rank, top-N per group, share within a group"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "main.py",
+      "lang": "python",
+      "code": "import pandas as pd\n\ndf = pd.read_csv(\"sales.csv\")\ndf[\"revenue\"] = df[\"units\"] * df[\"unit_price\"]\n\n# transform: thêm cột tổng hợp nhưng GIỮ nguyên số dòng\ndf[\"region_total\"] = df.groupby(\"region\")[\"revenue\"].transform(\"sum\")\ndf[\"share_in_region\"] = (df[\"revenue\"] / df[\"region_total\"]).round(3)\n\n# rank trong nhóm và top-N mỗi nhóm\ndf[\"rank_in_region\"] = df.groupby(\"region\")[\"revenue\"].rank(ascending=False, method=\"first\")\ntop2 = df[df[\"rank_in_region\"] <= 2].sort_values([\"region\", \"rank_in_region\"])\nprint(top2[[\"region\", \"product\", \"revenue\"]].head(4).values.tolist())\n\n# filter: giữ các nhóm thoả điều kiện (ví dụ vùng có >= 15 đơn)\nbig = df.groupby(\"region\").filter(lambda g: len(g) >= 15)\nprint(sorted(big[\"region\"].unique()))\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Với mỗi dòng, thêm cột share = revenue / tổng revenue của CATEGORY của nó (dùng transform). In share lớn nhất làm tròn 4 chữ số.",
+        "en": "For each row add a share column = revenue / the total revenue of its CATEGORY (use transform). Print the largest share rounded to 4 digits."
+      },
+      "hint": {
+        "vi": "df.groupby('category')['revenue'].transform('sum').",
+        "en": "df.groupby('category')['revenue'].transform('sum')."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\ndf = pd.read_csv('sales.csv')\ndf['revenue'] = df['units'] * df['unit_price']\n# in share lớn nhất\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\ndf = pd.read_csv('sales.csv')\ndf['revenue'] = df['units'] * df['unit_price']\ndf['share'] = df['revenue'] / df.groupby('category')['revenue'].transform('sum')\nprint(round(float(df['share'].max()), 4))\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == '0.5714'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Lấy đơn có doanh thu cao nhất MỖI region (rank method='first'). In danh sách [region, product] theo thứ tự region.",
+        "en": "Take the highest-revenue order of EACH region (rank with method='first'). Print a list of [region, product] ordered by region."
+      },
+      "hint": {
+        "vi": "rank(ascending=False, method='first') == 1 rồi sort_values('region').",
+        "en": "rank(ascending=False, method='first') == 1 then sort_values('region')."
+      },
+      "starter": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\ndf = pd.read_csv('sales.csv')\ndf['revenue'] = df['units'] * df['unit_price']\n# in [region, product] cao nhất mỗi vùng\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "main.py",
+          "lang": "python",
+          "code": "import pandas as pd\ndf = pd.read_csv('sales.csv')\ndf['revenue'] = df['units'] * df['unit_price']\ndf['r'] = df.groupby('region')['revenue'].rank(ascending=False, method='first')\nprint(df[df['r'] == 1].sort_values('region')[['region', 'product']].values.tolist())\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đầu ra đúng",
+            "en": "The output is correct"
+          },
+          "test": "_out == \"[['East', 'Laptop'], ['North', 'Desk'], ['South', 'Laptop'], ['West', 'Phone']]\""
+        }
+      ]
+    }
+  ],
+  "engine": "python",
+  "data": [
+    "sales.csv"
+  ]
+}
