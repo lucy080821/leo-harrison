@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Dự án: API quản lý việc cần làm có xác thực, kiểm tra và kiểm thử",
+    "en": "Project: a task API with authentication, validation and tests"
+  },
+  "summary": {
+    "vi": "Bearer token, middleware xác thực, chống IDOR, mã trạng thái đúng, kiểm thử bằng inject, hướng sản xuất",
+    "en": "Bearer tokens, auth middleware, IDOR prevention, correct status codes, testing with inject, production direction"
+  },
+  "minutes": 45,
+  "preview": "console",
+  "files": [
+    {
+      "name": "index.js",
+      "lang": "javascript",
+      "code": "const express = require(\"express\");\nconst app = express();\napp.use(express.json());\n\nconst users = { \"tok-an\": { id: 1, name: \"An\" }, \"tok-binh\": { id: 2, name: \"Bình\" } };\nconst tasks = [];\nlet nextId = 1;\n\n// Xác thực: Authorization: Bearer <token> -> req.user\napp.use((req, res, next) => {\n  const m = (req.headers[\"authorization\"] || \"\").match(/^Bearer (.+)$/);\n  req.user = m ? users[m[1]] : undefined;\n  next();\n});\nconst requireAuth = (req, res, next) => (req.user ? next() : res.status(401).json({ error: \"unauthorized\" }));\n\n// Kiểm tra đầu vào theo danh sách cho phép\nfunction validate(body) {\n  const errors = [];\n  if (!body || typeof body.title !== \"string\" || body.title.trim().length < 3) errors.push(\"title >= 3 ký tự\");\n  return errors;\n}\n\napp.post(\"/tasks\", requireAuth, (req, res) => {\n  const errors = validate(req.body);\n  if (errors.length) return res.status(400).json({ errors });\n  const task = { id: nextId++, title: req.body.title.trim(), ownerId: req.user.id, done: false };\n  tasks.push(task);\n  res.status(201).json(task);\n});\n\n// CHỈ trả việc của chính người dùng (chống IDOR)\napp.get(\"/tasks\", requireAuth, (req, res) => res.json(tasks.filter((t) => t.ownerId === req.user.id)));\n\nconst call = (method, url, token, body) =>\n  app.inject({ method, url, headers: token ? { authorization: \"Bearer \" + token } : {}, body });\n\n(async () => {\n  console.log((await call(\"POST\", \"/tasks\", null, { title: \"abc\" })).statusCode);                 // 401\n  console.log((await call(\"POST\", \"/tasks\", \"tok-an\", { title: \"x\" })).statusCode);              // 400\n  console.log((await call(\"POST\", \"/tasks\", \"tok-an\", { title: \"Học Node\" })).statusCode);       // 201\n})();\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Thêm PATCH /tasks/:id đánh dấu hoàn thành. Chỉ CHỦ SỞ HỮU được sửa; người khác (hoặc id không tồn tại) nhận 404 (không tiết lộ việc có tồn tại). Kết quả kỳ vọng: 201 (tạo), 1 (An có 1 việc), 404 (Bình sửa việc của An), 200 (An sửa).",
+        "en": "Add PATCH /tasks/:id marking a task done. Only the OWNER may edit; others (or a missing id) get 404 (don't reveal whether it exists). Expected: 201 (create), 1 (An has 1 task), 404 (Bình editing An's task), 200 (An editing)."
+      },
+      "hint": {
+        "vi": "tìm task theo id và ownerId === req.user.id; không thấy thì 404.",
+        "en": "find the task by id and ownerId === req.user.id; if not found, 404."
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const express = require(\"express\");\nconst app = express();\napp.use(express.json());\n\nconst users = { \"tok-an\": { id: 1, name: \"An\" }, \"tok-binh\": { id: 2, name: \"Bình\" } };\nconst tasks = [];\nlet nextId = 1;\n\n// Xác thực: Authorization: Bearer <token> -> req.user\napp.use((req, res, next) => {\n  const m = (req.headers[\"authorization\"] || \"\").match(/^Bearer (.+)$/);\n  req.user = m ? users[m[1]] : undefined;\n  next();\n});\nconst requireAuth = (req, res, next) => (req.user ? next() : res.status(401).json({ error: \"unauthorized\" }));\n\n// Kiểm tra đầu vào theo danh sách cho phép\nfunction validate(body) {\n  const errors = [];\n  if (!body || typeof body.title !== \"string\" || body.title.trim().length < 3) errors.push(\"title >= 3 ký tự\");\n  return errors;\n}\n\napp.post(\"/tasks\", requireAuth, (req, res) => {\n  const errors = validate(req.body);\n  if (errors.length) return res.status(400).json({ errors });\n  const task = { id: nextId++, title: req.body.title.trim(), ownerId: req.user.id, done: false };\n  tasks.push(task);\n  res.status(201).json(task);\n});\n\n// CHỈ trả việc của chính người dùng (chống IDOR)\napp.get(\"/tasks\", requireAuth, (req, res) => res.json(tasks.filter((t) => t.ownerId === req.user.id)));\n\n// thêm PATCH /tasks/:id ở đây\n\nconst call = (method, url, token, body) =>\n  app.inject({ method, url, headers: token ? { authorization: \"Bearer \" + token } : {}, body });\n\n(async () => {\n  const a = await call(\"POST\", \"/tasks\", \"tok-an\", { title: \"Học Node\" });\n  await call(\"POST\", \"/tasks\", \"tok-binh\", { title: \"Việc của Bình\" });\n  const mine = JSON.parse((await call(\"GET\", \"/tasks\", \"tok-an\")).body);\n  const p = await call(\"PATCH\", \"/tasks/1\", \"tok-binh\");     // Bình không được sửa việc của An\n  const q = await call(\"PATCH\", \"/tasks/1\", \"tok-an\");\n  console.log([a.statusCode, mine.length, p.statusCode, q.statusCode].join(\",\"));\n})();\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const express = require(\"express\");\nconst app = express();\napp.use(express.json());\n\nconst users = { \"tok-an\": { id: 1, name: \"An\" }, \"tok-binh\": { id: 2, name: \"Bình\" } };\nconst tasks = [];\nlet nextId = 1;\n\n// Xác thực: Authorization: Bearer <token> -> req.user\napp.use((req, res, next) => {\n  const m = (req.headers[\"authorization\"] || \"\").match(/^Bearer (.+)$/);\n  req.user = m ? users[m[1]] : undefined;\n  next();\n});\nconst requireAuth = (req, res, next) => (req.user ? next() : res.status(401).json({ error: \"unauthorized\" }));\n\n// Kiểm tra đầu vào theo danh sách cho phép\nfunction validate(body) {\n  const errors = [];\n  if (!body || typeof body.title !== \"string\" || body.title.trim().length < 3) errors.push(\"title >= 3 ký tự\");\n  return errors;\n}\n\napp.post(\"/tasks\", requireAuth, (req, res) => {\n  const errors = validate(req.body);\n  if (errors.length) return res.status(400).json({ errors });\n  const task = { id: nextId++, title: req.body.title.trim(), ownerId: req.user.id, done: false };\n  tasks.push(task);\n  res.status(201).json(task);\n});\n\n// CHỈ trả việc của chính người dùng (chống IDOR)\napp.get(\"/tasks\", requireAuth, (req, res) => res.json(tasks.filter((t) => t.ownerId === req.user.id)));\n\napp.patch(\"/tasks/:id\", requireAuth, (req, res) => {\n  const t = tasks.find((x) => x.id === Number(req.params.id));\n  if (!t || t.ownerId !== req.user.id) return res.status(404).json({ error: \"not found\" });\n  t.done = true;\n  res.json(t);\n});\n\nconst call = (method, url, token, body) =>\n  app.inject({ method, url, headers: token ? { authorization: \"Bearer \" + token } : {}, body });\n\n(async () => {\n  const a = await call(\"POST\", \"/tasks\", \"tok-an\", { title: \"Học Node\" });\n  await call(\"POST\", \"/tasks\", \"tok-binh\", { title: \"Việc của Bình\" });\n  const mine = JSON.parse((await call(\"GET\", \"/tasks\", \"tok-an\")).body);\n  const p = await call(\"PATCH\", \"/tasks/1\", \"tok-binh\");     // Bình không được sửa việc của An\n  const q = await call(\"PATCH\", \"/tasks/1\", \"tok-an\");\n  console.log([a.statusCode, mine.length, p.statusCode, q.statusCode].join(\",\"));\n})();\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "201,1,404,200",
+            "en": "201,1,404,200"
+          },
+          "test": "logs.join('|')==='201,1,404,200'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Thêm DELETE /tasks/:id: chỉ chủ sở hữu xoá được, trả 204 khi xoá thành công, 404 nếu không phải của mình hoặc đã xoá. Kỳ vọng với tình huống bài: 404 (Bình xoá việc của An), 204 (An xoá), 404 (xoá lần hai).",
+        "en": "Add DELETE /tasks/:id: only the owner may delete, return 204 on success, 404 if it isn't theirs or was already deleted. Expected for the scenario: 404 (Bình deleting An's task), 204 (An deletes), 404 (second delete)."
+      },
+      "hint": {
+        "vi": "findIndex với id và ownerId, splice, status(204).send().",
+        "en": "findIndex with id and ownerId, splice, status(204).send()."
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const express = require(\"express\");\nconst app = express();\napp.use(express.json());\n\nconst users = { \"tok-an\": { id: 1, name: \"An\" }, \"tok-binh\": { id: 2, name: \"Bình\" } };\nconst tasks = [];\nlet nextId = 1;\n\n// Xác thực: Authorization: Bearer <token> -> req.user\napp.use((req, res, next) => {\n  const m = (req.headers[\"authorization\"] || \"\").match(/^Bearer (.+)$/);\n  req.user = m ? users[m[1]] : undefined;\n  next();\n});\nconst requireAuth = (req, res, next) => (req.user ? next() : res.status(401).json({ error: \"unauthorized\" }));\n\n// Kiểm tra đầu vào theo danh sách cho phép\nfunction validate(body) {\n  const errors = [];\n  if (!body || typeof body.title !== \"string\" || body.title.trim().length < 3) errors.push(\"title >= 3 ký tự\");\n  return errors;\n}\n\napp.post(\"/tasks\", requireAuth, (req, res) => {\n  const errors = validate(req.body);\n  if (errors.length) return res.status(400).json({ errors });\n  const task = { id: nextId++, title: req.body.title.trim(), ownerId: req.user.id, done: false };\n  tasks.push(task);\n  res.status(201).json(task);\n});\n\n// CHỈ trả việc của chính người dùng (chống IDOR)\napp.get(\"/tasks\", requireAuth, (req, res) => res.json(tasks.filter((t) => t.ownerId === req.user.id)));\n\n// thêm DELETE /tasks/:id ở đây\n\nconst call = (method, url, token, body) =>\n  app.inject({ method, url, headers: token ? { authorization: \"Bearer \" + token } : {}, body });\n\n(async () => {\n  await call(\"POST\", \"/tasks\", \"tok-an\", { title: \"Học Node\" });\n  const x = await call(\"DELETE\", \"/tasks/1\", \"tok-binh\");    // việc của An\n  const y = await call(\"DELETE\", \"/tasks/1\", \"tok-an\");\n  const z = await call(\"DELETE\", \"/tasks/1\", \"tok-an\");\n  console.log([x.statusCode, y.statusCode, z.statusCode].join(\",\"));\n})();\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const express = require(\"express\");\nconst app = express();\napp.use(express.json());\n\nconst users = { \"tok-an\": { id: 1, name: \"An\" }, \"tok-binh\": { id: 2, name: \"Bình\" } };\nconst tasks = [];\nlet nextId = 1;\n\n// Xác thực: Authorization: Bearer <token> -> req.user\napp.use((req, res, next) => {\n  const m = (req.headers[\"authorization\"] || \"\").match(/^Bearer (.+)$/);\n  req.user = m ? users[m[1]] : undefined;\n  next();\n});\nconst requireAuth = (req, res, next) => (req.user ? next() : res.status(401).json({ error: \"unauthorized\" }));\n\n// Kiểm tra đầu vào theo danh sách cho phép\nfunction validate(body) {\n  const errors = [];\n  if (!body || typeof body.title !== \"string\" || body.title.trim().length < 3) errors.push(\"title >= 3 ký tự\");\n  return errors;\n}\n\napp.post(\"/tasks\", requireAuth, (req, res) => {\n  const errors = validate(req.body);\n  if (errors.length) return res.status(400).json({ errors });\n  const task = { id: nextId++, title: req.body.title.trim(), ownerId: req.user.id, done: false };\n  tasks.push(task);\n  res.status(201).json(task);\n});\n\n// CHỈ trả việc của chính người dùng (chống IDOR)\napp.get(\"/tasks\", requireAuth, (req, res) => res.json(tasks.filter((t) => t.ownerId === req.user.id)));\n\napp.delete(\"/tasks/:id\", requireAuth, (req, res) => {\n  const i = tasks.findIndex((x) => x.id === Number(req.params.id) && x.ownerId === req.user.id);\n  if (i === -1) return res.status(404).json({ error: \"not found\" });\n  tasks.splice(i, 1);\n  res.status(204).send();\n});\n\nconst call = (method, url, token, body) =>\n  app.inject({ method, url, headers: token ? { authorization: \"Bearer \" + token } : {}, body });\n\n(async () => {\n  await call(\"POST\", \"/tasks\", \"tok-an\", { title: \"Học Node\" });\n  const x = await call(\"DELETE\", \"/tasks/1\", \"tok-binh\");    // việc của An\n  const y = await call(\"DELETE\", \"/tasks/1\", \"tok-an\");\n  const z = await call(\"DELETE\", \"/tasks/1\", \"tok-an\");\n  console.log([x.statusCode, y.statusCode, z.statusCode].join(\",\"));\n})();\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "404,204,404",
+            "en": "404,204,404"
+          },
+          "test": "logs.join('|')==='404,204,404'"
+        }
+      ]
+    }
+  ],
+  "runtime": "node"
+}

@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Cache trong dịch vụ: LRU, TTL và các bẫy",
+    "en": "Caching in services: LRU, TTL and pitfalls"
+  },
+  "summary": {
+    "vi": "cache-aside, TTL, LRU bằng Map, cache stampede, vô hiệu hoá, HTTP cache và ETag",
+    "en": "cache-aside, TTL, an LRU with Map, cache stampede, invalidation, HTTP caching and ETag"
+  },
+  "minutes": 30,
+  "preview": "console",
+  "files": [
+    {
+      "name": "index.js",
+      "lang": "javascript",
+      "code": "// LRU (Least Recently Used): đầy thì loại mục lâu không dùng nhất. Map giữ thứ tự chèn nên rất tiện.\nclass LRU {\n  constructor(max) { this.max = max; this.m = new Map(); }\n  get(k) {\n    if (!this.m.has(k)) return undefined;\n    const v = this.m.get(k);\n    this.m.delete(k); this.m.set(k, v);          // đưa lên \"mới dùng nhất\"\n    return v;\n  }\n  set(k, v) {\n    if (this.m.has(k)) this.m.delete(k);\n    this.m.set(k, v);\n    if (this.m.size > this.max) this.m.delete(this.m.keys().next().value);   // loại cũ nhất\n  }\n}\n\nconst c = new LRU(2);\nc.set(\"a\", 1); c.set(\"b\", 2); c.get(\"a\"); c.set(\"c\", 3);   // b bị loại\nconsole.log([...c.m.keys()].join(\",\"));\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Cache-aside: viết getUser(id) kiểm tra cache (Map) trước; nếu chưa có thì gọi db(id), lưu vào cache rồi trả. Gọi getUser(1) ba lần và getUser(2) một lần: in số lần db thực sự chạy.",
+        "en": "Cache-aside: write getUser(id) checking the cache (a Map) first; if missing call db(id), store it in the cache and return. Call getUser(1) three times and getUser(2) once: log how many times db really ran."
+      },
+      "hint": {
+        "vi": "if (cache.has(id)) return cache.get(id).",
+        "en": "if (cache.has(id)) return cache.get(id)."
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "let dbCalls = 0;\nconst db = (id) => { dbCalls++; return { id }; };\nconst cache = new Map();\nfunction getUser(id) {\n  // viết ở đây\n}\ngetUser(1); getUser(1); getUser(1); getUser(2);\nconsole.log(dbCalls);\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "let dbCalls = 0;\nconst db = (id) => { dbCalls++; return { id }; };\nconst cache = new Map();\nfunction getUser(id) {\n  if (cache.has(id)) return cache.get(id);\n  const u = db(id);\n  cache.set(id, u);\n  return u;\n}\ngetUser(1); getUser(1); getUser(1); getUser(2);\nconsole.log(dbCalls);\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "db chạy 2 lần",
+            "en": "db ran twice"
+          },
+          "test": "logs.join('|')==='2'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Chống 'cache stampede': khi nhiều yêu cầu cùng lúc thấy cache trống, chỉ MỘT nên gọi nguồn. Viết once(fn) lưu Promise đang chạy theo khoá để các lời gọi đồng thời dùng chung. Gọi load('x') 3 lần cùng lúc, in số lần fetch thật rồi kết quả của lời gọi đầu.",
+        "en": "Prevent a 'cache stampede': when many concurrent requests see an empty cache, only ONE should hit the source. Write once(fn) storing the in-flight Promise per key so concurrent calls share it. Call load('x') 3 times concurrently, log the real fetch count then the first call's result."
+      },
+      "hint": {
+        "vi": "if (!inflight.has(k)) inflight.set(k, fn(k)); return inflight.get(k).",
+        "en": "if (!inflight.has(k)) inflight.set(k, fn(k)); return inflight.get(k)."
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "let fetches = 0;\nconst slow = async (k) => { fetches++; await new Promise((r) => setTimeout(r, 10)); return \"val-\" + k; };\nfunction once(fn) {\n  // viết ở đây\n}\nconst load = once(slow);\n(async () => {\n  const rs = await Promise.all([load(\"x\"), load(\"x\"), load(\"x\")]);\n  console.log(fetches + \"|\" + rs[0]);\n})();\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "let fetches = 0;\nconst slow = async (k) => { fetches++; await new Promise((r) => setTimeout(r, 10)); return \"val-\" + k; };\nfunction once(fn) {\n  const inflight = new Map();\n  return (k) => {\n    if (!inflight.has(k)) inflight.set(k, fn(k));\n    return inflight.get(k);\n  };\n}\nconst load = once(slow);\n(async () => {\n  const rs = await Promise.all([load(\"x\"), load(\"x\"), load(\"x\")]);\n  console.log(fetches + \"|\" + rs[0]);\n})();\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "1|val-x",
+            "en": "1|val-x"
+          },
+          "test": "logs.join('|')==='1|val-x'"
+        }
+      ]
+    }
+  ],
+  "runtime": "node"
+}

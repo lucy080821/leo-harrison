@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Bảo mật API: kiểm tra đầu vào, chèn mã và header",
+    "en": "API security: input validation, injection and headers"
+  },
+  "summary": {
+    "vi": "danh sách cho phép, SQL injection và truy vấn tham số hoá, XSS, header bảo mật, CORS, OWASP Top 10",
+    "en": "allow-lists, SQL injection and parameterised queries, XSS, security headers, CORS, the OWASP Top 10"
+  },
+  "minutes": 35,
+  "preview": "console",
+  "files": [
+    {
+      "name": "index.js",
+      "lang": "javascript",
+      "code": "// Kiểm tra đầu vào theo DANH SÁCH CHO PHÉP (cái gì hợp lệ), không phải danh sách cấm\nfunction validateUser(body) {\n  const errors = {};\n  if (typeof body.email !== \"string\" || !/^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$/.test(body.email)) errors.email = \"email sai\";\n  if (!Number.isInteger(body.age) || body.age < 13 || body.age > 120) errors.age = \"tuổi sai\";\n  if (![\"user\", \"editor\"].includes(body.role ?? \"user\")) errors.role = \"vai trò sai\";   // KHÔNG cho tự đặt \"admin\"\n  return errors;\n}\n\nconsole.log(JSON.stringify(validateUser({ email: \"a@x.vn\", age: 20 })));\nconsole.log(JSON.stringify(validateUser({ email: \"oops\", age: \"20\", role: \"admin\" })));\n\n// Truy vấn tham số hoá: dữ liệu KHÔNG BAO GIỜ được ghép vào câu SQL\nconst bad = (name) => \"SELECT * FROM users WHERE name = '\" + name + \"'\";\nconst good = (name) => ({ text: \"SELECT * FROM users WHERE name = $1\", values: [name] });\nconsole.log(bad(\"x' OR '1'='1\"));\nconsole.log(JSON.stringify(good(\"x' OR '1'='1\")));\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Chống mass assignment: viết pick(obj, allowed) chỉ giữ các khoá nằm trong danh sách cho phép. Với body {name:'An', role:'admin', isPaid:true} và allowed ['name'], in JSON.stringify của kết quả.",
+        "en": "Prevent mass assignment: write pick(obj, allowed) keeping only keys in the allow-list. With body {name:'An', role:'admin', isPaid:true} and allowed ['name'], log the JSON.stringify of the result."
+      },
+      "hint": {
+        "vi": "Object.fromEntries(Object.entries(obj).filter(([k]) => allowed.includes(k))).",
+        "en": "Object.fromEntries(Object.entries(obj).filter(([k]) => allowed.includes(k)))."
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "function pick(obj, allowed) {\n  // viết ở đây\n}\nconsole.log(JSON.stringify(pick({ name: \"An\", role: \"admin\", isPaid: true }, [\"name\"])));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "function pick(obj, allowed) {\n  return Object.fromEntries(Object.entries(obj).filter(([k]) => allowed.includes(k)));\n}\nconsole.log(JSON.stringify(pick({ name: \"An\", role: \"admin\", isPaid: true }, [\"name\"])));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Chỉ còn name",
+            "en": "Only name remains"
+          },
+          "test": "logs.join('|')==='{\"name\":\"An\"}'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Chống XSS khi chèn văn bản người dùng vào HTML: viết escapeHtml(s) thay & < > \" ' bằng &amp; &lt; &gt; &quot; &#39; (thay & trước tiên). In escapeHtml(\"<img src=x onerror='a()'>\").",
+        "en": "Prevent XSS when inserting user text into HTML: write escapeHtml(s) replacing & < > \" ' with &amp; &lt; &gt; &quot; &#39; (replace & first). Log escapeHtml(\"<img src=x onerror='a()'>\")."
+      },
+      "hint": {
+        "vi": "chuỗi replace nối tiếp, & trước.",
+        "en": "chained replace calls, & first."
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "function escapeHtml(s) {\n  // viết ở đây\n}\nconsole.log(escapeHtml(\"<img src=x onerror='a()'>\"));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "function escapeHtml(s) {\n  return s.replace(/&/g, \"&amp;\").replace(/</g, \"&lt;\").replace(/>/g, \"&gt;\").replace(/\"/g, \"&quot;\").replace(/'/g, \"&#39;\");\n}\nconsole.log(escapeHtml(\"<img src=x onerror='a()'>\"));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đúng chuỗi đã thoát",
+            "en": "The escaped string"
+          },
+          "test": "logs.join('|')==='&lt;img src=x onerror=&#39;a()&#39;&gt;'"
+        }
+      ]
+    }
+  ],
+  "runtime": "node"
+}

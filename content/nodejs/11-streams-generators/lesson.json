@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Stream và xử lý dữ liệu lớn bằng async generator",
+    "en": "Streams and processing large data with async generators"
+  },
+  "summary": {
+    "vi": "vì sao cần stream, áp suất ngược, pipeline, async iterator, xử lý từng dòng",
+    "en": "why streams, backpressure, pipelines, async iterators, line-by-line processing"
+  },
+  "minutes": 35,
+  "preview": "console",
+  "files": [
+    {
+      "name": "index.js",
+      "lang": "javascript",
+      "code": "// Đọc tệp 10 GB không thể nạp hết vào RAM: xử lý TỪNG MẢNH.\n// Async generator mô phỏng đúng ý tưởng của stream.\nasync function* source() {\n  for (const chunk of [\"id,qty\\n1,5\\n2\", \",7\\n3,9\\n\"]) yield chunk;     // dữ liệu đến từng mảnh\n}\n\n// Ghép các mảnh thành dòng hoàn chỉnh (một dòng có thể bị cắt giữa hai mảnh)\nasync function* lines(chunks) {\n  let rest = \"\";\n  for await (const c of chunks) {\n    rest += c;\n    const parts = rest.split(\"\\n\");\n    rest = parts.pop();                 // phần chưa trọn dòng, giữ lại\n    for (const p of parts) yield p;\n  }\n  if (rest) yield rest;\n}\n\n(async () => {\n  let total = 0;\n  for await (const line of lines(source())) {\n    if (line.startsWith(\"id\")) continue;\n    total += Number(line.split(\",\")[1]);\n  }\n  console.log(total);   // 21\n})();\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết async generator map(iter, fn) yield fn(x) cho mỗi phần tử của iter (một 'Transform stream'). Dùng với nguồn gồm 1,2,3 và fn = x => x * 10; in các giá trị nối bằng dấu phẩy.",
+        "en": "Write an async generator map(iter, fn) yielding fn(x) for each element of iter (a 'Transform stream'). Use it with a source of 1,2,3 and fn = x => x * 10; log the values joined by commas."
+      },
+      "hint": {
+        "vi": "for await (const x of iter) yield fn(x);",
+        "en": "for await (const x of iter) yield fn(x);"
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "async function* gen() { yield 1; yield 2; yield 3; }\nasync function* map(iter, fn) {\n  // viết ở đây\n}\n(async () => {\n  const out = [];\n  for await (const v of map(gen(), (x) => x * 10)) out.push(v);\n  console.log(out.join(\",\"));\n})();\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "async function* gen() { yield 1; yield 2; yield 3; }\nasync function* map(iter, fn) {\n  for await (const x of iter) yield fn(x);\n}\n(async () => {\n  const out = [];\n  for await (const v of map(gen(), (x) => x * 10)) out.push(v);\n  console.log(out.join(\",\"));\n})();\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "10,20,30",
+            "en": "10,20,30"
+          },
+          "test": "logs.join('|')==='10,20,30'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Viết async generator batch(iter, size) gom các phần tử thành mảng có tối đa size phần tử (phần dư ở lô cuối). Với nguồn 1..5 và size 2, in JSON.stringify của mảng các lô.",
+        "en": "Write an async generator batch(iter, size) grouping elements into arrays of at most size (the remainder in the last batch). With a source 1..5 and size 2, log the JSON.stringify of the array of batches."
+      },
+      "hint": {
+        "vi": "gom vào mảng tạm, đủ size thì yield rồi đặt lại.",
+        "en": "collect into a temp array, yield when it reaches size, then reset."
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "async function* gen() { for (let i = 1; i <= 5; i++) yield i; }\nasync function* batch(iter, size) {\n  // viết ở đây\n}\n(async () => {\n  const out = [];\n  for await (const b of batch(gen(), 2)) out.push(b);\n  console.log(JSON.stringify(out));\n})();\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "async function* gen() { for (let i = 1; i <= 5; i++) yield i; }\nasync function* batch(iter, size) {\n  let cur = [];\n  for await (const x of iter) {\n    cur.push(x);\n    if (cur.length === size) { yield cur; cur = []; }\n  }\n  if (cur.length) yield cur;\n}\n(async () => {\n  const out = [];\n  for await (const b of batch(gen(), 2)) out.push(b);\n  console.log(JSON.stringify(out));\n})();\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "[[1,2],[3,4],[5]]",
+            "en": "[[1,2],[3,4],[5]]"
+          },
+          "test": "logs.join('|')==='[[1,2],[3,4],[5]]'"
+        }
+      ]
+    }
+  ],
+  "runtime": "node"
+}

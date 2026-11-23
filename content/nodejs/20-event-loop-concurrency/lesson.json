@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Event loop và đồng thời: thứ tự thực thi và giới hạn song song",
+    "en": "The event loop and concurrency: execution order and parallelism limits"
+  },
+  "summary": {
+    "vi": "call stack, microtask vs macrotask, nextTick, không chặn event loop, giới hạn đồng thời, worker threads",
+    "en": "the call stack, microtasks vs macrotasks, nextTick, not blocking the event loop, concurrency limits, worker threads"
+  },
+  "minutes": 35,
+  "preview": "console",
+  "files": [
+    {
+      "name": "index.js",
+      "lang": "javascript",
+      "code": "// Thứ tự thực thi: đồng bộ -> microtask (Promise) -> macrotask (setTimeout)\nconsole.log(\"1 đồng bộ\");\nsetTimeout(() => console.log(\"4 setTimeout\"), 0);\nPromise.resolve().then(() => console.log(\"3 microtask\"));\nqueueMicrotask(() => console.log(\"3b queueMicrotask\"));\nconsole.log(\"2 đồng bộ\");\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Dự đoán rồi chạy: đoạn mã có setTimeout 0, Promise.then và log đồng bộ. Hoàn thành để in đúng thứ tự: 'A', 'B', 'C', 'D' với A và D đồng bộ, B là microtask (Promise.then), C là macrotask (setTimeout). Ghi log theo thứ tự bằng cách đặt đúng lệnh vào từng chỗ, rồi in mảng thứ tự nối bằng '|' khi mọi thứ xong.",
+        "en": "Predict then run: the code has a setTimeout 0, a Promise.then and a synchronous log. Complete it to log in the order 'A', 'B', 'C', 'D' where A and D are synchronous, B is a microtask (Promise.then), C is a macrotask (setTimeout). Record in order by placing the right call in each spot, then log the order array joined by '|' when everything is done."
+      },
+      "hint": {
+        "vi": "Thứ tự thật khi chạy: đồng bộ trước, microtask, rồi macrotask. Hãy đặt tên theo đúng thứ tự THỰC THI.",
+        "en": "Actual run order: synchronous first, then microtask, then macrotask. Name them in actual EXECUTION order."
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const order = [];\n// Thứ tự thực thi thật sẽ là: đồng bộ, đồng bộ, microtask, macrotask.\n// Đặt nhãn sao cho kết quả cuối là A|B|C|D.\nsetTimeout(() => { order.push(\"?\"); console.log(order.join(\"|\")); }, 0);\nPromise.resolve().then(() => order.push(\"?\"));\norder.push(\"?\");\norder.push(\"?\");\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const order = [];\nsetTimeout(() => { order.push(\"D\"); console.log(order.join(\"|\")); }, 0);\nPromise.resolve().then(() => order.push(\"C\"));\norder.push(\"A\");\norder.push(\"B\");\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "A|B|C|D",
+            "en": "A|B|C|D"
+          },
+          "test": "logs.join('|')==='A|B|C|D'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Giới hạn đồng thời (như p-limit): viết mapLimit(items, limit, fn) chạy fn(item) bất đồng bộ nhưng tối đa limit cái cùng lúc, trả kết quả đúng thứ tự. fn ghi nhận số tác vụ đang chạy lớn nhất (maxActive). Với 6 phần tử, limit 2: in maxActive và kết quả nối bằng dấu phẩy.",
+        "en": "A concurrency limit (like p-limit): write mapLimit(items, limit, fn) running async fn(item) with at most limit at once, returning results in order. fn tracks the maximum number running (maxActive). With 6 items, limit 2: log maxActive and the results joined by commas."
+      },
+      "hint": {
+        "vi": "nhiều 'worker' cùng lấy chỉ số kế tiếp: let i = 0; workers = Array(limit).fill().map(async () => { while (i < n) {...} }).",
+        "en": "several 'workers' pulling the next index: let i = 0; workers = Array(limit).fill().map(async () => { while (i < n) {...} })."
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "let active = 0, maxActive = 0;\nconst fn = async (x) => {\n  active++; maxActive = Math.max(maxActive, active);\n  await new Promise((r) => setTimeout(r, 10));\n  active--;\n  return x * 2;\n};\nasync function mapLimit(items, limit, fn) {\n  // viết ở đây\n}\n(async () => {\n  const r = await mapLimit([1, 2, 3, 4, 5, 6], 2, fn);\n  console.log(maxActive + \"|\" + r.join(\",\"));\n})();\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "let active = 0, maxActive = 0;\nconst fn = async (x) => {\n  active++; maxActive = Math.max(maxActive, active);\n  await new Promise((r) => setTimeout(r, 10));\n  active--;\n  return x * 2;\n};\nasync function mapLimit(items, limit, fn) {\n  const out = new Array(items.length);\n  let i = 0;\n  const workers = Array.from({ length: limit }, async () => {\n    while (i < items.length) {\n      const idx = i++;\n      out[idx] = await fn(items[idx]);\n    }\n  });\n  await Promise.all(workers);\n  return out;\n}\n(async () => {\n  const r = await mapLimit([1, 2, 3, 4, 5, 6], 2, fn);\n  console.log(maxActive + \"|\" + r.join(\",\"));\n})();\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "2|2,4,6,8,10,12",
+            "en": "2|2,4,6,8,10,12"
+          },
+          "test": "logs.join('|')==='2|2,4,6,8,10,12'"
+        }
+      ]
+    }
+  ],
+  "runtime": "node"
+}

@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Token và JWT: cấu trúc, hạn dùng và những cạm bẫy",
+    "en": "Tokens and JWT: structure, expiry and pitfalls"
+  },
+  "summary": {
+    "vi": "header.payload.signature, base64url, exp, ký và kiểm tra chữ ký, khi nào KHÔNG dùng JWT",
+    "en": "header.payload.signature, base64url, exp, signing and verifying, when NOT to use JWT"
+  },
+  "minutes": 30,
+  "preview": "console",
+  "files": [
+    {
+      "name": "index.js",
+      "lang": "javascript",
+      "code": "// JWT = base64url(header).base64url(payload).chữ_ký\nconst b64u = (o) => Buffer.from(JSON.stringify(o)).toString(\"base64\").replace(/\\+/g, \"-\").replace(/\\//g, \"_\").replace(/=+$/, \"\");\nconst unb64u = (s) => JSON.parse(Buffer.from(s.replace(/-/g, \"+\").replace(/_/g, \"/\"), \"base64\").toString());\n\n// CHỮ KÝ GIẢ chỉ để minh hoạ cấu trúc. Thực tế dùng HMAC-SHA256 (crypto.createHmac) hoặc RS256/EdDSA.\nconst sign = (data, secret) => b64u({ s: data.length + secret.length });\n\nfunction createToken(payload, secret) {\n  const head = b64u({ alg: \"HS256\", typ: \"JWT\" });\n  const body = b64u(payload);\n  return head + \".\" + body + \".\" + sign(head + \".\" + body, secret);\n}\n\nfunction verifyToken(token, secret, now) {\n  const [h, p, sig] = token.split(\".\");\n  if (sig !== sign(h + \".\" + p, secret)) return { ok: false, reason: \"chữ ký sai\" };\n  const payload = unb64u(p);\n  if (payload.exp && payload.exp <= now) return { ok: false, reason: \"hết hạn\" };\n  return { ok: true, payload };\n}\n\nconst t = createToken({ sub: \"42\", exp: 100 }, \"s3cret\");\nconsole.log(verifyToken(t, \"s3cret\", 50).ok, verifyToken(t, \"s3cret\", 200).reason);\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết decodePayload(token) lấy đoạn giữa của JWT, giải base64url và JSON.parse. (Giải mã KHÔNG cần khoá: payload chỉ được ký, không được mã hoá, nên đừng để bí mật trong đó.) Với token tạo từ {sub:'7',role:'admin'}, in payload.role.",
+        "en": "Write decodePayload(token) taking the middle part of a JWT, base64url-decoding and JSON.parse-ing it. (Decoding needs NO key: the payload is signed, not encrypted, so never put secrets in it.) For a token built from {sub:'7',role:'admin'}, log payload.role."
+      },
+      "hint": {
+        "vi": "token.split('.')[1], thay - thành +, _ thành /.",
+        "en": "token.split('.')[1], replace - with + and _ with /."
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const b64u = (o) => Buffer.from(JSON.stringify(o)).toString(\"base64\").replace(/\\+/g, \"-\").replace(/\\//g, \"_\").replace(/=+$/, \"\");\nconst token = b64u({ alg: \"HS256\" }) + \".\" + b64u({ sub: \"7\", role: \"admin\" }) + \".sig\";\n\nfunction decodePayload(token) {\n  // viết ở đây\n}\nconsole.log(decodePayload(token).role);\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const b64u = (o) => Buffer.from(JSON.stringify(o)).toString(\"base64\").replace(/\\+/g, \"-\").replace(/\\//g, \"_\").replace(/=+$/, \"\");\nconst token = b64u({ alg: \"HS256\" }) + \".\" + b64u({ sub: \"7\", role: \"admin\" }) + \".sig\";\n\nfunction decodePayload(token) {\n  const p = token.split(\".\")[1].replace(/-/g, \"+\").replace(/_/g, \"/\");\n  return JSON.parse(Buffer.from(p, \"base64\").toString());\n}\nconsole.log(decodePayload(token).role);\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "admin",
+            "en": "admin"
+          },
+          "test": "logs.join('|')==='admin'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Kiểm tra hạn: viết isExpired(payload, nowSec, skewSec = 30) trả true nếu payload.exp + skewSec <= nowSec (cho phép lệch đồng hồ). In kết quả cho exp=100: now=120, now=130, now=200 (skew mặc định).",
+        "en": "Expiry check: write isExpired(payload, nowSec, skewSec = 30) returning true if payload.exp + skewSec <= nowSec (allowing clock skew). Log results for exp=100: now=120, now=130, now=200 (default skew)."
+      },
+      "hint": {
+        "vi": "payload.exp + skewSec <= nowSec.",
+        "en": "payload.exp + skewSec <= nowSec."
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "function isExpired(payload, nowSec, skewSec = 30) {\n  // viết ở đây\n}\nconst p = { exp: 100 };\nconsole.log([isExpired(p, 120), isExpired(p, 130), isExpired(p, 200)].join(\",\"));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "function isExpired(payload, nowSec, skewSec = 30) {\n  return payload.exp + skewSec <= nowSec;\n}\nconst p = { exp: 100 };\nconsole.log([isExpired(p, 120), isExpired(p, 130), isExpired(p, 200)].join(\",\"));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "false,true,true",
+            "en": "false,true,true"
+          },
+          "test": "logs.join('|')==='false,true,true'"
+        }
+      ]
+    }
+  ],
+  "runtime": "node"
+}

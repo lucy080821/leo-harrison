@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Buffer và mã hoá: hex, base64 và nhị phân",
+    "en": "Buffer and encodings: hex, base64 and binary"
+  },
+  "summary": {
+    "vi": "byte vs ký tự, UTF-8, hex/base64, base64url, byteLength, nối Buffer",
+    "en": "bytes vs characters, UTF-8, hex/base64, base64url, byteLength, concatenating Buffers"
+  },
+  "minutes": 25,
+  "preview": "console",
+  "files": [
+    {
+      "name": "index.js",
+      "lang": "javascript",
+      "code": "const s = \"Việt\";                                      // 4 ký tự\nconsole.log(s.length, Buffer.byteLength(s));           // 4 và 6 byte (ệ, ế... mỗi ký tự có dấu tốn 2-3 byte)\n\nconst buf = Buffer.from(\"Node\");\nconsole.log(buf.toString(\"hex\"));                      // 4e6f6465\nconsole.log(buf.toString(\"base64\"));                   // Tm9kZQ==\n\n// base64url: biến thể an toàn cho URL (dùng trong JWT): thay + / bằng - _ và bỏ dấu =\nconst toUrl = (b64) => b64.replace(/\\+/g, \"-\").replace(/\\//g, \"_\").replace(/=+$/, \"\");\nconsole.log(toUrl(\"Tm9kZQ==\"));\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết toBase64Url(str) mã hoá chuỗi UTF-8 sang base64url (dùng Buffer.from(str).toString('base64') rồi thay + thành -, / thành _ và bỏ dấu =). In toBase64Url('Node?>') và toBase64Url('a').",
+        "en": "Write toBase64Url(str) encoding a UTF-8 string to base64url (use Buffer.from(str).toString('base64') then replace + with -, / with _ and strip =). Log toBase64Url('Node?>') and toBase64Url('a')."
+      },
+      "hint": {
+        "vi": "Dùng replace với regex /\\+/g và /\\//g.",
+        "en": "Use replace with regex /\\+/g and /\\//g."
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "function toBase64Url(str) {\n  // viết ở đây\n}\nconsole.log(toBase64Url(\"Node?>\") + \"|\" + toBase64Url(\"a\"));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "function toBase64Url(str) {\n  return Buffer.from(str).toString(\"base64\").replace(/\\+/g, \"-\").replace(/\\//g, \"_\").replace(/=+$/, \"\");\n}\nconsole.log(toBase64Url(\"Node?>\") + \"|\" + toBase64Url(\"a\"));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đúng hai chuỗi",
+            "en": "Both strings correct"
+          },
+          "test": "logs.join('|')==='Tm9kZT8-|YQ'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Kích thước thật khi lưu/gửi là số BYTE chứ không phải số ký tự. In s.length và Buffer.byteLength(s) cho s = 'Xin chào' (cách nhau dấu phẩy), rồi in hex của Buffer.from('é').",
+        "en": "The real size for storage/sending is the BYTE count, not the character count. Log s.length and Buffer.byteLength(s) for s = 'Xin chào' (comma-separated), then the hex of Buffer.from('é')."
+      },
+      "hint": {
+        "vi": "'é' trong UTF-8 chiếm 2 byte: c3a9.",
+        "en": "'é' in UTF-8 takes 2 bytes: c3a9."
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const s = \"Xin chào\";\n// in length, byteLength, rồi hex của 'é'\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const s = \"Xin chào\";\nconsole.log(s.length + \",\" + Buffer.byteLength(s));\nconsole.log(Buffer.from(\"é\").toString(\"hex\"));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "8,9 rồi c3a9",
+            "en": "8,9 then c3a9"
+          },
+          "test": "logs.join('|')==='8,9|c3a9'"
+        }
+      ]
+    }
+  ],
+  "runtime": "node"
+}

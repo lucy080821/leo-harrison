@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "process, đối số dòng lệnh và cấu hình",
+    "en": "process, command-line arguments and configuration"
+  },
+  "summary": {
+    "vi": "process.argv, env, exit code, parse đối số, cấu hình theo lớp, tín hiệu",
+    "en": "process.argv, env, exit codes, parsing arguments, layered configuration, signals"
+  },
+  "minutes": 25,
+  "preview": "console",
+  "files": [
+    {
+      "name": "index.js",
+      "lang": "javascript",
+      "code": "// Mô phỏng process.argv: [\"node\", \"script.js\", ...đối số]\nfunction parseArgs(argv) {\n  const out = { _: [] };\n  for (let i = 0; i < argv.length; i++) {\n    const a = argv[i];\n    if (a.startsWith(\"--\")) {\n      const [k, v] = a.slice(2).split(\"=\");\n      out[k] = v === undefined ? true : v;\n    } else out._.push(a);\n  }\n  return out;\n}\n\nconsole.log(JSON.stringify(parseArgs([\"build\", \"--minify\", \"--out=dist\"])));\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Cấu hình theo lớp: giá trị cuối cùng ưu tiên env > đối số dòng lệnh > mặc định? Thực tế thường: đối số > env > file > mặc định. Viết resolve(defaults, file, env, args) trả object gộp theo thứ tự ưu tiên đó (args cao nhất). In JSON.stringify(resolve({port:3000,debug:false},{port:4000},{debug:true},{port:5000})).",
+        "en": "Layered configuration: typically args > env > file > defaults. Write resolve(defaults, file, env, args) returning an object merged in that priority (args highest). Log JSON.stringify(resolve({port:3000,debug:false},{port:4000},{debug:true},{port:5000}))."
+      },
+      "hint": {
+        "vi": "Object.assign({}, defaults, file, env, args).",
+        "en": "Object.assign({}, defaults, file, env, args)."
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "function resolve(defaults, file, env, args) {\n  // viết ở đây\n}\nconsole.log(JSON.stringify(resolve({ port: 3000, debug: false }, { port: 4000 }, { debug: true }, { port: 5000 })));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "function resolve(defaults, file, env, args) {\n  return Object.assign({}, defaults, file, env, args);\n}\nconsole.log(JSON.stringify(resolve({ port: 3000, debug: false }, { port: 4000 }, { debug: true }, { port: 5000 })));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Gộp đúng ưu tiên",
+            "en": "Merged in the right priority"
+          },
+          "test": "logs.join('|')==='{\"port\":5000,\"debug\":true}'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Mã thoát (exit code): 0 thành công, khác 0 là lỗi. Viết run(task) trả mã: 0 nếu task() chạy xong, 1 nếu ném lỗi thường, 2 nếu lỗi có thuộc tính code === 'EUSAGE'. In ba mã cho: task ok, task ném Error('x'), task ném lỗi có code 'EUSAGE'.",
+        "en": "Exit codes: 0 is success, non-zero is failure. Write run(task) returning the code: 0 if task() finishes, 1 on a normal thrown error, 2 if the error has code === 'EUSAGE'. Log the three codes for: an ok task, a task throwing Error('x'), a task throwing an error with code 'EUSAGE'."
+      },
+      "hint": {
+        "vi": "try/catch; kiểm tra e.code.",
+        "en": "try/catch; check e.code."
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "function run(task) {\n  // viết ở đây\n}\nconst usage = Object.assign(new Error(\"u\"), { code: \"EUSAGE\" });\nconsole.log([run(() => {}), run(() => { throw new Error(\"x\"); }), run(() => { throw usage; })].join(\",\"));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "function run(task) {\n  try { task(); return 0; }\n  catch (e) { return e.code === \"EUSAGE\" ? 2 : 1; }\n}\nconst usage = Object.assign(new Error(\"u\"), { code: \"EUSAGE\" });\nconsole.log([run(() => {}), run(() => { throw new Error(\"x\"); }), run(() => { throw usage; })].join(\",\"));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "0,1,2",
+            "en": "0,1,2"
+          },
+          "test": "logs.join('|')==='0,1,2'"
+        }
+      ]
+    }
+  ],
+  "runtime": "node"
+}

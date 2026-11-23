@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Middleware thực dụng: request id, xác thực và giới hạn tần suất",
+    "en": "Practical middleware: request id, auth and rate limiting"
+  },
+  "summary": {
+    "vi": "chuỗi middleware, requestId, kiểm tra khoá API, token bucket, thứ tự middleware",
+    "en": "the middleware chain, request id, API-key checks, token bucket, middleware order"
+  },
+  "minutes": 35,
+  "preview": "console",
+  "files": [
+    {
+      "name": "index.js",
+      "lang": "javascript",
+      "code": "const express = require(\"express\");\nconst app = express();\n\n// 1) Gắn mã yêu cầu để lần vết log\nlet n = 0;\napp.use((req, res, next) => { req.id = \"req-\" + ++n; next(); });\n\n// 2) Giới hạn tần suất: tối đa 2 yêu cầu mỗi khoá\nconst hits = new Map();\nfunction rateLimit(max) {\n  return (req, res, next) => {\n    const key = req.headers[\"x-client\"] || \"anon\";\n    const c = (hits.get(key) || 0) + 1;\n    hits.set(key, c);\n    if (c > max) return res.status(429).json({ error: \"quá nhiều yêu cầu\" });\n    next();\n  };\n}\napp.use(rateLimit(2));\n\napp.get(\"/\", (req, res) => res.json({ id: req.id }));\n\n(async () => {\n  const codes = [];\n  for (let i = 0; i < 3; i++) codes.push((await app.inject({ url: \"/\", headers: { \"x-client\": \"a\" } })).statusCode);\n  console.log(codes.join(\",\"));\n})();\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết middleware requireRole(role) đọc req.headers['x-role']: nếu khác role trả 403 JSON {error:'forbidden'}, ngược lại next(). Áp cho GET /admin và in statusCode với x-role 'user' rồi 'admin', cách nhau dấu phẩy.",
+        "en": "Write a requireRole(role) middleware reading req.headers['x-role']: if it differs from role return 403 JSON {error:'forbidden'}, else next(). Apply it to GET /admin and log the statusCode with x-role 'user' then 'admin', comma-separated."
+      },
+      "hint": {
+        "vi": "return (req, res, next) => ...",
+        "en": "return (req, res, next) => ..."
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const express = require(\"express\");\nconst app = express();\nfunction requireRole(role) {\n  // viết ở đây\n}\napp.get(\"/admin\", requireRole(\"admin\"), (req, res) => res.json({ ok: true }));\n(async () => {\n  const a = await app.inject({ url: \"/admin\", headers: { \"x-role\": \"user\" } });\n  const b = await app.inject({ url: \"/admin\", headers: { \"x-role\": \"admin\" } });\n  console.log(a.statusCode + \",\" + b.statusCode);\n})();\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const express = require(\"express\");\nconst app = express();\nfunction requireRole(role) {\n  return (req, res, next) => {\n    if (req.headers[\"x-role\"] !== role) return res.status(403).json({ error: \"forbidden\" });\n    next();\n  };\n}\napp.get(\"/admin\", requireRole(\"admin\"), (req, res) => res.json({ ok: true }));\n(async () => {\n  const a = await app.inject({ url: \"/admin\", headers: { \"x-role\": \"user\" } });\n  const b = await app.inject({ url: \"/admin\", headers: { \"x-role\": \"admin\" } });\n  console.log(a.statusCode + \",\" + b.statusCode);\n})();\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "403,200",
+            "en": "403,200"
+          },
+          "test": "logs.join('|')==='403,200'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Cài thuật toán token bucket: makeBucket(capacity, refillPerSec) trả hàm take(nowSec) → true nếu còn token (trừ 1), false nếu hết; token nạp lại theo thời gian trôi qua (tối đa capacity). Với capacity 2, refill 1/giây: gọi ở t=0,0,0,1,1.5 và in kết quả.",
+        "en": "Implement the token bucket algorithm: makeBucket(capacity, refillPerSec) returns take(nowSec) → true if a token is left (consume 1), false if empty; tokens refill with elapsed time (up to capacity). With capacity 2, refill 1/second: call at t=0,0,0,1,1.5 and log the results."
+      },
+      "hint": {
+        "vi": "tokens = Math.min(cap, tokens + (now - last) * rate).",
+        "en": "tokens = Math.min(cap, tokens + (now - last) * rate)."
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "function makeBucket(capacity, refillPerSec) {\n  // viết ở đây\n}\nconst take = makeBucket(2, 1);\nconsole.log([take(0), take(0), take(0), take(1), take(1.5)].join(\",\"));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "function makeBucket(capacity, refillPerSec) {\n  let tokens = capacity, last = 0;\n  return (now) => {\n    tokens = Math.min(capacity, tokens + (now - last) * refillPerSec);\n    last = now;\n    if (tokens >= 1) { tokens -= 1; return true; }\n    return false;\n  };\n}\nconst take = makeBucket(2, 1);\nconsole.log([take(0), take(0), take(0), take(1), take(1.5)].join(\",\"));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "true,true,false,true,false",
+            "en": "true,true,false,true,false"
+          },
+          "test": "logs.join('|')==='true,true,false,true,false'"
+        }
+      ]
+    }
+  ],
+  "runtime": "node"
+}

@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Tầng dữ liệu: repository, truy vấn tham số hoá và giao dịch",
+    "en": "The data layer: repositories, parameterised queries and transactions"
+  },
+  "summary": {
+    "vi": "repository pattern, query builder an toàn, giao dịch (all or nothing), N+1, phân trang con trỏ",
+    "en": "the repository pattern, safe query builders, transactions (all or nothing), N+1, cursor pagination"
+  },
+  "minutes": 35,
+  "preview": "console",
+  "files": [
+    {
+      "name": "index.js",
+      "lang": "javascript",
+      "code": "// Repository: che giấu cách lưu trữ. Đổi CSDL không làm đổi tầng nghiệp vụ.\nfunction makeUserRepo() {\n  const rows = [{ id: 1, name: \"An\", active: true }, { id: 2, name: \"Bình\", active: false }, { id: 3, name: \"Chi\", active: true }];\n  return {\n    findById: async (id) => rows.find((r) => r.id === id) ?? null,\n    listActive: async () => rows.filter((r) => r.active),\n  };\n}\n\n// Query builder an toàn: trả {text, values}; giá trị KHÔNG bao giờ nằm trong text\nfunction selectWhere(table, conds) {\n  const keys = Object.keys(conds);\n  const where = keys.map((k, i) => k + \" = $\" + (i + 1)).join(\" AND \");\n  return { text: \"SELECT * FROM \" + table + (where ? \" WHERE \" + where : \"\"), values: keys.map((k) => conds[k]) };\n}\n\n(async () => {\n  const repo = makeUserRepo();\n  console.log((await repo.listActive()).map((u) => u.name).join(\",\"));\n  console.log(JSON.stringify(selectWhere(\"users\", { name: \"An\", active: true })));\n})();\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Giao dịch 'tất cả hoặc không': viết transfer(accounts, from, to, amount) chuyển tiền; nếu số dư from không đủ thì ném Error và KHÔNG thay đổi gì (kiểm tra trước khi sửa, hoặc hoàn tác). Với {a:100,b:0}: in số dư sau chuyển 30, rồi thử chuyển 500 (bắt lỗi) và in số dư lần nữa, cách nhau '|'.",
+        "en": "An all-or-nothing transaction: write transfer(accounts, from, to, amount) moving money; if from's balance is insufficient throw an Error and change NOTHING (check before mutating, or roll back). With {a:100,b:0}: log the balances after moving 30, then try 500 (catch the error) and log the balances again, separated by '|'."
+      },
+      "hint": {
+        "vi": "kiểm tra số dư trước khi trừ.",
+        "en": "check the balance before subtracting."
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const accounts = { a: 100, b: 0 };\nfunction transfer(acc, from, to, amount) {\n  // viết ở đây\n}\ntransfer(accounts, \"a\", \"b\", 30);\nconst s1 = accounts.a + \",\" + accounts.b;\ntry { transfer(accounts, \"a\", \"b\", 500); } catch (e) {}\nconsole.log(s1 + \"|\" + accounts.a + \",\" + accounts.b);\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const accounts = { a: 100, b: 0 };\nfunction transfer(acc, from, to, amount) {\n  if (acc[from] < amount) throw new Error(\"insufficient funds\");\n  acc[from] -= amount;\n  acc[to] += amount;\n}\ntransfer(accounts, \"a\", \"b\", 30);\nconst s1 = accounts.a + \",\" + accounts.b;\ntry { transfer(accounts, \"a\", \"b\", 500); } catch (e) {}\nconsole.log(s1 + \"|\" + accounts.a + \",\" + accounts.b);\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "70,30|70,30",
+            "en": "70,30|70,30"
+          },
+          "test": "logs.join('|')==='70,30|70,30'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Phân trang con trỏ (keyset): viết page(rows, afterId, limit) trả các hàng có id > afterId (rows đã sắp tăng theo id), tối đa limit, kèm nextCursor = id hàng cuối hoặc null nếu hết. Với ids 1..5: in JSON của page(rows,0,2) rồi page(rows,4,2).",
+        "en": "Cursor (keyset) pagination: write page(rows, afterId, limit) returning rows with id > afterId (rows are sorted by ascending id), at most limit, plus nextCursor = the last row's id, or null if there are no more. With ids 1..5: log the JSON of page(rows,0,2) then page(rows,4,2)."
+      },
+      "hint": {
+        "vi": "filter id > afterId rồi slice(0, limit); nextCursor chỉ khi còn dữ liệu sau đó.",
+        "en": "filter id > afterId then slice(0, limit); nextCursor only if more data remains."
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const rows = [1, 2, 3, 4, 5].map((id) => ({ id }));\nfunction page(rows, afterId, limit) {\n  // viết ở đây\n}\nconsole.log(JSON.stringify(page(rows, 0, 2)) + \"|\" + JSON.stringify(page(rows, 4, 2)));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const rows = [1, 2, 3, 4, 5].map((id) => ({ id }));\nfunction page(rows, afterId, limit) {\n  const rest = rows.filter((r) => r.id > afterId);\n  const items = rest.slice(0, limit);\n  const nextCursor = rest.length > limit ? items[items.length - 1].id : null;\n  return { items: items.map((r) => r.id), nextCursor };\n}\nconsole.log(JSON.stringify(page(rows, 0, 2)) + \"|\" + JSON.stringify(page(rows, 4, 2)));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Hai trang đúng",
+            "en": "Both pages correct"
+          },
+          "test": "logs.join('|')==='{\"items\":[1,2],\"nextCursor\":2}|{\"items\":[5],\"nextCursor\":null}'"
+        }
+      ]
+    }
+  ],
+  "runtime": "node"
+}

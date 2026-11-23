@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Log có cấu trúc và quan sát: mức log, request id và chỉ số",
+    "en": "Structured logging and observability: levels, request ids and metrics"
+  },
+  "summary": {
+    "vi": "JSON log, mức log, ngữ cảnh con (child logger), che dữ liệu nhạy cảm, đếm chỉ số, độ trễ phân vị",
+    "en": "JSON logs, log levels, child loggers, redacting sensitive data, counting metrics, latency percentiles"
+  },
+  "minutes": 30,
+  "preview": "console",
+  "files": [
+    {
+      "name": "index.js",
+      "lang": "javascript",
+      "code": "// Logger có cấu trúc: mỗi dòng là MỘT JSON, máy đọc/lọc/tổng hợp được\nconst LEVELS = { debug: 10, info: 20, warn: 30, error: 40 };\nfunction makeLogger(minLevel, base = {}, sink = console.log) {\n  const log = (level, msg, extra) => {\n    if (LEVELS[level] < LEVELS[minLevel]) return;\n    sink(JSON.stringify({ level, msg, ...base, ...extra }));\n  };\n  return {\n    debug: (m, e) => log(\"debug\", m, e), info: (m, e) => log(\"info\", m, e),\n    warn: (m, e) => log(\"warn\", m, e), error: (m, e) => log(\"error\", m, e),\n    child: (more) => makeLogger(minLevel, { ...base, ...more }, sink),   // thêm ngữ cảnh (requestId)\n  };\n}\n\nconst root = makeLogger(\"info\", { service: \"api\" });\nconst req = root.child({ requestId: \"r-1\" });\nroot.debug(\"bị lọc\");                    // dưới mức info: không in\nreq.info(\"đã nhận yêu cầu\", { path: \"/x\" });\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Che dữ liệu nhạy cảm trước khi log: viết redact(obj, keys) trả bản sao trong đó các khoá nằm trong keys có giá trị '[REDACTED]'. Với {user:'an', password:'123', token:'abc'} và keys ['password','token'], in JSON.stringify.",
+        "en": "Redact sensitive data before logging: write redact(obj, keys) returning a copy where keys in keys have the value '[REDACTED]'. With {user:'an', password:'123', token:'abc'} and keys ['password','token'], log the JSON.stringify."
+      },
+      "hint": {
+        "vi": "Object.fromEntries(Object.entries(obj).map(...)).",
+        "en": "Object.fromEntries(Object.entries(obj).map(...))."
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "function redact(obj, keys) {\n  // viết ở đây\n}\nconsole.log(JSON.stringify(redact({ user: \"an\", password: \"123\", token: \"abc\" }, [\"password\", \"token\"])));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "function redact(obj, keys) {\n  return Object.fromEntries(Object.entries(obj).map(([k, v]) => [k, keys.includes(k) ? \"[REDACTED]\" : v]));\n}\nconsole.log(JSON.stringify(redact({ user: \"an\", password: \"123\", token: \"abc\" }, [\"password\", \"token\"])));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Đã che",
+            "en": "Redacted"
+          },
+          "test": "logs.join('|')==='{\"user\":\"an\",\"password\":\"[REDACTED]\",\"token\":\"[REDACTED]\"}'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Tính phân vị độ trễ: viết percentile(values, p) (p từ 0 đến 100) bằng phương pháp 'nearest-rank': sắp xếp tăng, lấy phần tử thứ ceil(p/100 × n) (đếm từ 1). Với độ trễ [10,20,30,40,50,60,70,80,90,100] in p50, p90, p99 cách nhau dấu phẩy.",
+        "en": "Compute latency percentiles: write percentile(values, p) (p from 0 to 100) by the 'nearest-rank' method: sort ascending, take the ceil(p/100 × n)-th element (1-based). With latencies [10,20,30,40,50,60,70,80,90,100] log p50, p90, p99 comma-separated."
+      },
+      "hint": {
+        "vi": "sorted[Math.ceil(p / 100 * n) - 1].",
+        "en": "sorted[Math.ceil(p / 100 * n) - 1]."
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "function percentile(values, p) {\n  // viết ở đây\n}\nconst l = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];\nconsole.log([percentile(l, 50), percentile(l, 90), percentile(l, 99)].join(\",\"));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "function percentile(values, p) {\n  const s = [...values].sort((a, b) => a - b);\n  return s[Math.max(0, Math.ceil((p / 100) * s.length) - 1)];\n}\nconst l = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];\nconsole.log([percentile(l, 50), percentile(l, 90), percentile(l, 99)].join(\",\"));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "50,90,100",
+            "en": "50,90,100"
+          },
+          "test": "logs.join('|')==='50,90,100'"
+        }
+      ]
+    }
+  ],
+  "runtime": "node"
+}

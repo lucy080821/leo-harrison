@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Lỗi trong Node: lớp lỗi tuỳ chỉnh, lỗi vận hành và lỗi lập trình",
+    "en": "Errors in Node: custom error classes, operational vs programmer errors"
+  },
+  "summary": {
+    "vi": "extends Error, mã lỗi, cause, lỗi vận hành vs lỗi lập trình, ánh xạ sang mã HTTP",
+    "en": "extends Error, error codes, cause, operational vs programmer errors, mapping to HTTP codes"
+  },
+  "minutes": 30,
+  "preview": "console",
+  "files": [
+    {
+      "name": "index.js",
+      "lang": "javascript",
+      "code": "class AppError extends Error {\n  constructor(message, { status = 500, code = \"INTERNAL\", cause } = {}) {\n    super(message, { cause });\n    this.name = this.constructor.name;\n    this.status = status;\n    this.code = code;\n  }\n}\nclass NotFoundError extends AppError {\n  constructor(what) { super(what + \" không tồn tại\", { status: 404, code: \"NOT_FOUND\" }); }\n}\nclass ValidationError extends AppError {\n  constructor(msg) { super(msg, { status: 400, code: \"VALIDATION\" }); }\n}\n\nfunction toHttp(err) {\n  if (err instanceof AppError) return { status: err.status, body: { error: err.code, message: err.message } };\n  return { status: 500, body: { error: \"INTERNAL\", message: \"Lỗi hệ thống\" } };   // không lộ chi tiết\n}\n\nconsole.log(JSON.stringify(toHttp(new NotFoundError(\"Bài viết\"))));\nconsole.log(JSON.stringify(toHttp(new TypeError(\"x is undefined\"))));\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Tạo lớp ConflictError extends AppError (status 409, code 'CONFLICT'). In err instanceof AppError, err.status, err.name cho new ConflictError('Email đã dùng'), cách nhau dấu phẩy.",
+        "en": "Create a ConflictError class extending AppError (status 409, code 'CONFLICT'). Log err instanceof AppError, err.status, err.name for new ConflictError('Email in use'), comma-separated."
+      },
+      "hint": {
+        "vi": "super(msg, { status: 409, code: 'CONFLICT' }).",
+        "en": "super(msg, { status: 409, code: 'CONFLICT' })."
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "class AppError extends Error {\n  constructor(message, { status = 500, code = \"INTERNAL\" } = {}) {\n    super(message);\n    this.name = this.constructor.name;\n    this.status = status;\n    this.code = code;\n  }\n}\n// viết ConflictError ở đây\nconst err = new ConflictError(\"Email in use\");\nconsole.log([err instanceof AppError, err.status, err.name].join(\",\"));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "class AppError extends Error {\n  constructor(message, { status = 500, code = \"INTERNAL\" } = {}) {\n    super(message);\n    this.name = this.constructor.name;\n    this.status = status;\n    this.code = code;\n  }\n}\nclass ConflictError extends AppError {\n  constructor(msg) { super(msg, { status: 409, code: \"CONFLICT\" }); }\n}\nconst err = new ConflictError(\"Email in use\");\nconsole.log([err instanceof AppError, err.status, err.name].join(\",\"));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "true,409,ConflictError",
+            "en": "true,409,ConflictError"
+          },
+          "test": "logs.join('|')==='true,409,ConflictError'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Bảo toàn nguyên nhân gốc bằng cause: bọc lỗi cấp thấp khi ném lỗi cấp cao. Viết loadUser(id) bắt lỗi từ db() và ném new Error('Không tải được user ' + id, { cause: e }). Bắt lỗi bên ngoài và in message rồi cause.message, cách nhau '|'.",
+        "en": "Preserve the root cause with cause: wrap the low-level error when throwing a high-level one. Write loadUser(id) catching the error from db() and throwing new Error('Could not load user ' + id, { cause: e }). Catch outside and log message then cause.message, separated by '|'."
+      },
+      "hint": {
+        "vi": "new Error(msg, { cause: e }).",
+        "en": "new Error(msg, { cause: e })."
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const db = () => { throw new Error(\"connection refused\"); };\nfunction loadUser(id) {\n  // viết ở đây\n}\ntry { loadUser(7); } catch (e) { console.log(e.message + \"|\" + e.cause.message); }\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const db = () => { throw new Error(\"connection refused\"); };\nfunction loadUser(id) {\n  try { return db(); }\n  catch (e) { throw new Error(\"Could not load user \" + id, { cause: e }); }\n}\ntry { loadUser(7); } catch (e) { console.log(e.message + \"|\" + e.cause.message); }\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có cả message và cause",
+            "en": "Both message and cause"
+          },
+          "test": "logs.join('|')==='Could not load user 7|connection refused'"
+        }
+      ]
+    }
+  ],
+  "runtime": "node"
+}

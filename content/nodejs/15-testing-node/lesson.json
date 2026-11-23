@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Kiểm thử Node: bộ chạy test tự viết, assert và app.inject",
+    "en": "Testing Node: a hand-made test runner, assert and app.inject"
+  },
+  "summary": {
+    "vi": "test như hàm, assert, kiểm thử API không mở cổng, mock, AAA, bao phủ đúng chỗ",
+    "en": "tests as functions, assert, testing an API without opening a port, mocks, AAA, covering the right places"
+  },
+  "minutes": 30,
+  "preview": "console",
+  "files": [
+    {
+      "name": "index.js",
+      "lang": "javascript",
+      "code": "// Bộ chạy test tối giản: hiểu test runner thực chất chỉ là vậy\nconst results = [];\nasync function test(name, fn) {\n  try { await fn(); results.push(\"✓ \" + name); }\n  catch (e) { results.push(\"✗ \" + name + \": \" + e.message); }\n}\nconst assert = require(\"assert\");\n\nconst add = (a, b) => a + b;\n\n(async () => {\n  await test(\"cộng hai số\", () => assert.strictEqual(add(2, 3), 5));\n  await test(\"cố ý sai\", () => assert.strictEqual(add(2, 2), 5));\n  console.log(results.join(\"\\n\"));\n})();\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Dùng app.inject kiểm thử API không cần mở cổng: tạo app Express có GET /ping trả JSON {pong:true}. Viết test kiểm tra statusCode 200 và JSON.parse(body).pong === true; in 'pass' nếu cả hai đúng.",
+        "en": "Use app.inject to test an API without opening a port: build an Express app with GET /ping returning JSON {pong:true}. Write a test checking statusCode 200 and JSON.parse(body).pong === true; log 'pass' if both hold."
+      },
+      "hint": {
+        "vi": "const r = await app.inject('/ping');",
+        "en": "const r = await app.inject('/ping');"
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const express = require(\"express\");\nconst assert = require(\"assert\");\nconst app = express();\n// thêm route GET /ping ở đây\n\n(async () => {\n  const r = await app.inject(\"/ping\");\n  assert.strictEqual(r.statusCode, 200);\n  assert.strictEqual(JSON.parse(r.body).pong, true);\n  console.log(\"pass\");\n})().catch(() => console.log(\"fail\"));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "const express = require(\"express\");\nconst assert = require(\"assert\");\nconst app = express();\napp.get(\"/ping\", (req, res) => res.json({ pong: true }));\n\n(async () => {\n  const r = await app.inject(\"/ping\");\n  assert.strictEqual(r.statusCode, 200);\n  assert.strictEqual(JSON.parse(r.body).pong, true);\n  console.log(\"pass\");\n})().catch(() => console.log(\"fail\"));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "pass",
+            "en": "pass"
+          },
+          "test": "logs.join('|')==='pass'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Mock phụ thuộc: sendWelcome(user, mailer) gọi mailer.send(user.email, 'Chào ' + user.name). Viết mailer giả ghi lại các lần gọi vào mảng calls, gọi sendWelcome({name:'An',email:'a@x.vn'}, fake) và in calls.length rồi calls[0].join('/').",
+        "en": "Mock a dependency: sendWelcome(user, mailer) calls mailer.send(user.email, 'Hi ' + user.name). Write a fake mailer recording calls into an array, call sendWelcome({name:'An',email:'a@x.vn'}, fake) and log calls.length then calls[0].join('/')."
+      },
+      "hint": {
+        "vi": "const fake = { send: (...a) => calls.push(a) }.",
+        "en": "const fake = { send: (...a) => calls.push(a) }."
+      },
+      "starter": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "function sendWelcome(user, mailer) {\n  mailer.send(user.email, \"Hi \" + user.name);\n}\nconst calls = [];\n// tạo mailer giả ở đây\nconst fake = null;\nsendWelcome({ name: \"An\", email: \"a@x.vn\" }, fake);\nconsole.log(calls.length + \"|\" + calls[0].join(\"/\"));\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "index.js",
+          "lang": "javascript",
+          "code": "function sendWelcome(user, mailer) {\n  mailer.send(user.email, \"Hi \" + user.name);\n}\nconst calls = [];\nconst fake = { send: (...a) => calls.push(a) };\nsendWelcome({ name: \"An\", email: \"a@x.vn\" }, fake);\nconsole.log(calls.length + \"|\" + calls[0].join(\"/\"));\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "1|a@x.vn/Hi An",
+            "en": "1|a@x.vn/Hi An"
+          },
+          "test": "logs.join('|')==='1|a@x.vn/Hi An'"
+        }
+      ]
+    }
+  ],
+  "runtime": "node"
+}
