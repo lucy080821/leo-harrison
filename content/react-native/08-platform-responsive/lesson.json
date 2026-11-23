@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Nền tảng và giao diện đáp ứng: Platform, kích thước màn hình",
+    "en": "Platforms and responsive UI: Platform and screen size"
+  },
+  "summary": {
+    "vi": "Platform.OS/select, useWindowDimensions, điểm ngắt, an toàn vùng tai thỏ, đơn vị density",
+    "en": "Platform.OS/select, useWindowDimensions, breakpoints, safe areas, density-independent units"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { View, Text, Platform, useWindowDimensions } from \"react-native\";\n\n// Hàm thuần: dễ kiểm thử, tách khỏi giao diện\nconst layoutFor = (width) => (width >= 768 ? \"tablet\" : \"phone\");\n\nexport default function App() {\n  const { width } = useWindowDimensions();       // tự cập nhật khi xoay màn hình\n  const font = Platform.select({ ios: 17, android: 16, default: 16 });\n  return (\n    <View>\n      <Text testID=\"os\">{Platform.OS}</Text>\n      <Text testID=\"layout\">{layoutFor(width)}</Text>\n      <Text style={{ fontSize: font }}>Văn bản</Text>\n    </View>\n  );\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết hàm columnsFor(width) trả số cột lưới: < 500 → 1, < 900 → 2, còn lại → 3. Hiển thị <Text testID=\"c\"> với các giá trị columnsFor(320), columnsFor(600), columnsFor(1200) nối bằng dấu phẩy.",
+        "en": "Write columnsFor(width) returning the grid column count: < 500 → 1, < 900 → 2, else → 3. Render <Text testID=\"c\"> with columnsFor(320), columnsFor(600), columnsFor(1200) joined by commas."
+      },
+      "hint": {
+        "vi": "width < 500 ? 1 : width < 900 ? 2 : 3.",
+        "en": "width < 500 ? 1 : width < 900 ? 2 : 3."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { Text } from \"react-native\";\n\nfunction columnsFor(width) {\n  // viết ở đây\n}\n\nexport default function App() {\n  return <Text testID=\"c\">{[columnsFor(320), columnsFor(600), columnsFor(1200)].join(\",\")}</Text>;\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { Text } from \"react-native\";\n\nfunction columnsFor(width) {\n  return width < 500 ? 1 : width < 900 ? 2 : 3;\n}\n\nexport default function App() {\n  return <Text testID=\"c\">{[columnsFor(320), columnsFor(600), columnsFor(1200)].join(\",\")}</Text>;\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "1,2,3",
+            "en": "1,2,3"
+          },
+          "test": "document.querySelector('[data-testid=\"c\"]')?.textContent==='1,2,3'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Dùng Platform.select để chọn nhãn theo nền tảng: ios → 'iOS', android → 'Android', web → 'Web', default → 'Khác'. Hiển thị trong <Text testID=\"p\">. (Trong trình duyệt phải ra 'Web'.)",
+        "en": "Use Platform.select to pick a label per platform: ios → 'iOS', android → 'Android', web → 'Web', default → 'Other'. Render it in <Text testID=\"p\">. (In the browser it must be 'Web'.)"
+      },
+      "hint": {
+        "vi": "Platform.select({ ios: 'iOS', android: 'Android', web: 'Web', default: 'Other' }).",
+        "en": "Platform.select({ ios: 'iOS', android: 'Android', web: 'Web', default: 'Other' })."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { Text, Platform } from \"react-native\";\n\nexport default function App() {\n  return <Text testID=\"p\">?</Text>;\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { Text, Platform } from \"react-native\";\n\nexport default function App() {\n  const label = Platform.select({ ios: \"iOS\", android: \"Android\", web: \"Web\", default: \"Other\" });\n  return <Text testID=\"p\">{label}</Text>;\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Ra Web",
+            "en": "Shows Web"
+          },
+          "test": "document.querySelector('[data-testid=\"p\"]')?.textContent==='Web'"
+        }
+      ]
+    }
+  ],
+  "runtime": "rn"
+}

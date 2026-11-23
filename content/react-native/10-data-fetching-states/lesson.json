@@ -1,0 +1,104 @@
+{
+  "title": {
+    "vi": "Lấy dữ liệu trong ứng dụng di động: tải, lỗi, rỗng và thử lại",
+    "en": "Fetching data in mobile apps: loading, errors, empty and retry"
+  },
+  "summary": {
+    "vi": "bốn trạng thái, ActivityIndicator, thử lại, mạng chập chờn, TanStack Query",
+    "en": "four states, ActivityIndicator, retry, flaky networks, TanStack Query"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { useState, useEffect } from \"react\";\nimport { View, Text, FlatList, ActivityIndicator, Pressable } from \"react-native\";\n\nconst fakeApi = (ok) => new Promise((res, rej) => setTimeout(() => (ok ? res([\"An\", \"Bình\"]) : rej(new Error(\"Mất kết nối\"))), 30));\n\nexport default function App() {\n  const [s, setS] = useState({ status: \"loading\" });\n  const [attempt, setAttempt] = useState(0);\n\n  useEffect(() => {\n    let ignore = false;\n    setS({ status: \"loading\" });\n    fakeApi(attempt > 0).then((d) => !ignore && setS({ status: \"ok\", data: d })).catch((e) => !ignore && setS({ status: \"error\", message: e.message }));\n    return () => { ignore = true; };\n  }, [attempt]);\n\n  if (s.status === \"loading\") return <ActivityIndicator testID=\"spin\" />;\n  if (s.status === \"error\") return <View><Text testID=\"err\">{s.message}</Text><Pressable testID=\"retry\" onPress={() => setAttempt(attempt + 1)}><Text>Thử lại</Text></Pressable></View>;\n  if (s.data.length === 0) return <Text testID=\"empty\">Chưa có dữ liệu</Text>;\n  return <FlatList data={s.data} keyExtractor={(x) => x} renderItem={({ item }) => <Text testID=\"row\">{item}</Text>} />;\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Hiển thị 2 người từ fakeApi sau khi tải: mỗi người là <Text testID=\"row\">. Trong lúc tải hiện <ActivityIndicator testID=\"spin\" />; xong thì spinner biến mất.",
+        "en": "Show 2 people from fakeApi once loaded: each is <Text testID=\"row\">. While loading show <ActivityIndicator testID=\"spin\" />; when done the spinner disappears."
+      },
+      "hint": {
+        "vi": "useState(null) cho data; if (!data) return <ActivityIndicator .../>.",
+        "en": "useState(null) for data; if (!data) return <ActivityIndicator .../>."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, useEffect } from \"react\";\nimport { View, Text, ActivityIndicator } from \"react-native\";\n\nconst fakeApi = () => new Promise((res) => setTimeout(() => res([\"An\", \"Bình\"]), 30));\n\nexport default function App() {\n  return <View><ActivityIndicator testID=\"spin\" /></View>;\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, useEffect } from \"react\";\nimport { View, Text, ActivityIndicator } from \"react-native\";\n\nconst fakeApi = () => new Promise((res) => setTimeout(() => res([\"An\", \"Bình\"]), 30));\n\nexport default function App() {\n  const [data, setData] = useState(null);\n  useEffect(() => { fakeApi().then(setData); }, []);\n  if (!data) return <ActivityIndicator testID=\"spin\" />;\n  return <View>{data.map((n) => <Text key={n} testID=\"row\">{n}</Text>)}</View>;\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 2 hàng sau khi tải",
+            "en": "2 rows after loading"
+          },
+          "test": "(async()=>{await new Promise(r=>setTimeout(r,250));return document.querySelectorAll('[data-testid=\"row\"]').length===2})()"
+        },
+        {
+          "label": {
+            "vi": "Spinner biến mất",
+            "en": "The spinner is gone"
+          },
+          "test": "(async()=>{await new Promise(r=>setTimeout(r,250));return !document.querySelector('[data-testid=\"spin\"]')})()"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Xử lý lỗi và thử lại: lần gọi đầu bị từ chối (hiện <Text testID=\"err\"> với thông báo), nút #retry gọi lại và lần hai thành công hiện <Text testID=\"ok\">Xong</Text>.",
+        "en": "Handle errors and retry: the first call is rejected (show <Text testID=\"err\"> with the message), the #retry button calls again and the second succeeds, showing <Text testID=\"ok\">Done</Text>."
+      },
+      "hint": {
+        "vi": "state { status }; attempt tăng khi bấm thử lại; gọi fn(attempt).",
+        "en": "a { status } state; attempt increases on retry; call fn(attempt)."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, useEffect } from \"react\";\nimport { View, Text, Pressable } from \"react-native\";\n\nconst api = (attempt) => new Promise((res, rej) => setTimeout(() => (attempt === 0 ? rej(new Error(\"Offline\")) : res(\"ok\")), 30));\n\nexport default function App() {\n  const [attempt, setAttempt] = useState(0);\n  return (\n    <View>\n      <Pressable testID=\"retry\" onPress={() => setAttempt(attempt + 1)}><Text>Thử lại</Text></Pressable>\n    </View>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, useEffect } from \"react\";\nimport { View, Text, Pressable } from \"react-native\";\n\nconst api = (attempt) => new Promise((res, rej) => setTimeout(() => (attempt === 0 ? rej(new Error(\"Offline\")) : res(\"ok\")), 30));\n\nexport default function App() {\n  const [attempt, setAttempt] = useState(0);\n  const [s, setS] = useState({ status: \"loading\" });\n  useEffect(() => {\n    let ignore = false;\n    setS({ status: \"loading\" });\n    api(attempt).then(() => !ignore && setS({ status: \"ok\" })).catch((e) => !ignore && setS({ status: \"error\", message: e.message }));\n    return () => { ignore = true; };\n  }, [attempt]);\n  return (\n    <View>\n      {s.status === \"error\" && <Text testID=\"err\">{s.message}</Text>}\n      {s.status === \"ok\" && <Text testID=\"ok\">Done</Text>}\n      <Pressable testID=\"retry\" onPress={() => setAttempt(attempt + 1)}><Text>Thử lại</Text></Pressable>\n    </View>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Lần đầu hiện lỗi Offline",
+            "en": "The first call shows the Offline error"
+          },
+          "test": "(async()=>{await new Promise(r=>setTimeout(r,250));return document.querySelector('[data-testid=\"err\"]')?.textContent==='Offline'})()"
+        },
+        {
+          "label": {
+            "vi": "Thử lại thì thành công",
+            "en": "Retry succeeds"
+          },
+          "test": "(async()=>{await new Promise(r=>setTimeout(r,250));document.querySelector('[data-testid=\"retry\"]').click();await new Promise(r=>setTimeout(r,250));return document.querySelector('[data-testid=\"ok\"]')?.textContent==='Done'&&!document.querySelector('[data-testid=\"err\"]')})()"
+        }
+      ]
+    }
+  ],
+  "runtime": "rn"
+}

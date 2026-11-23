@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Hiệu năng và kiến trúc: JS thread, Hermes, kiến trúc mới và Expo",
+    "en": "Performance and architecture: the JS thread, Hermes, the New Architecture and Expo"
+  },
+  "summary": {
+    "vi": "luồng JS và UI, render thừa, React.memo + useCallback trong danh sách, Hermes, Fabric/JSI, Expo vs bare",
+    "en": "the JS and UI threads, needless renders, React.memo + useCallback in lists, Hermes, Fabric/JSI, Expo vs bare"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { useState, useCallback, memo } from \"react\";\nimport { View, Text, Pressable } from \"react-native\";\n\n// Đếm số lần render từng dòng để QUAN SÁT chi phí\nwindow.__rows = 0;\n\nconst Row = memo(function Row({ id, onPick }) {\n  window.__rows += 1;\n  return <Pressable testID={\"row\" + id} onPress={() => onPick(id)}><Text>Dòng {id}</Text></Pressable>;\n});\n\nexport default function App() {\n  const [picked, setPicked] = useState(null);\n  const onPick = useCallback((id) => setPicked(id), []);      // tham chiếu hàm ổn định: memo mới có tác dụng\n  return (\n    <View>\n      <Text testID=\"picked\">{String(picked)}</Text>\n      {[1, 2, 3].map((id) => <Row key={id} id={id} onPick={onPick} />)}\n    </View>\n  );\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Mỗi lần bấm một dòng, state ở App đổi nhưng các dòng không cần render lại. Bọc Row bằng memo và dùng useCallback cho onPick. Ban đầu 3 lần render (3 dòng); sau khi bấm dòng 1 và dòng 2, tổng window.__rows phải vẫn là 3.",
+        "en": "Each time a row is clicked App's state changes but rows needn't re-render. Wrap Row in memo and use useCallback for onPick. Initially 3 renders (3 rows); after clicking row 1 and row 2, the total window.__rows must still be 3."
+      },
+      "hint": {
+        "vi": "const Row = memo(function Row(...)) và const onPick = useCallback(..., []).",
+        "en": "const Row = memo(function Row(...)) and const onPick = useCallback(..., [])."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\nimport { View, Text, Pressable } from \"react-native\";\n\nwindow.__rows = 0;\n\nfunction Row({ id, onPick }) {\n  window.__rows += 1;\n  return <Pressable testID={\"row\" + id} onPress={() => onPick(id)}><Text>Dòng {id}</Text></Pressable>;\n}\n\nexport default function App() {\n  const [picked, setPicked] = useState(null);\n  const onPick = (id) => setPicked(id);\n  return (\n    <View>\n      <Text testID=\"picked\">{String(picked)}</Text>\n      {[1, 2, 3].map((id) => <Row key={id} id={id} onPick={onPick} />)}\n    </View>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, useCallback, memo } from \"react\";\nimport { View, Text, Pressable } from \"react-native\";\n\nwindow.__rows = 0;\n\nconst Row = memo(function Row({ id, onPick }) {\n  window.__rows += 1;\n  return <Pressable testID={\"row\" + id} onPress={() => onPick(id)}><Text>Dòng {id}</Text></Pressable>;\n});\n\nexport default function App() {\n  const [picked, setPicked] = useState(null);\n  const onPick = useCallback((id) => setPicked(id), []);\n  return (\n    <View>\n      <Text testID=\"picked\">{String(picked)}</Text>\n      {[1, 2, 3].map((id) => <Row key={id} id={id} onPick={onPick} />)}\n    </View>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Bấm hai dòng mà tổng render vẫn 3",
+            "en": "After two clicks total renders stay 3"
+          },
+          "test": "(async()=>{document.querySelector('[data-testid=\"row1\"]').click();await new Promise(r=>setTimeout(r,80));document.querySelector('[data-testid=\"row2\"]').click();await new Promise(r=>setTimeout(r,80));return document.querySelector('[data-testid=\"picked\"]').textContent==='2'&&window.__rows===3})()"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Tính toán nặng trong render làm giật: dùng useMemo để chỉ tính tổng khi `items` đổi, KHÔNG tính lại khi chỉ state `tick` đổi. window.__calc đếm số lần tính; sau 3 lần bấm #tick nó phải bằng 1.",
+        "en": "Heavy computation in render causes jank: use useMemo to compute the total only when `items` changes, NOT when only the `tick` state changes. window.__calc counts computations; after 3 clicks on #tick it must equal 1."
+      },
+      "hint": {
+        "vi": "const total = useMemo(() => { window.__calc++; return ...; }, [items]).",
+        "en": "const total = useMemo(() => { window.__calc++; return ...; }, [items])."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, useMemo } from \"react\";\nimport { View, Text, Pressable } from \"react-native\";\n\nwindow.__calc = 0;\nconst items = [1, 2, 3, 4];\n\nexport default function App() {\n  const [tick, setTick] = useState(0);\n  window.__calc++;\n  const total = items.reduce((s, x) => s + x, 0);\n  return (\n    <View>\n      <Text testID=\"total\">{total}</Text>\n      <Pressable testID=\"tick\" onPress={() => setTick(tick + 1)}><Text>{tick}</Text></Pressable>\n    </View>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, useMemo } from \"react\";\nimport { View, Text, Pressable } from \"react-native\";\n\nwindow.__calc = 0;\nconst items = [1, 2, 3, 4];\n\nexport default function App() {\n  const [tick, setTick] = useState(0);\n  const total = useMemo(() => {\n    window.__calc++;\n    return items.reduce((s, x) => s + x, 0);\n  }, []);\n  return (\n    <View>\n      <Text testID=\"total\">{total}</Text>\n      <Pressable testID=\"tick\" onPress={() => setTick(tick + 1)}><Text>{tick}</Text></Pressable>\n    </View>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Sau 3 lần bấm chỉ tính 1 lần",
+            "en": "After 3 clicks it computed only once"
+          },
+          "test": "(async()=>{const b=document.querySelector('[data-testid=\"tick\"]');for(let i=0;i<3;i++){b.click();await new Promise(r=>setTimeout(r,60));}return document.querySelector('[data-testid=\"total\"]').textContent==='10'&&window.__calc===1})()"
+        }
+      ]
+    }
+  ],
+  "runtime": "rn"
+}

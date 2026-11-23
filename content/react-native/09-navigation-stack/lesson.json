@@ -1,0 +1,97 @@
+{
+  "title": {
+    "vi": "Điều hướng: ngăn xếp màn hình và truyền tham số",
+    "en": "Navigation: the screen stack and passing parameters"
+  },
+  "summary": {
+    "vi": "push/pop, ngăn xếp, params, nút Back, React Navigation và Expo Router",
+    "en": "push/pop, the stack, params, the Back button, React Navigation and Expo Router"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { useState } from \"react\";\nimport { View, Text, Pressable } from \"react-native\";\n\n// Ngăn xếp điều hướng tối giản: mảng các màn hình {name, params}\nexport default function App() {\n  const [stack, setStack] = useState([{ name: \"Home\" }]);\n  const top = stack[stack.length - 1];\n  const push = (name, params) => setStack([...stack, { name, params }]);\n  const pop = () => stack.length > 1 && setStack(stack.slice(0, -1));\n\n  return (\n    <View>\n      <Text testID=\"screen\">{top.name}{top.params ? \":\" + top.params.id : \"\"}</Text>\n      <Text testID=\"depth\">{stack.length}</Text>\n      {top.name === \"Home\" && (\n        <Pressable testID=\"open\" onPress={() => push(\"Detail\", { id: 7 })}><Text>Mở chi tiết</Text></Pressable>\n      )}\n      {stack.length > 1 && <Pressable testID=\"back\" onPress={pop}><Text>Quay lại</Text></Pressable>}\n    </View>\n  );\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Hoàn thành ngăn xếp: nút #go push màn 'B', nút #back pop về 'A'. <Text testID=\"top\"> hiện tên màn đang ở trên cùng. Ban đầu 'A'; bấm #go thành 'B'; bấm #back về 'A'.",
+        "en": "Finish the stack: button #go pushes screen 'B', button #back pops to 'A'. <Text testID=\"top\"> shows the topmost screen's name. Initially 'A'; click #go for 'B'; click #back to return to 'A'."
+      },
+      "hint": {
+        "vi": "push: setStack([...stack, 'B']); pop: setStack(stack.slice(0, -1)).",
+        "en": "push: setStack([...stack, 'B']); pop: setStack(stack.slice(0, -1))."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\nimport { View, Text, Pressable } from \"react-native\";\n\nexport default function App() {\n  const [stack, setStack] = useState([\"A\"]);\n  return (\n    <View>\n      <Text testID=\"top\">{stack[stack.length - 1]}</Text>\n      <Pressable testID=\"go\" onPress={() => {}}><Text>Đi</Text></Pressable>\n      <Pressable testID=\"back\" onPress={() => {}}><Text>Về</Text></Pressable>\n    </View>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\nimport { View, Text, Pressable } from \"react-native\";\n\nexport default function App() {\n  const [stack, setStack] = useState([\"A\"]);\n  return (\n    <View>\n      <Text testID=\"top\">{stack[stack.length - 1]}</Text>\n      <Pressable testID=\"go\" onPress={() => setStack([...stack, \"B\"])}><Text>Đi</Text></Pressable>\n      <Pressable testID=\"back\" onPress={() => stack.length > 1 && setStack(stack.slice(0, -1))}><Text>Về</Text></Pressable>\n    </View>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Ban đầu A",
+            "en": "Starts at A"
+          },
+          "test": "document.querySelector('[data-testid=\"top\"]')?.textContent==='A'"
+        },
+        {
+          "label": {
+            "vi": "Go thành B, Back về A",
+            "en": "Go gives B, Back returns to A"
+          },
+          "test": "(async()=>{document.querySelector('[data-testid=\"go\"]').click();await new Promise(r=>setTimeout(r,80));const b=document.querySelector('[data-testid=\"top\"]').textContent==='B';document.querySelector('[data-testid=\"back\"]').click();await new Promise(r=>setTimeout(r,80));return b&&document.querySelector('[data-testid=\"top\"]').textContent==='A'})()"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Truyền tham số: danh sách có 3 sản phẩm (testID p1, p2, p3). Bấm sản phẩm nào thì màn chi tiết hiện <Text testID=\"detail\"> với tên sản phẩm đó (An, Bình hoặc Chi). Bấm p2 phải ra 'Bình'.",
+        "en": "Passing parameters: a list has 3 products (testID p1, p2, p3). Clicking one shows a detail screen with <Text testID=\"detail\"> showing that product's name (An, Bình or Chi). Clicking p2 must show 'Bình'."
+      },
+      "hint": {
+        "vi": "lưu sản phẩm được chọn trong state (params) rồi hiện màn chi tiết.",
+        "en": "store the chosen product in state (params) then show the detail screen."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\nimport { View, Text, Pressable } from \"react-native\";\n\nconst PEOPLE = [\"An\", \"Bình\", \"Chi\"];\n\nexport default function App() {\n  const [selected, setSelected] = useState(null);\n  return (\n    <View>\n      {PEOPLE.map((name, i) => (\n        <Pressable key={name} testID={\"p\" + (i + 1)} onPress={() => {}}><Text>{name}</Text></Pressable>\n      ))}\n    </View>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\nimport { View, Text, Pressable } from \"react-native\";\n\nconst PEOPLE = [\"An\", \"Bình\", \"Chi\"];\n\nexport default function App() {\n  const [selected, setSelected] = useState(null);\n  if (selected) {\n    return <View><Text testID=\"detail\">{selected}</Text><Pressable testID=\"x\" onPress={() => setSelected(null)}><Text>Về</Text></Pressable></View>;\n  }\n  return (\n    <View>\n      {PEOPLE.map((name, i) => (\n        <Pressable key={name} testID={\"p\" + (i + 1)} onPress={() => setSelected(name)}><Text>{name}</Text></Pressable>\n      ))}\n    </View>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Bấm p2 hiện Bình",
+            "en": "Clicking p2 shows Bình"
+          },
+          "test": "(async()=>{document.querySelector('[data-testid=\"p2\"]').click();await new Promise(r=>setTimeout(r,80));return document.querySelector('[data-testid=\"detail\"]')?.textContent==='Bình'})()"
+        }
+      ]
+    }
+  ],
+  "runtime": "rn"
+}

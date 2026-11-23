@@ -1,0 +1,97 @@
+{
+  "title": {
+    "vi": "Dự án: ứng dụng việc cần làm với danh sách, lọc và state dẫn xuất",
+    "en": "Project: a to-do app with a list, filters and derived state"
+  },
+  "summary": {
+    "vi": "thiết kế state tối thiểu, thêm/đánh dấu/xoá, lọc bằng useMemo, trạng thái rỗng, hướng mở rộng",
+    "en": "minimal state design, add/toggle/delete, filtering with useMemo, the empty state, ways to extend"
+  },
+  "minutes": 40,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { useState, useMemo } from \"react\";\nimport { View, Text, TextInput, Pressable, FlatList } from \"react-native\";\n\nexport default function App() {\n  const [todos, setTodos] = useState([{ id: 1, title: \"Học React Native\", done: false }]);\n  const [text, setText] = useState(\"\");\n  const [filter, setFilter] = useState(\"all\");          // all | active | done\n\n  const add = () => {\n    const title = text.trim();\n    if (!title) return;\n    setTodos((prev) => [...prev, { id: Date.now(), title, done: false }]);\n    setText(\"\");\n  };\n  const toggle = (id) => setTodos((prev) => prev.map((t) => (t.id === id ? { ...t, done: !t.done } : t)));\n  const remove = (id) => setTodos((prev) => prev.filter((t) => t.id !== id));\n\n  const visible = useMemo(\n    () => todos.filter((t) => (filter === \"all\" ? true : filter === \"done\" ? t.done : !t.done)),\n    [todos, filter]\n  );\n  const left = todos.filter((t) => !t.done).length;      // DẪN XUẤT, không lưu riêng\n\n  return (\n    <View>\n      <TextInput testID=\"input\" value={text} onChangeText={setText} placeholder=\"Việc cần làm\" onSubmitEditing={add} />\n      <Pressable testID=\"add\" accessibilityRole=\"button\" onPress={add}><Text>Thêm</Text></Pressable>\n      <Text testID=\"left\">{left}</Text>\n      <Pressable testID=\"f-done\" onPress={() => setFilter(\"done\")}><Text>Đã xong</Text></Pressable>\n      <FlatList\n        data={visible}\n        keyExtractor={(t) => String(t.id)}\n        ListEmptyComponent={<Text testID=\"empty\">Không có việc nào</Text>}\n        renderItem={({ item }) => (\n          <View>\n            <Pressable testID=\"todo\" onPress={() => toggle(item.id)}><Text>{item.done ? \"✓ \" : \"\"}{item.title}</Text></Pressable>\n            <Pressable testID=\"del\" onPress={() => remove(item.id)}><Text>Xoá</Text></Pressable>\n          </View>\n        )}\n      />\n    </View>\n  );\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Hoàn thành hàm add: nếu ô nhập (sau khi trim) không rỗng thì thêm một việc mới vào cuối danh sách và xoá ô nhập. Ban đầu có 1 việc; gõ 'Mua sữa' rồi bấm #add: có 2 việc <Text testID=\"todo\"> và ô nhập rỗng.",
+        "en": "Finish the add function: if the input (after trim) isn't empty, append a new todo and clear the input. Initially 1 todo; type 'Buy milk' then click #add: there are 2 <Text testID=\"todo\"> items and the input is empty."
+      },
+      "hint": {
+        "vi": "setTodos(prev => [...prev, { id: Date.now(), title, done: false }]); setText('').",
+        "en": "setTodos(prev => [...prev, { id: Date.now(), title, done: false }]); setText('')."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, useMemo } from \"react\";\nimport { View, Text, TextInput, Pressable, FlatList } from \"react-native\";\n\nexport default function App() {\n  const [todos, setTodos] = useState([{ id: 1, title: \"Học React Native\", done: false }]);\n  const [text, setText] = useState(\"\");\n  const [filter, setFilter] = useState(\"all\");          // all | active | done\n\n  const add = () => {\n    const title = text.trim();\n    if (!title) return;\n    // TODO: thêm việc mới vào danh sách rồi xoá ô nhập\n  };\n  const toggle = (id) => setTodos((prev) => prev.map((t) => (t.id === id ? { ...t, done: !t.done } : t)));\n  const remove = (id) => setTodos((prev) => prev.filter((t) => t.id !== id));\n\n  const visible = useMemo(\n    () => todos.filter((t) => (filter === \"all\" ? true : filter === \"done\" ? t.done : !t.done)),\n    [todos, filter]\n  );\n  const left = todos.filter((t) => !t.done).length;      // DẪN XUẤT, không lưu riêng\n\n  return (\n    <View>\n      <TextInput testID=\"input\" value={text} onChangeText={setText} placeholder=\"Việc cần làm\" onSubmitEditing={add} />\n      <Pressable testID=\"add\" accessibilityRole=\"button\" onPress={add}><Text>Thêm</Text></Pressable>\n      <Text testID=\"left\">{left}</Text>\n      <Pressable testID=\"f-done\" onPress={() => setFilter(\"done\")}><Text>Đã xong</Text></Pressable>\n      <FlatList\n        data={visible}\n        keyExtractor={(t) => String(t.id)}\n        ListEmptyComponent={<Text testID=\"empty\">Không có việc nào</Text>}\n        renderItem={({ item }) => (\n          <View>\n            <Pressable testID=\"todo\" onPress={() => toggle(item.id)}><Text>{item.done ? \"✓ \" : \"\"}{item.title}</Text></Pressable>\n            <Pressable testID=\"del\" onPress={() => remove(item.id)}><Text>Xoá</Text></Pressable>\n          </View>\n        )}\n      />\n    </View>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, useMemo } from \"react\";\nimport { View, Text, TextInput, Pressable, FlatList } from \"react-native\";\n\nexport default function App() {\n  const [todos, setTodos] = useState([{ id: 1, title: \"Học React Native\", done: false }]);\n  const [text, setText] = useState(\"\");\n  const [filter, setFilter] = useState(\"all\");          // all | active | done\n\n  const add = () => {\n    const title = text.trim();\n    if (!title) return;\n    setTodos((prev) => [...prev, { id: Date.now(), title, done: false }]);\n    setText(\"\");\n  };\n  const toggle = (id) => setTodos((prev) => prev.map((t) => (t.id === id ? { ...t, done: !t.done } : t)));\n  const remove = (id) => setTodos((prev) => prev.filter((t) => t.id !== id));\n\n  const visible = useMemo(\n    () => todos.filter((t) => (filter === \"all\" ? true : filter === \"done\" ? t.done : !t.done)),\n    [todos, filter]\n  );\n  const left = todos.filter((t) => !t.done).length;      // DẪN XUẤT, không lưu riêng\n\n  return (\n    <View>\n      <TextInput testID=\"input\" value={text} onChangeText={setText} placeholder=\"Việc cần làm\" onSubmitEditing={add} />\n      <Pressable testID=\"add\" accessibilityRole=\"button\" onPress={add}><Text>Thêm</Text></Pressable>\n      <Text testID=\"left\">{left}</Text>\n      <Pressable testID=\"f-done\" onPress={() => setFilter(\"done\")}><Text>Đã xong</Text></Pressable>\n      <FlatList\n        data={visible}\n        keyExtractor={(t) => String(t.id)}\n        ListEmptyComponent={<Text testID=\"empty\">Không có việc nào</Text>}\n        renderItem={({ item }) => (\n          <View>\n            <Pressable testID=\"todo\" onPress={() => toggle(item.id)}><Text>{item.done ? \"✓ \" : \"\"}{item.title}</Text></Pressable>\n            <Pressable testID=\"del\" onPress={() => remove(item.id)}><Text>Xoá</Text></Pressable>\n          </View>\n        )}\n      />\n    </View>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Thêm Mua sữa: 2 việc và ô nhập rỗng",
+            "en": "Adding Buy milk: 2 items and an empty input"
+          },
+          "test": "(async()=>{const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;const i=document.querySelector('[data-testid=\"input\"]');set.call(i,'Buy milk');i.dispatchEvent(new Event('input',{bubbles:true}));await new Promise(r=>setTimeout(r,80));document.querySelector('[data-testid=\"add\"]').click();await new Promise(r=>setTimeout(r,120));return document.querySelectorAll('[data-testid=\"todo\"]').length===2&&document.querySelector('[data-testid=\"input\"]').value===''})()"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Số việc còn lại <Text testID=\"left\"> phải là state DẪN XUẤT: đếm các việc chưa xong từ todos (không lưu riêng). Ban đầu 1; bấm vào việc đầu để đánh dấu xong thì còn 0.",
+        "en": "The remaining count <Text testID=\"left\"> must be DERIVED: count the unfinished todos from todos (don't store it separately). Initially 1; clicking the first todo to mark it done makes it 0."
+      },
+      "hint": {
+        "vi": "todos.filter((t) => !t.done).length.",
+        "en": "todos.filter((t) => !t.done).length."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, useMemo } from \"react\";\nimport { View, Text, TextInput, Pressable, FlatList } from \"react-native\";\n\nexport default function App() {\n  const [todos, setTodos] = useState([{ id: 1, title: \"Học React Native\", done: false }]);\n  const [text, setText] = useState(\"\");\n  const [filter, setFilter] = useState(\"all\");          // all | active | done\n\n  const add = () => {\n    const title = text.trim();\n    if (!title) return;\n    setTodos((prev) => [...prev, { id: Date.now(), title, done: false }]);\n    setText(\"\");\n  };\n  const toggle = (id) => setTodos((prev) => prev.map((t) => (t.id === id ? { ...t, done: !t.done } : t)));\n  const remove = (id) => setTodos((prev) => prev.filter((t) => t.id !== id));\n\n  const visible = useMemo(\n    () => todos.filter((t) => (filter === \"all\" ? true : filter === \"done\" ? t.done : !t.done)),\n    [todos, filter]\n  );\n  const left = 0;      // TODO: đếm số việc chưa xong (dẫn xuất từ todos)\n\n  return (\n    <View>\n      <TextInput testID=\"input\" value={text} onChangeText={setText} placeholder=\"Việc cần làm\" onSubmitEditing={add} />\n      <Pressable testID=\"add\" accessibilityRole=\"button\" onPress={add}><Text>Thêm</Text></Pressable>\n      <Text testID=\"left\">{left}</Text>\n      <Pressable testID=\"f-done\" onPress={() => setFilter(\"done\")}><Text>Đã xong</Text></Pressable>\n      <FlatList\n        data={visible}\n        keyExtractor={(t) => String(t.id)}\n        ListEmptyComponent={<Text testID=\"empty\">Không có việc nào</Text>}\n        renderItem={({ item }) => (\n          <View>\n            <Pressable testID=\"todo\" onPress={() => toggle(item.id)}><Text>{item.done ? \"✓ \" : \"\"}{item.title}</Text></Pressable>\n            <Pressable testID=\"del\" onPress={() => remove(item.id)}><Text>Xoá</Text></Pressable>\n          </View>\n        )}\n      />\n    </View>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, useMemo } from \"react\";\nimport { View, Text, TextInput, Pressable, FlatList } from \"react-native\";\n\nexport default function App() {\n  const [todos, setTodos] = useState([{ id: 1, title: \"Học React Native\", done: false }]);\n  const [text, setText] = useState(\"\");\n  const [filter, setFilter] = useState(\"all\");          // all | active | done\n\n  const add = () => {\n    const title = text.trim();\n    if (!title) return;\n    setTodos((prev) => [...prev, { id: Date.now(), title, done: false }]);\n    setText(\"\");\n  };\n  const toggle = (id) => setTodos((prev) => prev.map((t) => (t.id === id ? { ...t, done: !t.done } : t)));\n  const remove = (id) => setTodos((prev) => prev.filter((t) => t.id !== id));\n\n  const visible = useMemo(\n    () => todos.filter((t) => (filter === \"all\" ? true : filter === \"done\" ? t.done : !t.done)),\n    [todos, filter]\n  );\n  const left = todos.filter((t) => !t.done).length;      // DẪN XUẤT, không lưu riêng\n\n  return (\n    <View>\n      <TextInput testID=\"input\" value={text} onChangeText={setText} placeholder=\"Việc cần làm\" onSubmitEditing={add} />\n      <Pressable testID=\"add\" accessibilityRole=\"button\" onPress={add}><Text>Thêm</Text></Pressable>\n      <Text testID=\"left\">{left}</Text>\n      <Pressable testID=\"f-done\" onPress={() => setFilter(\"done\")}><Text>Đã xong</Text></Pressable>\n      <FlatList\n        data={visible}\n        keyExtractor={(t) => String(t.id)}\n        ListEmptyComponent={<Text testID=\"empty\">Không có việc nào</Text>}\n        renderItem={({ item }) => (\n          <View>\n            <Pressable testID=\"todo\" onPress={() => toggle(item.id)}><Text>{item.done ? \"✓ \" : \"\"}{item.title}</Text></Pressable>\n            <Pressable testID=\"del\" onPress={() => remove(item.id)}><Text>Xoá</Text></Pressable>\n          </View>\n        )}\n      />\n    </View>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Ban đầu còn 1",
+            "en": "Initially 1 left"
+          },
+          "test": "document.querySelector('[data-testid=\"left\"]')?.textContent==='1'"
+        },
+        {
+          "label": {
+            "vi": "Đánh dấu xong thì còn 0",
+            "en": "Marking done leaves 0"
+          },
+          "test": "(async()=>{document.querySelector('[data-testid=\"todo\"]').click();await new Promise(r=>setTimeout(r,100));return document.querySelector('[data-testid=\"left\"]').textContent==='0'})()"
+        }
+      ]
+    }
+  ],
+  "runtime": "rn"
+}

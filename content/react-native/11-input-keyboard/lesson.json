@@ -1,0 +1,97 @@
+{
+  "title": {
+    "vi": "Nhập liệu và bàn phím: loại bàn phím, ô mật khẩu và chuyển ô",
+    "en": "Input and keyboard: keyboard types, password fields and moving between fields"
+  },
+  "summary": {
+    "vi": "keyboardType, secureTextEntry, returnKeyType, ref.focus, KeyboardAvoidingView, autofill",
+    "en": "keyboardType, secureTextEntry, returnKeyType, ref.focus, KeyboardAvoidingView, autofill"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { useState, useRef } from \"react\";\nimport { View, Text, TextInput, Pressable } from \"react-native\";\n\nexport default function App() {\n  const [pw, setPw] = useState(\"\");\n  const [show, setShow] = useState(false);\n  const passRef = useRef(null);\n\n  return (\n    <View>\n      <TextInput\n        testID=\"email\" placeholder=\"Email\" keyboardType=\"email-address\" autoCapitalize=\"none\"\n        textContentType=\"emailAddress\" returnKeyType=\"next\"\n        onSubmitEditing={() => passRef.current?.focus()}           // Enter -> sang ô kế\n      />\n      <TextInput\n        ref={passRef} testID=\"pw\" placeholder=\"Mật khẩu\" value={pw} onChangeText={setPw}\n        secureTextEntry={!show} textContentType=\"password\" returnKeyType=\"done\"\n      />\n      <Pressable testID=\"eye\" onPress={() => setShow(!show)}><Text>{show ? \"Ẩn\" : \"Hiện\"}</Text></Pressable>\n    </View>\n  );\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Ô mật khẩu <TextInput testID=\"pw\"> phải ẩn ký tự (secureTextEntry) ban đầu, và nút #eye bật/tắt hiển thị. Kiểm tra bằng thuộc tính type của input: ban đầu 'password', sau khi bấm #eye là 'text'.",
+        "en": "The password <TextInput testID=\"pw\"> must hide characters (secureTextEntry) initially, and the #eye button toggles visibility. Checked via the input's type attribute: initially 'password', after clicking #eye 'text'."
+      },
+      "hint": {
+        "vi": "secureTextEntry={!show}.",
+        "en": "secureTextEntry={!show}."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\nimport { View, Text, TextInput, Pressable } from \"react-native\";\n\nexport default function App() {\n  const [show, setShow] = useState(false);\n  return (\n    <View>\n      <TextInput testID=\"pw\" placeholder=\"Mật khẩu\" />\n      <Pressable testID=\"eye\" onPress={() => setShow(!show)}><Text>{show ? \"Ẩn\" : \"Hiện\"}</Text></Pressable>\n    </View>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\nimport { View, Text, TextInput, Pressable } from \"react-native\";\n\nexport default function App() {\n  const [show, setShow] = useState(false);\n  return (\n    <View>\n      <TextInput testID=\"pw\" placeholder=\"Mật khẩu\" secureTextEntry={!show} />\n      <Pressable testID=\"eye\" onPress={() => setShow(!show)}><Text>{show ? \"Ẩn\" : \"Hiện\"}</Text></Pressable>\n    </View>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Ban đầu type=password",
+            "en": "Initially type=password"
+          },
+          "test": "document.querySelector('[data-testid=\"pw\"]')?.type==='password'"
+        },
+        {
+          "label": {
+            "vi": "Bấm #eye thì type=text",
+            "en": "Clicking #eye gives type=text"
+          },
+          "test": "(async()=>{document.querySelector('[data-testid=\"eye\"]').click();await new Promise(r=>setTimeout(r,80));return document.querySelector('[data-testid=\"pw\"]').type==='text'})()"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Xác thực số điện thoại khi gõ: <TextInput testID=\"phone\"> chỉ giữ lại chữ số (loại mọi ký tự khác) và tối đa 10 ký tự. Gõ '09a1-2b3' thì ô phải còn '09123' (các chữ số giữ nguyên thứ tự). Hiển thị giá trị trong chính ô.",
+        "en": "Sanitise a phone number while typing: <TextInput testID=\"phone\"> keeps only digits (dropping every other character) and at most 10 characters. Typing '09a1-2b3' must leave '09123' (the digits in order). The value shows in the field itself."
+      },
+      "hint": {
+        "vi": "onChangeText={(t) => setV(t.replace(/\\D/g, '').slice(0, 10))}",
+        "en": "onChangeText={(t) => setV(t.replace(/\\D/g, '').slice(0, 10))}"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\nimport { View, TextInput } from \"react-native\";\n\nexport default function App() {\n  const [v, setV] = useState(\"\");\n  return (\n    <View>\n      <TextInput testID=\"phone\" value={v} onChangeText={setV} keyboardType=\"phone-pad\" />\n    </View>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\nimport { View, TextInput } from \"react-native\";\n\nexport default function App() {\n  const [v, setV] = useState(\"\");\n  return (\n    <View>\n      <TextInput testID=\"phone\" value={v} onChangeText={(t) => setV(t.replace(/\\D/g, \"\").slice(0, 10))} keyboardType=\"phone-pad\" />\n    </View>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Gõ 09a1-2b3 còn 09123",
+            "en": "Typing 09a1-2b3 leaves 09123"
+          },
+          "test": "(async()=>{const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;const i=document.querySelector('[data-testid=\"phone\"]');set.call(i,'09a1-2b3');i.dispatchEvent(new Event('input',{bubbles:true}));await new Promise(r=>setTimeout(r,80));return i.value==='09123'})()"
+        }
+      ]
+    }
+  ],
+  "runtime": "rn"
+}

@@ -1,0 +1,97 @@
+{
+  "title": {
+    "vi": "Chủ đề và chế độ tối: token màu, useColorScheme và Context",
+    "en": "Theming and dark mode: colour tokens, useColorScheme and Context"
+  },
+  "summary": {
+    "vi": "token màu theo vai trò, useColorScheme, ThemeContext, ghi đè của người dùng, tương phản",
+    "en": "role-based colour tokens, useColorScheme, ThemeContext, user override, contrast"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { createContext, useContext, useState } from \"react\";\nimport { View, Text, Pressable, useColorScheme } from \"react-native\";\n\n// Token theo VAI TRÒ (nền, chữ), không theo màu cụ thể: đổi chủ đề chỉ đổi bảng này\nconst themes = {\n  light: { bg: \"#ffffff\", text: \"#0f172a\", accent: \"#0ea5e9\" },\n  dark:  { bg: \"#0f172a\", text: \"#f1f5f9\", accent: \"#38bdf8\" },\n};\nconst ThemeCtx = createContext(themes.light);\nconst useTheme = () => useContext(ThemeCtx);\n\nfunction Card() {\n  const t = useTheme();\n  return <View testID=\"card\" style={{ backgroundColor: t.bg, padding: 16 }}><Text style={{ color: t.text }}>Chào</Text></View>;\n}\n\nexport default function App() {\n  const system = useColorScheme() ?? \"light\";          // theo hệ điều hành\n  const [override, setOverride] = useState(null);       // người dùng có thể chọn riêng\n  const scheme = override ?? system;\n  return (\n    <ThemeCtx.Provider value={themes[scheme]}>\n      <Card />\n      <Pressable testID=\"toggle\" onPress={() => setOverride(scheme === \"dark\" ? \"light\" : \"dark\")}><Text>Đổi chủ đề</Text></Pressable>\n    </ThemeCtx.Provider>\n  );\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết hàm pickTheme(system, override) trả override nếu có, ngược lại system, và nếu cả hai rỗng trả 'light'. Hiển thị <Text testID=\"t\"> với pickTheme('dark', null), pickTheme('dark','light'), pickTheme(null, null) nối bằng dấu phẩy.",
+        "en": "Write pickTheme(system, override) returning override if present, else system, and if both are empty return 'light'. Render <Text testID=\"t\"> with pickTheme('dark', null), pickTheme('dark','light'), pickTheme(null, null) joined by commas."
+      },
+      "hint": {
+        "vi": "return override ?? system ?? 'light'.",
+        "en": "return override ?? system ?? 'light'."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { Text } from \"react-native\";\n\nfunction pickTheme(system, override) {\n  // viết ở đây\n}\n\nexport default function App() {\n  return <Text testID=\"t\">{[pickTheme(\"dark\", null), pickTheme(\"dark\", \"light\"), pickTheme(null, null)].join(\",\")}</Text>;\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { Text } from \"react-native\";\n\nfunction pickTheme(system, override) {\n  return override ?? system ?? \"light\";\n}\n\nexport default function App() {\n  return <Text testID=\"t\">{[pickTheme(\"dark\", null), pickTheme(\"dark\", \"light\"), pickTheme(null, null)].join(\",\")}</Text>;\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "dark,light,light",
+            "en": "dark,light,light"
+          },
+          "test": "document.querySelector('[data-testid=\"t\"]')?.textContent==='dark,light,light'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Chủ đề qua Context: Card đọc màu nền từ ThemeCtx. Mặc định nền #ffffff; nút #toggle chuyển sang chủ đề tối nền #0f172a. Kiểm tra backgroundColor của <View testID=\"card\">: ban đầu rgb(255, 255, 255), sau khi bấm rgb(15, 23, 42).",
+        "en": "Theme via Context: Card reads its background from ThemeCtx. Default background #ffffff; the #toggle button switches to the dark theme background #0f172a. Check the backgroundColor of <View testID=\"card\">: initially rgb(255, 255, 255), after clicking rgb(15, 23, 42)."
+      },
+      "hint": {
+        "vi": "<ThemeCtx.Provider value={themes[scheme]}> và Card dùng useContext.",
+        "en": "<ThemeCtx.Provider value={themes[scheme]}> and Card uses useContext."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { createContext, useContext, useState } from \"react\";\nimport { View, Text, Pressable } from \"react-native\";\n\nconst themes = { light: { bg: \"#ffffff\" }, dark: { bg: \"#0f172a\" } };\nconst ThemeCtx = createContext(themes.light);\n\nfunction Card() {\n  return <View testID=\"card\" style={{ backgroundColor: \"#ffffff\", padding: 16 }}><Text>Chào</Text></View>;\n}\n\nexport default function App() {\n  const [scheme, setScheme] = useState(\"light\");\n  return (\n    <ThemeCtx.Provider value={themes[scheme]}>\n      <Card />\n      <Pressable testID=\"toggle\" onPress={() => setScheme(\"dark\")}><Text>Tối</Text></Pressable>\n    </ThemeCtx.Provider>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { createContext, useContext, useState } from \"react\";\nimport { View, Text, Pressable } from \"react-native\";\n\nconst themes = { light: { bg: \"#ffffff\" }, dark: { bg: \"#0f172a\" } };\nconst ThemeCtx = createContext(themes.light);\n\nfunction Card() {\n  const t = useContext(ThemeCtx);\n  return <View testID=\"card\" style={{ backgroundColor: t.bg, padding: 16 }}><Text>Chào</Text></View>;\n}\n\nexport default function App() {\n  const [scheme, setScheme] = useState(\"light\");\n  return (\n    <ThemeCtx.Provider value={themes[scheme]}>\n      <Card />\n      <Pressable testID=\"toggle\" onPress={() => setScheme(\"dark\")}><Text>Tối</Text></Pressable>\n    </ThemeCtx.Provider>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Ban đầu nền trắng",
+            "en": "Initially a white background"
+          },
+          "test": "getComputedStyle(document.querySelector('[data-testid=\"card\"]')).backgroundColor==='rgb(255, 255, 255)'"
+        },
+        {
+          "label": {
+            "vi": "Bấm thì nền tối",
+            "en": "Clicking gives a dark background"
+          },
+          "test": "(async()=>{document.querySelector('[data-testid=\"toggle\"]').click();await new Promise(r=>setTimeout(r,80));return getComputedStyle(document.querySelector('[data-testid=\"card\"]')).backgroundColor==='rgb(15, 23, 42)'})()"
+        }
+      ]
+    }
+  ],
+  "runtime": "rn"
+}

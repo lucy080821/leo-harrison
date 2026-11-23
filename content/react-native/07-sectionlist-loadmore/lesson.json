@@ -1,0 +1,97 @@
+{
+  "title": {
+    "vi": "SectionList và tải thêm dữ liệu",
+    "en": "SectionList and loading more data"
+  },
+  "summary": {
+    "vi": "danh sách có nhóm, renderSectionHeader, nối thêm trang, tránh tải lặp",
+    "en": "grouped lists, renderSectionHeader, appending pages, avoiding repeated loads"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { View, Text, SectionList } from \"react-native\";\n\nconst SECTIONS = [\n  { title: \"Trái cây\", data: [\"Táo\", \"Chuối\"] },\n  { title: \"Rau\", data: [\"Cải\", \"Cà rốt\", \"Hành\"] },\n];\n\nexport default function App() {\n  return (\n    <SectionList\n      sections={SECTIONS}\n      keyExtractor={(item) => item}\n      renderSectionHeader={({ section }) => <Text style={{ fontWeight: \"bold\" }}>{section.title}</Text>}\n      renderItem={({ item }) => <Text>{item}</Text>}\n    />\n  );\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Hiển thị SectionList với hai nhóm. Mỗi tiêu đề nhóm là <Text testID=\"header\"> và mỗi mục là <Text testID=\"row\">. Với nhóm A có 2 mục và nhóm B có 3 mục: 2 header và 5 row.",
+        "en": "Render a SectionList with two groups. Each group header is <Text testID=\"header\"> and each item <Text testID=\"row\">. With group A having 2 items and B having 3: 2 headers and 5 rows."
+      },
+      "hint": {
+        "vi": "renderSectionHeader={({ section }) => <Text testID=\"header\">{section.title}</Text>}",
+        "en": "renderSectionHeader={({ section }) => <Text testID=\"header\">{section.title}</Text>}"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { Text, SectionList } from \"react-native\";\n\nconst SECTIONS = [{ title: \"A\", data: [\"a1\", \"a2\"] }, { title: \"B\", data: [\"b1\", \"b2\", \"b3\"] }];\n\nexport default function App() {\n  return <SectionList sections={SECTIONS} keyExtractor={(x) => x} renderItem={({ item }) => <Text>{item}</Text>} />;\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { Text, SectionList } from \"react-native\";\n\nconst SECTIONS = [{ title: \"A\", data: [\"a1\", \"a2\"] }, { title: \"B\", data: [\"b1\", \"b2\", \"b3\"] }];\n\nexport default function App() {\n  return (\n    <SectionList\n      sections={SECTIONS}\n      keyExtractor={(x) => x}\n      renderSectionHeader={({ section }) => <Text testID=\"header\">{section.title}</Text>}\n      renderItem={({ item }) => <Text testID=\"row\">{item}</Text>}\n    />\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "2 header",
+            "en": "2 headers"
+          },
+          "test": "document.querySelectorAll('[data-testid=\"header\"]').length===2"
+        },
+        {
+          "label": {
+            "vi": "5 hàng",
+            "en": "5 rows"
+          },
+          "test": "document.querySelectorAll('[data-testid=\"row\"]').length===5"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Nút #more (testID=\"more\") nối thêm 3 mục vào danh sách (không thay thế), nhưng không làm gì khi đang tải (loading). Ban đầu có 3 mục <Text testID=\"it\">; bấm hai lần liên tiếp thật nhanh chỉ nối MỘT lần (do loading), tổng cộng 6 mục. Dùng setTimeout 30ms giả lập tải.",
+        "en": "Button #more (testID=\"more\") appends 3 items to the list (not replace) but does nothing while loading. Initially there are 3 items <Text testID=\"it\">; two very quick clicks append only ONCE (because of loading), totalling 6. Use a 30ms setTimeout to simulate loading."
+      },
+      "hint": {
+        "vi": "if (loading) return; setLoading(true); setTimeout(() => { setItems(p => [...p, ...]); setLoading(false); }, 30).",
+        "en": "if (loading) return; setLoading(true); setTimeout(() => { setItems(p => [...p, ...]); setLoading(false); }, 30)."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\nimport { View, Text, Pressable } from \"react-native\";\n\nexport default function App() {\n  const [items, setItems] = useState([1, 2, 3]);\n  const more = () => {\n    setTimeout(() => setItems((p) => [...p, p.length + 1, p.length + 2, p.length + 3]), 30);\n  };\n  return (\n    <View>\n      <Pressable testID=\"more\" onPress={more}><Text>Thêm</Text></Pressable>\n      {items.map((n) => <Text key={n} testID=\"it\">{n}</Text>)}\n    </View>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, useRef } from \"react\";\nimport { View, Text, Pressable } from \"react-native\";\n\nexport default function App() {\n  const [items, setItems] = useState([1, 2, 3]);\n  const loading = useRef(false);\n  const more = () => {\n    if (loading.current) return;\n    loading.current = true;\n    setTimeout(() => {\n      setItems((p) => [...p, p.length + 1, p.length + 2, p.length + 3]);\n      loading.current = false;\n    }, 30);\n  };\n  return (\n    <View>\n      <Pressable testID=\"more\" onPress={more}><Text>Thêm</Text></Pressable>\n      {items.map((n) => <Text key={n} testID=\"it\">{n}</Text>)}\n    </View>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Hai lần bấm nhanh chỉ thêm 3 mục (tổng 6)",
+            "en": "Two quick clicks add only 3 (total 6)"
+          },
+          "test": "(async()=>{const b=document.querySelector('[data-testid=\"more\"]');b.click();b.click();await new Promise(r=>setTimeout(r,200));return document.querySelectorAll('[data-testid=\"it\"]').length===6})()"
+        }
+      ]
+    }
+  ],
+  "runtime": "rn"
+}

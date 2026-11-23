@@ -1,0 +1,97 @@
+{
+  "title": {
+    "vi": "FlatList chuyên sâu: key, trạng thái rỗng, ngăn cách và hiệu năng",
+    "en": "FlatList in depth: keys, empty state, separators and performance"
+  },
+  "summary": {
+    "vi": "keyExtractor, ListEmptyComponent, ItemSeparatorComponent, ảo hoá, getItemLayout",
+    "en": "keyExtractor, ListEmptyComponent, ItemSeparatorComponent, virtualisation, getItemLayout"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { View, Text, FlatList, StyleSheet } from \"react-native\";\n\nconst DATA = [{ id: \"a\", name: \"Áo\" }, { id: \"b\", name: \"Quần\" }, { id: \"c\", name: \"Mũ\" }];\n\nexport default function App() {\n  return (\n    <FlatList\n      data={DATA}\n      keyExtractor={(item) => item.id}                       // key ổn định, không dùng index\n      renderItem={({ item }) => <Text style={styles.row}>{item.name}</Text>}\n      ItemSeparatorComponent={() => <View style={styles.sep} />}\n      ListEmptyComponent={<Text>Chưa có sản phẩm</Text>}\n    />\n  );\n}\n\nconst styles = StyleSheet.create({ row: { padding: 12 }, sep: { height: 1, backgroundColor: \"#ddd\" } });\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Khi data rỗng, FlatList phải hiện <Text testID=\"empty\">Trống</Text> nhờ ListEmptyComponent. Khi có dữ liệu thì không hiện. Dùng nút #toggle (testID=\"toggle\") đổi giữa rỗng và 2 phần tử.",
+        "en": "When data is empty, FlatList must show <Text testID=\"empty\">Empty</Text> via ListEmptyComponent. With data it must not. A button testID=\"toggle\" switches between empty and 2 items."
+      },
+      "hint": {
+        "vi": "ListEmptyComponent={<Text testID=\"empty\">Empty</Text>}",
+        "en": "ListEmptyComponent={<Text testID=\"empty\">Empty</Text>}"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\nimport { View, Text, FlatList, Pressable } from \"react-native\";\n\nexport default function App() {\n  const [data, setData] = useState([]);\n  return (\n    <View>\n      <Pressable testID=\"toggle\" onPress={() => setData(data.length ? [] : [\"x\", \"y\"])}><Text>Đổi</Text></Pressable>\n      <FlatList data={data} keyExtractor={(x) => x} renderItem={({ item }) => <Text testID=\"item\">{item}</Text>} />\n    </View>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState } from \"react\";\nimport { View, Text, FlatList, Pressable } from \"react-native\";\n\nexport default function App() {\n  const [data, setData] = useState([]);\n  return (\n    <View>\n      <Pressable testID=\"toggle\" onPress={() => setData(data.length ? [] : [\"x\", \"y\"])}><Text>Đổi</Text></Pressable>\n      <FlatList\n        data={data}\n        keyExtractor={(x) => x}\n        renderItem={({ item }) => <Text testID=\"item\">{item}</Text>}\n        ListEmptyComponent={<Text testID=\"empty\">Empty</Text>}\n      />\n    </View>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Rỗng thì hiện Empty",
+            "en": "Empty data shows Empty"
+          },
+          "test": "document.querySelector('[data-testid=\"empty\"]')?.textContent==='Empty'"
+        },
+        {
+          "label": {
+            "vi": "Có dữ liệu thì ẩn Empty và hiện 2 mục",
+            "en": "With data, Empty hides and 2 items show"
+          },
+          "test": "(async()=>{document.querySelector('[data-testid=\"toggle\"]').click();await new Promise(r=>setTimeout(r,80));return !document.querySelector('[data-testid=\"empty\"]')&&document.querySelectorAll('[data-testid=\"item\"]').length===2})()"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Thêm ItemSeparatorComponent vẽ <View testID=\"sep\" style={{height:1}} /> giữa các phần tử. Với 4 phần tử phải có đúng 3 đường phân cách.",
+        "en": "Add an ItemSeparatorComponent drawing <View testID=\"sep\" style={{height:1}} /> between items. With 4 items there must be exactly 3 separators."
+      },
+      "hint": {
+        "vi": "ItemSeparatorComponent={() => <View testID=\"sep\" style={{ height: 1 }} />}",
+        "en": "ItemSeparatorComponent={() => <View testID=\"sep\" style={{ height: 1 }} />}"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { View, Text, FlatList } from \"react-native\";\n\nexport default function App() {\n  return (\n    <FlatList data={[1, 2, 3, 4]} keyExtractor={(n) => String(n)} renderItem={({ item }) => <Text>{item}</Text>} />\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { View, Text, FlatList } from \"react-native\";\n\nexport default function App() {\n  return (\n    <FlatList\n      data={[1, 2, 3, 4]}\n      keyExtractor={(n) => String(n)}\n      renderItem={({ item }) => <Text>{item}</Text>}\n      ItemSeparatorComponent={() => <View testID=\"sep\" style={{ height: 1 }} />}\n    />\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có 3 đường phân cách",
+            "en": "There are 3 separators"
+          },
+          "test": "document.querySelectorAll('[data-testid=\"sep\"]').length===3"
+        }
+      ]
+    }
+  ],
+  "runtime": "rn"
+}

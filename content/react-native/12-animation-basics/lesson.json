@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Hoạt ảnh: Animated, timing và interpolate",
+    "en": "Animation: Animated, timing and interpolate"
+  },
+  "summary": {
+    "vi": "Animated.Value, timing/spring, interpolate, luồng native, 60 fps, Reanimated",
+    "en": "Animated.Value, timing/spring, interpolate, the native driver, 60 fps, Reanimated"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { useRef, useEffect } from \"react\";\nimport { View, Text, Animated } from \"react-native\";\n\nexport default function App() {\n  const opacity = useRef(new Animated.Value(0)).current;       // giá trị hoạt ảnh, không gây render lại\n\n  useEffect(() => {\n    Animated.timing(opacity, { toValue: 1, duration: 150, useNativeDriver: false }).start();\n  }, []);\n\n  return (\n    <Animated.View testID=\"box\" style={{ opacity, padding: 16, backgroundColor: \"#bae6fd\" }}>\n      <Text>Hiện dần</Text>\n    </Animated.View>\n  );\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Làm hộp <Animated.View testID=\"box\"> mờ dần từ opacity 0 lên 1 trong 150ms bằng Animated.timing (useNativeDriver: false). Sau 600ms opacity phải bằng 1.",
+        "en": "Fade the <Animated.View testID=\"box\"> from opacity 0 to 1 over 150ms with Animated.timing (useNativeDriver: false). After 600ms opacity must be 1."
+      },
+      "hint": {
+        "vi": "const v = useRef(new Animated.Value(0)).current; Animated.timing(v, { toValue: 1, duration: 150, useNativeDriver: false }).start().",
+        "en": "const v = useRef(new Animated.Value(0)).current; Animated.timing(v, { toValue: 1, duration: 150, useNativeDriver: false }).start()."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useRef, useEffect } from \"react\";\nimport { Text, Animated } from \"react-native\";\n\nexport default function App() {\n  return (\n    <Animated.View testID=\"box\" style={{ opacity: 0, padding: 16 }}>\n      <Text>Hiện dần</Text>\n    </Animated.View>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useRef, useEffect } from \"react\";\nimport { Text, Animated } from \"react-native\";\n\nexport default function App() {\n  const opacity = useRef(new Animated.Value(0)).current;\n  useEffect(() => {\n    Animated.timing(opacity, { toValue: 1, duration: 150, useNativeDriver: false }).start();\n  }, []);\n  return (\n    <Animated.View testID=\"box\" style={{ opacity, padding: 16 }}>\n      <Text>Hiện dần</Text>\n    </Animated.View>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Sau 600ms opacity = 1",
+            "en": "After 600ms opacity = 1"
+          },
+          "test": "(async()=>{await new Promise(r=>setTimeout(r,600));return Number(getComputedStyle(document.querySelector('[data-testid=\"box\"]')).opacity)===1})()"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Dùng interpolate: một Animated.Value chạy 0 → 1 trong 150ms; ánh xạ sang chiều rộng 50 → 200 qua value.interpolate({ inputRange:[0,1], outputRange:[50,200] }). Sau 600ms, <Animated.View testID=\"bar\"> phải rộng 200px.",
+        "en": "Use interpolate: an Animated.Value runs 0 → 1 over 150ms; map it to width 50 → 200 via value.interpolate({ inputRange:[0,1], outputRange:[50,200] }). After 600ms <Animated.View testID=\"bar\"> must be 200px wide."
+      },
+      "hint": {
+        "vi": "width: v.interpolate({ inputRange: [0, 1], outputRange: [50, 200] }).",
+        "en": "width: v.interpolate({ inputRange: [0, 1], outputRange: [50, 200] })."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useRef, useEffect } from \"react\";\nimport { Animated } from \"react-native\";\n\nexport default function App() {\n  const v = useRef(new Animated.Value(0)).current;\n  useEffect(() => {\n    Animated.timing(v, { toValue: 1, duration: 150, useNativeDriver: false }).start();\n  }, []);\n  return <Animated.View testID=\"bar\" style={{ height: 20, width: 50, backgroundColor: \"teal\" }} />;\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useRef, useEffect } from \"react\";\nimport { Animated } from \"react-native\";\n\nexport default function App() {\n  const v = useRef(new Animated.Value(0)).current;\n  useEffect(() => {\n    Animated.timing(v, { toValue: 1, duration: 150, useNativeDriver: false }).start();\n  }, []);\n  const width = v.interpolate({ inputRange: [0, 1], outputRange: [50, 200] });\n  return <Animated.View testID=\"bar\" style={{ height: 20, width, backgroundColor: \"teal\" }} />;\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Sau 600ms rộng 200px",
+            "en": "After 600ms it is 200px wide"
+          },
+          "test": "(async()=>{await new Promise(r=>setTimeout(r,600));return Math.round(document.querySelector('[data-testid=\"bar\"]').getBoundingClientRect().width)===200})()"
+        }
+      ]
+    }
+  ],
+  "runtime": "rn"
+}

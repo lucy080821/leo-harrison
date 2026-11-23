@@ -1,0 +1,90 @@
+{
+  "title": {
+    "vi": "Lưu trữ cục bộ: AsyncStorage, kho an toàn và đồng bộ",
+    "en": "Local storage: AsyncStorage, secure stores and syncing"
+  },
+  "summary": {
+    "vi": "API bất đồng bộ get/set, JSON, hook useStoredState, kho an toàn, SQLite, di chuyển dữ liệu",
+    "en": "async get/set API, JSON, a useStoredState hook, secure stores, SQLite, data migration"
+  },
+  "minutes": 30,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { useState, useEffect } from \"react\";\nimport { View, Text, Pressable } from \"react-native\";\n\n// Giao diện giống AsyncStorage: getItem/setItem BẤT ĐỒNG BỘ, chỉ lưu CHUỖI\nconst makeMemoryStorage = () => {\n  const m = {};\n  return {\n    getItem: async (k) => (k in m ? m[k] : null),\n    setItem: async (k, v) => { m[k] = v; },\n  };\n};\nconst storage = makeMemoryStorage();\n\nfunction useStoredState(key, initial) {\n  const [value, setValue] = useState(initial);\n  const [ready, setReady] = useState(false);\n  useEffect(() => {\n    storage.getItem(key).then((raw) => {\n      if (raw !== null) { try { setValue(JSON.parse(raw)); } catch {} }   // dữ liệu hỏng -> dùng mặc định\n      setReady(true);\n    });\n  }, [key]);\n  useEffect(() => { if (ready) storage.setItem(key, JSON.stringify(value)); }, [key, value, ready]);\n  return [value, setValue, ready];\n}\n\nexport default function App() {\n  const [count, setCount, ready] = useStoredState(\"count\", 0);\n  if (!ready) return <Text>Đang đọc…</Text>;\n  return <View><Text testID=\"n\">{count}</Text><Pressable testID=\"inc\" onPress={() => setCount(count + 1)}><Text>+1</Text></Pressable></View>;\n}\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Viết save(key, obj) lưu JSON.stringify(obj) vào storage và load(key, fallback) đọc rồi JSON.parse; nếu thiếu khoá hoặc JSON hỏng trả fallback. Hiển thị <Text testID=\"r\"> với kết quả của: load('a', 'F') (chưa lưu), rồi sau save('a', {x:1}) thì load('a','F').x, cách nhau '|'.",
+        "en": "Write save(key, obj) storing JSON.stringify(obj) in storage and load(key, fallback) reading then JSON.parse-ing; if the key is missing or the JSON is corrupt return fallback. Render <Text testID=\"r\"> with the results of: load('a', 'F') (nothing saved), then after save('a', {x:1}) load('a','F').x, separated by '|'."
+      },
+      "hint": {
+        "vi": "try { return raw === null ? fallback : JSON.parse(raw); } catch { return fallback; }",
+        "en": "try { return raw === null ? fallback : JSON.parse(raw); } catch { return fallback; }"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, useEffect } from \"react\";\nimport { Text } from \"react-native\";\n\nconst m = {};\nconst storage = {\n  getItem: async (k) => (k in m ? m[k] : null),\n  setItem: async (k, v) => { m[k] = v; },\n};\n\nasync function save(key, obj) {\n  // viết ở đây\n}\nasync function load(key, fallback) {\n  // viết ở đây\n}\n\nexport default function App() {\n  const [r, setR] = useState(\"\");\n  useEffect(() => {\n    (async () => {\n      const a = await load(\"a\", \"F\");\n      await save(\"a\", { x: 1 });\n      const b = (await load(\"a\", \"F\")).x;\n      setR(a + \"|\" + b);\n    })();\n  }, []);\n  return <Text testID=\"r\">{r}</Text>;\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { useState, useEffect } from \"react\";\nimport { Text } from \"react-native\";\n\nconst m = {};\nconst storage = {\n  getItem: async (k) => (k in m ? m[k] : null),\n  setItem: async (k, v) => { m[k] = v; },\n};\n\nasync function save(key, obj) {\n  await storage.setItem(key, JSON.stringify(obj));\n}\nasync function load(key, fallback) {\n  const raw = await storage.getItem(key);\n  try { return raw === null ? fallback : JSON.parse(raw); } catch { return fallback; }\n}\n\nexport default function App() {\n  const [r, setR] = useState(\"\");\n  useEffect(() => {\n    (async () => {\n      const a = await load(\"a\", \"F\");\n      await save(\"a\", { x: 1 });\n      const b = (await load(\"a\", \"F\")).x;\n      setR(a + \"|\" + b);\n    })();\n  }, []);\n  return <Text testID=\"r\">{r}</Text>;\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "F|1",
+            "en": "F|1"
+          },
+          "test": "(async()=>{await new Promise(r=>setTimeout(r,300));return document.querySelector('[data-testid=\"r\"]')?.textContent==='F|1'})()"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Di chuyển phiên bản dữ liệu: dữ liệu cũ v1 là {name:'An Nguyen'}; v2 tách thành {firstName, lastName, v:2}. Viết migrate(data) nhận dữ liệu bất kỳ và trả v2 (nếu đã là v2 giữ nguyên). Hiển thị <Text testID=\"m\"> với `${firstName}/${lastName}/${v}` của migrate({name:'An Nguyen'}).",
+        "en": "Data version migration: old v1 data is {name:'An Nguyen'}; v2 splits into {firstName, lastName, v:2}. Write migrate(data) accepting any data and returning v2 (keep it if already v2). Render <Text testID=\"m\"> with `${firstName}/${lastName}/${v}` of migrate({name:'An Nguyen'})."
+      },
+      "hint": {
+        "vi": "if (data.v === 2) return data; tách name theo khoảng trắng đầu tiên.",
+        "en": "if (data.v === 2) return data; split name at the first space."
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { Text } from \"react-native\";\n\nfunction migrate(data) {\n  // viết ở đây\n}\n\nexport default function App() {\n  const d = migrate({ name: \"An Nguyen\" });\n  return <Text testID=\"m\">{d && `${d.firstName}/${d.lastName}/${d.v}`}</Text>;\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { Text } from \"react-native\";\n\nfunction migrate(data) {\n  if (data.v === 2) return data;\n  const [firstName, ...rest] = data.name.split(\" \");\n  return { firstName, lastName: rest.join(\" \"), v: 2 };\n}\n\nexport default function App() {\n  const d = migrate({ name: \"An Nguyen\" });\n  return <Text testID=\"m\">{d && `${d.firstName}/${d.lastName}/${d.v}`}</Text>;\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "An/Nguyen/2",
+            "en": "An/Nguyen/2"
+          },
+          "test": "document.querySelector('[data-testid=\"m\"]')?.textContent==='An/Nguyen/2'"
+        }
+      ]
+    }
+  ],
+  "runtime": "rn"
+}

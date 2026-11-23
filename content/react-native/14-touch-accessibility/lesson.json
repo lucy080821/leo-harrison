@@ -1,0 +1,97 @@
+{
+  "title": {
+    "vi": "Chạm và trợ năng: kích thước vùng chạm, nhãn và vai trò",
+    "en": "Touch and accessibility: target size, labels and roles"
+  },
+  "summary": {
+    "vi": "vùng chạm tối thiểu, hitSlop, accessibilityLabel/Role/State, VoiceOver/TalkBack, tương phản",
+    "en": "minimum touch targets, hitSlop, accessibilityLabel/Role/State, VoiceOver/TalkBack, contrast"
+  },
+  "minutes": 25,
+  "preview": "web",
+  "files": [
+    {
+      "name": "App.jsx",
+      "lang": "jsx",
+      "code": "import { useState } from \"react\";\nimport { View, Text, Pressable, StyleSheet } from \"react-native\";\n\nexport default function App() {\n  const [liked, setLiked] = useState(false);\n  return (\n    <View>\n      <Pressable\n        testID=\"like\"\n        accessibilityRole=\"button\"\n        accessibilityLabel={liked ? \"Bỏ thích bài viết\" : \"Thích bài viết\"}   // nút chỉ có biểu tượng PHẢI có nhãn\n        accessibilityState={{ selected: liked }}\n        hitSlop={8}\n        onPress={() => setLiked(!liked)}\n        style={({ pressed }) => [styles.btn, pressed && styles.pressed]}\n      >\n        <Text>{liked ? \"♥\" : \"♡\"}</Text>\n      </Pressable>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  btn: { minWidth: 44, minHeight: 44, alignItems: \"center\", justifyContent: \"center\" },   // vùng chạm >= 44\n  pressed: { opacity: 0.6 },\n});\n"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ex1",
+      "prompt": {
+        "vi": "Nút chỉ có biểu tượng cần nhãn cho trình đọc màn hình: thêm accessibilityRole=\"button\" và accessibilityLabel=\"Xoá\" cho <Pressable testID=\"del\"> (nội dung là ký tự '✕'). Trên web chúng thành role=button và aria-label.",
+        "en": "An icon-only button needs a label for screen readers: add accessibilityRole=\"button\" and accessibilityLabel=\"Delete\" to <Pressable testID=\"del\"> (its content is the '✕' character). On the web they become role=button and aria-label."
+      },
+      "hint": {
+        "vi": "<Pressable accessibilityRole=\"button\" accessibilityLabel=\"Delete\">",
+        "en": "<Pressable accessibilityRole=\"button\" accessibilityLabel=\"Delete\">"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { Text, Pressable } from \"react-native\";\n\nexport default function App() {\n  return (\n    <Pressable testID=\"del\" onPress={() => {}}>\n      <Text>✕</Text>\n    </Pressable>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { Text, Pressable } from \"react-native\";\n\nexport default function App() {\n  return (\n    <Pressable testID=\"del\" accessibilityRole=\"button\" accessibilityLabel=\"Delete\" onPress={() => {}}>\n      <Text>✕</Text>\n    </Pressable>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Có vai trò button",
+            "en": "Has the button role"
+          },
+          "test": "document.querySelector('[data-testid=\"del\"]')?.getAttribute('role')==='button'"
+        },
+        {
+          "label": {
+            "vi": "Có nhãn Delete",
+            "en": "Has the label Delete"
+          },
+          "test": "document.querySelector('[data-testid=\"del\"]')?.getAttribute('aria-label')==='Delete'"
+        }
+      ]
+    },
+    {
+      "id": "ex2",
+      "prompt": {
+        "vi": "Vùng chạm tối thiểu 44×44: đặt style cho <Pressable testID=\"tap\"> có minWidth 44 và minHeight 44 (nội dung chỉ là một ký tự nhỏ). Chiều cao và rộng thực phải ≥ 44px.",
+        "en": "Minimum 44×44 touch target: style <Pressable testID=\"tap\"> with minWidth 44 and minHeight 44 (its content is just one small character). The real width and height must be ≥ 44px."
+      },
+      "hint": {
+        "vi": "style={{ minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' }}",
+        "en": "style={{ minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' }}"
+      },
+      "starter": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { Text, Pressable } from \"react-native\";\n\nexport default function App() {\n  return (\n    <Pressable testID=\"tap\" onPress={() => {}}>\n      <Text>+</Text>\n    </Pressable>\n  );\n}\n"
+        }
+      ],
+      "solution": [
+        {
+          "name": "App.jsx",
+          "lang": "jsx",
+          "code": "import { Text, Pressable } from \"react-native\";\n\nexport default function App() {\n  return (\n    <Pressable testID=\"tap\" onPress={() => {}} style={{ minWidth: 44, minHeight: 44, alignItems: \"center\", justifyContent: \"center\" }}>\n      <Text>+</Text>\n    </Pressable>\n  );\n}\n"
+        }
+      ],
+      "checks": [
+        {
+          "label": {
+            "vi": "Rộng và cao ≥ 44",
+            "en": "Width and height ≥ 44"
+          },
+          "test": "(()=>{const r=document.querySelector('[data-testid=\"tap\"]').getBoundingClientRect();return r.width>=44&&r.height>=44})()"
+        }
+      ]
+    }
+  ],
+  "runtime": "rn"
+}
