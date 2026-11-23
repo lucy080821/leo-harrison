@@ -62,23 +62,6 @@ body {
   color: var(--fg);
 }
 
-/* ---------- Logo gợn sóng ---------- */
-@keyframes lexi-wave {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-0.18em); }
-}
-.logo-letter {
-  display: inline-block;
-  animation: lexi-wave 2.4s ease-in-out infinite;
-  background: linear-gradient(135deg, var(--brand), var(--brand-2));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-@media (prefers-reduced-motion: reduce) {
-  .logo-letter { animation: none; }
-}
-
 /* ---------- Nội dung bài học (markdown) ---------- */
 .prose-lesson { line-height: 1.75; font-size: 0.98rem; }
 .prose-lesson h1 { font-size: 1.6rem; font-weight: 700; margin: 0 0 1rem; }
