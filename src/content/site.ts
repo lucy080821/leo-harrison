@@ -306,16 +306,28 @@ export const t = {
   skillsTitle: { vi: "Kỹ năng", en: "Skills" } as L10n,
   aboutBody: [
     {
-      vi: "Mình là Tạ Hoàng Anh Tuấn, mọi người hay gọi mình là Leo. Mình làm những công cụ giúp việc học và việc đọc dữ liệu bớt nặng nề hơn.",
-      en: "I'm Tạ Hoàng Anh Tuấn, and people call me Leo. I build tools that make learning and reading data less of a chore.",
+      vi: "Mình chẳng là ai cả, cũng chẳng có gì trong tay. Mình chỉ là một người bình thường với đôi chút hoài bão: không lớn lao, nhưng có thật. Và được đóng góp một điều gì đó cho xã hội là một trong số đó.",
+      en: "I am nobody. I have nothing. I'm just an ordinary man with ambitions: not huge ones, but ambitions all the same. Contributing to society is one of them.",
     },
     {
-      vi: "Lucy Tutor ra đời để học và luyện thi tiếng Anh có AI đồng hành. Cerno dành cho ai có dữ liệu trong Google Sheets nhưng chưa có cách trình bày. Learn With Leo là nơi mình viết lại những gì đã học về lập trình, để người khác bắt đầu từ con số 0 mà không bị lạc. Kênh Tiếng Anh Không Khó trên YouTube và TikTok đưa tiếng Anh đến người học theo cách nhẹ nhàng hơn.",
-      en: "Lucy Tutor lets people study and prepare for English exams with an AI alongside them. Cerno is for anyone whose data sits in Google Sheets with no good way to show it. Learn With Leo is where I write down what I've learned about programming so others can start from zero without getting lost. The Tiếng Anh Không Khó channel on YouTube and TikTok brings English to learners in a lighter way.",
+      vi: "Nói thật, trang web này không hẳn là một bản portfolio hay một lá thư xin việc (dĩ nhiên nếu nó giúp được việc đó thì mình sẽ rất vui). Nó là nơi mình đánh dấu những cột mốc trên hành trình nghề nghiệp, để nhìn lại thật sâu những gì mình đã làm, và mình hy vọng nó sẽ là ngọn đuốc soi đường cho mình đến một tương lai tốt đẹp hơn.",
+      en: "To be honest, this website isn't really a portfolio or a cover letter for job hunting (though I would be truly happy if it ends up serving that purpose). It is the place where I mark the landmarks of my career. It lets me look deeply at what I have been doing, and I hope it will be a torch that lights my way to a better future.",
     },
     {
-      vi: "Trang này gom tất cả lại một chỗ, kèm những gì mình học được và muốn chia sẻ. Phần tiếng Anh chuyên sâu sẽ là chủ đề tiếp theo.",
-      en: "This site puts everything in one place, along with what I've learned and want to share. In-depth English is the next topic.",
+      vi: "Tất cả khoá học ở đây không chỉ dành cho bạn, người mà mình mong một ngày nào đó sẽ biết đến trang web này, mà còn được xây nên cho chính mình.",
+      en: "Every course here was built not only for you, whom I hope will someday find this website, but also for myself.",
+    },
+    {
+      vi: "Chúng ta đang sống trong thời đại trí tuệ nhân tạo, nên việc tiếp cận tri thức trên khắp thế giới không còn là một tầm nhìn xa vời. Nhưng gom tất cả về chiếc hộp kiến thức của riêng mình thì không đơn giản như ta nghĩ. Vì vậy mình muốn cùng bạn gom chúng về một nơi, để cả bạn và mình đều dễ dàng tìm đến. Chừng đó có thể chưa đủ để có một công việc, nhưng ít nhất cũng đủ tiếp thêm cho chúng ta chút kiến thức, để mỗi ngày trở thành một phiên bản tốt hơn của chính mình.",
+      en: "We live in the age of Artificial Intelligence, so reaching knowledge from all over the world is no longer an ambitious vision. Yet gathering all of it into our own knowledge box is not as simple as we think. That is why I want to help gather it in one place that you and I can both reach easily. It may not be enough to land a job, but at least it can give us the knowledge to grow into better versions of ourselves.",
+    },
+    {
+      vi: "Đó là tất cả những gì mình muốn chia sẻ. Mong bạn thích trang web này. Và xin hãy nhớ rằng mình sẽ thật sự hạnh phúc khi bạn dùng được những kiến thức này để trở thành phiên bản tốt hơn của chính bạn.",
+      en: "That is all I wanted to share. I hope you enjoy my website. And please remember that I will be truly happy when you can use this knowledge to become a better version of yourself.",
+    },
+    {
+      vi: "Mình tên là Anh Tuấn. Bạn cứ gọi mình là Leo nhé.",
+      en: "So, my name is Anh Tuấn. Or you can call me Leo.",
     },
   ] as L10n[],
   englishPageTitle: { vi: "Tiếng Anh chuyên sâu", en: "Advanced English" } as L10n,
