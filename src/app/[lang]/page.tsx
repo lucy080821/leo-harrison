@@ -223,6 +223,16 @@ export default async function Home({
               {t.objective[lang]}
             </p>
           </Reveal>
+          <Reveal>
+            <div className="mt-10 max-w-3xl space-y-5 border-t border-line pt-8 text-lg leading-relaxed">
+              {t.aboutBody.map((para, i) => (
+                <p key={i}>{para[lang]}</p>
+              ))}
+              <p className="pt-2 text-right" aria-label={t.signature[lang]}>
+                <span className="signature">{t.signature[lang]}</span>
+              </p>
+            </div>
+          </Reveal>
         </section>
 
         <section id="experience" aria-labelledby="exp-h" className="py-12">
