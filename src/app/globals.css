@@ -63,6 +63,7 @@ body {
 }
 
 /* ---------- Nội dung bài học (markdown) ---------- */
+.signature { font-family: "Caveat", "Bradley Hand", "Segoe Script", cursive; font-weight: 700; font-size: clamp(2.2rem, 7vw, 3.2rem); line-height: 1.1; color: var(--brand); transform: rotate(-4deg); transform-origin: left center; display: inline-block; }
 .prose-lesson { line-height: 1.75; font-size: 0.98rem; }
 .prose-lesson h1 { font-size: 1.6rem; font-weight: 700; margin: 0 0 1rem; }
 .prose-lesson h2 { font-size: 1.25rem; font-weight: 650; margin: 1.8rem 0 0.6rem; padding-bottom: .3rem; border-bottom: 1px solid var(--border); }

@@ -26,6 +26,9 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
         {t.aboutBody.map((para, i) => (
           <p key={i}>{para[lang]}</p>
         ))}
+        <p className="pt-2 text-right" aria-label={t.signature[lang]}>
+          <span className="signature">{t.signature[lang]}</span>
+        </p>
       </div>
       <section className="mt-14 border-t border-line pt-8">
         <h2 className="h-display text-2xl">{t.experienceTitle[lang]}</h2>

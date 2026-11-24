@@ -330,6 +330,7 @@ export const t = {
       en: "So, my name is Anh Tuấn. Or you can call me Leo.",
     },
   ] as L10n[],
+  signature: { vi: "Be yourself!", en: "Be yourself!" } as L10n,
   englishPageTitle: { vi: "Tiếng Anh chuyên sâu", en: "Advanced English" } as L10n,
   englishPageBody: {
     vi: "Các khoá học tiếng Anh đi sâu hơn giáo trình thông thường. Khoá đầu tiên là ngữ âm học: một giáo trình cho sinh viên ngành ngôn ngữ và giáo viên, có công cụ tương tác, bài tập nhẹ nhàng và không tính điểm.",
